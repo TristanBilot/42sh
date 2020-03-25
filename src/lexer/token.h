@@ -6,15 +6,29 @@
 */
 enum token_type
 {
-    TOKEN_PLUS = 0,
-    TOKEN_MINUS,
-    TOKEN_MULTIPLY,
-    TOKEN_DIVIDE,
-    TOKEN_LEFT_PARENTHESIS,
-    TOKEN_RIGHT_PARENTHESIS,
-    TOKEN_EOF,
-    TOKEN_NUMBER
-};
+    TOK_NONE,
+    TOK_NEWLINE,	// \n
+    TOK_EOF,		// EOF
+    TOK_AND,		// &&
+    TOK_SEPAND,		// &
+    TOK_OR,		    // ||
+    TOK_PIPE,		// |
+    TOK_DSEMI,		// ;;
+    TOK_SEP,		// ;
+    TOK_LPAREN,		// (
+    TOK_RPAREN,		// )
+    TOK_DLESSDASH,	// <<-
+    TOK_DLESS,		// <<
+    TOK_LESSGREAT,	// <>
+    TOK_LESSAND,	// <&
+    TOK_LESS,		// <
+    TOK_DGREAT,		// >>
+    TOK_GREATAND,	// >&
+    TOK_CLOBBER,	// >|
+    TOK_GREAT,		// >
+    TOK_IONUMBER,	// number juste before '>' or '<'
+    TOK_WORD		// all others
+} e_tokenid;
 
 /**
 ** \brief Token struct declaration
