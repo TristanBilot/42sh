@@ -1,8 +1,25 @@
 #include <criterion/criterion.h>
-#include <token.h>
+#include <lexer/lexer.h>
 
-Test(lexer, test) {
-    const char *input = "";
+Test(lexer, core_methods)
+{
+    struct lexer *lex = new_lexer("&& || ;;");
+    cr_assert(peek(lex)->type == TOK_AND);
+    cr_assert(peek(lex)->type == TOK_AND);
+    cr_assert(pop(lex)->type == TOK_AND);
+    cr_assert(peek(lex)->type == TOK_OR);
+    cr_assert(pop(lex)->type == TOK_OR);
+    cr_assert(pop(lex)->type == TOK_DSEMI);
+}
+
+Test(lexer, input)
+{
+    const char *input = "find -name 'keta' && ls &||";
     struct lexer *lexer = new_lexer(input);
-    cr_assert(lexer_pop(lexer) == TOK_EOF);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_AND);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_WORD);
 }

@@ -17,9 +17,13 @@ CFLAGS= \
 OBJS= \
       src/lexer/token.o \
       src/lexer/lexer.o \
+      src/lexer/lex_evaluation.o \
       src/utils/xalloc.o \
       src/utils/string.o \
       ${NONE}
+
+TEST_OBJS = \
+      tests/tests_lexer.o
 
 BINS= \
       token_printer \
@@ -41,6 +45,9 @@ debug: CFLAGS+= -g -fsanitize=address
 debug: LDFLAGS+= -fsanitize=address
 debug: all
 
+tests: LDFLAGS+= -lcriterion
+tests: run_test
+
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
@@ -48,6 +55,9 @@ ast_print: src/eval/ast_print.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 rpn_print: src/eval/rpn_print.o ${OBJS}
+	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
+run_test: tests/tests_lexer.o ${OBJS} ${TEST_OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 clean:
