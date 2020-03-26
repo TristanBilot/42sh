@@ -49,6 +49,8 @@ enum word_type
 ** \brief Token struct declaration
 **
 ** \param type the enum associated to the string.
+** \param value of a token (string) if this token is a word.
+** \param next pointer to the next token in the list.
 */
 struct token
 {
@@ -57,6 +59,13 @@ struct token
     struct token *next;
 };
 
+/**
+** \brief Basically a lined-list of tokens.
+**
+** \param first token of the list (used as start point for parsing).
+** \param last token of the list.
+** \param next pointer to the next token in the list.
+*/
 struct token_list
 {
     struct token *last;

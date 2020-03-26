@@ -1,16 +1,13 @@
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "utils/xalloc.h"
+#include "utils/string.h"
 #include "lexer/token.h"
 #include "lexer/lexer.h"
+#include "lexer/lex_evaluation.h"
 
 #define MAX_STR_LEN 256
-
-int is(char *a, char *b)
-{
-    return strcmp(a, b) == 0;
-}
 
 char **split(const char *str)
 {
@@ -27,26 +24,7 @@ char **split(const char *str)
     return res;
 }
 
-int evaluate_number(char *str, size_t *index)
-{
-    int res = 0;
-    while (index && *index < strlen(str) &&
-        str[*index] >= '0' && str[*index] <= '9')
-    {
-        res *= 10;
-        res += (str[(*index)++] - '0');
-    }
-    (*index)--;
-    return res;
-}
-
-void flush(char *buffer, int size)
-{
-    for (int i = 0; i < size; i++)
-        buffer[i] = '\0';
-}
-
-void lexer_init(struct lexer *lexer)
+void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
     char *c;
@@ -88,7 +66,7 @@ struct lexer *new_lexer(const char *str) {
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
     lexer->token_list = xmalloc(sizeof(struct token_list));
     lexer->input = str;
-    lexer_init(lexer);
+    init_lexer(lexer);
     return lexer;
 }
 

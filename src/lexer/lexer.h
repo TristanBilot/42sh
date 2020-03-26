@@ -8,7 +8,6 @@
 **
 ** \param input the full input string.
 ** \param token_list the linked-list of tokens.
-** \param current the current token pointer in the list.
 */
 struct lexer {
     const char *input;
@@ -44,12 +43,20 @@ struct token *peek(struct lexer *lexer);
 */
 struct token *pop(struct lexer *lexer);
 
+/**
+** \brief Append a new token to the token_list of the lexer.
+**
+** \param lexer the lexer.
+** \param token the token to append.
+*/
 void append(struct lexer *lexer, struct token *token);
 
-int is(char *a, char *b);
-
-enum token_type evaluate_token(char *c);
-
-void lexer_init(struct lexer *lexer);
+/**
+** \brief Fill the token list by creating all the tokens from
+** the given string.
+**
+** \param lexer the lexer.
+*/
+void init_lexer(struct lexer *lexer);
 
 #endif /* ! LEXER_H */

@@ -5,6 +5,7 @@
         "token.h": "c",
         "memory": "c",
         "utility": "c",
-        "lexer.h": "c"
+        "lexer.h": "c",
+        "string.h": "c"
     }
 }

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "utils/string.h"
 
 char *type_to_str(int type)
@@ -27,4 +28,15 @@ char *type_to_str(int type)
         "TOK_WORD"
     };
     return types[type];
+}
+
+void flush(char *buffer, int size)
+{
+    for (int i = 0; i < size; i++)
+        buffer[i] = '\0';
+}
+
+int is(char *a, char *b)
+{
+    return strcmp(a, b) == 0;
 }

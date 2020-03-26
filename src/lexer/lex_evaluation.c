@@ -1,3 +1,4 @@
+#include "utils/string.h"
 #include "lexer/lexer.h"
 
 enum token_type evaluate_token(char *c)
