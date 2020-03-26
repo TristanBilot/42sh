@@ -15,8 +15,10 @@ CFLAGS= \
         ${NONE}
 
 OBJS= \
-      src/lexer/*.o \
+      src/lexer/token.o \
+      src/lexer/lexer.o \
       src/utils/xalloc.o \
+      src/utils/string.o \
       ${NONE}
 
 BINS= \

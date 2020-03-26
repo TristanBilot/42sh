@@ -1,5 +1,6 @@
 #include "lexer/lexer.h"
 #include "lexer/token.h"
+#include "utils/string.h"
 
 #include <err.h>
 #include <stdio.h>
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
     struct token *token = NULL;
     while ((token = pop(lexer)))
     {
-        printf("%u\n", token->type);
+        printf("%s\n", type_to_str(token->type));
         if (token->type == TOK_EOF)
             break;
 
