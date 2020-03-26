@@ -50,7 +50,7 @@ enum token_type evaluate_token(char *c)
         return TOK_CLOBBER;
     else if (is(c, ">"))
         return TOK_GREAT;
-    return -1;
+    return TOK_WORD;
 }
 
 char **split(const char *str)
@@ -97,7 +97,7 @@ void lexer_init(struct lexer *lexer)
     while (splitted[i] != '\0')
     {
         c = splitted[i];
-        if ((type = evaluate_token(c)) < 0)
+        if ((type = evaluate_token(c)) == TOK_WORD)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
@@ -105,10 +105,15 @@ void lexer_init(struct lexer *lexer)
                 buf[0] = c[j];
                 buf[1] = '\0';
                 strcat(buffer, buf);
-                if ((type = evaluate_token(buffer)) >= 0 && 
+                if ((type = evaluate_token(buffer)) != TOK_WORD && 
                     c[j+1] && (c[j+1] == ' ' || c[j+1] == '\n'))
                 {
                     append(lexer, new_token_type(type));
+                    flush(buffer, MAX_STR_LEN);
+                }
+                if (j == strlen(c) - 1)
+                {
+                    append(lexer, new_token_word(c));
                     flush(buffer, MAX_STR_LEN);
                 }
             }

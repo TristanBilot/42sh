@@ -19,6 +19,14 @@ struct token *new_token_type(int type)
     return new;
 }
 
+struct token *new_token_word(const char *value)
+{
+    struct token *new = new_token();
+    new->type = TOK_WORD;
+    new->value = value;
+    return new;
+}
+
 void free_token(struct token *token)
 {
     free(token);

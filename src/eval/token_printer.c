@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-
     struct lexer *lexer = new_lexer(argv[1]);
 
     // printf("%s\n", token_str(lexer_peek(lexer)));

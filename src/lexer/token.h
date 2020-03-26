@@ -53,6 +53,7 @@ enum word_type
 struct token
 {
     enum token_type type;
+    const char *value;
     struct token *next;
 };
 
@@ -70,6 +71,7 @@ struct token_list
 */
 struct token *new_token(void);
 struct token *new_token_type(int type);
+struct token *new_token_word(const char *value);
 
 /**
 ** \brief Wrapper to release memory of a token
