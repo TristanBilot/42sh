@@ -27,10 +27,6 @@ int main(int argc, char *argv[])
         if (token->type == TOK_EOF)
             break;
 
-        free_token(token);
-        token = NULL;
     }
-
-    free_token(token);
     free_lexer(lexer);
 }

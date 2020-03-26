@@ -2,10 +2,56 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "utils/xalloc.h"
+#include "lexer/token.h"
 #include "lexer/lexer.h"
-#include "token.h"
 
 #define MAX_STR_LEN 256
+
+int is(char *a, char *b)
+{
+    return strcmp(a, b) == 0;
+}
+
+enum token_type evaluate_token(char *c)
+{
+    if (is(c, "\n"))
+        return TOK_NEWLINE;
+    else if (is(c, "&&"))
+        return TOK_AND;
+    else if (is(c, "&"))
+        return TOK_SEPAND;
+    else if (is(c, "||"))
+        return TOK_OR;
+    else if (is(c, "|"))
+        return TOK_PIPE;
+    else if (is(c, ";;"))
+        return TOK_DSEMI;
+    else if (is(c, ";"))
+        return TOK_SEMI;
+    else if (is(c, "("))
+        return TOK_LPAREN;
+    else if (is(c, ")"))
+        return TOK_RPAREN;
+    else if (is(c, "<<-"))
+        return TOK_DLESSDASH;
+    else if (is(c, "<<"))
+        return TOK_DLESS;
+    else if (is(c, "<>"))
+        return TOK_LESSGREAT;
+    else if (is(c, "<&"))
+        return TOK_LESSAND;
+    else if (is(c, "<"))
+        return TOK_LESS;
+    else if (is(c, ">>"))
+        return TOK_DGREAT;
+    else if (is(c, ">&"))
+        return TOK_GREATAND;
+    else if (is(c, ">|"))
+        return TOK_CLOBBER;
+    else if (is(c, ">"))
+        return TOK_GREAT;
+    return -1;
+}
 
 char **split(const char *str)
 {
@@ -34,22 +80,6 @@ int evaluate_number(char *str, size_t *index)
     (*index)--;
     return res;
 }
-
-// struct token *lex_full_token(int type, char *token)
-// {
-//     struct token *new = new_token();
-//     if (type == TOKEN_NUMBER)
-//         new->value = atoi(token);
-//     new->type = type;
-//     return new;
-// }
-
-// struct token *lex_token(int type, char *token, size_t index)
-// {
-//     struct token *new = new_token();
-//     new->type = type;
-//     return new;
-// }
 
 void flush(char *buffer, int size)
 {
