@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "criterion.h": "c",
-        "test.h": "c"
+        "test.h": "c",
+        "token.h": "c",
+        "memory": "c",
+        "utility": "c",
+        "lexer.h": "c"
     }
 }

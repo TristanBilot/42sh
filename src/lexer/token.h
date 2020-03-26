@@ -1,6 +1,8 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#define MAX_TOKEN 256
+
 /**
 ** \brief Type of a token (operators, value, ...)
 */
@@ -14,7 +16,7 @@ enum token_type
     TOK_OR,		    // ||
     TOK_PIPE,		// |
     TOK_DSEMI,		// ;;
-    TOK_SEP,		// ;
+    TOK_SEMI,		// ;
     TOK_LPAREN,		// (
     TOK_RPAREN,		// )
     TOK_DLESSDASH,	// <<-
@@ -28,39 +30,52 @@ enum token_type
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
     TOK_WORD		// all others
-} e_tokenid;
+};
 
-/**
-** \brief Token struct declaration
-*/
-struct token
+enum word_type
 {
-    /* type of the token */
-    enum token_type type;
-    /* hold the number (only used when type == TOKEN_NUMBER) */
-    int value;
+    WORD_IF,
+    WORD_THEN,
+    WORD_ELSE,
+    WORD_ELIF,
+    WORD_FI,
+    WORD_DO,
+    WORD_DONE,
+    WORD_FOR
+    /*...*/
 };
 
 /**
-** \brief String representation of a token (used for debugging and errors)
+** \brief Token struct declaration
 **
-** \return a string describing the given token
-** \param token to stringify
+** \param type the enum associated to the string.
 */
-const char *token_str(struct token *token);
+struct token
+{
+    enum token_type type;
+    struct token *next;
+};
+
+struct token_list
+{
+    struct token *last;
+    struct token *first;
+    struct token *next;
+};
 
 /**
-** \brief Token allocator and initialiser
+** \brief Token allocator and initializer
 **
 ** \return a pointer to the allocated token
 */
-struct token *token_alloc(void);
+struct token *new_token(void);
+struct token *new_token_type(int type);
 
 /**
 ** \brief Wrapper to release memory of a token
 **
 ** \param token the token to free
 */
-void token_free(struct token *token);
+void free_token(struct token *token);
 
 #endif /* ! TOKEN_H */

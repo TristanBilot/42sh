@@ -4,28 +4,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char *token_str(struct token *token)
+struct token *new_token(void)
 {
-    static const char *token_strs[] = { "+", "-", "*", "/", "(", ")", "EOF" };
-    static char number_str[11];
-
-    if (token->type != TOKEN_NUMBER)
-        return token_strs[token->type];
-        
-    sprintf(number_str, "%d", token->value);
-    return number_str;
+    struct token *new = xmalloc(sizeof(*new));
+    new->type = TOK_EOF;
+    new->next = NULL;
+    return new;
 }
 
-struct token *token_alloc(void)
+struct token *new_token_type(int type)
 {
-    struct token *res = xmalloc(sizeof(*res));
-    res->type = TOKEN_EOF;
-    res->value = 0;
-
-    return res;
+    struct token *new = new_token();
+    new->type = type;
+    return new;
 }
 
-void token_free(struct token *token)
+void free_token(struct token *token)
 {
     free(token);
 }

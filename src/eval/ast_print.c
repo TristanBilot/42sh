@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     }
 
 
-    struct lexer *lexer = lexer_alloc(argv[1]);
+    struct lexer *lexer = new_lexer(argv[1]);
 
     struct ast *ast = NULL;
 
@@ -63,5 +63,5 @@ int main(int argc, char *argv[])
         puts("Parsing error");
 
     ast_free(ast);
-    lexer_free(lexer);
+    free_lexer(lexer);
 }

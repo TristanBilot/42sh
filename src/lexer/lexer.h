@@ -12,8 +12,7 @@
 */
 struct lexer {
     const char *input;
-    struct token *token_list;
-    struct token *current;
+    struct token_list *token_list;
 };
 
 /**
@@ -44,5 +43,13 @@ struct token *peek(struct lexer *lexer);
 ** \param lexer the lexer to lex from
 */
 struct token *pop(struct lexer *lexer);
+
+void append(struct lexer *lexer, struct token *token);
+
+int is(char *a, char *b);
+
+enum token_type evaluate_token(char *c);
+
+void lexer_init(struct lexer *lexer);
 
 #endif /* ! LEXER_H */

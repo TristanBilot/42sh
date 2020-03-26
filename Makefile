@@ -15,24 +15,22 @@ CFLAGS= \
         ${NONE}
 
 OBJS= \
-      src/ast/ast.o \
-      src/lexer/lexer.o \
-      src/lexer/token.o \
-      src/parser/parser.o \
+      src/lexer/*.o \
       src/utils/xalloc.o \
       ${NONE}
 
 BINS= \
       token_printer \
-      ast_print \
-      rpn_print \
-      ${NONE}
+      # ast_print \
+      # rpn_print \
+      # ${NONE}
 
 BINS_OBJS = \
             src/eval/token_printer.o \
-            src/eval/ast_print.o \
-            src/eval/rpn_print.o \
             ${NONE}
+            # src/eval/ast_print.o \
+            # src/eval/rpn_print.o \
+            #${NONE}
 
 
 all: ${BINS}

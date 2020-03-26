@@ -13,24 +13,24 @@ int main(int argc, char *argv[])
     }
 
 
-    struct lexer *lexer = lexer_alloc(argv[1]);
+    struct lexer *lexer = new_lexer(argv[1]);
 
     // printf("%s\n", token_str(lexer_peek(lexer)));
     // for (int i = 0; i < lexer->length; i++)
-    //     printf("%s\n", token_str(lexer_pop(lexer)));
+    //     printf("%s\n", token_str(pop(lexer)));
 
 
     struct token *token = NULL;
-    while ((token = lexer_pop(lexer)))
+    while ((token = pop(lexer)))
     {
-        printf("%s\n", token_str(token));
-        if (token->type == TOKEN_EOF)
+        printf("%u\n", token->type);
+        if (token->type == TOK_EOF)
             break;
 
-        token_free(token);
+        free_token(token);
         token = NULL;
     }
 
-    token_free(token);
-    lexer_free(lexer);
+    free_token(token);
+    free_lexer(lexer);
 }
