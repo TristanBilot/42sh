@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "criterion.h": "c",
+        "test.h": "c"
+    }
+}
