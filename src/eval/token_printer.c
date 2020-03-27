@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
         puts("Usage: ./test \"expression\"");
         return 1;
     }
-    printf("%s\n", "aa\n");
     struct lexer *lexer = new_lexer(argv[1]);
 
     // printf("%s\n", token_str(lexer_peek(lexer)));
@@ -23,8 +22,8 @@ int main(int argc, char *argv[])
     while ((token = pop(lexer)))
     {
         printf("%s %s\n", type_to_str(token->type), token->value);
-        if (token->type == TOK_EOF)
-            break;
+        // if (token->type == TOK_EOF)
+        //     break;
 
     }
     free_lexer(lexer);

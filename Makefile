@@ -20,6 +20,7 @@ OBJS= \
       src/lexer/lex_evaluation.o \
       src/utils/xalloc.o \
       src/utils/string.o \
+      src/utils/buffer.o \
       ${NONE}
 
 TEST_OBJS = \

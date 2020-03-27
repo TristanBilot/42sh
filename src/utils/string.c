@@ -30,13 +30,6 @@ char *type_to_str(int type)
     return types[type];
 }
 
-void flush(struct buffer *buffer, int size)
-{
-    buffer->index = 0;
-    for (int i = 0; i < size; i++)
-        buffer->buf[i] = '\0';
-}
-
 int is(const char *a, const char *b)
 {
     return strcmp(a, b) == 0;

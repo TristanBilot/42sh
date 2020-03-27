@@ -21,6 +21,28 @@ char *lex_backslash(char *c, int i)
     return NULL;
 }
 
+struct token *lex_great_less_and(const char *c, int i)
+{
+    if (!c || !c[i] || !c[i + 1])
+        return NULL;
+    if (c[i] == '<' && c[i + 1] == '&') /* <& */
+        return new_token_type(TOK_LESSAND);
+    if (c[i] == '>' && c[i + 1] == '&') /* >& */
+        return new_token_type(TOK_GREATAND);
+    return NULL;
+}
+
+struct token *lex_io_number(char *c, int i)
+{
+    if (!c || !c[i] || (c[i] < '0' || c[i] > '2'))
+        return NULL;
+    if (c[i + 1] == '>' && ((c[i - 1] && (c[i - 1] == ' ')) || !c[i - 1])) /* 2> */
+        return new_token_io_number(c[i]);
+    if (c[i - 1] && c[i - 2] && is(substr(c, i - 2, i - 1), ">&")) /* >&2 */
+        return new_token_io_number(c[i]);
+    return NULL;
+}
+
 enum token_type evaluate_token(char *c)
 {
     if (is(c, "\n"))

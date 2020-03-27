@@ -3,10 +3,7 @@
 
 #include <stdlib.h>
 
-struct buffer {
-    char *buf;
-    int index;
-};
+#define MAX_STR_LEN 256
 
 /**
 ** \brief Return the associated string of a token type.
@@ -14,14 +11,6 @@ struct buffer {
 ** \param type the enum value of the token.
 */
 char *type_to_str(int type);
-
-/**
-** \brief Empty a string buffer.
-**
-** \param buffer the string to be clear.
-** \param size the length of the buffer.
-*/
-void flush(struct buffer *buffer, int size);
 
 /**
 ** \brief Return true is a == b
