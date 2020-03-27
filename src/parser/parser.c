@@ -21,7 +21,7 @@ static bool token_is_eop(struct token *token)
 **       + ---------------------- +
 **
 ** this means at least one function must be declares before the 3 are
-** defined.
+** defined. oui
 */
 static bool parse_exp(struct lexer *lexer, struct ast **ast);
 
