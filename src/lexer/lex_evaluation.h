@@ -1,6 +1,8 @@
 #ifndef LEX_EVALUATION_H
 #define LEX_EVALUATION_H
 
+char *lex_backslash(char *c, int i);
+
 /**
 ** \brief Return the associated type of a string token.
 **

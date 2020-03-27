@@ -8,6 +8,7 @@ struct token *new_token(void)
 {
     struct token *new = xmalloc(sizeof(*new));
     new->type = TOK_EOF;
+    new->value = "";
     new->next = NULL;
     return new;
 }

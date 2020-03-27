@@ -30,19 +30,26 @@ void init_lexer(struct lexer *lexer)
     char *c;
     int i = 0;
     int type;
-    char buffer[MAX_STR_LEN];
+    struct buffer *buffer = NULL;
     while (splitted[i] != '\0')
     {
+        buffer = calloc(sizeof(struct buffer), 1);
+        buffer->buf = calloc(256,1);
         c = splitted[i];
         if ((type = evaluate_token(c)) == TOK_WORD)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
-                char buf[2];
-                buf[0] = c[j];
-                buf[1] = '\0';
-                strcat(buffer, buf);
-                if ((type = evaluate_token(buffer)) != TOK_WORD && 
+                if (lex_backslash(c, j))
+                {
+                    append(lexer, new_token_word(lex_backslash(c, j)));
+                    flush(buffer, MAX_STR_LEN);
+                    
+                    break;
+                }
+                
+                buffer->buf[buffer->index++] = c[j];
+                if ((type = evaluate_token(buffer->buf)) != TOK_WORD && 
                     c[j+1] && (c[j+1] == ' ' || c[j+1] == '\n'))
                 {
                     append(lexer, new_token_type(type));

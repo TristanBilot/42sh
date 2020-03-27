@@ -1,5 +1,25 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "utils/string.h"
 #include "lexer/lexer.h"
+
+char *lex_backslash(char *c, int i)
+{
+    if (!c || !c[i] || c[i] != '\\')
+        return NULL;
+
+    char next = c[i + 1];
+    if (next == EOF)
+        (void) c; /* TODO (echo \ \\\) */
+
+    if (next && next != '\\')
+        return substr(c, i, strlen(c));
+        
+    if (next && next == '\\')
+        return "\\"; /* NEED IMPROVEMENTS LATER */
+    return NULL;
+}
 
 enum token_type evaluate_token(char *c)
 {

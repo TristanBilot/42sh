@@ -30,13 +30,26 @@ char *type_to_str(int type)
     return types[type];
 }
 
-void flush(char *buffer, int size)
+void flush(struct buffer *buffer, int size)
 {
+    buffer->index = 0;
     for (int i = 0; i < size; i++)
-        buffer[i] = '\0';
+        buffer->buf[i] = '\0';
 }
 
-int is(char *a, char *b)
+int is(const char *a, const char *b)
 {
     return strcmp(a, b) == 0;
+}
+
+char *substr(char *src, int pos, int len)
+{ 
+  char *dest = NULL;
+  if (len > 0)
+  {
+    dest = calloc(len + 10, 1);
+    if (dest != NULL)
+        strncat(dest, src + pos, len);
+  }
+  return dest;
 }
