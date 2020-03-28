@@ -15,7 +15,6 @@ enum token_type
     TOK_SEPAND,		// &
     TOK_OR,		    // ||
     TOK_PIPE,		// |
-    TOK_DSEMI,
     TOK_SEMI,		// ;
     TOK_LPAREN,		// (
     TOK_RPAREN,		// )
@@ -30,21 +29,22 @@ enum token_type
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
     TOK_WORD,		// all others
-    KW_IF,
-    KW_THEN,
-    KW_ELSE,
-    KW_ELIF,
-    KW_FI,
-    KW_DO,
-    KW_DONE,
-    KW_FOR,
-    KW_WHILE,
-    KW_UNTIL,
-    KW_CASE,
-    KW_ESAC,
-    KW_IN,
-    KW_DSEMI,
-    KW_UNKNOWN
+
+    KW_IF,          // if
+    KW_THEN,        // then
+    KW_ELSE,        // else
+    KW_ELIF,        // elif
+    KW_FI,          // fi
+    KW_DO,          // do
+    KW_DONE,        // done
+    KW_FOR,         // for
+    KW_WHILE,       // while
+    KW_UNTIL,       // until
+    KW_CASE,        // case
+    KW_ESAC,        // esac
+    KW_IN,          // in
+    KW_DSEMI,       // ;;
+    KW_UNKNOWN      // ??
     /*...*/
 };
 
