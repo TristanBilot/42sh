@@ -1,6 +1,7 @@
 #include "lexer/token.h"
 #include "utils/xalloc.h"
 
+#include <errno.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,7 @@ struct token *new_token_type(int type)
 {
     struct token *new = new_token();
     new->type = type;
+    new->value = "";
     return new;
 }
 
@@ -38,6 +40,12 @@ struct token *new_token_word(char *value)
     new->value = malloc(MAX_TOKEN);  /* FREE */
     strcpy(new->value, value);
     return new;
+}
+
+struct token *new_token_error(char *err)
+{
+    perror(err);
+    return new_token_type(TOK_ERROR);
 }
 
 void free_token(struct token *token)

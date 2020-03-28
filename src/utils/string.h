@@ -21,6 +21,13 @@ char *type_to_str(int type);
 int is(const char *a, const char *b);
 
 /**
+** \brief Return true is c is a number.
+**
+** \param c the caracter.
+*/
+int is_number(char c);
+
+/**
 ** \brief Return the substring between pos and len - 1
 **
 ** \param src the string.

@@ -8,7 +8,7 @@
 */
 enum token_type
 {
-    TOK_NONE,
+    TOK_ERROR,
     TOK_NEWLINE,	// \n
     TOK_EOF,		// EOF
     TOK_AND,		// &&
@@ -82,6 +82,7 @@ struct token *new_token(void);
 struct token *new_token_type(int type);
 struct token *new_token_io_number(char number);
 struct token *new_token_word(char *value);
+struct token *new_token_error(char *err);
 
 /**
 ** \brief Wrapper to release memory of a token

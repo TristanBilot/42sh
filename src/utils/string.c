@@ -4,7 +4,7 @@
 char *type_to_str(int type)
 {
     char *types[] = {
-        "TOK_NONE",
+        "TOK_ERROR",
         "TOK_NEWLINE",
         "TOK_EOF",	
         "TOK_AND",	
@@ -35,14 +35,21 @@ int is(const char *a, const char *b)
     return strcmp(a, b) == 0;
 }
 
+int is_number(char c)
+{
+    return c >= '0' && c <= '9';
+}
+
 char *substr(char *src, int pos, int len)
 { 
-  char *dest = NULL;
-  if (len > 0)
-  {
-    dest = calloc(len + 10, 1);
-    if (dest != NULL)
-        strncat(dest, src + pos, len);
-  }
-  return dest;
+    // if (!src || !src[pos] || !src[len])
+    //     return NULL;
+    char *dest = NULL;
+    if (len > 0)
+    {
+        dest = calloc(len + 10, 1);
+        if (dest != NULL)
+            strncat(dest, src + pos, len);
+    }
+    return dest;
 }
