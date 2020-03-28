@@ -1,6 +1,7 @@
 #include "lexer/lexer.h"
 #include "lexer/token.h"
 #include "utils/string.h"
+#include "lexer/lex_evaluation.h"
 
 #include <err.h>
 #include <stdio.h>

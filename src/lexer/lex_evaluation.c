@@ -78,8 +78,43 @@ struct token *lex_great_less(char *c, int i)
     return NULL;
 }
 
+enum token_type evaluate_keyword(char *c)
+{
+    if (is(c, "if"))
+        return KW_IF;
+    if (is(c, "then"))
+        return KW_THEN;
+    if (is(c, "elif"))
+        return KW_ELIF;
+    if (is(c, "else"))
+        return KW_ELSE;
+    if (is(c, "fi"))
+        return KW_FI;
+    if (is(c, "do"))
+        return KW_DO;
+    if (is(c, "done"))
+        return KW_DONE;
+    if (is(c, "for"))
+        return KW_FOR;
+    if (is(c, "while"))
+        return KW_WHILE;
+    if (is(c, "until"))
+        return KW_UNTIL;
+    if (is(c, "case"))
+        return KW_CASE;
+    if (is(c, "esac"))
+        return KW_ESAC;
+    if (is(c, "in"))
+        return KW_IN;
+    if (is(c, ";;"))
+        return KW_DSEMI;
+    return KW_UNKNOWN;
+}
+
 enum token_type evaluate_token(char *c)
 {
+    if (evaluate_keyword(c) != KW_UNKNOWN)
+        return evaluate_keyword(c);
     if (is(c, "\n"))
         return TOK_NEWLINE;
     else if (is(c, "&&"))
@@ -90,8 +125,6 @@ enum token_type evaluate_token(char *c)
         return TOK_OR;
     else if (is(c, "|"))
         return TOK_PIPE;
-    else if (is(c, ";;"))
-        return TOK_DSEMI;
     else if (is(c, ";"))
         return TOK_SEMI;
     else if (is(c, "("))

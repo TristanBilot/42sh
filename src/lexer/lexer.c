@@ -76,26 +76,25 @@ void init_lexer(struct lexer *lexer)
     {
         buffer = new_buffer();
         c = splitted[i];
-        if ((type = evaluate_token(c)) == TOK_WORD)
-        {
-            for (size_t j = 0; j < strlen(c); j++)
+            if ((type = evaluate_token(c)) == TOK_WORD)
             {
-                if (lex_full(lexer, c, j))
-                    break;
-
-                if (lex_part(lexer, buffer, c, &j))
-                    continue;
-
-                append_buffer(buffer, c[j]);
-                if (j == strlen(c) - 1)
+                for (size_t j = 0; j < strlen(c); j++)
                 {
-                    append(lexer, new_token_word(buffer->buf));
-                    flush(buffer);
+                    if (lex_full(lexer, c, j))
+                        break;
+                    if (lex_part(lexer, buffer, c, &j))
+                        continue;
+
+                    append_buffer(buffer, c[j]);
+                    if (j == strlen(c) - 1)
+                    {
+                        append(lexer, new_token_word(buffer->buf));
+                        flush(buffer);
+                    }
                 }
             }
-        }
-        else
-            append(lexer, new_token_type(type));
+            else
+                append(lexer, new_token_type(type));
         i++;
         free_buffer(buffer);
     }

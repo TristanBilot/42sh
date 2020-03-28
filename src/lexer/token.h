@@ -29,19 +29,22 @@ enum token_type
     TOK_CLOBBER,	// >|
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
-    TOK_WORD		// all others
-};
-
-enum word_type
-{
-    WORD_IF,
-    WORD_THEN,
-    WORD_ELSE,
-    WORD_ELIF,
-    WORD_FI,
-    WORD_DO,
-    WORD_DONE,
-    WORD_FOR
+    TOK_WORD,		// all others
+    KW_IF,
+    KW_THEN,
+    KW_ELSE,
+    KW_ELIF,
+    KW_FI,
+    KW_DO,
+    KW_DONE,
+    KW_FOR,
+    KW_WHILE,
+    KW_UNTIL,
+    KW_CASE,
+    KW_ESAC,
+    KW_IN,
+    KW_DSEMI,
+    KW_UNKNOWN
     /*...*/
 };
 

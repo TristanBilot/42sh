@@ -25,7 +25,22 @@ char *type_to_str(int type)
         "TOK_CLOBBER",
         "TOK_GREAT",	
         "TOK_IONUMBER",
-        "TOK_WORD"
+        "TOK_WORD",
+        "KW_IF",
+        "KW_THEN",
+        "KW_ELSE",
+        "KW_ELIF",
+        "KW_FI",
+        "KW_DO",
+        "KW_DONE",
+        "KW_FOR",
+        "KW_WHILE",
+        "KW_UNTIL",
+        "KW_CASE",
+        "KW_ESAC",
+        "KW_IN",
+        "KW_DSEMI",
+        "KW_UNKNOWN"
     };
     return types[type];
 }
@@ -41,9 +56,7 @@ int is_number(char c)
 }
 
 char *substr(char *src, int pos, int len)
-{ 
-    // if (!src || !src[pos] || !src[len])
-    //     return NULL;
+{
     char *dest = NULL;
     if (len > 0)
     {
