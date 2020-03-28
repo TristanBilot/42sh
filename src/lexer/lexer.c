@@ -1,57 +1,12 @@
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "utils/xalloc.h"
+#include "utils/string.h"
+#include "utils/buffer.h"
 #include "lexer/token.h"
 #include "lexer/lexer.h"
-
-#define MAX_STR_LEN 256
-
-int is(char *a, char *b)
-{
-    return strcmp(a, b) == 0;
-}
-
-enum token_type evaluate_token(char *c)
-{
-    if (is(c, "\n"))
-        return TOK_NEWLINE;
-    else if (is(c, "&&"))
-        return TOK_AND;
-    else if (is(c, "&"))
-        return TOK_SEPAND;
-    else if (is(c, "||"))
-        return TOK_OR;
-    else if (is(c, "|"))
-        return TOK_PIPE;
-    else if (is(c, ";;"))
-        return TOK_DSEMI;
-    else if (is(c, ";"))
-        return TOK_SEMI;
-    else if (is(c, "("))
-        return TOK_LPAREN;
-    else if (is(c, ")"))
-        return TOK_RPAREN;
-    else if (is(c, "<<-"))
-        return TOK_DLESSDASH;
-    else if (is(c, "<<"))
-        return TOK_DLESS;
-    else if (is(c, "<>"))
-        return TOK_LESSGREAT;
-    else if (is(c, "<&"))
-        return TOK_LESSAND;
-    else if (is(c, "<"))
-        return TOK_LESS;
-    else if (is(c, ">>"))
-        return TOK_DGREAT;
-    else if (is(c, ">&"))
-        return TOK_GREATAND;
-    else if (is(c, ">|"))
-        return TOK_CLOBBER;
-    else if (is(c, ">"))
-        return TOK_GREAT;
-    return TOK_WORD;
-}
+#include "lexer/lex_evaluation.h"
 
 char **split(const char *str)
 {
@@ -65,71 +20,98 @@ char **split(const char *str)
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
+    free(splitted);
     return res;
 }
 
-int evaluate_number(char *str, size_t *index)
+int lex_full(struct lexer *lexer, const char *c, int j)
 {
-    int res = 0;
-    while (index && *index < strlen(str) &&
-        str[*index] >= '0' && str[*index] <= '9')
+    char *value;
+    if ((value = lex_backslash(c, j)))
     {
-        res *= 10;
-        res += (str[(*index)++] - '0');
+        append(lexer, new_token_word(value));
+        return 1;
     }
-    (*index)--;
-    return res;
+    return 0;
 }
 
-void flush(char *buffer, int size)
+int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *j)
 {
-    for (int i = 0; i < size; i++)
-        buffer[i] = '\0';
+    struct token *token = NULL;
+    char *copy = strdup(c);
+    if ((token = lex_io_number(copy, *j))) { }
+    else if ((token = lex_great_less_and(c, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        (*j)++;
+    }
+    else if ((token = lex_great_less(copy, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        if (token->type != TOK_LESS && token->type != TOK_GREAT) /* <, > */
+        {
+            if (token->type == TOK_DLESSDASH) /* <<- */
+                (*j) += 2;
+            else /* <<, >| ... */
+                (*j)++;
+        }
+    }
+    else if ((token = lex_semicolon_newline(copy, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        if (token->type == KW_DSEMI) /* ;; */
+            (*j)++;
+    }
+    append(lexer, token);
+    return token ? 1 : 0;
 }
 
-void lexer_init(struct lexer *lexer)
+void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
     char *c;
     int i = 0;
     int type;
-    char buffer[MAX_STR_LEN];
+    struct buffer *buffer = NULL;
     while (splitted[i] != '\0')
     {
+        buffer = new_buffer();
         c = splitted[i];
+
         if ((type = evaluate_token(c)) == TOK_WORD)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
-                char buf[2];
-                buf[0] = c[j];
-                buf[1] = '\0';
-                strcat(buffer, buf);
-                if ((type = evaluate_token(buffer)) != TOK_WORD && 
-                    c[j+1] && (c[j+1] == ' ' || c[j+1] == '\n'))
-                {
-                    append(lexer, new_token_type(type));
-                    flush(buffer, MAX_STR_LEN);
-                }
+                if (lex_full(lexer, c, j))
+                    break;
+                if (lex_part(lexer, buffer, c, &j))
+                    continue;
+
+                append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)
                 {
-                    append(lexer, new_token_word(c));
-                    flush(buffer, MAX_STR_LEN);
+                    append(lexer, new_token_word(buffer->buf));
+                    flush(buffer);
                 }
             }
         }
         else
             append(lexer, new_token_type(type));
         i++;
+        free_buffer(buffer);
     }
-    append(lexer, new_token());
+    append(lexer, new_token_type(TOK_EOF));
+    free(splitted);
 }
 
 struct lexer *new_lexer(const char *str) {
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
     lexer->token_list = xmalloc(sizeof(struct token_list));
+    lexer->token_list->first = NULL;
+    lexer->token_list->next = NULL;
+    lexer->token_list->last = NULL;
     lexer->input = str;
-    lexer_init(lexer);
+    init_lexer(lexer);
     return lexer;
 }
 
@@ -142,9 +124,10 @@ void free_lexer(struct lexer *lexer)
     while (index && index->next)
     {
         tmp = index;
-        free(tmp);
         index = index->next;
+        free(tmp);
     }
+    free(lexer->token_list);
     free(lexer);
 }
 
@@ -159,8 +142,7 @@ struct token *peek(struct lexer *lexer)
 struct token *pop(struct lexer *lexer)
 {
     if (!lexer->token_list ||
-        !lexer->token_list->next ||
-        !lexer->token_list->next->next)
+        !lexer->token_list->next)
         return NULL;
     struct token *next = lexer->token_list->next;
     lexer->token_list->next = next->next;
@@ -177,6 +159,7 @@ void append(struct lexer *lexer, struct token *token)
         lexer->token_list->last = token;
         lexer->token_list->first = token;
         lexer->token_list->next->next = NULL;
+        return;
     }
     lexer->token_list->last->next = token;
     lexer->token_list->last = token;
