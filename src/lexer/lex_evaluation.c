@@ -78,6 +78,17 @@ struct token *lex_great_less(char *c, int i)
     return NULL;
 }
 
+struct token *lex_semi_colon(char *c, int i)
+{
+    if (!c || !c[i])
+        return NULL;
+    if (c[i] == ';' && c[i + 1] && c[i + 1] == ';') /* ;; */
+        return new_token_type(KW_DSEMI);
+    if (c[i] == ';') /* ; */
+        return new_token_type(TOK_SEMI);
+    return NULL;
+}
+
 enum token_type evaluate_keyword(char *c)
 {
     if (is(c, "if"))

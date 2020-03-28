@@ -15,7 +15,7 @@ enum token_type
     TOK_SEPAND,		// &
     TOK_OR,		    // ||
     TOK_PIPE,		// |
-    TOK_DSEMI,		// ;;
+    TOK_DSEMI,
     TOK_SEMI,		// ;
     TOK_LPAREN,		// (
     TOK_RPAREN,		// )

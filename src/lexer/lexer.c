@@ -37,19 +37,14 @@ int lex_full(struct lexer *lexer, const char *c, int j)
 int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *j)
 {
     struct token *token = NULL;
-    if ((token = lex_io_number(strdup(c), *j)))
-    {
-        append(lexer, token);
-        return 1;
-    }
-    if ((token = lex_great_less_and(c, *j)))
+    char *copy = strdup(c);
+    if ((token = lex_io_number(copy, *j))) { }
+    else if ((token = lex_great_less_and(c, *j)))
     {
         append_word_if_needed(lexer, buffer);
         (*j)++;
-        append(lexer, token);
-        return 1;
     }
-    if ((token = lex_great_less(strdup(c), *j)))
+    else if ((token = lex_great_less(copy, *j)))
     {
         append_word_if_needed(lexer, buffer);
         if (token->type != TOK_LESS && token->type != TOK_GREAT) /* <, > */
@@ -59,10 +54,15 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
             else /* <<, >| ... */
                 (*j)++;
         }
-        append(lexer, token);
-        return 1;
     }
-    return 0;
+    else if ((token = lex_semi_colon(copy, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        if (token->type == KW_DSEMI) /* ;; */
+            (*j)++;
+    }
+    append(lexer, token);
+    return token ? 1 : 0;
 }
 
 void init_lexer(struct lexer *lexer)

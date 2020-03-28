@@ -10,7 +10,7 @@ Test(lexer, core_methods)
     cr_assert(pop(lex)->type == TOK_AND);
     cr_assert(peek(lex)->type == TOK_OR);
     cr_assert(pop(lex)->type == TOK_OR);
-    cr_assert(pop(lex)->type == TOK_DSEMI);
+    cr_assert(pop(lex)->type == KW_DSEMI);
 }
 
 Test(lexer, input)
@@ -199,4 +199,36 @@ Test(lexer, no_spaced_redirections)
     cr_assert(pop(lexer7)->type == TOK_WORD);
     cr_assert(pop(lexer7)->type == TOK_LESSGREAT);
     cr_assert(pop(lexer7)->type == TOK_WORD);
+}
+
+Test(lexer, semicolon)
+{
+    const char *input1 = ";;";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == KW_DSEMI);
+
+    const char *input2 = ";";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == TOK_SEMI);
+
+    const char *input3 = "case answer in 1;;";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(pop(lexer3)->type == KW_CASE);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+    cr_assert(pop(lexer3)->type == KW_IN);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+    cr_assert(pop(lexer3)->type == KW_DSEMI);
+
+    const char *input4 = "case answ;er ;;in 1;;";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(pop(lexer4)->type == KW_CASE);
+    cr_assert(peek(lexer4)->type == TOK_WORD);
+    cr_assert(is(pop(lexer4)->value, "answ"));
+    cr_assert(pop(lexer4)->type == TOK_SEMI);
+    cr_assert(peek(lexer4)->type == TOK_WORD);
+    cr_assert(is(pop(lexer4)->value, "er"));
+    cr_assert(pop(lexer4)->type == KW_DSEMI);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == KW_DSEMI);
 }
