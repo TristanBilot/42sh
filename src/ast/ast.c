@@ -1,31 +1,40 @@
-#include "ast/ast.h"
-#include "utils/xalloc.h"
-
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <../lexer/token.h>
 
-struct ast *ast_alloc(void)
+struct ast_node
 {
-    struct ast *res = xmalloc(sizeof(*res));
-    memset(res, 0, sizeof(*res));
-    return res;
-}
-
-void ast_free(struct ast *ast)
-{
-    if (ast && ast->type != EXPR_NUMBER)
+    enum node_type
     {
-        ast_free(right_child(ast));
-        ast_free(left_child(ast));
-    }
+        NODE_IF,                                // = KEYWORD
+        NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
+        NODE_WORD                               // = WORD
+    } type;
 
-    free(ast);
-}
+    union
+    {
+        struct ast_node_if ast_node_if;
+        struct ast_node_command ast_node_simplecommand;
+        struct ast_node_word;
+        struct ast_node_logical;
+    } data;
+};
 
-struct ast *ast_alloc_number(int value)
+struct ast_node *ast_node_init(void)
 {
-    struct ast *res = ast_alloc();
-    res->type = EXPR_NUMBER;
-    res->data.value = value;
+    struct ast_node *res = malloc(sizeof(struct ast_node));
+    if(!res)
+        return NULL;
     return res;
+}
+void ast_node_free(struct ast_node *node)
+{
+    if(node != NULL)
+        free(node);
+}    if(node != NULL)
+        free(node);
+}    if(node != NULL)
+        free(node);
+}    if(node != NULL)
+        free(node);
 }
