@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "lexer/lexer.h"
 #include "utils/buffer.h"
 
 struct buffer *new_buffer()
@@ -20,6 +21,15 @@ void append_buffer(struct buffer *buffer, char c)
 int buffer_len(struct buffer *buffer)
 {
     return strlen(buffer->buf);
+}
+
+void append_word_if_needed(struct lexer *lexer, struct buffer *buffer)
+{
+    if (buffer_len(buffer) > 0)
+    {
+        append(lexer, new_token_word(buffer->buf));
+        flush(buffer);
+    }
 }
 
 void free_buffer(struct buffer *buffer)

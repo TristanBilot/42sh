@@ -37,7 +37,9 @@ struct token *lex_io_number(char *c, int i)
     if (!c || !c[i])
         return NULL;
     if (is_number(c[i]) && c[i + 1] == '>' &&
-        ((c[i - 1] && (c[i - 1] == ' ')) || !c[i - 1])) /* 2> */
+        ((c[i - 1] && (c[i - 1] == ' ')) || !c[i - 1]) &&
+        (!c[i + 2] || (c[i + 2] == '&' || (is_number(c[i + 2]) && /* 2> */
+        c[i + 2] >= '0' && c[i + 2] <= '2')))) /* 2>a */
         return new_token_io_number(c[i]);
     if (c[i - 1] && c[i - 2] && c[i - 1] == '&'  && c[i - 2] == '>') /* >&2 */
     {
@@ -49,6 +51,30 @@ struct token *lex_io_number(char *c, int i)
                 return new_token_io_number(c[i]);
         }
     }
+    return NULL;
+}
+
+struct token *lex_great_less(char *c, int i)
+{
+    if (!c || !c[i])
+        return NULL;
+    if (c[i + 1])
+    {
+        if (c[i] == '<' && c[i + 1] == '<' && c[i + 2] && c[i + 2] == '-')
+            return new_token_type(TOK_DLESSDASH);
+        if (c[i] == '<' && c[i + 1] == '<')
+            return new_token_type(TOK_DLESS);
+        if (c[i] == '>' && c[i + 1] == '>')
+            return new_token_type(TOK_DGREAT);
+        if (c[i] == '<' && c[i + 1] == '>')
+            return new_token_type(TOK_LESSGREAT);
+        if (c[i] == '>' && c[i + 1] == '|')
+            return new_token_type(TOK_CLOBBER);
+    }
+    if (c[i] == '<')
+        return new_token_type(TOK_LESS);
+    if (c[i] == '>')
+        return new_token_type(TOK_GREAT);
     return NULL;
 }
 

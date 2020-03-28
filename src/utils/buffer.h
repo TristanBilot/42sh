@@ -1,6 +1,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include "lexer/lexer.h"
 #define BUFFER_SIZE 256
 
 struct buffer {
@@ -12,6 +13,7 @@ struct buffer *new_buffer();
 void append_buffer(struct buffer *buffer, char c);
 void free_buffer(struct buffer *buffer);
 int buffer_len(struct buffer *buffer);
+void append_word_if_needed(struct lexer *lexer, struct buffer *buffer);
 
 /**
 ** \brief Empty a string buffer.

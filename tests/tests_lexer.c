@@ -126,6 +126,27 @@ Test(lexer, spaced_redirections)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_LESS);
     cr_assert(pop(lexer4)->type == TOK_WORD);
+
+    const char *input5 = "echo 'hello' <<- file";
+    struct lexer *lexer5 = new_lexer(input5);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_DLESSDASH);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+
+    const char *input6 = "echo 'hello' >| file";
+    struct lexer *lexer6 = new_lexer(input6);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == TOK_CLOBBER);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+
+    const char *input7 = "echo 'hello' <> file";
+    struct lexer *lexer7 = new_lexer(input7);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_LESSGREAT);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
 }
 
 Test(lexer, no_spaced_redirections)
@@ -157,4 +178,25 @@ Test(lexer, no_spaced_redirections)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_LESS);
     cr_assert(pop(lexer4)->type == TOK_WORD);
+
+    const char *input5 = "echo 'hello'<<-file";
+    struct lexer *lexer5 = new_lexer(input5);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_DLESSDASH);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+
+    const char *input6 = "echo 2>|file";
+    struct lexer *lexer6 = new_lexer(input6);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == TOK_CLOBBER);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+
+    const char *input7 = "echo 23<>file";
+    struct lexer *lexer7 = new_lexer(input7);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_LESSGREAT);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
 }

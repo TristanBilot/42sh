@@ -4,6 +4,7 @@
 struct token *lex_great_less_and(const char *c, int i);
 struct token *lex_io_number(char *c, int i);
 char *lex_backslash(const char *c, int i);
+struct token *lex_great_less(char *c, int i);
 
 /**
 ** \brief Return the associated type of a string token.

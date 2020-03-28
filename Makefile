@@ -39,6 +39,8 @@ BINS_OBJS = \
             # src/eval/rpn_print.o \
             #${NONE}
 
+TEST_BINS = \
+            run_test
 
 all: ${BINS}
 
@@ -62,6 +64,6 @@ run_test: tests/tests_lexer.o ${OBJS} ${TEST_OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 clean:
-	${RM} ${OBJS} ${BINS} ${BINS_OBJS}
+	${RM} ${OBJS} ${BINS} ${BINS_OBJS} ${TEST_BINS}
 
 .PHONY: all
