@@ -41,7 +41,7 @@ struct token *lex_io_number(char *c, int i)
         (!c[i + 2] || (c[i + 2] == '&' || (is_number(c[i + 2]) && /* 2> */
         c[i + 2] >= '0' && c[i + 2] <= '2')))) /* 2>a */
         return new_token_io_number(c[i]);
-    if (c[i - 1] && c[i - 2] && c[i - 1] == '&'  && c[i - 2] == '>') /* >&2 */
+    if (i >= 2 && c[i - 1] == '&'  && c[i - 2] == '>') /* >&2 */
     {
         if (is_number(c[i]))
         {
