@@ -250,3 +250,12 @@ Test(lexer, semicolon)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == KW_DSEMI);
 }
+
+Test(lexer, not)
+{
+    const char *input1 = "if ! true";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == KW_IF);
+    cr_assert(pop(lexer1)->type == TOK_NOT);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+}

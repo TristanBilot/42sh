@@ -28,6 +28,7 @@ enum token_type
     TOK_CLOBBER,	// >|
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
+    TOK_NOT,        // !
     TOK_WORD,		// all others
 
     KW_IF,          // if

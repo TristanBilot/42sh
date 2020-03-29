@@ -25,6 +25,7 @@ char *type_to_str(int type)
         "TOK_CLOBBER",
         "TOK_GREAT",	
         "TOK_IONUMBER",
+        "TOK_NOT",
         "TOK_WORD",
         "KW_IF",
         "KW_THEN",

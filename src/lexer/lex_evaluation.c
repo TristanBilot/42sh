@@ -162,5 +162,7 @@ enum token_type evaluate_token(char *c)
         return TOK_CLOBBER;
     else if (is(c, ">"))
         return TOK_GREAT;
+    else if (is(c, "!"))
+        return TOK_NOT;
     return TOK_WORD;
 }
