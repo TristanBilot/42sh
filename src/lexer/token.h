@@ -49,7 +49,7 @@ enum token_type
 };
 
 /**
-** \brief Token struct declaration
+** \brief Token struct declaration.
 **
 ** \param type the enum associated to the string.
 ** \param value of a token (string) if this token is a word.
@@ -77,9 +77,9 @@ struct token_list
 };
 
 /**
-** \brief Token allocator and initializer
+** \brief Token allocator and initializer.
 **
-** \return a pointer to the allocated token
+** \return a pointer to the allocated token.
 */
 struct token *new_token(void);
 struct token *new_token_type(int type);

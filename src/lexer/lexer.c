@@ -106,7 +106,7 @@ void init_lexer(struct lexer *lexer)
 
 struct lexer *new_lexer(const char *str) {
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
-    lexer->token_list = xmalloc(200); /* Don't change it or crash in criterion */
+    lexer->token_list = xmalloc(sizeof(struct token_list));
     lexer->token_list->first = NULL;
     lexer->token_list->next = NULL;
     lexer->token_list->last = NULL;
