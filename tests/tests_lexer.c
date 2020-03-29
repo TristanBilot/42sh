@@ -259,3 +259,15 @@ Test(lexer, not)
     cr_assert(pop(lexer1)->type == TOK_NOT);
     cr_assert(pop(lexer1)->type == TOK_WORD);
 }
+
+Test(lexer, curly_braces)
+{
+    const char *input1 = "if { a -eq b }";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == KW_IF);
+    cr_assert(pop(lexer1)->type == TOK_LCURL);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_RCURL);
+}

@@ -15,6 +15,8 @@ char *type_to_str(int type)
         "TOK_SEMI",	
         "TOK_LPAREN",	
         "TOK_RPAREN",	
+        "TOK_LCURL",
+        "TOK_RCURL",
         "TOK_DLESSDASH",
         "TOK_DLESS",	
         "TOK_LESSGREAT",

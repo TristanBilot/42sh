@@ -18,6 +18,8 @@ enum token_type
     TOK_SEMI,		// ;
     TOK_LPAREN,		// (
     TOK_RPAREN,		// )
+    TOK_LCURL,		// {
+    TOK_RCURL,		// }
     TOK_DLESSDASH,	// <<-
     TOK_DLESS,		// <<
     TOK_LESSGREAT,	// <>
