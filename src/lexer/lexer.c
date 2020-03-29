@@ -20,6 +20,7 @@ char **split(const char *str)
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
+    free(splitted);
     return res;
 }
 
@@ -100,6 +101,7 @@ void init_lexer(struct lexer *lexer)
         free_buffer(buffer);
     }
     append(lexer, new_token_type(TOK_EOF));
+    free(splitted);
 }
 
 struct lexer *new_lexer(const char *str) {
@@ -122,9 +124,10 @@ void free_lexer(struct lexer *lexer)
     while (index && index->next)
     {
         tmp = index;
-        free(tmp);
         index = index->next;
+        free(tmp);
     }
+    free(lexer->token_list);
     free(lexer);
 }
 

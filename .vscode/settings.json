@@ -24,6 +24,7 @@
         "system_error": "c",
         "tuple": "c",
         "type_traits": "c",
-        "vector": "c"
+        "vector": "c",
+        "lex_evaluation.h": "c"
     }
 }
