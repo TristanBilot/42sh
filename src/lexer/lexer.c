@@ -55,7 +55,7 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
                 (*j)++;
         }
     }
-    else if ((token = lex_semi_colon(copy, *j)))
+    else if ((token = lex_semicolon_newline(copy, *j)))
     {
         append_word_if_needed(lexer, buffer);
         if (token->type == KW_DSEMI) /* ;; */
@@ -76,29 +76,30 @@ void init_lexer(struct lexer *lexer)
     {
         buffer = new_buffer();
         c = splitted[i];
-            if ((type = evaluate_token(c)) == TOK_WORD)
-            {
-                for (size_t j = 0; j < strlen(c); j++)
-                {
-                    if (lex_full(lexer, c, j))
-                        break;
-                    if (lex_part(lexer, buffer, c, &j))
-                        continue;
 
-                    append_buffer(buffer, c[j]);
-                    if (j == strlen(c) - 1)
-                    {
-                        append(lexer, new_token_word(buffer->buf));
-                        flush(buffer);
-                    }
+        if ((type = evaluate_token(c)) == TOK_WORD)
+        {
+            for (size_t j = 0; j < strlen(c); j++)
+            {
+                if (lex_full(lexer, c, j))
+                    break;
+                if (lex_part(lexer, buffer, c, &j))
+                    continue;
+
+                append_buffer(buffer, c[j]);
+                if (j == strlen(c) - 1)
+                {
+                    append(lexer, new_token_word(buffer->buf));
+                    flush(buffer);
                 }
             }
-            else
-                append(lexer, new_token_type(type));
+        }
+        else
+            append(lexer, new_token_type(type));
         i++;
         free_buffer(buffer);
     }
-    append(lexer, new_token());
+    append(lexer, new_token_type(TOK_EOF));
 }
 
 struct lexer *new_lexer(const char *str) {
@@ -138,8 +139,7 @@ struct token *peek(struct lexer *lexer)
 struct token *pop(struct lexer *lexer)
 {
     if (!lexer->token_list ||
-        !lexer->token_list->next ||
-        !lexer->token_list->next->next)
+        !lexer->token_list->next)
         return NULL;
     struct token *next = lexer->token_list->next;
     lexer->token_list->next = next->next;

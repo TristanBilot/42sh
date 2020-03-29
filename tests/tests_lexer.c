@@ -2,7 +2,7 @@
 #include "lexer/lexer.h"
 #include "utils/string.h"
 
-Test(lexer, core_methods)
+Test(lexer, basic_tokens)
 {
     struct lexer *lex = new_lexer("&& || ;;");
     cr_assert(peek(lex)->type == TOK_AND);
@@ -13,7 +13,7 @@ Test(lexer, core_methods)
     cr_assert(pop(lex)->type == KW_DSEMI);
 }
 
-Test(lexer, input)
+Test(lexer, basic_word_tokens)
 {
     const char *input = "find -name 'keta' && ls &||";
     struct lexer *lexer = new_lexer(input);
