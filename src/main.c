@@ -8,18 +8,17 @@
 #include <stdbool.h>
 
 #include "my_42sh.h"
+#include "utils/xalloc.h"
 
 void print_usage()
 {
-    fprintf(stderr, USAGE);
+    fprintf(stdout, USAGE);
     exit(1);
 }
 
 static struct option_sh *init_option_sh()
 {
-    struct option_sh *option = malloc(sizeof(struct option_sh));
-    if (option == NULL)
-        err(2, strerror(errno));
+    struct option_sh *option = xmalloc(sizeof(struct option_sh));
     option->norc_flag = false;
     option->print_ast_flag = false;
     option->cmd = NULL;

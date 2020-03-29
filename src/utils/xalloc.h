@@ -1,7 +1,7 @@
 #ifndef XALLOC_H
 #define XALLOC_H
 
-#include "utils/attr.h"
+#include "attr.h"
 
 #include <stddef.h>
 
