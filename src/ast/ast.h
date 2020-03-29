@@ -2,7 +2,7 @@
 #define AST_H
 
 
-struct  ast_node_if                              // INSTANCE KEYWORD
+struct ast_node_if                              // INSTANCE KEYWORD
 {
     struct ast_node_compound_list *condition;   // the condition
     struct ast_node_compound_list *if_body;     // the body of the if

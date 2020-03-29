@@ -60,3 +60,4 @@ void append(struct lexer *lexer, struct token *token);
 void init_lexer(struct lexer *lexer);
 
 #endif /* ! LEXER_H */
+r

@@ -19,10 +19,7 @@ static struct option_sh *init_option_sh()
 {
     struct option_sh *option = malloc(sizeof(struct option_sh));
     if (option == NULL)
-    {
-        fprintf(stderr, "%s", strerror(errno));
-        exit(1);
-    }
+        err(2, strerror(errno));
     option->norc_flag = false;
     option->print_ast_flag = false;
     option->cmd = NULL;
