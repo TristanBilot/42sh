@@ -1,8 +1,7 @@
+#include <stdio.h>
 #include "lexer/lexer.h"
 #include "lexer/token.h"
-
-#include <err.h>
-#include <stdio.h>
+#include "utils/string.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,21 +10,11 @@ int main(int argc, char *argv[])
         puts("Usage: ./test \"expression\"");
         return 1;
     }
-
     struct lexer *lexer = new_lexer(argv[1]);
-
-    // printf("%s\n", token_str(lexer_peek(lexer)));
-    // for (int i = 0; i < lexer->length; i++)
-    //     printf("%s\n", token_str(pop(lexer)));
-
-
     struct token *token = NULL;
-    while ((token = pop(lexer)))
-    {
-        printf("%u\n", token->type);
-        if (token->type == TOK_EOF)
-            break;
 
-    }
+    while ((token = pop(lexer)))
+        printf("%s %s\n", type_to_str(token->type), token->value);
+
     free_lexer(lexer);
 }

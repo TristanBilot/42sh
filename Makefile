@@ -15,9 +15,16 @@ CFLAGS= \
         ${NONE}
 
 OBJS= \
-      src/lexer/*.o \
+      src/lexer/token.o \
+      src/lexer/lexer.o \
+      src/lexer/lex_evaluation.o \
       src/utils/xalloc.o \
+      src/utils/string.o \
+      src/utils/buffer.o \
       ${NONE}
+
+TEST_OBJS = \
+      tests/tests_lexer.o
 
 BINS= \
       token_printer \
@@ -32,12 +39,17 @@ BINS_OBJS = \
             # src/eval/rpn_print.o \
             #${NONE}
 
+TEST_BINS = \
+            run_test
 
 all: ${BINS}
 
 debug: CFLAGS+= -g -fsanitize=address
 debug: LDFLAGS+= -fsanitize=address
 debug: all
+
+tests: LDFLAGS+= -lcriterion
+tests: run_test
 
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
@@ -48,7 +60,10 @@ ast_print: src/eval/ast_print.o ${OBJS}
 rpn_print: src/eval/rpn_print.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
+run_test: tests/tests_lexer.o ${OBJS} ${TEST_OBJS}
+	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
 clean:
-	${RM} ${OBJS} ${BINS} ${BINS_OBJS}
+	${RM} ${OBJS} ${BINS} ${BINS_OBJS} ${TEST_BINS}
 
 .PHONY: all
