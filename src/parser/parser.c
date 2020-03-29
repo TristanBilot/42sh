@@ -2,145 +2,107 @@
 #include "parser.h"
 #include "utils/xalloc.h"
 
-static bool token_is_sop(struct token *token)
-{
-    return token->type == TOKEN_MULTIPLY || token->type == TOKEN_DIVIDE;
-}
-
-static bool token_is_eop(struct token *token)
-{
-    return token->type == TOKEN_PLUS || token->type == TOKEN_MINUS;
-}
-
-/* /!\ forward function declaration /!\
-**
-** This solves a cyclique dependency between the 3 parsing functions
-**
-**      exp ----> sexp ----> texp +
-**       ^                        |
-**       + ---------------------- +
-**
-** this means at least one function must be declares before the 3 are
-** defined.
-*/
-static bool parse_exp(struct lexer *lexer, struct ast **ast);
-
-static bool parse_parenthesis(struct lexer *lexer, struct ast **ast)
-{
-    bool res = parse_exp(lexer, ast);
-
-    struct token *token = lexer_pop(lexer);
-    res = res && token && token->type == TOKEN_RIGHT_PARENTHESIS;
-
-    token_free(token);
-    return res;
-}
-
-static bool parse_texp(struct lexer *lexer, struct ast **ast)
-{
-    struct token *token = lexer_pop(lexer);
-    if (!token)
-        return false;
-
-    bool res = true;
-    if (token->type == TOKEN_LEFT_PARENTHESIS)
-        res = parse_parenthesis(lexer, ast);
-    else if (token->type == TOKEN_NUMBER)
-        *ast  = ast_alloc_number(token->value);
-    else if (token->type == TOKEN_MINUS)
+static bool parse_look_ahead(struct lexer *lexer, struct token *expected_token){
+    if(lexer != NULL)
     {
-        token_free(token);
-        token = lexer_pop(lexer);
-
-        if (token && token->type == TOKEN_NUMBER)
-            *ast = ast_alloc_number(-token->value);
+        struct token *next_token = peek(struct lexer *lexer);
+        if(expected_token == next_token)
+        {
+            return true;
+        }
         else
-            res = false;
+        {
+            return false;
+        }
     }
     else
-        res = false;
-
-    token_free(token);
-    return res;
-}
-
-static bool parse_sexp(struct lexer *lexer, struct ast **ast)
-{
-    if (!parse_texp(lexer, ast))
-        return false;
-
-    bool res = true;
-    struct token *token = lexer_peek(lexer);
-    while (res && token && token_is_sop(token))
     {
-        token = lexer_pop(lexer);
-
-        struct ast *tmp = ast_alloc();
-        switch (token->type)
-        {
-        case TOKEN_MULTIPLY:
-            tmp->type = EXPR_MULTIPLICATION;
-            break;
-        case TOKEN_DIVIDE:
-            tmp->type = EXPR_DIVISION;
-            break;
-        default:
-            res = false;
-            break;
-        }
-        res = parse_texp(lexer, &tmp->data.children.right);
-        tmp->data.children.left = *ast;
-        *ast = tmp;
-        token_free(token);
-        token = lexer_peek(lexer);
-    };
-
-    return res;
+        return false;
+    }
+    
 }
 
-static bool parse_exp(struct lexer *lexer, struct ast **ast)
+struct ast_node *parser(struct lexer *lexer)
 {
-    if (!parse_sexp(lexer, ast))
-        return false;
+    struct ast_node *ast = ast_node_init();
+    if (!lexer || !ast)
+        printf("Struct error\n");
+    if (parse_input(lexer, ast))
+        printf("Parser error\n");
+    return ast;
+}
 
-    bool res = true;
-    struct token *token = lexer_peek(lexer);
-    while (res && token && token_is_eop(token))
+static bool parse_input(struct lexer *lexer, struct ast_node *ast)
+{
+    if(lexer == NULL || ast == NULL)
     {
-        token = lexer_pop(lexer);
-
-        struct ast *tmp = ast_alloc();
-        switch (token->type)
+        return true;
+    }
+    else
+    {
+        struct token *next_token = peek(lexer);
+        if(next_token->value == "\n")
         {
-        case TOKEN_PLUS:
-            tmp->type = EXPR_ADDITION;
-            break;
-        case TOKEN_MINUS:
-            tmp->type = EXPR_SUBTRACTION;
-            break;
-        default:
-            res = false;
-            break;
+            return false;
         }
-        res = parse_sexp(lexer, &tmp->data.children.right);
-        tmp->data.children.left = *ast;
-        *ast = tmp;
-        token_free(token);
-        token = lexer_peek(lexer);
-    };
-
-    return res;
+        else if(next_token->value == "\0"){
+            return false;
+        }
+        else if
+        {
+            bool b = parse_list(lexer,ast);
+            if(b == )
+        }
+    }
 }
 
-bool parse_expression(struct lexer *lexer, struct ast **ast)
+static bool parse_list(struct lexer *lexer, struct ast_node *ast)
 {
-    struct token *token = lexer_peek(lexer);
-    if (!token || token->type == TOKEN_EOF)
-        return false;
-
-    if (!parse_exp(lexer, ast))
-        return false;
-
-    token = lexer_peek(lexer);
-    return token && token->type == TOKEN_EOF;
+    do
+    {
+        if (parse_and_or(lexer, ast))
+            return true;
+        if (peek(lexer) != ';' && peek(lexer) != '&')
+            return true;
+        pop(lexer);
+    } while(peek(lexer) != '\n' && peek(lexer) != '\0')
+    return false;
 }
+
+static bool parse_and_or(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_pipeline(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_command(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_simple_command(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_shell_command(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_funcdec(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_redirection(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_prefix(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_element(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_coumpound_list(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_rule_for(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_rule_while(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_rule_until(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_rule_case(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_rule_if(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_else_clause(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_do_group(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_case_clause(struct lexer *lexer, struct ast_node *ast);
+
+static bool parse_case_item(struct lexer *lexer, struct ast_node *ast);
