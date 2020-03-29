@@ -46,7 +46,7 @@ struct token *lex_io_number(char *c, int i)
         if (is_number(c[i]))
         {
             if (c[i] > '2' || (c[i + 1] && is_number(c[i + 1]))) /* >&4 error */
-                return new_token_error("bad file descriptor");
+                return new_token_error("42sh: bad file descriptor");
             else
                 return new_token_io_number(c[i]);
         }

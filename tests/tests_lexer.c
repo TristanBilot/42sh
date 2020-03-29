@@ -25,6 +25,24 @@ Test(lexer, basic_word_tokens)
     cr_assert(pop(lexer)->type == TOK_WORD);
 }
 
+Test(lexer, newline)
+{
+    const char *input = "word \n another";
+    struct lexer *lexer = new_lexer(input);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+}
+
+Test(lexer, eof)
+{
+    const char *input = "word";
+    struct lexer *lexer = new_lexer(input);
+    cr_assert(pop(lexer)->type == TOK_WORD);
+    cr_assert(pop(lexer)->type == TOK_EOF);
+    cr_assert(pop(lexer) == NULL);
+}
+
 Test(lexer, backslash)
 {
     cr_assert(is(substr("azerty", 1, 6), "zerty"));

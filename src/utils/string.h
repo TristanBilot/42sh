@@ -2,6 +2,7 @@
 #define STRING_H
 
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_STR_LEN 256
 
@@ -35,5 +36,12 @@ int is_number(char c);
 ** \param len the ending index.
 */
 char *substr(char *src, int pos, int len);
+
+/**
+** \brief Print an error in stderr when an invalid token appeared.
+**
+** \param msg the message to display.
+*/
+void error(char *msg);
 
 #endif /* ! STRING_H */

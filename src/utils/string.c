@@ -1,4 +1,5 @@
-#include <string.h>
+#include <stdio.h>
+#include <errno.h>
 #include "utils/string.h"
 
 char *type_to_str(int type)
@@ -64,4 +65,9 @@ char *substr(char *src, int pos, int len)
             strncat(dest, src + pos, len);
     }
     return dest;
+}
+
+void error(char *msg)
+{
+    perror(msg);
 }

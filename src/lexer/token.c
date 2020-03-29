@@ -1,8 +1,7 @@
 #include "lexer/token.h"
 #include "utils/xalloc.h"
+#include "utils/string.h"
 
-#include <errno.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -44,7 +43,7 @@ struct token *new_token_word(char *value)
 
 struct token *new_token_error(char *err)
 {
-    perror(err);
+    error(err);
     return new_token_type(TOK_ERROR);
 }
 
