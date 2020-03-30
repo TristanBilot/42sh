@@ -88,6 +88,10 @@ struct token *lex_semicolon_newline(char *c, int i)
         return new_token_type(TOK_SEMI);
     if (c[i] == '\n')
         return new_token_type(TOK_NEWLINE);
+    if (c[i] == '{')
+        return new_token_type(TOK_LCURL);
+    if (c[i] == '}')
+        return new_token_type(TOK_RCURL);
     return NULL;
 }
 
@@ -144,6 +148,10 @@ enum token_type evaluate_token(char *c)
         return TOK_LPAREN;
     else if (is(c, ")"))
         return TOK_RPAREN;
+    else if (is(c, "{"))
+        return TOK_LCURL;
+    else if (is(c, "}"))
+        return TOK_RCURL;
     else if (is(c, "<<-"))
         return TOK_DLESSDASH;
     else if (is(c, "<<"))
@@ -162,5 +170,7 @@ enum token_type evaluate_token(char *c)
         return TOK_CLOBBER;
     else if (is(c, ">"))
         return TOK_GREAT;
+    else if (is(c, "!"))
+        return TOK_NOT;
     return TOK_WORD;
 }
