@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#include "lexer/token.h"
+#include "token.h"
 
 /**
 ** \brief Lexer architecture and methods.

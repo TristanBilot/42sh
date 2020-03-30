@@ -25,6 +25,8 @@
         "tuple": "c",
         "type_traits": "c",
         "vector": "c",
-        "lex_evaluation.h": "c"
+        "lex_evaluation.h": "c",
+        "stdlib.h": "c",
+        "stdbool.h": "c"
     }
 }

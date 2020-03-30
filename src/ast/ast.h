@@ -36,8 +36,9 @@ struct node_and_or
     struct node_pipeline *right;
 };
 
-struct node_pipeline{
-    
+struct node_pipeline
+{
+    bool truc_de_merde;
 };
 struct node_command
 {
@@ -62,9 +63,11 @@ struct shell_command{
 };
 
 
-struct funcdec{
+struct funcdec
+{
     bool is_function;
-    struct struct node_
+    char *function_name;
+    // struct node_shell_command *shell_command;
 };
 
 
@@ -87,7 +90,7 @@ struct ast_node_else_clause
     {
         struct ast_node_if *elif; 
         struct ast_node_compound_list *else_body;
-    }
+    } data;
 };
 
 /*struct ast_node_logical                         //INSTANCE LOGICAL
@@ -124,7 +127,7 @@ struct ast_node_while
 **
 ** \return a pointer to the allocated ast node
 */
-struct ast_node *ast_node_init(enum node_type type);
+struct ast_node *ast_node_init(int type);
 
 /**
 ** \brief Wrapper to release memory of an ast node and its children

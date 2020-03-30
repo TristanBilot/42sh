@@ -7,7 +7,7 @@ CPPFLAGS= \
           ${NONE}
 CFLAGS= \
         -g \
-        -Werror \
+      #   -Werror \#
         -Wextra \
         -Wall \
         -pedantic \
@@ -15,7 +15,8 @@ CFLAGS= \
         ${NONE}
 
 OBJS= \
-      src/lexer/token.o \
+      src/parser/parser.o     \
+      src/lexer/token.o       \
       src/lexer/lexer.o \
       src/lexer/lex_evaluation.o \
       src/utils/xalloc.o \
@@ -27,12 +28,14 @@ TEST_OBJS = \
       tests/tests_lexer.o \
       tests/tests_ast.o
 
-BINS = token_printer
+BINS = \
+      token_printer \
+      ast_print
 
 BINS_OBJS = \
             src/eval/token_printer.o \
+            src/eval/ast_print.o \
             ${NONE}
-            # src/eval/ast_print.o \
             # src/eval/rpn_print.o \
             #${NONE}
 

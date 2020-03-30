@@ -1,8 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "ast/ast.h"
-#include "lexer/lexer.h"
+#include "../ast/ast.h"
+#include "../lexer/lexer.h"
 
 #include <stdbool.h>
 
@@ -16,49 +16,49 @@ struct parser *init_parser(struct lexer *lexer);
 
 static bool parse_look_ahead(struct parser *parser, struct token *expected_token);
 
-struct ast_node *parse(struct parser *parser);
+void *parse(struct lexer *lexer);
 
-static bool parse_input(struct parser *parser, struct ast_node *ast);
+static bool parse_input(struct parser *parser, void *ast);
 
-static bool parse_list(struct parser *parser, struct ast_node *ast);
+static bool parse_list(struct parser *parser, void *ast);
 
-static bool parse_and_or(struct parser *parser, struct ast_node *ast);
+static bool parse_and_or(struct parser *parser, void *ast);
 
-static bool parse_pipeline(struct parser *parser, struct ast_node *ast);
+static bool parse_pipeline(struct parser *parser, void *ast);
 
-static bool parse_command(struct parser *parser, struct ast_node *ast);
+static bool parse_command(struct parser *parser, void *ast);
 
-static bool parse_simple_command(struct parser *parser, struct ast_node *ast);
+static bool parse_simple_command(struct parser *parser, void *ast);
 
-static bool parse_shell_command(struct parser *parser, struct ast_node *ast);
+static bool parse_shell_command(struct parser *parser, void *ast);
 
-static bool parse_funcdec(struct parser *parser, struct ast_node *ast);
+static bool parse_funcdec(struct parser *parser, void *ast);
 
-static bool parse_redirection(struct parser *parser, struct ast_node *ast);
+static bool parse_redirection(struct parser *parser, void *ast);
 
-static bool parse_prefix(struct parser *parser, struct ast_node *ast);
+static bool parse_prefix(struct parser *parser, void *ast);
 
-static bool parse_element(struct parser *parser, struct ast_node *ast);
+static bool parse_element(struct parser *parser, void *ast);
 
-static bool parse_coumpound_list(struct parser *parser, struct ast_node *ast);
+static bool parse_coumpound_list(struct parser *parser, void *ast);
 
-static bool parse_rule_for(struct parser *parser, struct ast_node *ast);
+static bool parse_rule_for(struct parser *parser, void *ast);
 
-static bool parse_rule_while(struct parser *parser, struct ast_node *ast);
+static bool parse_rule_while(struct parser *parser, void *ast);
 
-static bool parse_rule_until(struct parser *parser, struct ast_node *ast);
+static bool parse_rule_until(struct parser *parser, void *ast);
 
-static bool parse_rule_case(struct parser *parser, struct ast_node *ast);
+static bool parse_rule_case(struct parser *parser, void *ast);
 
-static bool parse_rule_if(struct parser *parser, struct ast_node *ast);
+static bool parse_rule_if(struct parser *parser, void *ast);
 
-static bool parse_else_clause(struct parser *parser, struct ast_node *ast);
+static bool parse_else_clause(struct parser *parser, void *ast);
 
-static bool parse_do_group(struct parser *parser, struct ast_node *ast);
+static bool parse_do_group(struct parser *parser, void *ast);
 
-static bool parse_case_clause(struct parser *parser, struct ast_node *ast);
+static bool parse_case_clause(struct parser *parser, void *ast);
 
-static bool parse_case_item(struct parser *parser, struct ast_node *ast);
+static bool parse_case_item(struct parser *parser, void *ast);
 
 
 #endif /* ! PARSER_H */
