@@ -7,16 +7,21 @@ struct ast_node
     {
         NODE_IF,                                // = KEYWORD
         NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
-        NODE_WORD                               // = WORD
+        NODE_WORD,                              // = WORD
+        NODE_LOGICAL
     } type;
 
     union
     {
-        struct ast_node_if ast_node_if;
-        struct ast_node_command ast_node_simplecommand;
-        struct ast_node_word;
-        struct ast_node_logical;
+        struct ast_node_if *ast_node_if;
+        struct ast_node_command *ast_node_simplecommand;
+        struct ast_node_word *ast_node_word;
+        struct ast_node_logical *ast_node_logical;
     } data;
+};
+
+
+struct ast_node_compound_list{
 };
 
 struct ast_node_if                              // INSTANCE KEYWORD
@@ -27,6 +32,8 @@ struct ast_node_if                              // INSTANCE KEYWORD
 };
 
 
+struct ast_node_command{
+};
 struct ast_node_logical                         //INSTANCE LOGICAL
 {
 };
@@ -61,21 +68,81 @@ struct ast_node_while
 **
 ** \return a pointer to the allocated ast node
 */
-struct ast *ast_alloc(void);
-
-/**
-** \brief Number ast node allocator and initialiser
-**
-** \param value the value to store inthe node
-** \return a pointer to the allocated ast node
-*/
-struct ast *ast_alloc_number(int value);
+struct ast_node *ast_node_init(enum node_type type);
 
 /**
 ** \brief Wrapper to release memory of an ast node and its children
 **
-** \param ast the node to free
+** \param node the node to free
 */
-void ast_free(struct ast *ast);
+
+void ast_node_free(struct ast_node *node);
+
+
+
+/**
+** \brief Ast node_if allocator and initialiser
+**
+** \return a pointer to the allocated ast node_if
+*/
+struct ast_node_if *ast_node_if_init(void);
+
+/**
+** \brief Wrapper to release memory of an ast node_if and its children
+**
+** \param node the node to free
+*/
+
+void ast_node_if_free(struct ast_node_if *node);
+
+
+/**
+** \brief Ast node_command allocator and initialiser
+**
+** \return a pointer to the allocated ast node_command
+*/
+struct ast_node_command *ast_node_command_init(void);
+
+/**
+** \brief Wrapper to release memory of an ast node_command and its children
+**
+** \param node_command the node to free
+*/
+
+void ast_node_command_free(struct ast_node_command *node);
+
+
+/**
+** \brief Ast node_word allocator and initialiser
+**
+** \return a pointer to the allocated ast node_word
+*/
+struct ast_node_word *ast_node_word_init(void);
+
+/**
+** \brief Wrapper to release memory of an ast node_word and its children
+**
+** \param node the node to free
+*/
+
+void ast_node_word_free(struct ast_node_word *node);
+
+
+/**
+** \brief Ast node_logical allocator and initialiser
+**
+** \return a pointer to the allocated ast node_logical
+*/
+struct ast_node_logical *ast_node_logical_init(void);
+
+/**
+** \brief Wrapper to release memory of an ast node_logical and its children
+**
+** \param node the node to free
+*/
+
+void ast_node_logical_free(struct ast_node_logical *node);
+
+
 
 #endif /* ! AST_H */
