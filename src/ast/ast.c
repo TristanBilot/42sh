@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ast/ast.h>
-#include "../lexer/token.h"
+#include "lexer/token.h"
 
 
-struct ast_node *ast_node_init(enum node_type type)
+
+int is_type(struct ast_node *node, int type)
+{
+    return node->type == type;
+}
+
+struct ast_node *ast_node_init(int type)
 {
     struct ast_node *res = malloc(sizeof(struct ast_node));
     if(!res)
@@ -20,7 +26,6 @@ struct ast_node *ast_node_init(enum node_type type)
         res->data.ast_node_simplecommand = ast_node_command_init();
     return res;
 }
-
 
 
 void ast_node_free(struct ast_node *node)

@@ -1,7 +1,7 @@
 #ifndef AST_H
 #define AST_H
 
-struct ast_node
+/*struct ast_node
 {
     enum node_type
     {
@@ -18,23 +18,73 @@ struct ast_node
         struct ast_node_word *ast_node_word;
         struct ast_node_logical *ast_node_logical;
     } data;
+};*/
+
+struct node_input{
+    struct node_list *node_list;
 };
 
-
-struct ast_node_compound_list{
+struct node_list{
+    struct node_and_or
 };
 
-struct ast_node_if                              // INSTANCE KEYWORD
+struct node_and_or
 {
-    struct ast_node_compound_list *condition;   // the condition
-    struct ast_node_compound_list *if_body;     // the body of the if
-    struct ast_node_else_clause *else_clause;   // the body of the else, may be NULL
+    struct node_pipeline *left;
+    struct node_pipeline *right;
+};
+
+struct node_command
+{
+    struct node_simple_command *command;
+    struct node_shell_command *shell_command;
+    struct node_funcdec *funcdec;
+    struct node_redirection *redirection;
 };
 
 
-struct ast_node_command{
+struct node_simple_command{
+    struct node_prefix **prefixes;
 };
-struct ast_node_logical                         //INSTANCE LOGICAL
+
+struct shell_command{
+    struct node_compound_list *compound_list;
+    struct node_rule_for *rule_for;
+    struct node_rule_while *rule_while;
+    struct node_rule_until *rule_until;
+    struct node_rule_case *rule_case;
+    struct node_rule_if *rule_if;
+};
+
+
+struct funcdec {
+    struct node_shell
+}
+
+
+struct node_compound_list
+{
+    struct ast_node **list;
+    struct ast_node *current_node;
+};
+
+struct node_if                              // INSTANCE KEYWORD
+{
+    struct node_compound_list *condition;   // the condition
+    struct node_compound_list *if_body;   // on peut mettre directement ici la liste de struct elif  // the body of the if
+    struct node_else_clause *else_clause;   // the body of the else, may be NULL
+};
+
+struct ast_node_else_clause
+{
+    union
+    {
+        struct ast_node_if *elif; 
+        struct ast_node_compound_list *else_body;
+    }
+};
+
+/*struct ast_node_logical                         //INSTANCE LOGICAL
 {
 };
 
@@ -61,7 +111,7 @@ struct ast_node_for
 struct ast_node_while
 {
 };
-
+*/
 
 /**
 ** \brief Ast node allocator and initialiser
@@ -145,4 +195,7 @@ void ast_node_logical_free(struct ast_node_logical *node);
 
 
 
+
+
+int is_type(struct token *token, int type);
 #endif /* ! AST_H */
