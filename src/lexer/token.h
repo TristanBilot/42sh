@@ -90,7 +90,7 @@ struct token *new_token_io_number(char number);
 struct token *new_token_word(char *value);
 struct token *new_token_error(char *err);
 
-int is_type(struct token *token, int type);
+int is_type(struct token *token, unsigned int type);
 
 /**
 ** \brief Wrapper to release memory of a token

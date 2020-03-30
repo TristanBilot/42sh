@@ -3,7 +3,7 @@ NONE=
 CC?= gcc
 CPPFLAGS= \
           -D_GNU_SOURCE \
-          -Isrc \
+          -Isrc         \
           ${NONE}
 CFLAGS= \
         -g \
@@ -21,18 +21,13 @@ OBJS= \
       src/utils/xalloc.o \
       src/utils/string.o \
       src/utils/buffer.o \
-      src/ast/ast.o \
       ${NONE}
 
 TEST_OBJS = \
       tests/tests_lexer.o \
       tests/tests_ast.o
 
-BINS= \
-      token_printer \
-      # ast_print \
-      # rpn_print \
-      # ${NONE}
+BINS = token_printer
 
 BINS_OBJS = \
             src/eval/token_printer.o \
@@ -43,7 +38,8 @@ BINS_OBJS = \
 
 TEST_BINS = \
             run_test_lexer \
-            run_test_ast
+            run_test_ast \
+            run_test_parser
 
 all: ${BINS}
 
@@ -52,7 +48,7 @@ debug: LDFLAGS+= -fsanitize=address
 debug: all
 
 tests: LDFLAGS+= -lcriterion
-tests: run_test_lexer run_test_ast
+tests: run_test_lexer run_test_ast run_test_parser
 
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
@@ -67,6 +63,9 @@ run_test_lexer: tests/tests_lexer.o ${OBJS} ${TEST_OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 run_test_ast: tests/tests_ast.o ${OBJS} ${TEST_OBJS}
+	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
+run_test_parser: tests/tests_parser.o ${OBJS} ${TEST_OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 clean:

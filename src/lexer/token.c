@@ -52,7 +52,7 @@ void free_token(struct token *token)
     free(token);
 }
 
-int is_type(struct token *token, int type)
+int is_type(struct token *token, unsigned int type)
 {
     return token->type == type;
 }

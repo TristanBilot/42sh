@@ -16,7 +16,7 @@ struct parser *init_parser(struct lexer *lexer);
 
 static bool parse_look_ahead(struct parser *parser, struct token *expected_token);
 
-struct ast_node *parser(struct parser *parser);
+struct ast_node *parse(struct parser *parser);
 
 static bool parse_input(struct parser *parser, struct ast_node *ast);
 

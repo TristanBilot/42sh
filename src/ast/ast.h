@@ -1,6 +1,8 @@
 #ifndef AST_H
 #define AST_H
 
+#include <stdbool.h>
+
 /*struct ast_node
 {
     enum node_type
@@ -25,7 +27,7 @@ struct node_input{
 };
 
 struct node_list{
-    struct node_and_or
+    struct node_and_or *and_or;
 };
 
 struct node_and_or
@@ -34,6 +36,9 @@ struct node_and_or
     struct node_pipeline *right;
 };
 
+struct node_pipeline{
+    
+};
 struct node_command
 {
     struct node_simple_command *command;
@@ -57,9 +62,10 @@ struct shell_command{
 };
 
 
-struct funcdec {
-    struct node_shell
-}
+struct funcdec{
+    bool is_function;
+    struct struct node_
+};
 
 
 struct node_compound_list
@@ -193,9 +199,4 @@ struct ast_node_logical *ast_node_logical_init(void);
 
 void ast_node_logical_free(struct ast_node_logical *node);
 
-
-
-
-
-int is_type(struct token *token, int type);
 #endif /* ! AST_H */
