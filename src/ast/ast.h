@@ -1,6 +1,23 @@
 #ifndef AST_H
 #define AST_H
 
+struct ast_node
+{
+    enum node_type
+    {
+        NODE_IF,                                // = KEYWORD
+        NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
+        NODE_WORD                               // = WORD
+    } type;
+
+    union
+    {
+        struct ast_node_if ast_node_if;
+        struct ast_node_command ast_node_simplecommand;
+        struct ast_node_word;
+        struct ast_node_logical;
+    } data;
+};
 
 struct ast_node_if                              // INSTANCE KEYWORD
 {

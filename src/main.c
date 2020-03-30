@@ -37,7 +37,7 @@ int main(int ac, char **av)
         {"norc", no_argument, 0, 'n'},
         {0, 0, 0, 0}
     };
-    while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) == -1)
+    while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)
     {
         if (opt == 'n')
             option->norc_flag = true;

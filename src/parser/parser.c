@@ -1,5 +1,6 @@
 #include "lexer/lexer.h"
-#include "parser.h"
+#include "parser/parser.h"
+#include "lexer/token.h"
 
 struct parser *init_parser(struct lexer *lexer)
 {
@@ -9,33 +10,33 @@ struct parser *init_parser(struct lexer *lexer)
     return parser;
 }
 
-
-struct token *get_next_token(struct parser *p){
-    if(p == NULL)
+struct token *get_next_token(struct parser *p)
+{
+    if (p == NULL)
         return NULL;
-    else
-    {
-        return p->current_token->next;
-    }
+    if (p->current_toke->next->type == EOF)
+        return NULL;
+    return p->current_token->next;
 }
 
-static bool parse_look_ahead(struct parser *p, struct token *expected_token){
+void parser_eat(struct parser *p)
+{
+    while (p->current_token->value == TOK_NEWLINE)
+        p->current_token = get_next_token;
+}
+
+static bool parse_look_ahead(struct parser *p, struct token *expected_token)
+{
     if(lexer != NULL)
     {
         struct token *next_token = get_next_token(p);
         if(expected_token == next_token)
-        {
             return true;
-        }
         else
-        {
             return false;
-        }  
     }
     else
-    {
         return false;
-    }
 }
 
 struct ast_node *parser(struct lexer *lexer)
@@ -52,69 +53,46 @@ struct ast_node *parser(struct lexer *lexer)
 
 static bool parse_input(struct parser *p, struct ast_node *ast)
 {
-    if(p->lexer == NULL || ast == NULL)
-    {
+    struct token *token = peek(p->lexer);
+    struct token *next = get_next_token(p);
+
+    if (!p->lexer || !ast)
         return true;
-    }
     else
     {
-        struct token *token = peek(p->lexer);
-        if (token->value == "\n")
-        {
+        if (is_type(token, TOK_NEWLINE))
             return false;           
-        }
-        else if (token->value == "\0")
-        {
+        else if (is_type(token, TOK_EOF))
             return false;
-        }
         else if
         {
-            
-            if (parse_list(lexer, ast) == false && strcmp(get_next_token(p)->value,"\0") == 0)
-            {
+            if (parse_list(lexer, ast) == false && is_type(next, TOK_EOF))
                 return false;
-            }
-            else if (parse_list(lexer, ast) == false && strcmp(get_next_token(p)->value,"\0") == 1)
-            {
+            else if (parse_list(lexer, ast) == false && !is_type(next, TOK_EOF))
                 return true;
-            }
-            else if (parse_list(lexer, ast) == true && strcmp(get_next_token(p)->value,"\0") == 0)
-            {
+            else if (parse_list(lexer, ast) == true && is_type(next, TOK_EOF))
                 return true;
-            }
             else
-            {
                 return true;
-            }
-            
-            
         }
         else
         {
-            if (parse_list(lexer,ast) == false && strcmp(get_next_token(p)->value,"\n") == 0)
-            {
+            if (parse_list(lexer,ast) == false && is_type(next, TOK_NEWLINE))
                 return false;
-            }
-            else if (parse_list(lexer,ast) == false && strcmp(get_next_token(p)->value,"\n") == 1)
-            {
+            else if (parse_list(lexer,ast) == false && !is_type(next, TOK_NEWLINE))
                 return true;
-            }
-            else if (parse_list(lexer,ast) == true && strcmp(get_next_token(p)->value,"\n") == 0)
-            {
+            else if (parse_list(lexer,ast) == true && is_type(next, TOK_NEWLINE))
                 return true;
-            }
             else
-            {
                 return true;
-            }
         }
     }
 }
 
-
 static bool parse_list(struct parser *parser, struct ast_node *ast)
 {
-    if(lexer == NULL || ast == NULL)
+    struct token *current = parser->current_token;
+    if (lexer == NULL || ast == NULL)
     {
         return true;
     }
@@ -122,23 +100,22 @@ static bool parse_list(struct parser *parser, struct ast_node *ast)
     {
         if (parse_and_or(parser, ast))
             return true;
-        if (strcmp(parser->current_token->value, ";") != 0 && strcmp(parser->current_token->value, "&") != 0)
+        if (parser->current_token->type != TOK_SEMI && strcmp(parser->current_token->value, "&") != 0)
             return true;
         parser->current_token = parser->current_token->next;
-    } while(strcmp(parser->current_token->value, "\n") != 0 && strcmp(parser->current_token->value, "\0") != 0)
+    } while(!is_type(next, TOK_NEWLINE) && !is_type(next, TOK_EOF))
     return false;
 }
 
 static bool parse_and_or(struct parser *parser, struct ast_node *ast)
 {
-    if(parser == NULL || ast == NULL)
+    if (parser == NULL || ast == NULL)
         return true;
     if (parse_pipeline(parser, ast))
         return true;
-    while(strcmp(parser->current_token->value, "&&") == 0 || strcmp(parser->current_token->value, "||") == 0)
+    while (parser->current_token->type == TOK_PIPE || parser->current_token->type == TOK_OR)
     {
-        while (parser->current_token && strcmp(parser->current_token->value, "\n") == 0)
-            parser->current_token = parser->current_token->next;
+        parser_eat(parser);
         if (parse_pipeline(parser, ast))
             return true;
     }
@@ -149,33 +126,98 @@ static bool parse_pipeline(struct parser *parser, struct ast_node *ast)
 {
     if(parser == NULL || ast == NULL)
         return true;
-    if (strcmp(parser->current_token->value, "!") == 0)
+    if (parser->current_token->type == TOK_PIPE)
     {   
         //créer le node not
-        pop(parser->lexer);
+        get_next_token(parser);
     }
     if (parse_command(parser, ast))
     {
-        if (strcmp("", "|")
+        while (parser->current_token->type == TOK_PIPE)
+        {
+            //créer le node pipe
+            parser_eat(parser);
+            if (!parse_command(parser, ast)
+                return false;
+        }
         return true;
     }
-    
+    else
+        return false;
 }
 
 static bool parse_command(struct parser *parser, struct ast_node *ast)
 {
-    if(parser == NULL || ast == NULL)
+    if(!parser || !ast) 
     {
         return true;
     }
+    if (parse_shell_command(parser, ast))
+    {
+        if (parse_funcdec(parser, ast))
+        {
+            if (parse_simple_command(parser, ast))
+                return true;
+        
+        }
+        else
+        {
+            do
+            {
+                parse_redirection(parser, ast);
+
+            } while(is_type(p->current->next,TOK_DLESSDASH) ||
+                is_type(p->current->next,TOK_DLESS) ||
+                is_type(p->current->next,TOK_LESSGREAT) ||
+                is_type(p->current->next,TOK_LESSAND) ||
+                is_type(p->current->next,TOK_LESS) ||
+                is_type(p->current->next,TOK_DGREAT) ||
+                is_type(p->current->next,TOK_GREATAND) ||
+                is_type(p->current->next,TOK_CLOBBER) ||
+                is_type(p->current->next,TOK_GREAT) ||
+            )
+        }
+    }
+    return false;
+    
 }
 
 static bool parse_simple_command(struct parser *parser, struct ast_node *ast)
 {
+    struct token *current = NULL;
     if(parser == NULL || ast == NULL)
     {
         return true;
     }
+    if (parse_prefix(parser, ast))
+    {
+        do
+        {
+            if (parse_element(parser, ast))
+                return true;
+            current = parser->current_token;
+        } while (!is_type(current, TOK_PIPE) && 
+            !is_type(current, TOK_AND) &&
+            !is_type(current, TOK_OR) &&
+            !is_type(current, TOK_SEMI) &&
+            !is_type(current, TOK_SEPAND) 
+            )
+    }
+    else
+    {
+        while (!is_type(current, TOK_PIPE) && 
+            !is_type(current, TOK_AND) &&
+            !is_type(current, TOK_OR) &&
+            !is_type(current, TOK_SEMI) &&
+            !is_type(current, TOK_SEPAND) 
+            // Not element
+            )
+        {
+            //parse prefix
+        }
+        //parse element
+    }
+
 }
 
 static bool parse_shell_command(struct parser *parser, struct ast_node *ast)
