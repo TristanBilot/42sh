@@ -4,5 +4,8 @@
 # Lexer
 # AST Printer
 # Handle the four options
+# Parse comments
+# Parse "" and ''
+# Don't forget -Werror in makefile
 
 --- Don't forget to write tests while coding ---

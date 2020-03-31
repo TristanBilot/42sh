@@ -4,43 +4,100 @@
 #include "parser/parser.h"
 #include "utils/string.h"
 
+Test(parser, parse_simple_command){
+    //one simple command
+    struct lexer *lexer = new_lexer("ls");
+    struct parser *parser = init_parser(lexer);
+    void *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
+    /*
+    // simple command with param
+    struct lexer *lexer = new_lexer("echo test");
+    struct parser *parser = init_parser(lexer);
+    struct node_input *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
 
-Test(ast_node, creation_arbre_NULL){                             
-    struct ast_node *node = NULL;
-    cr_assert(ast_node_init(NODE_IF) == NULL);
+    // simple command with assigment word
+    struct lexer *lexer = new_lexer("a=1 echo a");
+    struct parser *parser = init_parser(lexer);
+    struct node_input *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
+    */
+}
+/*
+Test(parser, parse_simple_if){
+    // simple if
+    struct lexer *lexer = new_lexer("if a then b fi");
+    struct parser *parser = init_parser(lexer);
+    struct node_input *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
+    
+    // if else
+    struct lexer *lexer = new_lexer("if a then b else c fi");
+    struct parser *parser = init_parser(lexer);
+    struct node_input *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
+    
+    // if elif else
+    struct lexer *lexer = new_lexer("if a then b elif c else d fi");
+    struct parser *parser = init_parser(lexer);
+    struct node_input *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
 }
 
-Test(ast_node, creation_arbre_NULL){                                
-    struct ast_node *node = ast_node_init();
-    cr_assert(init_ast() != NULL);
+Test(parser, parser_and_or_simple){
+    struct lexer *lexer = new_lexer("ls | cat test");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+
+    struct lexer *lexer = new_lexer("ls || cat test ");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+
+    struct lexer *lexer = new_lexer("ls & cat Makefile");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+
+    struct lexer *lexer = new_lexer("ls && cat Makefile");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+    
 }
 
-Test(ast_node, test_enum_type_NODE_IF){                        
-    struct ast_node *node = ast_node_if_init();
-    /*function parse*/
-    cr_assert(node->type == NODE_IF);
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("/n");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+}
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer(" ");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+}
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("ls;echo toto");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+}
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("ls | echo test | cat test");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
+}
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("ls || echo test || cat test");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
 }
 
-Test(ast_node, test_enum_type_NODE_SIMPLE_COMMAND){
-    struct ast_node *node = ast_node_command_init();
-    cr_assert(node->type == NODE_SIMPLECOMMAND);
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("ls & echo test & cat test");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
 }
-
-Test(ast_node, test_enum_type_NODE_WORD){
-    struct ast_node *node = ast_node_word_init();
-    cr_assert(node->type == NODE_WORD);
+Test(parser, parser_){
+    struct lexer *lexer = new_lexer("ls && echo test && cat test");
+    struct parser *parser = init_parser(lexer);
+    cr_assert(!parse_input(parser, ast));
 }
-
-Test(ast_node, test_enum_type_NODE_LOGICAL){
-    struct ast_node *node = ast_node_logical_init();
-    cr_assert(node->type == NODE_LOGICAL);
-}
-
-Test(ast_node, test_enum_type_WRONG_NODE){
-    struct ast_node *node = ast_node_logical_init();
-    cr_assert(node->type == NODE_WORD);
-}
-
-
-
-
+*/

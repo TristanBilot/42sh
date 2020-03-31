@@ -73,5 +73,5 @@ char *substr(char *src, int pos, int len)
 
 void error(char *msg)
 {
-    perror(msg);
+    printf("%s\n", msg);
 }

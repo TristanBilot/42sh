@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 
     if ((ast = parse(lexer)))
         print_ast(ast);
-    else
-        puts("Parsing error\n");
+    // else
+    //     puts("Parsing error\n");
 
     free_lexer(lexer);
 }

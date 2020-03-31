@@ -7,7 +7,6 @@ CPPFLAGS= \
           ${NONE}
 CFLAGS= \
         -g \
-      #   -Werror \#
         -Wextra \
         -Wall \
         -pedantic \
@@ -26,8 +25,9 @@ OBJS= \
       ${NONE}
 
 TEST_OBJS = \
-      tests/tests_lexer.o \
-      tests/tests_ast.o
+      # tests/tests_lexer.o \
+      # tests/tests_ast.o \
+      tests/tests_parser.o
 
 BINS = \
       token_printer \
@@ -36,8 +36,7 @@ BINS = \
 BINS_OBJS = \
             src/eval/token_printer.o \
             src/eval/ast_print.o \
-            ${NONE}
-            # src/eval/rpn_print.o \
+            src/eval/rpn_print.o \
             #${NONE}
 
 TEST_BINS = \
@@ -52,7 +51,8 @@ debug: LDFLAGS+= -fsanitize=address
 debug: all
 
 tests: LDFLAGS+= -lcriterion
-tests: run_test_lexer run_test_ast run_test_parser
+# tests: run_test_lexer run_test_ast run_test_parser
+tests: run_test_parser
 
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
