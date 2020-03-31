@@ -95,6 +95,18 @@ struct token *lex_semicolon_newline(char *c, int i)
     return NULL;
 }
 
+struct token *lex_assignment_word(char *c, int i)
+{
+    if (!c || !c[i])
+        return NULL;
+    if (!(c[i] == '='))
+        return NULL;
+    char *var_name = substr(c, 0, i);
+    struct token *token = new_token_type(TOK_ASS_WORD);
+    token->value = var_name;
+    return token;
+}
+
 enum token_type evaluate_keyword(char *c)
 {
     if (is(c, "if"))

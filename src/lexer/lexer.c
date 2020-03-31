@@ -62,6 +62,9 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
         if (token->type == KW_DSEMI) /* ;; */
             (*j)++;
     }
+    else if ((token = lex_assignment_word(copy, *j))) {
+        flush(buffer);
+    }
     append(lexer, token);
     return token ? 1 : 0;
 }

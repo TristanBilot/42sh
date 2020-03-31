@@ -271,3 +271,19 @@ Test(lexer, curly_braces)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_RCURL);
 }
+
+Test(lexer, assignment_word)
+{
+    const char *input1 = "var=123";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(peek(lexer1)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer1)->value, "var"));
+    cr_assert(is(peek(lexer1)->value, "123"));
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+
+    const char *input2 = "=223";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(peek(lexer2)->type == TOK_ASS_WORD);
+    cr_assert(pop(lexer2)->value == NULL);
+    cr_assert(is(pop(lexer2)->value, "223"));
+}

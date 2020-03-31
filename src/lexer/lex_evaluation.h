@@ -6,6 +6,7 @@ struct token *lex_io_number(char *c, int i);
 char *lex_backslash(const char *c, int i);
 struct token *lex_great_less(char *c, int i);
 struct token *lex_semicolon_newline(char *c, int i);
+struct token *lex_assignment_word(char *c, int i);
 
 /**
 ** \brief Return the associated keyword of a string token.

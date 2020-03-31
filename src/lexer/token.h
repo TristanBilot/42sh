@@ -28,6 +28,7 @@ enum token_type
     TOK_DGREAT,		// >>
     TOK_GREATAND,	// >&
     TOK_CLOBBER,	// >|
+    TOK_ASS_WORD,    // =
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
     TOK_NOT,        // !
