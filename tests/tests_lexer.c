@@ -86,7 +86,7 @@ Test(lexer, io_number)
     cr_assert(is(pop(lexer)->value, "2"));
 
     cr_assert(pop(lexer)->type == TOK_GREATAND);
-    cr_assert(peek(lexer)->type == TOK_IONUMBER);
+    cr_assert(peek(lexer)->type == TOK_WORD);
     cr_assert(is(peek(lexer)->value, "1"));
 
     const char *input2 = "a 22>&2";
@@ -95,7 +95,7 @@ Test(lexer, io_number)
     cr_assert(pop(lexer2)->type == TOK_WORD);
 
     cr_assert(pop(lexer2)->type == TOK_GREATAND);
-    cr_assert(peek(lexer2)->type == TOK_IONUMBER);
+    cr_assert(peek(lexer2)->type == TOK_WORD);
     cr_assert(is(peek(lexer2)->value, "2"));
 
     const char *input3 = "aa 2>&3";
@@ -104,7 +104,7 @@ Test(lexer, io_number)
     cr_assert(is(pop(lexer3)->value, "2"));
 
     cr_assert(pop(lexer3)->type == TOK_GREATAND);
-    cr_assert(peek(lexer3)->type == TOK_ERROR);
+    cr_assert(peek(lexer3)->type == TOK_WORD);
 
     const char *input4 = "a 2>&22";
     struct lexer *lexer4 = new_lexer(input4);
@@ -112,7 +112,7 @@ Test(lexer, io_number)
     // cr_assert(is(pop(lexer3)->value, "2"));
     pop(lexer4);
     cr_assert(pop(lexer4)->type == TOK_GREATAND);
-    cr_assert(peek(lexer4)->type == TOK_ERROR);
+    cr_assert(peek(lexer4)->type == TOK_WORD);
 }
 
 Test(lexer, spaced_redirections)
@@ -207,7 +207,7 @@ Test(lexer, no_spaced_redirections)
     const char *input6 = "echo 2>|file";
     struct lexer *lexer6 = new_lexer(input6);
     cr_assert(pop(lexer6)->type == TOK_WORD);
-    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == TOK_IONUMBER);
     cr_assert(pop(lexer6)->type == TOK_CLOBBER);
     cr_assert(pop(lexer6)->type == TOK_WORD);
 
