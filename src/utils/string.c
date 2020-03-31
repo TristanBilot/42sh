@@ -62,7 +62,7 @@ int is_number(char c)
 char *substr(char *src, int pos, int len)
 {
     char *dest = NULL;
-    if (len - pos > 0)
+    if (len> 0)
     {
         dest = calloc(len + 10, 1);
         if (dest != NULL)

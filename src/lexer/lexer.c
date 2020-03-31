@@ -24,15 +24,18 @@ char **split(const char *str)
     return res;
 }
 
-int lex_full(struct lexer *lexer, const char *c, int j)
+int lex_full(struct lexer *lexer, const char *c, size_t j)
 {
-    char *value;
+    char *value = NULL;
+    struct token *token = NULL;
     if ((value = lex_backslash(c, j)))
-    {
         append(lexer, new_token_word(value));
-        return 1;
+    else if ((token = lex_assignment_word(strdup(c), &j))) {
+        append(lexer, token);
+        if ((token = lex_assignment_value(strdup(c), ++j)))
+            append(lexer, token);
     }
-    return 0;
+    return (token || value) ? 1 : 0;
 }
 
 int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *j)
@@ -61,9 +64,6 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
         append_word_if_needed(lexer, buffer);
         if (token->type == KW_DSEMI) /* ;; */
             (*j)++;
-    }
-    else if ((token = lex_assignment_word(copy, *j))) {
-        flush(buffer);
     }
     append(lexer, token);
     return token ? 1 : 0;
