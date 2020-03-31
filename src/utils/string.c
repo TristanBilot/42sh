@@ -25,6 +25,7 @@ char *type_to_str(int type)
         "TOK_DGREAT",	
         "TOK_GREATAND",
         "TOK_CLOBBER",
+        "TOK_ASS_WORD",
         "TOK_GREAT",	
         "TOK_IONUMBER",
         "TOK_NOT",
@@ -61,7 +62,7 @@ int is_number(char c)
 char *substr(char *src, int pos, int len)
 {
     char *dest = NULL;
-    if (len > 0)
+    if (len> 0)
     {
         dest = calloc(len + 10, 1);
         if (dest != NULL)

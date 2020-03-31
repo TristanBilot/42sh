@@ -4,7 +4,7 @@
 #include "utils/string.h"
 #include "lexer/lexer.h"
 
-char *lex_backslash(char *c, int i)
+char *lex_backslash(char *c, size_t i)
 {
     if (!c || !c[i] || c[i] != '\\')
         return NULL;
@@ -21,7 +21,7 @@ char *lex_backslash(char *c, int i)
     return NULL;
 }
 
-struct token *lex_great_less_and(const char *c, int i)
+struct token *lex_great_less_and(const char *c, size_t i)
 {
     if (!c || !c[i] || !c[i + 1])
         return NULL;
@@ -32,7 +32,7 @@ struct token *lex_great_less_and(const char *c, int i)
     return NULL;
 }
 
-struct token *lex_io_number(char *c, int i)
+struct token *lex_io_number(char *c, size_t i)
 {
     if (!c || !c[i])
         return NULL;
@@ -54,7 +54,7 @@ struct token *lex_io_number(char *c, int i)
     return NULL;
 }
 
-struct token *lex_great_less(char *c, int i)
+struct token *lex_great_less(char *c, size_t i)
 {
     if (!c || !c[i])
         return NULL;
@@ -78,7 +78,7 @@ struct token *lex_great_less(char *c, int i)
     return NULL;
 }
 
-struct token *lex_semicolon_newline(char *c, int i)
+struct token *lex_semicolon_newline(char *c, size_t i)
 {
     if (!c || !c[i])
         return NULL;
@@ -93,6 +93,29 @@ struct token *lex_semicolon_newline(char *c, int i)
     if (c[i] == '}')
         return new_token_type(TOK_RCURL);
     return NULL;
+}
+
+struct token *lex_assignment_word(char *c, size_t *i)
+{
+    if (!c || !c[*i])
+        return NULL;
+    if (!(c[*i] == '='))
+        return NULL;
+    if (*i == 0)
+        return new_token_error("Assignment rules can not start with '='");
+    
+    char *var_name = substr(c, 0, *i);
+    struct token *token = new_token_type(TOK_ASS_WORD);
+    token->value = var_name;
+    return token;
+}
+
+struct token *lex_assignment_value(char *c, size_t i)
+{
+    if (!c || !c[i])
+        return NULL;
+    char *value = substr(c, i, strlen(c));
+    return new_token_word(value);
 }
 
 enum token_type evaluate_keyword(char *c)
