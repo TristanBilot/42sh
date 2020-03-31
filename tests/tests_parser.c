@@ -4,7 +4,7 @@
 #include "parser/parser.h"
 #include "utils/string.h"
 
-/*
+
 Test(parser, parse_redirection)
 {
     struct parser *parser = init_parser(new_lexer("1>2"));
@@ -15,7 +15,7 @@ Test(parser, parse_redirection)
     void *ast11 = NULL;
     cr_assert(!parse_redirection(parser11, ast11));
 
-    /*struct parser *parser2 = init_parser(new_lexer("1<>2"));
+    /*struct parser *parser2 = init_parser(new_lexer("1<>2"));                  //on voit ça après
     void *ast2 = NULL;
     cr_assert(!parse_redirection(parser2, ast2));*/
 
@@ -128,12 +128,12 @@ Test(parser, parse_simple_if){
 }
 */
 
-Test(parser, parser_and_or_simple){
+/*Test(parser, parser_and_or_simple){
     struct parser *parser = init_parser(new_lexer("ls | cat test"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
 
-    struct parser *parser2 = init_parser(init_parser(new_lexer("ls || cat test")););
+    struct parser *parser2 = init_parser(init_parser(new_lexer("ls || cat test")));
     void *ast2 = NULL;
     cr_assert(!parse_input(parser2, ast2));
 
@@ -146,6 +146,7 @@ Test(parser, parser_and_or_simple){
     cr_assert(!parse_input(parser4, ast4));
     
 }
+*/
 
 /*
 Test(parser, parser_multi_logical){
