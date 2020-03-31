@@ -36,12 +36,12 @@ struct token *lex_io_number(char *c, size_t i)
 {
     if (!c || !c[i])
         return NULL;
-    if (is_number(c[i]) && c[i + 1] == '>' &&
-        ((c[i - 1] && (c[i - 1] == ' ')) || !c[i - 1]) &&
-        (!c[i + 2] || (c[i + 2] == '&' || (is_number(c[i + 2]) && /* 2> */
-        c[i + 2] >= '0' && c[i + 2] <= '2')))) /* 2>a */
-        return new_token_io_number(c[i]);
-    if (i >= 2 && c[i - 1] == '&'  && c[i - 2] == '>') /* >&2 */
+    
+    if (is_number(c[i]) && ((c[i-1] && (c[i-1] == ' ')) || !c[i-1])) /* 2>a */
+        if ((c[i+1] == '<' && c[i+2] == '&') || (c[i+1] == '>' && c[i+2] == '&'))
+                return new_token_io_number(c[i]);
+                
+    if (i >= 2 && ((c[i-1] == '&' && c[i-2] == '>') || (c[i-1] == '&' && c[i-2] == '<'))) /* >&2 */
     {
         if (is_number(c[i]))
         {
