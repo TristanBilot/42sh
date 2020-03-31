@@ -34,23 +34,33 @@ struct token *lex_great_less_and(const char *c, size_t i)
 
 struct token *lex_io_number(char *c, size_t i)
 {
-    if (!c || !c[i])
+    if (!c || !c[i] || !c[i+1])
         return NULL;
+    if (!c[i+2])
+        return (c[i+1] =='<' || c[i+1] == '>') ? new_token_io_number(c[i]) : NULL;
     
     if (is_number(c[i]) && ((c[i-1] && (c[i-1] == ' ')) || !c[i-1])) /* 2>a */
-        if ((c[i+1] == '<' && c[i+2] == '&') || (c[i+1] == '>' && c[i+2] == '&'))
-                return new_token_io_number(c[i]);
-                
-    if (i >= 2 && ((c[i-1] == '&' && c[i-2] == '>') || (c[i-1] == '&' && c[i-2] == '<'))) /* >&2 */
     {
-        if (is_number(c[i]))
-        {
-            if (c[i] > '2' || (c[i + 1] && is_number(c[i + 1]))) /* >&4 error */
-                return new_token_error("42sh: bad file descriptor");
-            else
-                return new_token_io_number(c[i]);
-        }
+        char io[3];
+        io[0] = c[i+1];
+        io[1] = c[i+2];
+        io[2] = '\0';
+        if (is(io, "<<") || is(io, ">>") || is(io, "<<-") || is(io, ">&") ||
+            is(io, "<&") || is(io, ">|") || is(io, "<>") || c[i+1] == '<' || c[i+1] == '>')
+            return new_token_io_number(c[i]);
     }
+    // if ((c[i+1] == '<' && c[i+2] == '&') || (c[i+1] == '>' && c[i+2] == '&'))
+                
+    // if (i >= 2 && ((c[i-1] == '&' && c[i-2] == '>') || (c[i-1] == '&' && c[i-2] == '<'))) /* >&2 */
+    // {
+    //     if (is_number(c[i]))
+    //     {
+    //         if (c[i] > '2' || (c[i + 1] && is_number(c[i + 1]))) /* >&4 error */
+    //             return new_token_error("42sh: bad file descriptor");
+    //         else
+    //             return new_token_io_number(c[i]);
+    //     }
+    // }
     return NULL;
 }
 
