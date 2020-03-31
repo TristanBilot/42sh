@@ -40,7 +40,7 @@ static bool parse_prefix(struct parser *parser, void *ast);
 
 static bool parse_element(struct parser *parser, void *ast);
 
-static bool parse_coumpound_list(struct parser *parser, void *ast);
+static bool parse_compound_list(struct parser *parser, void *ast);
 
 static bool parse_rule_for(struct parser *parser, void *ast);
 

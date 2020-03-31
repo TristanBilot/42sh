@@ -4,6 +4,7 @@
 #include "../utils/parser_utils.h"
 #include "parser.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -251,7 +252,7 @@ static bool parse_redirection(struct parser *parser, void *ast)
     next_token(parser);
     curr = parser->current_token;
     next_token(parser);
-    return (!(is_type(curr, TOK_WORD) || is_type(curr, TOK_HEREDOC))) ? true : false;
+    return (!(is_type(curr, TOK_WORD) /*|| is_type(curr, TOK_HEREDOC) */ )) ? true : false;
 }
 
 static bool parse_prefix(struct parser *parser, void *ast)
@@ -349,7 +350,7 @@ static bool parse_rule_while(struct parser *parser, void *ast)
     {
         next_token(parser);
         current = parser->current_token;
-        if (parse_coumpound_list(parser, ast))
+        if (parse_compound_list(parser, ast))
             return true;
         return (parse_do_group(parser, ast)) ? true : false;
     }
@@ -363,7 +364,7 @@ static bool parse_rule_until(struct parser *parser, void *ast)
     {
         next_token(parser);
         current = parser->current_token;
-        if (parse_coumpound_list(parser, ast))
+        if (parse_compound_list(parser, ast))
             return true;
         return (parse_do_group(parser, ast)) ? true : false;
     }

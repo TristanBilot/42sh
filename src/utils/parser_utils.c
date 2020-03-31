@@ -1,5 +1,5 @@
-#include <stdbool.h>
 #include "../lexer/token.h"
+#include "parser_utils.h"
 
 bool is_redirection(struct token *token)
 {

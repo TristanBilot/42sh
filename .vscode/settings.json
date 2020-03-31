@@ -27,6 +27,7 @@
         "vector": "c",
         "lex_evaluation.h": "c",
         "stdlib.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "parser_utils.h": "c"
     }
 }
