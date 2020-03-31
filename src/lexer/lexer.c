@@ -8,7 +8,7 @@
 #include "lexer/lexer.h"
 #include "lexer/lex_evaluation.h"
 
-char **split(const char *str)
+char **splitG(const char *str)
 {
     char delim[] = " ";
     char **res = calloc(1, sizeof(char *) * MAX_TOKEN);

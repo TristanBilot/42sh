@@ -8,8 +8,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define DEBUG_FLAG true
+#define DEBUG(msg) if (DEBUG_FLAG) \
+                        printf("%s\n", msg);
+
 struct parser *init_parser(struct lexer *lexer)
 {
+    DEBUG("Erreur sur la fonction : init_parser\n");
     struct parser *parser = malloc(sizeof(struct parser));
     parser->lexer = lexer;
     parser->current_token = peek(lexer);
@@ -18,6 +23,7 @@ struct parser *init_parser(struct lexer *lexer)
 
 struct token *get_next_token(struct parser *p)
 {
+    DEBUG("Erreur sur la fonction : get_next_token\n");
     if (p == NULL)
         return NULL;
     if (is_type(p->current_token->next, EOF))
@@ -27,12 +33,14 @@ struct token *get_next_token(struct parser *p)
 
 void parser_eat(struct parser *p)
 {
+    DEBUG("Erreur sur la fonction : parser_eat\n");
     while (is_type(p->current_token, TOK_NEWLINE))
         p->current_token = get_next_token(p);
 }
 
 void next_token(struct parser *parser)
 {
+    DEBUG("Erreur sur la fonction : next_token\n");
     if (!parser->current_token || !parser->current_token->next)
         return;
     parser->current_token = parser->current_token->next;
@@ -54,6 +62,7 @@ void next_token(struct parser *parser)
 
 void *parse(struct lexer *lexer)
 {
+    DEBUG("Erreur sur la fonction : parse\n");
     struct ast_node *ast = NULL;//init_node_input();                           // = fonction ast_node_input a redefinir
     if (!lexer) //|| !ast)
         error("Struct error");
@@ -66,6 +75,7 @@ void *parse(struct lexer *lexer)
 
 bool parse_input(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_input\n");
     if (!parser->lexer) //|| !ast)
         return true;
     if (is_type(parser->current_token, TOK_NEWLINE) ||
@@ -85,6 +95,7 @@ bool parse_input(struct parser *parser, void *ast)
 
 bool parse_list(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_list\n");
     (void)ast;
     if (!parser) //|| !ast)
         return true;
@@ -107,6 +118,7 @@ bool parse_list(struct parser *parser, void *ast)
 
 bool parse_and_or(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_and_or\n");
     (void)ast;
     if (!parser) //|| !ast)
         return true;
@@ -124,6 +136,7 @@ bool parse_and_or(struct parser *parser, void *ast)
 
 bool parse_pipeline(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_pipeline\n");
     (void)ast;
     if (!parser) //|| !ast)
         return true;
@@ -151,6 +164,7 @@ bool parse_pipeline(struct parser *parser, void *ast)
 
 bool parse_command(struct parser *p, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_command\n");
     struct token *current = p->current_token;
     if (parse_shell_command(p, ast))
     {
@@ -172,6 +186,7 @@ bool parse_command(struct parser *p, void *ast)
 
 bool parse_simple_command(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_simple_command\n");
     struct token *current = parser->current_token;
     if (parse_prefix(parser, ast))
     {
@@ -197,6 +212,7 @@ bool parse_simple_command(struct parser *parser, void *ast)
 
 bool parse_shell_command(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_shell_command\n");
     struct token *current = parser->current_token;
     if (is_type(current, TOK_LCURL) || is_type(current, TOK_LPAREN))
     {
@@ -221,6 +237,7 @@ bool parse_shell_command(struct parser *parser, void *ast)
 
 bool parse_funcdec(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_funcdec\n");
     struct token *current = parser->current_token;
     if (strcmp("function", current->value) == 0)
         next_token(parser);
@@ -245,26 +262,31 @@ bool parse_funcdec(struct parser *parser, void *ast)
 
 bool parse_redirection(struct parser *parser, void *ast)
 {
-    if (!(is_type(parser->current_token, TOK_IONUMBER)))
+    DEBUG("Erreur sur la fonction : parse_redirection\n");
+    if (!(is_type(parser->current_token, TOK_IONUMBER))){
+        printf("%s\n",parser->current_token->value);
         return true;
+    }
         
     next_token(parser);
     struct token *curr = parser->current_token;
-    if (!(is_type(curr, TOK_GREAT) || is_type(curr, TOK_LESS) ||
-        is_type(curr, TOK_DGREAT) || is_type(curr, TOK_DLESS) ||
-        is_type(curr, TOK_DLESSDASH) || is_type(curr, TOK_GREATAND) ||
-        is_type(curr, TOK_LESSAND) || is_type(curr, TOK_CLOBBER) ||
-        is_type(curr, TOK_LESSGREAT)))
+    if (!is_redirection(curr)){
+        printf("%s\n","test2");
         return true;
+    }
         
     next_token(parser);
     curr = parser->current_token;
     next_token(parser);
+    printf("%d\n", curr->type);
+    if(!(is_type(curr, TOK_WORD)))
+        printf("%s\n","test3");
     return (!(is_type(curr, TOK_WORD) /*|| is_type(curr, TOK_HEREDOC) */ )) ? true : false;
 }
 
 bool parse_prefix(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_prefix\n");
     if (is_type(parser->current_token, TOK_ASS_WORD))
     {
         next_token(parser);
@@ -272,14 +294,14 @@ bool parse_prefix(struct parser *parser, void *ast)
     }
     if (is_type(parser->current_token, TOK_IONUMBER))
     {
-        parse_redirection(parser, ast);
-        return false;
+        return parse_redirection(parser, ast) ? true : false;
     }
     return true;
 }
 
 bool parse_element(struct parser *parser, void *ast)
 {
+    DEBUG("Erreur sur la fonction : parse_element\n");
     if (is_type(parser->current_token, TOK_WORD))
     {
         next_token(parser);
@@ -287,8 +309,7 @@ bool parse_element(struct parser *parser, void *ast)
     }
     if (is_type(parser->current_token, TOK_IONUMBER))
     {
-        parse_redirection(parser, ast);
-        return false;
+        return parse_redirection(parser, ast) ? true : false;
     }
     return true;
 }
