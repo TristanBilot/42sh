@@ -1,8 +1,8 @@
 # CMake / Autotools building
 # Documentation
 # Standard input
-# Lexer
 # AST Printer
 # Handle the four options
+#Parse commentary
 
 --- Don't forget to write tests while coding ---
