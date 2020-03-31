@@ -100,6 +100,7 @@ bool parse_list(struct parser *parser, void *ast)
         return true;
     do
     {
+        printf("*************************%s\n", parser->current_token->value);
         if (parse_and_or(parser, ast))
             return true;
         if (!is_type(parser->current_token, TOK_SEMI) && 
@@ -123,10 +124,14 @@ bool parse_and_or(struct parser *parser, void *ast)
         return true;
     if (parse_pipeline(parser, ast))
         return true;
+    //next_token(parser);
+    printf("[%d]<--- mon tokan\n", parser->current_token->type);
     while (is_type(parser->current_token, TOK_AND) ||
         is_type(parser->current_token, TOK_OR))
     {
+        next_token(parser);
         parser_eat(parser);
+        printf("[%d]<--- mon tokan\n", parser->current_token->type);
         if (parse_pipeline(parser, ast))
             return true;
     }
@@ -136,6 +141,7 @@ bool parse_and_or(struct parser *parser, void *ast)
 bool parse_pipeline(struct parser *parser, void *ast)
 {
     DEBUG("parse_pipeline\n");
+    printf("[%d]<--- mon tokan\n", parser->current_token->type);
     (void)ast;
     if (!parser) //|| !ast)
         return true;
@@ -150,10 +156,10 @@ bool parse_pipeline(struct parser *parser, void *ast)
         while (is_type(parser->current_token, TOK_PIPE))
         {
             //créer le node pipe
+            next_token(parser);
             parser_eat(parser);
             if (parse_command(parser, ast))
                 return true;
-            next_token(parser);
             //créer le node command
         }
         return false;
@@ -204,7 +210,6 @@ bool parse_simple_command(struct parser *parser, void *ast)
         while (!parse_prefix(parser, ast))
             current = parser->current_token;
         parser->current_token = current;
-        printf("aaaaaaa\n");
         while (!parse_element(parser, ast))
             current = parser->current_token;
         printf("%d\n", current->type);
@@ -281,10 +286,10 @@ bool parse_redirection(struct parser *parser, void *ast)
     curr = parser->current_token;
     next_token(parser);
     printf("%d\n", curr->type);
-    if(!(is_type(curr, TOK_IONUMBER)))
+    if(!(is_type(curr, TOK_WORD)))
         printf("%s\n","test3");
     printf("%d\n",curr->type);
-    return (!(is_type(curr, TOK_IONUMBER) /*|| is_type(curr, TOK_HEREDOC) */ )) ? true : false;
+    return (!(is_type(curr, TOK_WORD) /*|| is_type(curr, TOK_HEREDOC) */ )) ? true : false;
 }
 
 bool parse_prefix(struct parser *parser, void *ast)
