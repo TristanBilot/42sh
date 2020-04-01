@@ -4,7 +4,6 @@
 #include "parser/parser.h"
 #include "utils/string.h"
 
-/*
 Test(parser, parse_redirection)
 {
     struct parser *parser = init_parser(new_lexer("1>2"));
@@ -51,9 +50,9 @@ Test(parser, parse_redirection)
     void *ast10 = NULL;
     cr_assert(!parse_redirection(parser10, ast10));
 }
-*/
+
 Test(parser, parse_simple_command){
-/*    //one simple command
+    //one simple command
     struct parser *parser = init_parser(new_lexer("ls"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
@@ -62,17 +61,21 @@ Test(parser, parse_simple_command){
     struct parser *parser2 = init_parser(new_lexer("echo test"));
     void *ast2 = NULL;
     cr_assert(!parse_input(parser2, ast2));
-*/
-    // simple command with assigment word
-    printf("/////////////////////////////\n");
-    struct parser *parser3 = init_parser(new_lexer("a=1"));
-    void *ast3 = NULL;
-    bool result = !parse_input(parser3, ast3);
-    printf("/////////////////////////////\n");
-    cr_assert(result);
-    
 }
-/*
+
+Test(parser, parser_assigment_word)
+{
+    // one assigment word
+    struct parser *parser = init_parser(new_lexer("a=1"));
+    void *ast = NULL;
+    cr_assert(!parse_input(parser, ast));
+
+    // simple command with assigment word
+    struct parser *parser2 = init_parser(new_lexer("a=1 echo a"));
+    void *ast2 = NULL;
+    cr_assert(!parse_input(parser2, ast2));
+}
+
 Test(parser, parser_simple_command2){
 
     struct parser *parser = init_parser(new_lexer("\n"));
@@ -108,33 +111,40 @@ Test(parser, parser_simple_command2){
     cr_assert(!parse_input(parser8, ast8));
 
 }
-*/
-/*
+
 Test(parser, parse_simple_if){
     // simple if
     struct parser *parser = init_parser(new_lexer("if a then b fi"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
-    
+
     // if else
     struct parser *parser2 = init_parser(new_lexer("if a then b else c fi"));
     void *ast2 = NULL;
     cr_assert(!parse_input(parser2, ast2));
-    
+
     // if elif else
-    struct parser *parser3 = init_parser(new_lexer("if a then b elif c else d fi"));
+    struct parser *parser3 = init_parser(new_lexer("if a then b elif c then d else e fi"));
     void *ast3 = NULL;
     cr_assert(!parse_input(parser3, ast3));
-    
+
+    // if elif
+    struct parser *parser4 = init_parser(new_lexer("if a then b elif c then d fi"));
+    void *ast4 = NULL;
+    cr_assert(!parse_input(parser4, ast4));
+
+    // if elif elif elif else
+    struct parser *parser5 = init_parser(new_lexer("if a then b elif c then d elif e then f else g fi"));
+    void *ast5 = NULL;
+    cr_assert(!parse_input(parser5, ast5));
 }
-*/
 
 Test(parser, parser_and_or_simple){
     struct parser *parser = init_parser(new_lexer("ls | cat test"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
 
-    struct parser *parser2 = init_parser(init_parser(new_lexer("ls || cat test")));
+    struct parser *parser2 = init_parser(new_lexer("ls | cat test"));
     void *ast2 = NULL;
     cr_assert(!parse_input(parser2, ast2));
 
@@ -166,7 +176,7 @@ Test(parser, parser_multi_logical){
 
 Test(parser, parser_){
 
-     struct parser *parser = init_parser(new_lexer("/n"));
+    struct parser *parser = init_parser(new_lexer("/n"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
  

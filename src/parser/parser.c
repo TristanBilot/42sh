@@ -67,28 +67,38 @@ void *parse(struct lexer *lexer)
         error("Struct error");
     struct parser *parser = init_parser(lexer);
     if (parse_input(parser, ast))
+    {
         error("Parser error");
+    }
     return ast;
 }
 /* Pour les fonctions qui suivent, on a admis qu'on retourne False si on ne trouve pas d'erreur sinon on renvoie True */
 
 bool parse_input(struct parser *parser, void *ast)
 {
+    printf("BEGIN PARSING : %s\n", parser->lexer->input);
     DEBUG("parse_input\n");
     if (!parser->lexer) //|| !ast)
+    {
+        printf("END PARSING 1 : %s\n", parser->lexer->input);
         return true;
+    }
     if (is_type(parser->current_token, TOK_NEWLINE) ||
-        is_type(parser->current_token, TOK_EOF)){
-            //printf("SUCCESS BUT NO TREE \n");
-            return false;
-        }
+        is_type(parser->current_token, TOK_EOF))
+    {
+        //printf("SUCCESS BUT NO TREE \n");
+        printf("END PARSING 2 : %s\n", parser->lexer->input);
+        return false;
+    }
     if (!parse_list(parser, ast))
         if (is_type(parser->current_token, TOK_EOF) ||
             is_type(parser->current_token, TOK_NEWLINE))
-            {
-                //printf("SUCCESS BUT NO TREE \n");
-                return false;
-            }
+        {
+            //printf("SUCCESS BUT NO TREE \n");
+            printf("END PARSING 3 : %s\n", parser->lexer->input);
+            return false;
+        }
+    printf("END PARSING 4 : %s\n", parser->lexer->input);
     return true;
 }
 
@@ -100,7 +110,7 @@ bool parse_list(struct parser *parser, void *ast)
         return true;
     do
     {
-        printf("*************************%s\n", parser->current_token->value);
+        //printf("*************************%s\n", parser->current_token->value);
         if (parse_and_or(parser, ast))
             return true;
         if (!is_type(parser->current_token, TOK_SEMI) && 
@@ -125,13 +135,13 @@ bool parse_and_or(struct parser *parser, void *ast)
     if (parse_pipeline(parser, ast))
         return true;
     //next_token(parser);
-    printf("[%d]<--- mon tokan\n", parser->current_token->type);
+    //printf("[%d]<--- mon tokan\n", parser->current_token->type);
     while (is_type(parser->current_token, TOK_AND) ||
         is_type(parser->current_token, TOK_OR))
     {
         next_token(parser);
         parser_eat(parser);
-        printf("[%d]<--- mon tokan\n", parser->current_token->type);
+        //printf("[%d]<--- mon tokan\n", parser->current_token->type);
         if (parse_pipeline(parser, ast))
             return true;
     }
@@ -141,7 +151,7 @@ bool parse_and_or(struct parser *parser, void *ast)
 bool parse_pipeline(struct parser *parser, void *ast)
 {
     DEBUG("parse_pipeline\n");
-    printf("[%d]<--- mon tokan\n", parser->current_token->type);
+    //printf("[%d]<--- mon tokan\n", parser->current_token->type);
     (void)ast;
     if (!parser) //|| !ast)
         return true;
@@ -170,7 +180,7 @@ bool parse_pipeline(struct parser *parser, void *ast)
 bool parse_command(struct parser *p, void *ast)
 {
     DEBUG("parse_command\n");
-    printf("[%d]<--- mon tokan\n", p->current_token->type);
+    //printf("[%d]<--- mon tokan\n", p->current_token->type);
     struct token *current = p->current_token;
     if (parse_shell_command(p, ast))
     {
@@ -193,7 +203,7 @@ bool parse_command(struct parser *p, void *ast)
 bool parse_simple_command(struct parser *parser, void *ast)
 {
     DEBUG("parse_simple_command\n");
-    printf("[%d]<--- mon tokan\n", parser->current_token->type);
+    //printf("[%d]<--- mon tokan\n", parser->current_token->type);
     struct token *current = parser->current_token;
     if (parse_prefix(parser, ast))
     {
@@ -207,14 +217,13 @@ bool parse_simple_command(struct parser *parser, void *ast)
     }
     else
     {
+        current = parser->current_token;
         while (!parse_prefix(parser, ast))
             current = parser->current_token;
         parser->current_token = current;
         while (!parse_element(parser, ast))
             current = parser->current_token;
-        printf("%d\n", current->type);
-        parser->current_token = current->next;
-        printf("%d\n", current->next->type);
+        parser->current_token = current;
     }
     return false;
 }
@@ -232,15 +241,11 @@ bool parse_shell_command(struct parser *parser, void *ast)
         return (is_type(current, TOK_RCURL) || is_type(current, TOK_RPAREN)) ? false : true;
     }
     if (parse_rule_for(parser, ast))
-        return true;
-    if (parse_rule_while(parser, ast))
-        return true;
-    if (parse_rule_until(parser, ast))
-        return true;
-    if (parse_rule_case(parser, ast))
-        return true;
-    if (parse_rule_if(parser, ast))
-        return true;
+        if (parse_rule_while(parser, ast))
+            if (parse_rule_until(parser, ast))
+                if (parse_rule_case(parser, ast))
+                    if (parse_rule_if(parser, ast))
+                        return true;
     return false;
 }
 
@@ -251,7 +256,7 @@ bool parse_funcdec(struct parser *parser, void *ast)
     if (strcmp("function", current->value) == 0)
         next_token(parser);
     //créer node function
-    next_token(parser);
+    //next_token(parser);
     if (!is_type(current, TOK_WORD))
         return true;
     //créer node word
@@ -273,22 +278,22 @@ bool parse_redirection(struct parser *parser, void *ast)
 {
     DEBUG("parse_redirection\n");
     if (is_type(parser->current_token, TOK_IONUMBER)){
-        printf("%s\n",parser->current_token->value);
+        //printf("%s\n",parser->current_token->value);
         next_token(parser);
     }
     struct token *curr = parser->current_token;
     if (!is_redirection(curr)){
-        printf("%s\n","test2");
+        //printf("%s\n","test2");
         return true;
     }
        
     next_token(parser);
     curr = parser->current_token;
     next_token(parser);
-    printf("%d\n", curr->type);
-    if(!(is_type(curr, TOK_WORD)))
+    //printf("%d\n", curr->type);
+    /*if(!(is_type(curr, TOK_WORD)))
         printf("%s\n","test3");
-    printf("%d\n",curr->type);
+    printf("%d\n",curr->type);*/
     return (!(is_type(curr, TOK_WORD) /*|| is_type(curr, TOK_HEREDOC) */ )) ? true : false;
 }
 
@@ -329,7 +334,9 @@ bool parse_compound_list(struct parser *parser, void *ast)
     DEBUG("parse_compound_list\n");
     parser_eat(parser);
     if (parse_and_or(parser, ast))
+    {
         return true;
+    }
     while (is_type(parser->current_token, TOK_SEMI) ||
         is_type(parser->current_token, TOK_SEPAND) ||
         is_type(parser->current_token, TOK_NEWLINE)
@@ -342,7 +349,7 @@ bool parse_compound_list(struct parser *parser, void *ast)
             return false;
         }
     }
-    next_token(parser);
+    //next_token(parser);
     return false;
 }
 
@@ -416,7 +423,7 @@ bool parse_rule_until(struct parser *parser, void *ast)
 
 bool parse_rule_case(struct parser *parser, void *ast)
 {
-    DEBUG("parse_compound_list\n");
+    DEBUG("parse_rule_case\n");
     if (!is_type(parser->current_token, KW_CASE))
         return true;
     next_token(parser);
@@ -446,20 +453,22 @@ bool parse_rule_if(struct parser *parser, void *ast)
     if (!is_type(curr, KW_IF))
         return true;
     next_token(parser);
-    
     if (parse_compound_list(parser, ast))
         return true;
     curr = parser->current_token;
+
     if (!(is_type(curr, KW_THEN)))
         return true;
     next_token(parser);
-
     if (parse_compound_list(parser, ast))
         return true;
     curr = parser->current_token;
-    if (is_type(curr, KW_ELSE))
-        return parse_else_clause(parser, ast) ? true : false;
-    
+    if (is_type(curr, KW_ELSE) || is_type(curr, KW_ELIF))
+    {
+        if (parse_else_clause(parser, ast))
+            return true;
+        curr = parser->current_token;
+    }
     next_token(parser);
     return (!(is_type(curr, KW_FI))) ? true : false;
 }
@@ -469,18 +478,24 @@ bool parse_else_clause(struct parser *parser, void *ast)
     DEBUG("parse_else_clause\n");
     struct token *current = parser->current_token;
     if (is_type(current, KW_ELSE))
+    {
+        next_token(parser);
         return (parse_compound_list(parser, ast)) ? true : false;
+    }
     if (is_type(current, KW_ELIF))
     {
+        next_token(parser);
         if(parse_compound_list(parser, ast))
             return true;
         current = parser->current_token;
-        if(is_type(current, KW_THEN)){
+        if(is_type(current, KW_THEN))
+        {
+            next_token(parser);
             if (parse_compound_list(parser, ast))
                 return true;
             current = parser->current_token;
-            if (is_type(current, KW_ELSE))
-                parse_else_clause(parser, ast);
+            if (is_type(current, KW_ELSE) || is_type(current, KW_ELIF))
+                return parse_else_clause(parser, ast);
             else
                 return false;
         }
