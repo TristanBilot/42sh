@@ -70,6 +70,7 @@ void *parse(struct lexer *lexer)
     {
         error("Parser error");
     }
+    free_parser(parser);
     return ast;
 }
 /* Pour les fonctions qui suivent, on a admis qu'on retourne False si on ne trouve pas d'erreur sinon on renvoie True */

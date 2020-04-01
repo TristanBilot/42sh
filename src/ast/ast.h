@@ -3,44 +3,31 @@
 
 #include <stdbool.h>
 
-struct ast
-{
-    struct token *token;
-    struct ast_node **children;
-    //struct ast_node *next_sibling;
-};
-echo "hello" && "ss"                  //on voit ça après && ls
-// struct node
+// struct ast_node
 // {
-//     enum token_type type;
-//     void *instructions;
+//     enum node_type
+//     {
+//         NODE_IF,                                // = KEYWORD
+//         NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
+//         NODE_WORD,                              // = WORD
+//         NODE_LOGICAL
+//     } type;
+
+//     union
+//     {
+//         struct ast_node_if *ast_node_if;
+//         struct ast_node_command *ast_node_simplecommand;
+//         struct ast_node_word *ast_node_word;
+//         struct ast_node_logical *ast_node_logical;
+//     } data;
 // };
-
-struct ast_node
-{
-    enum node_type
-    {
-        NODE_IF,                                // = KEYWORD
-        NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
-        NODE_WORD,                              // = WORD
-        NODE_LOGICAL
-    } type;
-
-    union
-    {
-        struct ast_node_if *ast_node_if;
-        struct ast_node_command *ast_node_simplecommand;
-        struct ast_node_word *ast_node_word;
-        struct ast_node_logical *ast_node_logical;
-    } data;
-};
 
 struct node_input{
     struct node_list *node_list;
 };
 
 struct node_list{
-    struct node_and_or *and_or;
+    struct node_and_or **and_or_list;
 };
 
 struct node_and_or
@@ -63,7 +50,6 @@ struct node_command
     };
     struct node_redirection **redirections;
 };
-
 
 struct node_simple_command
 {
@@ -130,13 +116,13 @@ struct node_compound_list
 struct node_while
 {
     struct node_compound_list *compound_list;
-    struct node_do_group *do_group;
+    struct node_compound_list *do_group;
 };
 
 struct node_until
 {
     struct node_compound_list *compound_list;
-    struct node_do_group *do_group;
+    struct node_compound_list *do_group;
 };
 
 struct node_rule_case
@@ -152,13 +138,24 @@ struct node_if                              // INSTANCE KEYWORD
     struct node_else_clause *else_clause;   // the body of the else, may be NULL
 };
 
-struct ast_node_else_clause
+struct node_else_clause
 {
     union
     {
         struct ast_node_if *elif; 
         struct ast_node_compound_list *else_body;
     } data;
+};
+
+struct node_case_clause
+{
+    struct node_case_item **case_items;
+};
+
+struct node_case_item
+{
+    char **words;
+    struct node_compound_list *compound_list;
 };
 
 /*struct ast_node_logical                         //INSTANCE LOGICAL
@@ -190,84 +187,3 @@ struct ast_node_while
 };
 */
 
-/**
-** \brief Ast node allocator and initialiser
-**
-** \return a pointer to the allocated ast node
-*/
-struct ast_node *ast_node_init(int type);
-
-/**
-** \brief Wrapper to release memory of an ast node and its children
-**
-** \param node the node to free
-*/
-
-void ast_node_free(struct ast_node *node);
-
-
-
-/**
-** \brief Ast node_if allocator and initialiser
-**
-** \return a pointer to the allocated ast node_if
-*/
-struct ast_node_if *ast_node_if_init(void);
-
-/**
-** \brief Wrapper to release memory of an ast node_if and its children
-**
-** \param node the node to free
-*/
-
-void ast_node_if_free(struct ast_node_if *node);
-
-
-/**
-** \brief Ast node_command allocator and initialiser
-**
-** \return a pointer to the allocated ast node_command
-*/
-struct ast_node_command *ast_node_command_init(void);
-
-/**
-** \brief Wrapper to release memory of an ast node_command and its children
-**
-** \param node_command the node to free
-*/
-
-void ast_node_command_free(struct ast_node_command *node);
-
-
-/**
-** \brief Ast node_word allocator and initialiser
-**
-** \return a pointer to the allocated ast node_word
-*/
-struct ast_node_word *ast_node_word_init(void);
-
-/**
-** \brief Wrapper to release memory of an ast node_word and its children
-**
-** \param node the node to free
-*/
-
-void ast_node_word_free(struct ast_node_word *node);
-
-
-/**
-** \brief Ast node_logical allocator and initialiser
-**
-** \return a pointer to the allocated ast node_logical
-*/
-struct ast_node_logical *ast_node_logical_init(void);
-
-/**
-** \brief Wrapper to release memory of an ast node_logical and its children
-**
-** \param node the node to free
-*/
-
-void ast_node_logical_free(struct ast_node_logical *node);
-
-#endif /* ! AST_H */
