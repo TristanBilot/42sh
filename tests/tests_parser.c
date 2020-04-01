@@ -14,7 +14,7 @@ Test(parser, parse_redirection)
     void *ast11 = NULL;
     cr_assert(!parse_redirection(parser11, ast11));
 
-    struct parser *parser2 = init_parser(new_lexer("1<>2"));                  //on voit ça après
+    struct parser *parser2 = init_parser(new_lexer("1<>2"));
     void *ast2 = NULL;
     cr_assert(!parse_redirection(parser2, ast2));
 
@@ -22,7 +22,7 @@ Test(parser, parse_redirection)
     void *ast3 = NULL;
     cr_assert(!parse_redirection(parser3, ast3));
 
-    //struct parser *parser4 = init_parser(new_lexer("1 > &2"));
+    //struct parser *parser4 = init_parser(new_lexer("1 > &2"));                  //on voit ça après
     //void *ast4 = NULL;
     //cr_assert(parse_redirection(parser4, ast4));
 
@@ -158,7 +158,8 @@ Test(parser, parser_and_or_simple){
     
 }
 
-Test(parser, parser_multi_logical){
+Test(parser, parser_multi_logical)
+{
 
     struct parser *parser = init_parser(new_lexer("ls | echo test || cat test"));
     void *ast = NULL;
@@ -172,19 +173,30 @@ Test(parser, parser_multi_logical){
     void *ast3 = NULL;
     cr_assert(!parse_input(parser3, ast3));
 
+    struct parser *parser4 = init_parser(new_lexer("ls | echo test && cat test | echo tata & cat tata"));
+    void *ast4 = NULL;
+    cr_assert(!parse_input(parser4, ast4));
+    
 }
 
-Test(parser, parser_){
+Test(parser, parser_hard_test_simple_command){
 
     struct parser *parser = init_parser(new_lexer("/n"));
     void *ast = NULL;
     cr_assert(!parse_input(parser, ast));
  
-    struct parser *parser2 = init_parser(new_lexer(" "));
+    struct parser *parser2 = init_parser(new_lexer("cd ../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../ ; pwd"));
     void *ast2 = NULL;
     cr_assert(!parse_input(parser2, ast2));
 
-    struct parser *parser3 = init_parser(new_lexer("ls;echo toto"));
+    struct parser *parser3 = init_parser(new_lexer("mkdir test1 ; cd test1 ; ls -a ; ls | cat | wc -c > fifi ; cat fifi"));
     void *ast3 = NULL;
     cr_assert(!parse_input(parser3, ast3));
+
+    struct parser *parser4 = init_parser(new_lexer("echo \"No dollar character\" 1>&2 | cat -e"));
+    void *ast4 = NULL;
+    cr_assert(!parse_input(parser4, ast4));
+
+
+
 }
