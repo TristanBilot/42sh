@@ -61,12 +61,5 @@ bool parse_case_clause(struct parser *parser, void *ast);
 
 bool parse_case_item(struct parser *parser, void *ast);
 
-void free_parser(struct parser *p)
-{
-    if(!p)
-    {
-        free_lexer(p->lexer);
-        free_token(p->current_token);
-    }
-}
+void free_parser(struct parser *p);
 #endif /* ! PARSER_H */

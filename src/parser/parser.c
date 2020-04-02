@@ -20,6 +20,15 @@ struct parser *init_parser(struct lexer *lexer)
     parser->current_token = peek(lexer);
     return parser;
 }
+void free_parser(struct parser *p)
+{
+    if(!p)
+    {
+        free_lexer(p->lexer);
+        free_token(p->current_token);
+        free(p);
+    }
+}
 
 struct token *get_next_token(struct parser *p)
 {
