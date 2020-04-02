@@ -28,11 +28,20 @@ struct node_input{
 
 struct node_list{
     struct node_and_or **and_or_list;
+    enum type{
+        SEMI,
+        SEPAND
+    };
 };
 
 struct node_and_or
 {
     struct node_pipeline **pipelines;
+
+    enum type{
+        AND,
+        OR
+    };
 };
 
 struct node_pipeline

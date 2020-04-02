@@ -22,7 +22,7 @@ struct parser *init_parser(struct lexer *lexer)
 }
 void free_parser(struct parser *p)
 {
-    if(!p)
+    if(p)
     {
         free_lexer(p->lexer);
         free_token(p->current_token);
