@@ -52,6 +52,8 @@ struct node_pipeline *build_pipeline(bool is_not)             // |
 struct node_command *build_command(struct parser *parser)             // command
 {
     struct node_command *new = xmalloc(sizeof(struct node_command));
+    new->command.simple_command = NULL;
+    new->redirections = NULL;
     return new;
 }
 
@@ -131,15 +133,13 @@ struct node_prefix *build_prefix(struct parser *parser)
 struct node_element *build_element(struct parser *parser)
 {
     int type = parser->current_token->type;
-    if (type != TOKEN_REDIRECTION && type != WORD)
-        return NULL;
     struct node_element *new = xmalloc(sizeof(struct node_element));
     switch (type)
     {
-    case TOKEN_REDIRECTION:
-        new->element.redirection = xmalloc(sizeof(struct node_redirection));
+    case TOK_IONUMBER:
+        new->element.redirection = NULL;
         break;
-    case WORD:
+    case TOK_WORD:
         new->element.word = "";
         break;
     default:

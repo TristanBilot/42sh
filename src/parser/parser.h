@@ -32,7 +32,7 @@ bool parse_redirection(struct parser *parser, struct node_redirection *ast);
 
 bool parse_prefix(struct parser *parser, struct node_prefix *ast);
 
-bool parse_element(struct parser *parser, struct node_element *ast);
+bool parse_element(struct parser *parser, struct node_element **ast);
 
 bool parse_compound_list(struct parser *parser, struct node_compound_list *ast);
 
