@@ -1,7 +1,6 @@
 #include "ast/ast.h"
 #include "lexer/lexer.h"
 #include "parser/parser.h"
-
 #include <err.h>
 #include <stdio.h>
 

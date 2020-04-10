@@ -15,6 +15,8 @@ CFLAGS= \
 
 OBJS= \
       src/parser/parser.o     \
+      src/ast/ast.o     \
+      src/ast/free.o     \
       src/lexer/token.o       \
       src/lexer/lexer.o \
       src/lexer/lex_evaluation.o \
@@ -25,10 +27,10 @@ OBJS= \
       ${NONE}
 
 TEST_OBJS = \
-      # tests/tests_lexer.o \
-      # tests/tests_ast.o \
       tests/tests_parser.o
-
+      #tests/tests_lexer.o
+      # tests/tests_ast.o \
+      
 BINS = \
       token_printer \
       ast_print
@@ -51,8 +53,8 @@ debug: LDFLAGS+= -fsanitize=address
 debug: all
 
 tests: LDFLAGS+= -lcriterion
-# tests: run_test_lexer run_test_ast run_test_parser
-tests: run_test_parser
+tests: LDFLAGS+= # -fsanitize=address
+tests: run_test_lexer run_test_ast run_test_parser
 
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}

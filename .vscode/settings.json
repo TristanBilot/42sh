@@ -28,6 +28,10 @@
         "lex_evaluation.h": "c",
         "stdlib.h": "c",
         "stdbool.h": "c",
-        "parser_utils.h": "c"
+        "parser_utils.h": "c",
+        "parser.h": "c",
+        "ast.h": "c",
+        "stdio.h": "c",
+        "xalloc.h": "c"
     }
 }

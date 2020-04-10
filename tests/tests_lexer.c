@@ -8,7 +8,7 @@ Test(lexer, basic_tokens)
     cr_assert(peek(lex)->type == TOK_AND);
     cr_assert(peek(lex)->type == TOK_AND);
     cr_assert(pop(lex)->type == TOK_AND);
-    cr_assert(peek(lex)->type == TOK_OR);
+    cr_assert(peek(lex)->type == TOK_OR); 
     cr_assert(pop(lex)->type == TOK_OR);
     cr_assert(pop(lex)->type == KW_DSEMI);
 }

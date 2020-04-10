@@ -20,6 +20,7 @@ char **split(const char *str)
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
+    res[i] = NULL;
     free(splitted);
     return res;
 }
@@ -76,7 +77,7 @@ void init_lexer(struct lexer *lexer)
     int i = 0;
     int type;
     struct buffer *buffer = NULL;
-    while (splitted[i] != '\0')
+    while (splitted[i])
     {
         buffer = new_buffer();
         c = splitted[i];
