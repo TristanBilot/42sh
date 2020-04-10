@@ -193,7 +193,8 @@ void free_for(struct node_for *ast)
     AST_EXISTS(ast);
     int i = 0;
     char *tmp = NULL;
-    while (ast->range[i])
+    printf("aaaaaaaaaaaaaaaaaaa => %p\n", ast->range);
+    while (ast->range && ast->range[i])
     {
         tmp = ast->range[i++];
         free(tmp);

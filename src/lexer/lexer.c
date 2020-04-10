@@ -129,10 +129,10 @@ void free_lexer(struct lexer *lexer)
     {
         tmp = index;
         index = index->next;
-        free(tmp);
+        // free(tmp);
     }
-    free(lexer->token_list);
-    free(lexer);
+    // free(lexer->token_list);
+    // free(lexer);
 }
 
 struct token *peek(struct lexer *lexer)
