@@ -61,19 +61,6 @@ void next_token(struct parser *parser)
     parser->current_token = parser->current_token->next;
 }
 
-/*static bool parse_look_ahead(struct parser *p, struct token *expected_token)
-{
-    if (p != NULL)
-    {
-        struct token *next_token = get_next_token(p);
-        if(expected_token == next_token)
-            return true;
-        else
-            return false;
-    }
-    else
-        return false;
-}*/
 
 void *parse(struct lexer *lexer)
 {
@@ -227,6 +214,7 @@ bool parse_command(struct parser *p, struct node_command *ast)
     if (parse_shell_command(p, ast->command.shell_command))
     {
         // A FREE MIEUX
+        printf("AMAZONIA FREE\n");
         free_shell_command(ast->command.shell_command);
         printf("AMAZONIA_FOREVER\n");
         if (parse_funcdec(p, ast->command.funcdec))
@@ -453,7 +441,7 @@ bool parse_element(struct parser *parser, struct node_element *ast)
     //FREE(AST)
     if (is_redirection(parser->current_token))
     {
-        ast->type = REDIRECTION;
+        ast->type = TOKEN_REDIRECTION;
         return parse_redirection(parser, ast->element.redirection) ? true : false;
     }
     return true;
