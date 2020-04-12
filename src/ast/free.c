@@ -204,7 +204,7 @@ void free_for(struct node_for *ast)
     AST_EXISTS(ast);
     //int i = 0;
     //char *tmp = NULL;
-    // printf("aaaaaaaaaaaaaaaaaaa => %p\n", ast);
+    printf("aaaaaaaaaaaaaaaaaaa => %p\n", ast);
     // while (ast->range && ast->range[i])
     // {
     //     tmp = ast->range[i++];

@@ -29,11 +29,13 @@ struct parser
     struct token *current_token;
 };
 
-struct node_input{
+struct node_input
+{
     struct node_list *node_list;
 };
 
-struct node_list{
+struct node_list
+{
     struct node_and_or *and_or;
     struct node_list *next_sibling;
     enum type

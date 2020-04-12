@@ -202,7 +202,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
     *ast = build_command();
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
-        // free_shell_command((*ast)->command.shell_command);
+        free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             // FREE ast->command.funcdec

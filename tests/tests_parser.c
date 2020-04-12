@@ -305,4 +305,4 @@ Test(parser, parser_hard_test_simple_command){          // marche pas
     bool result6 = parse_input(parser6, &ast6);
     // free_parser(parser4);
     cr_assert(result6);     //ici on check le not apres la pipeline qui ne doit pas marcher d'acc on est good on remballe ? ah oui ok c'est good, laisse le test quand même yes yes j'ai tellement mal au ventre mdr ils etaient enormes tes burgers aussi aussi enorme que tes bourlets mdr ct violen bru :'( x))) tkt je suis tjr aussi gentil voyons ptit fdp :oooooooooooooooooooooooooooo laisse ma mère trkl toi je vais te faire boire des shots juste pour vomir pétasse mdddddrrrr ramene les shots hahahahahahah dit elle elle a fini comme ca o-O   cpas drole jsuis vexée 
-} 
+}
