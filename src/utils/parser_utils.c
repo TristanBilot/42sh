@@ -23,6 +23,7 @@ struct node_prefix *append_prefix(
 {
     if (!ast)
         return NULL;
+    char *range;
     if (!ast->prefixes)
     {
         ast->prefixes = prefix;

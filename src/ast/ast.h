@@ -205,7 +205,11 @@ struct node_if                              // INSTANCE KEYWORD
 struct node_for
 {
     char *variable_name;
-    char **range;
+    struct range
+    {
+        char *value;
+        char *next_value;
+    } values;
     struct node_do_group *body;
 };
 

@@ -33,5 +33,6 @@
         "ast.h": "c",
         "stdio.h": "c",
         "xalloc.h": "c"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

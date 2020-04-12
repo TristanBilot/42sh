@@ -93,6 +93,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         printf("END PARSING 2 : %s\n", parser->lexer->input);
         return false;
     }
+    printf(" BEFORE ENTER IN BUILD_INPUT : %s\n", parser->lexer->input);
     *ast = build_input();
     if (!parse_list(parser, &((*ast)->node_list)))
         if (is_type(parser->current_token, TOK_EOF) ||
@@ -522,18 +523,14 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
     }
     next_token(parser);
     current = parser->current_token;
-    unsigned i = 0;
-    bool on = false;
     while (is_type(current, TOK_WORD))
     {
-        on = true;
-        (*ast)->range = xrealloc((*ast)->range, sizeof(char *) * (i + 1));
-        (*ast)->range[i++] = current->value; 
+        ast = append_value_to_for(*ast, current->value);
+        // (*ast)->range = xrealloc((*ast)->range, sizeof(char *) * (i + 1));
+        // (*ast)->range[i++] = current->value; 
         next_token(parser);
         current = parser->current_token;
     }
-    if (on)
-        (*ast)->range[i] = 0;
     if (!(is_type(current, TOK_SEMI) || is_type(current, TOK_NEWLINE)))
     {
         //free_token(current);

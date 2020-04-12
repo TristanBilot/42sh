@@ -9,6 +9,10 @@ struct node_input *build_input(void)                 // \n EOF
 {
     struct node_input *new = xmalloc(sizeof(struct node_input));
     new->node_list = NULL;
+    if(new)
+        printf("NODE CREATE IN BUILD_INPUT NOT NULL");
+    else
+        printf("ERROR NODE BUILD_INPUT\n");
     return new;
 }
 
