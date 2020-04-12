@@ -188,19 +188,30 @@ void free_compound_list(struct node_compound_list *ast)
     FREE_AST(ast);  
 }
 
+void free_range(struct range *range)
+{
+    struct range *tmp = NULL;
+    while (range)
+    {
+        tmp = range;
+        range = range->next;
+        free(tmp);
+    }
+}
+
 void free_for(struct node_for *ast)
 {
     AST_EXISTS(ast);
-    int i = 0;
-    char *tmp = NULL;
-    printf("aaaaaaaaaaaaaaaaaaa => %p\n", ast);
+    //int i = 0;
+    //char *tmp = NULL;
+    // printf("aaaaaaaaaaaaaaaaaaa => %p\n", ast);
     // while (ast->range && ast->range[i])
     // {
     //     tmp = ast->range[i++];
     //     free(tmp);
     // }
     if (ast->range)
-        free(ast->range); // m ca va pas planter ici ? psk t'as encore ast-> range = NULL on teste
+        free_range(ast->range); // m ca va pas planter ici ? psk t'as encore ast-> range = NULL on teste
     // free(ast->range);
     free_do_group(ast->body);
     FREE_AST(ast);

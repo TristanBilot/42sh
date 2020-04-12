@@ -53,7 +53,7 @@ struct node_pipeline *build_pipeline(bool is_not)             // |
     return new;
 }
 
-struct node_command *build_command(struct parser *parser)             // command
+struct node_command *build_command(void)             // command
 {
     struct node_command *new = xmalloc(sizeof(struct node_command));
     new->command.simple_command = NULL;

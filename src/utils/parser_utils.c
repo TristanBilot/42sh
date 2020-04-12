@@ -23,9 +23,9 @@ struct node_prefix *append_prefix(
 {
     if (!ast)
         return NULL;
-    char *range;
     if (!ast->prefixes)
     {
+        prefix->next = NULL;
         ast->prefixes = prefix;
         return ast->prefixes;
     }
@@ -34,6 +34,8 @@ struct node_prefix *append_prefix(
     {
         if (!first->next)
         {
+            if (prefix)
+                prefix->next = NULL;
             first->next = prefix;
             return ast->prefixes;
         }
@@ -50,6 +52,7 @@ struct node_element *append_element(
         return NULL;
     if (!ast->elements)
     {
+        element->next = NULL;
         ast->elements = element;
         return ast->elements;
     }
@@ -58,6 +61,8 @@ struct node_element *append_element(
     {
         if (!first->next)
         {
+            if (element)
+                element->next = NULL;
             first->next = element;
             return ast->elements;
         }
@@ -74,6 +79,7 @@ struct node_redirection *append_redirection(
         return NULL;
     if (!ast->redirections)
     {
+        redirection->next = NULL;
         ast->redirections = redirection;
         return ast->redirections;
     }
@@ -82,10 +88,39 @@ struct node_redirection *append_redirection(
     {
         if (!first->next)
         {
+            if (redirection)
+                redirection->next = NULL;
             first->next = redirection;
             return ast->redirections;
         }
         first = first->next;
     }
     return ast->redirections;
+}
+
+struct range *append_value_to_for(
+    struct node_for *ast,
+    char *value) 
+{
+    if (!ast)
+        return NULL;
+    struct range *new = malloc(sizeof(struct range));
+    new->next = NULL;
+    new->value = value;
+    if (!ast->range)
+    {
+        ast->range = new;
+        return ast->range;
+    }
+    struct range *first = ast->range;
+    while (first)
+    {
+        if (!first->next)
+        {
+            first->next = new;
+            return ast->range;
+        }
+        first = first->next;
+    }
+    return ast->range;
 }

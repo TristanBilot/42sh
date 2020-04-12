@@ -80,29 +80,23 @@ void *parse(struct lexer *lexer)
 
 bool parse_input(struct parser *parser, struct node_input **ast)
 {
-    printf("BEGIN PARSING : %s\n", parser->lexer->input);
     DEBUG("parse_input\n");
     if (!parser->lexer)
     {
-        printf("END PARSING 1 : %s\n", parser->lexer->input);
         return true;
     }
     if (is_type(parser->current_token, TOK_NEWLINE) ||
         is_type(parser->current_token, TOK_EOF))
     {
-        printf("END PARSING 2 : %s\n", parser->lexer->input);
         return false;
     }
-    printf(" BEFORE ENTER IN BUILD_INPUT : %s\n", parser->lexer->input);
     *ast = build_input();
     if (!parse_list(parser, &((*ast)->node_list)))
         if (is_type(parser->current_token, TOK_EOF) ||
             is_type(parser->current_token, TOK_NEWLINE))
         {
-            printf("END PARSING 3 : %s\n", parser->lexer->input);
             return false;
         }
-    printf("END PARSING 4 : %s\n", parser->lexer->input);
     return true;
 }
 
@@ -148,7 +142,6 @@ bool parse_and_or(struct parser *parser, struct node_and_or **ast)
     if (parse_pipeline(parser, &(node_and_or->left.pipeline)))
         return true;
     int count = 0;
-    //next_token(parser);
     while (is_type(parser->current_token, TOK_AND) ||
         is_type(parser->current_token, TOK_OR))
     {
@@ -178,11 +171,9 @@ bool parse_pipeline(struct parser *parser, struct node_pipeline **ast)
     DEBUG("parse_pipeline\n");
     if (!parser)
         return true;
-    //créer node pipeline
     bool is_not = false;
     if (is_type(parser->current_token, TOK_NOT))
-    {   
-        // node_pipeline->not = true
+    {
         is_not = true;
         next_token(parser);
     }
@@ -190,17 +181,14 @@ bool parse_pipeline(struct parser *parser, struct node_pipeline **ast)
     struct node_pipeline *tmp = *ast;
     if (!parse_command(parser, &((*ast)->command)))
     {
-        tmp = tmp->next_sibling;
         while (is_type(parser->current_token, TOK_PIPE))
         {
             tmp = tmp->next_sibling;
-            //créer le node pipe
             next_token(parser);
             parser_eat(parser);
             tmp = build_pipeline(false);
             if (parse_command(parser, &(tmp->command)))
                 return true;
-            //créer le node command
         }
         return false;
     }
@@ -211,20 +199,15 @@ bool parse_command(struct parser *p, struct node_command **ast)
 {
     DEBUG("parse_command\n");
     struct token *current = p->current_token;
-    *ast = build_command(p);
+    *ast = build_command();
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
-        // A FREE MIEUX
-        printf("AMAZONIA FREE\n");
-        free_shell_command((*ast)->command.shell_command);
-        printf("AMAZONIA_FOREVER\n");
-        return true; // A ENLEVER APRES
+        // free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             // FREE ast->command.funcdec
             (*ast)->type = SIMPLE_COMMAND;
             p->current_token = current;
-            //free_token(current);
             return parse_simple_command(p, &((*ast)->command.simple_command));
         }
         while (is_redirection(p->current_token))
@@ -236,7 +219,6 @@ bool parse_command(struct parser *p, struct node_command **ast)
         }
     }
     (*ast)->type = SHELL_COMMAND;
-    //free_token(current);
     while (is_redirection(p->current_token))
     {
         struct node_redirection *r = NULL;
@@ -250,7 +232,6 @@ bool parse_command(struct parser *p, struct node_command **ast)
 bool parse_simple_command(struct parser *parser, struct node_simple_command **ast)
 {
     DEBUG("parse_simple_command\n");
-    //printf("[%d]<--- mon tokan\n", parser->current_token->type);
     struct token *current = parser->current_token;
     struct node_prefix *p = NULL;
     *ast = build_simple_command();
@@ -261,21 +242,19 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
         struct node_element *e = NULL;
         if (parse_element(parser, &e))
             return true;
-        printf("AST POINTER AMAZONIA => %s\n", e->element.word);
-        printf("************%p\n", (void *)e);
-        printf("************%p\n", (void *)ast);
         (*ast)->elements = append_element(*ast, e);
         
         e = NULL;
         current = parser->current_token;
         while (!parse_element(parser, &e))
         {
+            
             current = parser->current_token;
-            (*ast)->elements = append_element(*ast, e);
+            append_element(*ast, e); // rajouter (*ast)->elements = ?
+            
             e = NULL;
         }
         // FREE e
-        //ast->elements = append_element(ast, e);
         parser->current_token = current;
     }
     else
@@ -301,7 +280,6 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
         // FREE e
         parser->current_token = current;
     }
-    //free_token(current);
     return false;
 }
 
@@ -315,16 +293,10 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
         (*ast)->type = (is_type(current, TOK_LCURL) ? C_BRACKETS : PARENTHESIS);
         next_token(parser);
         if (parse_compound_list(parser, &((*ast)->shell.compound_list)))
-        {
-            //free_token(current);
             return true;
-        }
         current = parser->current_token;
         if (is_type(current, TOK_RCURL) || is_type(current, TOK_RPAREN))
-        {
-            //free_token(current);
             return false;
-        }
         return true;
     }
     else if (parse_rule_for(parser, &((*ast)->shell.rule_for)))
@@ -336,19 +308,15 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
                 if (parse_rule_case(parser, &((*ast)->shell.rule_case)))
                     // FREE ast->shell.rule_case
                     if (parse_rule_if(parser, &((*ast)->shell.rule_if)))
-                    {
-                        //free_token(current);
                         return true;
-                    }
     (*ast)->type = RULE;
-    //free_token(current);
     return false;
 }
 
 bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
 {
-    //DEBUG("parse_funcdec\n");
-    printf("AMAZONIA");
+    DEBUG("parse_funcdec\n");
+    printf("AMAZONIA\n");
     struct token *current = parser->current_token;
     bool is_function = false;
     
@@ -359,26 +327,16 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
     }
     
     if (!is_type(current, TOK_WORD))
-    {
-        //free_token(current);
         return true;
-    }
     
     char *function_name = current->value;
     next_token(parser);
     if (!is_type(current, TOK_LPAREN))
-    {
-        //free_token(current);
         return true;
-    }
     next_token(parser);
     if (!is_type(current, TOK_RPAREN))
-    {
-        //free_token(current);
         return true;
-    }
     parser_eat(parser);
-    //free_token(current);
     *ast = build_funcdec(is_function, function_name);
     if (parse_shell_command(parser, &((*ast)->shell_command)))
         return true;
@@ -394,22 +352,14 @@ bool parse_redirection(struct parser *parser, struct node_redirection **ast)
     struct token *curr = parser->current_token;
     (*ast)->type = curr->type;
     if (!is_redirection(curr))
-    {
-        //free_token(curr);
         return true;
-    }
-       
     next_token(parser);
     curr = parser->current_token;
     (*ast)->right = curr->value;
     next_token(parser);
 
     if (!(is_type(curr, TOK_WORD) /*|| is_type(curr, TOK_HEREDOC) */ ))
-    {
-        //free_token(curr);
         return true;
-    }
-    //free_token(curr);
     return false;
 }
 
@@ -438,11 +388,9 @@ bool parse_element(struct parser *parser, struct node_element **ast)
 {
     DEBUG("parse_element\n");    
     *ast = build_element(parser);
-    
     if (is_type(parser->current_token, TOK_WORD))
     {
         (*ast)->type = WORD;
-        
         (*ast)->element.word = parser->current_token->value;
         next_token(parser);
         return false;
@@ -480,17 +428,15 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
             return false;
         }
     }
-    //next_token(parser);
     return false;
 }
 
-bool parse_rule_for(struct parser *parser, struct node_for **ast)
+bool parse_rule_for(struct parser *parser, struct node_for **ast) // PROBLEME REVOIR GRAMMAIRE
 {
     DEBUG("parse_rule_for\n");
     struct token *current = parser->current_token;
     if (!(is_type(current, KW_FOR)))
     {
-        //free_token(current);
         //FREE(AST)
         return true;
     }
@@ -499,7 +445,6 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
     current = parser->current_token;
     if (!(is_type(current, TOK_WORD)))
     {
-        //free_token(current);
         //FREE(AST)
         return true;
     }
@@ -517,7 +462,6 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
     
     if (!(is_type(current, KW_IN)))
     {
-        //free_token(current);
         //FREE(AST)
         return true;
     }
@@ -525,26 +469,21 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
     current = parser->current_token;
     while (is_type(current, TOK_WORD))
     {
-        ast = append_value_to_for(*ast, current->value);
-        // (*ast)->range = xrealloc((*ast)->range, sizeof(char *) * (i + 1));
-        // (*ast)->range[i++] = current->value; 
+        (*ast)->range = append_value_to_for(*ast, current->value);
         next_token(parser);
         current = parser->current_token;
     }
     if (!(is_type(current, TOK_SEMI) || is_type(current, TOK_NEWLINE)))
     {
-        //free_token(current);
         //FREE(AST)
         return true;
     }
     next_token(parser);
     current = parser->current_token;
     parser_eat(parser);
-    //free_token(current);
     return parse_do_group(parser, &((*ast)->body)) ? true : false;
 }
 
-    
 bool parse_rule_while(struct parser *parser, struct node_while **ast)
 {
     DEBUG("parse_rule_while\n");
@@ -554,14 +493,10 @@ bool parse_rule_while(struct parser *parser, struct node_while **ast)
         *ast = build_while();
         next_token(parser);
         current = parser->current_token;
-        if (parse_compound_list(parser, &((*ast)->condition))){
-            //free_token(current);
+        if (parse_compound_list(parser, &((*ast)->condition)))
             return true;
-        }
-        //free_token(current);
         return parse_do_group(parser, &((*ast)->body));
     }
-    //free_token(current);
     return true;
 }
 
@@ -575,22 +510,12 @@ bool parse_rule_until(struct parser *parser, struct node_until **ast)
         next_token(parser);
         current = parser->current_token;
         if (parse_compound_list(parser, &((*ast)->condition)))
-        {
-            //free_token(current);
             return true;
-        }
         if (parse_do_group(parser, &((*ast)->body)))
-        {
-            //free_token(current);
             return true;
-        }
         else
-        {
-            //free_token(current);
             return false;
-        }
     }
-    //free_token(current);
     return true;
 }
 
@@ -626,46 +551,54 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
     struct token *curr = parser->current_token;
     *ast = build_if();
     if (!is_type(curr, KW_IF))
-    {
-        //free_token(curr);
         return true;
-    }
     next_token(parser);
     if (parse_compound_list(parser, &((*ast)->condition)))
-    {
-        //free_token(curr);
         return true;
-    }
     curr = parser->current_token;
 
     if (!(is_type(curr, KW_THEN)))
-    {
-        //free_token(curr);
         return true;
-    }
     next_token(parser);
     if (parse_compound_list(parser, &((*ast)->if_body)))
-    {
-        //free_token(curr);
         return true;
-    }
     curr = parser->current_token;
     if (is_type(curr, KW_ELSE) || is_type(curr, KW_ELIF))
     {
         if (parse_else_clause(parser, &((*ast)->else_clause)))
-        {
-            //free_token(curr);
             return true;
-        }
         curr = parser->current_token;
     }
     next_token(parser);
     if (!(is_type(curr, KW_FI)))
-    {
-        //free_token(curr);
         return true;
+    return false;
+}
+
+bool parse_rule_elif(struct parser *parser, struct node_if **ast)
+{
+    DEBUG("parse_rule_elif\n");
+    struct token *curr = parser->current_token;
+    *ast = build_if();
+    if (!is_type(curr, KW_ELIF))
+        return true;
+    next_token(parser);
+    if (parse_compound_list(parser, &((*ast)->condition)))
+        return true;
+    curr = parser->current_token;
+
+    if (!(is_type(curr, KW_THEN)))
+        return true;
+    next_token(parser);
+    if (parse_compound_list(parser, &((*ast)->if_body)))
+        return true;
+    curr = parser->current_token;
+    if (is_type(curr, KW_ELSE) || is_type(curr, KW_ELIF))
+    {
+        if (parse_else_clause(parser, &((*ast)->else_clause)))
+            return true;
+        curr = parser->current_token;
     }
-    //free_token(curr);
     return false;
 }
 
@@ -676,52 +609,18 @@ bool parse_else_clause(struct parser *parser, struct node_else_clause **ast)
     if (is_type(current, KW_ELSE))
     {
         next_token(parser);
-        //free_token(current);
         *ast = build_else_clause(parser);
         (*ast)->type = ELSE;
         return parse_compound_list(parser, &((*ast)->clause.else_body));
     }
     if (is_type(current, KW_ELIF))
     {
-        next_token(parser);
         *ast = build_else_clause(parser);
         (*ast)->type = ELIF;
-        if (parse_rule_if(parser, &((*ast)->clause.elif)))
-        {
-            //free_token(current);
+        if (parse_rule_elif(parser, &((*ast)->clause.elif)))
             return true;
-        }
-        current = parser->current_token;
-        if (is_type(current, KW_THEN))
-        {
-            next_token(parser);
-            *ast = build_else_clause(parser);
-            (*ast)->type = ELSE;
-            if (parse_compound_list(parser, &((*ast)->clause.else_body)))
-            {
-                //free_token(current);
-                return true;
-            }
-            current = parser->current_token;
-            if (is_type(current, KW_ELSE) || is_type(current, KW_ELIF))
-            {
-                //free_token(current);
-                *ast = build_else_clause(parser);
-                return parse_else_clause(parser, &((*ast)));
-            }
-            else
-            {
-                //free_token(current);
-                return false;
-            }
-        }
-        else
-        {
-            //free_token(current);
-            return true;
-        }
+        return false;
     }
-    //free_token(current);
     return true;
 }
 
@@ -735,14 +634,9 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
         next_token(parser);
         current = parser->current_token;
         if (parse_compound_list(parser, &((*ast)->body)))
-        {
-            //free_token(current);
             return true;
-        }
-        //free_token(current);
         return is_type(parser->current_token, KW_DONE);
     }
-    //free_token(current);
     return true;
 }
 
@@ -752,10 +646,7 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
     struct token *current = parser->current_token;
     *ast = build_case_clause();
     if (parse_case_item(parser, &((*ast)->case_item)))
-    {
-        //free_token(current);
         return true;
-    }
     next_token(parser);
     while (is_type(current, KW_DSEMI))
     {
@@ -764,10 +655,7 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
         *ast = (*ast)->next;
         *ast = build_case_clause();
         if (parse_case_item(parser, &((*ast)->case_item)))
-        {
-            //free_token(current);
             return true;
-        }
         next_token(parser);
     }
     if (is_type(current, KW_DSEMI))
@@ -776,7 +664,6 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
         //créer node semicolon
     }
     parser_eat(parser);
-    //free_token(current);
     return false;
 }
 
@@ -809,12 +696,8 @@ bool parse_case_item(struct parser *parser, struct node_case_item **ast)
     {
         (*ast)->type = COMPOUND;
         if (parse_compound_list(parser, &((*ast)->next.compound_list)))
-        {
-            //free_token(current);
             return true;
-        }
     }
     next_token(parser);
-    //free_token(current);
     return false;
 }

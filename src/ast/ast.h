@@ -202,14 +202,16 @@ struct node_if                              // INSTANCE KEYWORD
     struct node_else_clause *else_clause;   // the body of the else, may be NULL
 };
 
+/* ONLY FOR NODE_FOR */
+struct range
+{
+    char *value;
+    struct range *next;
+};
 struct node_for
 {
     char *variable_name;
-    struct range
-    {
-        char *value;
-        char *next_value;
-    } values;
+    struct range *range;
     struct node_do_group *body;
 };
 
@@ -258,7 +260,7 @@ struct node_list *build_list(void);
 struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, struct node_pipeline *right);
 struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left, struct node_pipeline *right);
 struct node_pipeline *build_pipeline(bool is_not);
-struct node_command *build_command(struct parser *parser);
+struct node_command *build_command(void);
 struct node_simple_command *build_simple_command(void);
 struct node_shell_command *build_shell_command(struct parser *parser);
 struct node_funcdec *build_funcdec(bool is_function, char *func_name);

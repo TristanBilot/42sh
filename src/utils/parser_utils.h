@@ -7,8 +7,13 @@ bool is_redirection(struct token *token);
 
 struct node_prefix *append_prefix(struct node_simple_command *ast, struct node_prefix *prefix);
 struct node_element *append_element(struct node_simple_command *ast, struct node_element *element);
+
 struct node_redirection *append_redirection(
     struct node_command *ast,
     struct node_redirection *redirection); 
+
+struct range *append_value_to_for(
+    struct node_for *ast,
+    char *value) ;
 
 #endif /* PARSER_UTILS_H */
