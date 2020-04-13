@@ -50,9 +50,10 @@ struct node_element *append_element(
 {
     if (!ast)
         return NULL;
+    if (element)
+        element->next = NULL;
     if (!ast->elements)
     {
-        element->next = NULL;
         ast->elements = element;
         return ast->elements;
     }
@@ -61,8 +62,6 @@ struct node_element *append_element(
     {
         if (!first->next)
         {
-            if (element)
-                element->next = NULL;
             first->next = element;
             return ast->elements;
         }
@@ -123,4 +122,23 @@ struct range *append_value_to_for(
         first = first->next;
     }
     return ast->range;
+}
+
+enum shell_type get_shell_command_type(int type)
+{
+    switch (type)
+    {
+    case KW_FOR:
+        return FOR;
+    case KW_WHILE:
+        return WHILE;
+    case KW_UNTIL:
+        return UNTIL;
+    case KW_CASE:
+        return CASE;
+    case KW_IF:
+        return IF;
+    default:
+        return -1;
+    }
 }
