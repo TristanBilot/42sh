@@ -7,13 +7,13 @@ Test(parser, parse_redirection)
 {
     struct parser *parser = init_parser(new_lexer("1>2"));
     void *ast = NULL;
-    bool result = parse_redirection(parser, &ast);
+    bool result = parse_input(parser, &ast);
     // free_parser(parser);
     cr_assert(!result);
 
     struct parser *parser11 = init_parser(new_lexer("1<2"));
     void *ast11 = NULL;
-    bool result11 = parse_redirection(parser11, &ast11);
+    bool result11 = parse_input(parser11, &ast11);
     // free_parser(parser11);
     cr_assert(!result11);
 }
@@ -21,53 +21,53 @@ Test(parser, parse_redirection)
 Test(parser, stuff) {
     struct parser *parser2 = init_parser(new_lexer("1<>2"));
     void *ast2 = NULL;
-    bool result2 = parse_redirection(parser2, &ast2);
+    bool result2 = parse_input(parser2, &ast2);
     // free_parser(parser2);
     cr_assert(!result2);
 
     struct parser *parser3 = init_parser(new_lexer("1>&2"));
     void *ast3 = NULL;
-    bool result3 = parse_redirection(parser3, &ast3);
+    bool result3 = parse_input(parser3, &ast3);
     // free_parser(parser3);
     cr_assert(!result3);
     //struct parser *parser4 = init_parser(new_lexer("1 > &2"));                  //on voit ça après
     //void *ast4 = NULL;
-    //cr_assert(parse_redirection(parser4, &ast4)); 
+    //cr_assert(parse_input(parser4, &ast4)); 
 
     struct parser *parser5= init_parser(new_lexer("1>>2"));
     void *ast5 = NULL;
-    bool result5 = parse_redirection(parser5, &ast5);
+    bool result5 = parse_input(parser5, &ast5);
     // free_parser(parser5);
     cr_assert(!result5);
 
 
     struct parser *parser6= init_parser(new_lexer("1<<2"));
     void *ast6 = NULL;
-    bool result6 = parse_redirection(parser6, &ast6);
+    bool result6 = parse_input(parser6, &ast6);
     // free_parser(parser6);
     cr_assert(!result6);
 
     struct parser *parser7= init_parser(new_lexer("1>>2"));
     void *ast7 = NULL;
-    bool result7 = parse_redirection(parser7, &ast7);
+    bool result7 = parse_input(parser7, &ast7);
     // free_parser(parser7);
     cr_assert(!result7);
 
     struct parser *parser8= init_parser(new_lexer("1<<-2"));
     void *ast8 = NULL;
-    bool result8 = parse_redirection(parser8, &ast8);
+    bool result8 = parse_input(parser8, &ast8);
     // free_parser(parser8);
     cr_assert(!result8);
 
     struct parser *parser9= init_parser(new_lexer("1>|2"));
     void *ast9 = NULL;
-    bool result9 = parse_redirection(parser9, &ast9);
+    bool result9 = parse_input(parser9, &ast9);
     // free_parser(parser9);
     cr_assert(!result9);
 
     struct parser *parser10 = init_parser(new_lexer("1<&2"));
     void *ast10 = NULL;
-    bool result10 = parse_redirection(parser10, &ast10);
+    bool result10 = parse_input(parser10, &ast10);
     // free_parser(parser10);
     cr_assert(!result10);
 }
@@ -305,4 +305,53 @@ Test(parser, parser_hard_test_simple_command){          // marche pas
     bool result6 = parse_input(parser6, &ast6);
     // free_parser(parser4);
     cr_assert(result6);     //ici on check le not apres la pipeline qui ne doit pas marcher d'acc on est good on remballe ? ah oui ok c'est good, laisse le test quand même yes yes j'ai tellement mal au ventre mdr ils etaient enormes tes burgers aussi aussi enorme que tes bourlets mdr ct violen bru :'( x))) tkt je suis tjr aussi gentil voyons ptit fdp :oooooooooooooooooooooooooooo laisse ma mère trkl toi je vais te faire boire des shots juste pour vomir pétasse mdddddrrrr ramene les shots hahahahahahah dit elle elle a fini comme ca o-O   cpas drole jsuis vexée 
+}
+
+Test(parser, rule_for)
+{
+    struct parser *parser = init_parser(new_lexer("for i; do echo test done"));
+    void *ast = NULL;
+    bool result = parse_input(parser, &ast);
+    // free_parser(parser);
+    cr_assert(!result);
+
+    struct parser *parser2 = init_parser(new_lexer("for i;\n\n\n do echo test done"));
+    void *ast2 = NULL;
+    bool result2 = parse_input(parser2, &ast2);
+    // free_parser(parser);
+    cr_assert(!result2);
+
+    struct parser *parser3 = init_parser(new_lexer("for i in range;\n\n\n do echo test done"));
+    void *ast3 = NULL;
+    bool result3 = parse_input(parser3, &ast3);
+    // free_parser(parser);
+    cr_assert(!result3);
+
+    struct parser *parser4 = init_parser(new_lexer("for i in range;\n\n\n do echo test; echo tata\necho toto done"));
+    void *ast4 = NULL;
+    bool result4 = parse_input(parser4, &ast4);
+    // free_parser(parser);
+    cr_assert(!result4);
+}
+
+Test(parser, funcdec)
+{
+    struct parser *parser = init_parser(new_lexer("function print_hello ( ) { echo hello }"));
+    void *ast = NULL;
+    bool result = parse_input(parser, &ast);
+    // free_parser(parser);
+    cr_assert(!result);
+
+    // A GERER DANS LE LEXER : parenthèses collées au nom de la fonction + parentheses collées entre elles
+    // struct parser *parser2 = init_parser(new_lexer("function print_hello() { echo hello }"));
+    // void *ast2 = NULL;
+    // bool result2 = parse_input(parser2, &ast2);
+    // // free_parser(parser);
+    // cr_assert(!result2);
+
+    struct parser *parser3 = init_parser(new_lexer("print_hello ( ) { echo hello }"));
+    void *ast3 = NULL;
+    bool result3 = parse_input(parser3, &ast3);
+    // free_parser(parser);
+    cr_assert(!result3);
 }

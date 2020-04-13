@@ -109,8 +109,15 @@ struct node_shell_command
         struct node_case *rule_case;
         struct node_if *rule_if;
     } shell;
+    enum shell_type /* NEED IMPLEMENTATION !!!!!!!!! */
+    {
+        FOR,
+        WHILE,
+        UNTIL,
+        CASE,
+        IF
+    } shell_type;
 };
-
 
 struct node_funcdec
 {
@@ -152,7 +159,7 @@ struct node_prefix
         {
             char *variable_name;
             char *value;
-        } assigment_word;
+        } assigment_word; /* MAYBE CREATE A POINTER */
         struct node_redirection *redirection;
     } prefix;
 };
@@ -193,6 +200,7 @@ struct node_until
 
 struct node_case
 {
+    bool is_case_clause;
     char *word;
     struct node_case_clause *case_clause;
 };
@@ -238,6 +246,7 @@ struct node_do_group
 
 struct node_case_clause
 {
+    bool is_sepand;
     struct node_case_item *case_item;
     struct node_case_clause *next;
 };

@@ -15,7 +15,7 @@
 #include "utils/xalloc.h"
 #include "utils/string.h"
 
-#define DEBUG_FLAG true
+#define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s", msg);
 
@@ -30,7 +30,7 @@ struct parser *init_parser(struct lexer *lexer)
 
 void free_parser(struct parser *p)
 {
-    if(p)
+    if (p)
     {
         free_lexer(p->lexer);
         free(p);
@@ -105,10 +105,15 @@ bool parse_list(struct parser *parser, struct node_list **ast)
     DEBUG("parse_list\n");
     if (!parser)
         return true;
+    *ast = build_list();
     struct node_list *tmp = *ast;
+    bool is_first = true;
     do
     {
-        tmp = build_list();
+        if (is_first)
+            is_first = !is_first;
+        else
+            tmp = build_list();
         if (parse_and_or(parser, &(tmp->and_or)))
             return true;
         if (!is_type(parser->current_token, TOK_SEMI) && 
@@ -127,8 +132,9 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             next_token(parser);
         }
         tmp = tmp->next_sibling;
-    } while(!is_type(parser->current_token, TOK_NEWLINE) && 
+    } while (!is_type(parser->current_token, TOK_NEWLINE) && 
         !is_type(parser->current_token, TOK_EOF));
+    printf("ast %p\n", *ast);
     return false;
 }
 
@@ -137,7 +143,7 @@ bool parse_and_or(struct parser *parser, struct node_and_or **ast)
     DEBUG("parse_and_or\n");
     if (!parser)
         return true;
-    struct node_and_or *node_and_or = build_and_or_final(false, NULL, NULL);             // and_or: pipeline (('&&'|'||') ('\n')* pipeline)*
+    struct node_and_or *node_and_or = build_and_or_final(false, NULL, NULL);    // and_or: pipeline (('&&'|'||') ('\n')* pipeline)*
     
     if (parse_pipeline(parser, &(node_and_or->left.pipeline)))
         return true;
@@ -202,7 +208,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
     *ast = build_command();
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
-        free_shell_command((*ast)->command.shell_command);
+        //free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             // FREE ast->command.funcdec
@@ -325,21 +331,22 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
         is_function = true;
         next_token(parser);
     }
-    
-    if (!is_type(current, TOK_WORD))
+    if (!is_type(parser->current_token, TOK_WORD))
         return true;
     
-    char *function_name = current->value;
+    char *function_name = parser->current_token->value;
     next_token(parser);
-    if (!is_type(current, TOK_LPAREN))
+    if (!is_type(parser->current_token, TOK_LPAREN))
         return true;
     next_token(parser);
-    if (!is_type(current, TOK_RPAREN))
+    if (!is_type(parser->current_token, TOK_RPAREN))
         return true;
+    next_token(parser);
     parser_eat(parser);
     *ast = build_funcdec(is_function, function_name);
     if (parse_shell_command(parser, &((*ast)->shell_command)))
         return true;
+    next_token(parser);
     return false;
 }
 
@@ -419,6 +426,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
         is_type(parser->current_token, TOK_NEWLINE)
         )
     {
+        next_token(parser);
         parser_eat(parser);
         tmp = tmp->next_sibling;
         tmp = build_compound_list();
@@ -451,34 +459,36 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast) // PROBLEME RE
     (*ast)->variable_name = current->value;
     next_token(parser);
     // parser_eat(parser);
-    if (is_type(current, TOK_SEMI))
+    if (is_type(parser->current_token, TOK_SEMI))
     {
         next_token(parser);
         current = parser->current_token;
         //FREE(AST)
     }
     else
+    {
         parser_eat(parser);
-    
-    if (!(is_type(current, KW_IN)))
-    {
-        //FREE(AST)
-        return true;
-    }
-    next_token(parser);
-    current = parser->current_token;
-    while (is_type(current, TOK_WORD))
-    {
-        (*ast)->range = append_value_to_for(*ast, current->value);
+        current = parser->current_token;
+        if (!(is_type(current, KW_IN)))
+        {
+            //FREE(AST)
+            return true;
+        }
         next_token(parser);
         current = parser->current_token;
+        while (is_type(current, TOK_WORD))
+        {
+            (*ast)->range = append_value_to_for(*ast, current->value);
+            next_token(parser);
+            current = parser->current_token;
+        }
+        if (!(is_type(current, TOK_SEMI) || is_type(current, TOK_NEWLINE)))
+        {
+            //FREE(AST)
+            return true;
+        }
+        next_token(parser);
     }
-    if (!(is_type(current, TOK_SEMI) || is_type(current, TOK_NEWLINE)))
-    {
-        //FREE(AST)
-        return true;
-    }
-    next_token(parser);
     current = parser->current_token;
     parser_eat(parser);
     return parse_do_group(parser, &((*ast)->body)) ? true : false;
@@ -635,7 +645,9 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
         current = parser->current_token;
         if (parse_compound_list(parser, &((*ast)->body)))
             return true;
-        return is_type(parser->current_token, KW_DONE);
+        current = parser->current_token;
+        next_token(parser);
+        return !is_type(current, KW_DONE);
     }
     return true;
 }
