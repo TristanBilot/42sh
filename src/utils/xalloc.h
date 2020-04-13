@@ -20,4 +20,7 @@ void *xmalloc(size_t size) __malloc;
 */
 void *xrealloc(void *ptr, size_t size);
 
+void *xcalloc(size_t nmb, size_t size);
+
+
 #endif /* ! XALLOC_H */

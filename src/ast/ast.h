@@ -100,6 +100,7 @@ struct node_shell_command
         PARENTHESIS,
         RULE
     } type;
+
     union shell
     {
         struct node_compound_list *compound_list;

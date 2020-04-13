@@ -1,0 +1,26 @@
+parse
+init_parser
+parse_input
+NODE CREATE IN BUILD_INPUT NOT NULLparse_list
+parse_and_or
+parse_pipeline
+parse_command
+parse_shell_command
+parse_rule_for
+free_for
+parse_rule_while
+free_while
+parse_rule_until
+free_until
+parse_rule_case
+free_case
+parse_rule_if
+free_if
+parse_funcdec
+AMAZONIA
+parse_simple_command
+parse_prefix
+parse_element
+parse_element
+end
+

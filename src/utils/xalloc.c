@@ -20,3 +20,11 @@ void *xrealloc(void *ptr, size_t size)
         err(1, "%s", strerror(errno));
     return ret;
 }
+
+void *xcalloc(size_t nmb, size_t size)
+{
+    void *ret = calloc(nmb, size);
+    if (size && !ret)
+        err(1, "%s", strerror(errno));
+    return ret;
+}
