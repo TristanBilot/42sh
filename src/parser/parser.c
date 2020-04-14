@@ -72,6 +72,7 @@ void *parse(struct lexer *lexer)
     if (parse_input(parser, &ast))
     {
         error("Parser error");
+        // FREE AST
     }
     free_parser(parser);
     return ast;
@@ -208,7 +209,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
     *ast = build_command();
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
-        //free_shell_command((*ast)->command.shell_command);
+        free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             // FREE ast->command.funcdec
@@ -244,11 +245,26 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
     if (parse_prefix(parser, &p))
     {
         // FREE p
+        printf("FAILED PARSE PREFIX\n");
+        
         parser->current_token = current;
         struct node_element *e = NULL;
         if (parse_element(parser, &e))
             return true;
-        (*ast)->elements = append_element(*ast, e);
+        append_element(*ast, e);
+        // struct node_element *a = xmalloc(sizeof(struct node_element));
+        // struct node_element *b = xmalloc(sizeof(struct node_element));
+        // struct node_element *c = xmalloc(sizeof(struct node_element));
+        // append_element(*ast, a);
+        // append_element(*ast, b);
+        // append_element(*ast, c);
+        // struct node_element *d = (*ast)->elements;
+        // while (d)
+        // {
+        //     printf("-> %p ", d);
+        //     d = d->next;
+        // }
+        // printf("\n");
         
         e = NULL;
         current = parser->current_token;
@@ -257,7 +273,7 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             
             current = parser->current_token;
             append_element(*ast, e); // rajouter (*ast)->elements = ?
-            
+            // (*ast)->elements = e;
             e = NULL;
         }
         // FREE e
@@ -265,6 +281,7 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
     }
     else
     {
+        printf("SUCCEED PARSE PREFIX\n");
         current = parser->current_token;
         (*ast)->prefixes = append_prefix(*ast, p);
         p = NULL;
@@ -280,12 +297,13 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
         while (!parse_element(parser, &e))
         {
             current = parser->current_token;
-            (*ast)->elements = append_element(*ast, e);
+            append_element(*ast, e);
             e = NULL;
         }
         // FREE e
         parser->current_token = current;
     }
+    printf("prefixes = %p elements = %p\n", (*ast)->prefixes, (*ast)->elements);
     return false;
 }
 
@@ -296,7 +314,8 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
     *ast = build_shell_command(parser);
     if (is_type(current, TOK_LCURL) || is_type(current, TOK_LPAREN))
     {
-        (*ast)->type = (is_type(current, TOK_LCURL) ? C_BRACKETS : PARENTHESIS);
+        // (*ast)->type = (is_type(current, TOK_LCURL) ? C_BRACKETS : PARENTHESIS);
+        // déjà fait dans build_shell_command
         next_token(parser);
         if (parse_compound_list(parser, &((*ast)->shell.compound_list)))
             return true;
@@ -305,17 +324,42 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
             return false;
         return true;
     }
-    else if (parse_rule_for(parser, &((*ast)->shell.rule_for)))
-        // FREE ast->shell.rule_for
-        if (parse_rule_while(parser, &((*ast)->shell.rule_while)))
-            // FREE ast->shell.rule_while
-            if (parse_rule_until(parser, &((*ast)->shell.rule_until)))
-                // FREE ast->shell.rule_until
-                if (parse_rule_case(parser, &((*ast)->shell.rule_case)))
-                    // FREE ast->shell.rule_case
-                    if (parse_rule_if(parser, &((*ast)->shell.rule_if)))
-                        return true;
-    (*ast)->type = RULE;
+    else
+    {
+        // (*ast)->type = get_shell_command_type(parser->current_token->type);
+        // if ((*ast)->shell_type == FOR)
+        printf("+++ before for : %s\n", type_to_str(parser->current_token->type));
+        struct token *current = parser->current_token;
+        if (parse_rule_for(parser, &((*ast)->shell.rule_for)))
+        {
+            parser->current_token = current;
+            // FREE ast->shell.rule_for
+            if (parse_rule_while(parser, &((*ast)->shell.rule_while)))
+            {
+                // FREE ast->shell.rule_while
+                parser->current_token = current;
+                if (parse_rule_until(parser, &((*ast)->shell.rule_until)))
+                {
+                    // FREE ast->shell.rule_until
+                    parser->current_token = current;
+                    if (parse_rule_case(parser, &((*ast)->shell.rule_case)))
+                    {
+                        // FREE ast->shell.rule_case
+                        parser->current_token = current;
+                        // printf("+++ before if : %s\n", type_to_str(parser->current_token->type));
+                        // printf("+++ before if next : %s\n", type_to_str(parser->current_token->next->type));
+                        if (parse_rule_if(parser, &((*ast)->shell.rule_if)))
+                        {
+                            parser->current_token = current;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
     return false;
 }
 
@@ -377,9 +421,9 @@ bool parse_prefix(struct parser *parser, struct node_prefix **ast)
     if (is_type(parser->current_token, TOK_ASS_WORD))
     {
         (*ast)->type = ASSIGMENT_WORD;
-        (*ast)->prefix.assigment_word.variable_name = parser->current_token->value;
+        (*ast)->prefix.assigment_word->variable_name = parser->current_token->value;
         next_token(parser);
-        (*ast)->prefix.assigment_word.value = parser->current_token->value;
+        (*ast)->prefix.assigment_word->value = parser->current_token->value;
         next_token(parser);
         return false;
     }
@@ -560,8 +604,10 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
     DEBUG("parse_rule_if\n");
     struct token *curr = parser->current_token;
     *ast = build_if();
+    printf("in parse if curr token : %s\n", type_to_str(parser->current_token->type));
     if (!is_type(curr, KW_IF))
         return true;
+    printf("accepted\n");
     next_token(parser);
     if (parse_compound_list(parser, &((*ast)->condition)))
         return true;

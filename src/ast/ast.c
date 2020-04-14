@@ -75,20 +75,13 @@ struct node_simple_command *build_simple_command(void)
 struct node_shell_command *build_shell_command(struct parser *parser)
 {
     struct node_shell_command *new = xmalloc(sizeof(struct node_shell_command));
+    new->shell.compound_list = NULL;
     if (is_type(parser->current_token, TOK_LPAREN))
-    {
-        new->shell.compound_list = NULL;
         new->type = PARENTHESIS;
-    }
     else if (is_type(parser->current_token, TOK_LCURL))
-    {
-        new->shell.compound_list = NULL;
         new->type = C_BRACKETS;
-    }
     else
-    {
         new->type = RULE;
-    }
     // printf("SHELL COMMAND \n");
     return new;
 }
@@ -122,14 +115,15 @@ struct node_redirection *build_redirection(struct parser *parser)
     
 }
 
-
 struct node_prefix *build_prefix(struct parser *parser)
 {
     struct node_prefix *new = xmalloc(sizeof(struct node_prefix));
+    printf("pointer pref : %p\n", new);
     if (is_type(parser->current_token, TOK_ASS_WORD))
     {
-        new->prefix.assigment_word.variable_name = "";
-        new->prefix.assigment_word.value = "";
+        new->prefix.assigment_word = xmalloc(sizeof(struct assigment_word));
+        new->prefix.assigment_word->variable_name = "";
+        new->prefix.assigment_word->value = "";
         new->type = ASSIGMENT_WORD;
     }
     else

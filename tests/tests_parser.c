@@ -201,6 +201,18 @@ Test(parser, parse_simple_if){
     bool result5 = parse_input(parser5, &ast5);
     // free_parser(parser5);
     cr_assert(!result5);
+
+    struct parser *parser6 = init_parser(new_lexer("if a then b  c then d elif e then f else g fi"));
+    void *ast6 = NULL;
+    bool result6 = parse_input(parser6, &ast6);
+    // free_parser(parser5);
+    cr_assert(result6);
+
+    struct parser *parser7 = init_parser(new_lexer("if a then b else c"));
+    void *ast7 = NULL;
+    bool result7 = parse_input(parser7, &ast7);
+    // free_parser(parser5);
+    cr_assert(result7);
 }
 
 
@@ -234,13 +246,22 @@ Test(parser, parser_and_or_simple){
     // free_parser(parser4);
     cr_assert(!result4);
 
-    
+    struct parser *parser5 = init_parser(new_lexer("ls && || cat Makefile"));
+    void *ast5 = NULL;
+    bool result5 = parse_input(parser5, &ast5);
+    // free_parser(parser5);
+    cr_assert(result5);
+
+    struct parser *parser6 = init_parser(new_lexer("ls || cat Makefile &&"));
+    void *ast6 = NULL;
+    bool result6 = parse_input(parser6, &ast6);
+    // free_parser(parser6);
+    cr_assert(result6);
 }
 
 
 Test(parser, parser_multi_logical)          //marche
 {
-
     struct parser *parser = init_parser(new_lexer("ls | echo test || cat test"));
     void *ast = NULL;
     bool result = parse_input(parser, &ast);
@@ -264,6 +285,18 @@ Test(parser, parser_multi_logical)          //marche
     bool result4 = parse_input(parser4, &ast4);
     // free_parser(parser4);
     cr_assert(!result4);
+
+    struct parser *parser5 = init_parser(new_lexer("ls | echo test |"));
+    void *ast5 = NULL;
+    bool result5 = parse_input(parser5, &ast5);
+    // free_parser(parser5);
+    cr_assert(result5);
+
+    struct parser *parser6 = init_parser(new_lexer("ls | > echo test"));
+    void *ast6 = NULL;
+    bool result6 = parse_input(parser6, &ast6);
+    // free_parser(parser6);
+    cr_assert(!result6);
 }
 
 Test(parser, parser_hard_test_simple_command){          // marche pas
@@ -332,6 +365,12 @@ Test(parser, rule_for)
     bool result4 = parse_input(parser4, &ast4);
     // free_parser(parser);
     cr_assert(!result4);
+
+    struct parser *parser5 = init_parser(new_lexer("for i in range do echo test; echo tata\necho toto done"));
+    void *ast5 = NULL;
+    bool result5 = parse_input(parser5, &ast5);
+    // free_parser(parser);
+    cr_assert(result5);
 }
 
 Test(parser, funcdec)
@@ -354,4 +393,16 @@ Test(parser, funcdec)
     bool result3 = parse_input(parser3, &ast3);
     // free_parser(parser);
     cr_assert(!result3);
+
+    struct parser *parser4 = init_parser(new_lexer("print_hello ( ) { echo hello "));
+    void *ast4 = NULL;
+    bool result4 = parse_input(parser4, &ast4);
+    // free_parser(parser);
+    cr_assert(result4);
+
+    struct parser *parser5 = init_parser(new_lexer("print_hello ( { echo hello }"));
+    void *ast5 = NULL;
+    bool result5 = parse_input(parser5, &ast5);
+    // free_parser(parser);
+    cr_assert(result5);
 }

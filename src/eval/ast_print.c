@@ -6,23 +6,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #define PRINT_NODE(msg) \
             fprintf(f, "%s\n", msg)
             
-
 void print_node_input(struct node_input *ast, FILE *f)
 {
     PRINT_NODE("INPUT");
-    printf("%p\n", (void *)ast);
+    // printf("%p\n", (void *)ast);
     print_node_list(ast->node_list, f);
     
 }
 void print_node_list(struct node_list *ast, FILE *f)
 {
+    // printf("====> %p\n", ast->and_or->left.pipeline->command->command.simple_command->prefixes);
     struct node_list *c = ast;
     print_node_and_or(c->and_or, f);
-    PRINT_NODE("ZIZI");
     while (c->next_sibling)
     {
         c = c->next_sibling;
@@ -44,6 +42,9 @@ void print_node_and_or(struct node_and_or *ast, FILE *f)
         PRINT_NODE("OR");
     else if (ast->type == AND)
         PRINT_NODE("AND");
+    // printf("left %p\n", ast->left.pipeline);
+    if (ast->is_final)
+        print_node_pipeline(ast->left.pipeline, f);
     if (ast->right)
         print_node_pipeline(ast->right, f);
 }
@@ -63,6 +64,7 @@ void print_node_pipeline(struct node_pipeline *ast, FILE *f)
 
 void print_node_command(struct node_command *ast, FILE *f)
 {
+    // printf("type %p\n", ast->command.simple_command);
     if (ast->type == SIMPLE_COMMAND)
         print_node_simple_command(ast->command.simple_command, f);
     else if (ast->type == SHELL_COMMAND)
@@ -90,6 +92,7 @@ void print_node_simple_command(struct node_simple_command *ast, FILE *f)
 {
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
+    // printf("p ==> %p  e ==> %p\n", ast->prefixes, e);
     while (p)
     {
         print_node_prefix(p, f);
@@ -170,11 +173,12 @@ void print_node_redirection(struct node_redirection *ast, FILE *f)
 }
 void print_node_prefix(struct node_prefix *ast, FILE *f)
 {
+    
     if (ast->type == ASSIGMENT_WORD)
     {
-        PRINT_NODE(ast->prefix.assigment_word.variable_name);
+        PRINT_NODE(ast->prefix.assigment_word->variable_name);
         PRINT_NODE("=");
-        PRINT_NODE(ast->prefix.assigment_word.value);
+        PRINT_NODE(ast->prefix.assigment_word->value);
         PRINT_NODE("");
     }
     else if (ast->type == REDIRECTION)
@@ -312,7 +316,9 @@ int main(int argc, char *argv[])
     struct node_input *ast = NULL;
 
     if ((ast = parse(lexer)))
+    {
         print_ast(ast);
+    }
     // else
     //     puts("Parsing error");
 

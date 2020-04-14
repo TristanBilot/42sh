@@ -159,7 +159,7 @@ struct node_prefix
         {
             char *variable_name;
             char *value;
-        } assigment_word; /* MAYBE CREATE A POINTER */
+        } *assigment_word; /* MAYBE CREATE A POINTER */
         struct node_redirection *redirection;
     } prefix;
 };
@@ -177,7 +177,6 @@ struct node_element
         char *word;
         struct node_redirection *redirection;
     } element;
-
 };
 
 struct node_compound_list
