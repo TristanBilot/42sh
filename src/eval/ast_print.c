@@ -12,7 +12,6 @@
 void print_node_input(struct node_input *ast, FILE *f)
 {
     PRINT_NODE("INPUT");
-    // printf("%p\n", (void *)ast);
     print_node_list(ast->node_list, f);
     
 }
@@ -35,6 +34,7 @@ void print_node_and_or(struct node_and_or *ast, FILE *f)
 {
     if (!ast->is_final)
     {
+        PRINT_NODE("CHIBRE");
         print_node_and_or(ast->left.and_or, f);
         print_node_pipeline(ast->left.pipeline, f);
     }
@@ -44,9 +44,11 @@ void print_node_and_or(struct node_and_or *ast, FILE *f)
         PRINT_NODE("AND");
     // printf("left %p\n", ast->left.pipeline);
     if (ast->is_final)
-        print_node_pipeline(ast->left.pipeline, f);
+        print_node_pipeline(ast->left.and_or->left.pipeline, f);
     if (ast->right)
         print_node_pipeline(ast->right, f);
+    //printf("======> %p\n", (ast->left.and_or->left));
+    //print_node_pipeline(ast->left.and_or->left.pipeline, f);
 }
 
 void print_node_pipeline(struct node_pipeline *ast, FILE *f)
@@ -64,7 +66,6 @@ void print_node_pipeline(struct node_pipeline *ast, FILE *f)
 
 void print_node_command(struct node_command *ast, FILE *f)
 {
-    // printf("type %p\n", ast->command.simple_command);
     if (ast->type == SIMPLE_COMMAND)
         print_node_simple_command(ast->command.simple_command, f);
     else if (ast->type == SHELL_COMMAND)
@@ -77,7 +78,7 @@ void print_node_command(struct node_command *ast, FILE *f)
             r = r->next;
         }
     }
-    else    
+    else
     {
         print_node_funcdec(ast->command.funcdec, f);
         struct node_redirection *r = ast->redirections;
@@ -92,7 +93,6 @@ void print_node_simple_command(struct node_simple_command *ast, FILE *f)
 {
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
-    // printf("p ==> %p  e ==> %p\n", ast->prefixes, e);
     while (p)
     {
         print_node_prefix(p, f);
@@ -134,7 +134,6 @@ void print_node_shell_command(struct node_shell_command *ast, FILE *f)
     default:
         break;
     }
-
 }
 void print_node_funcdec(struct node_funcdec *ast, FILE *f)
 {
@@ -152,9 +151,9 @@ void print_node_redirection(struct node_redirection *ast, FILE *f)
     PRINT_NODE(ast->left);
 
     if (TOK_DLESSDASH == ast->type)
-            PRINT_NODE("<<-");
+        PRINT_NODE("<<-");
     if (TOK_DLESS == ast->type)
-            PRINT_NODE("<<");
+        PRINT_NODE("<<");
     if (TOK_LESSGREAT == ast->type)
         PRINT_NODE("<>");
     if (TOK_LESS == ast->type)
@@ -169,11 +168,9 @@ void print_node_redirection(struct node_redirection *ast, FILE *f)
         PRINT_NODE(">");
 
     PRINT_NODE(ast->right);
-    
 }
 void print_node_prefix(struct node_prefix *ast, FILE *f)
 {
-    
     if (ast->type == ASSIGMENT_WORD)
     {
         PRINT_NODE(ast->prefix.assigment_word->variable_name);
