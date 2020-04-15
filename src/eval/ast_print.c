@@ -6,14 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define PRINT_NODE(msg) \
+#define PRINT_FLAG true
+#define PRINT_NODE(msg) if (PRINT_FLAG) \
             fprintf(f, "%s\n", msg)
             
 void print_node_input(struct node_input *ast, FILE *f)
 {
-    PRINT_NODE("INPUT");
+    //PRINT_NODE("INPUT");
     print_node_list(ast->node_list, f);
-    
 }
 void print_node_list(struct node_list *ast, FILE *f)
 {
@@ -32,33 +32,50 @@ void print_node_list(struct node_list *ast, FILE *f)
 }
 void print_node_and_or(struct node_and_or *ast, FILE *f)
 {
-    if (!ast->is_final)
-    {
-        PRINT_NODE("CHIBRE");
-        print_node_and_or(ast->left.and_or, f);
-        print_node_pipeline(ast->left.pipeline, f);
-    }
-    if (ast->type == OR)
-        PRINT_NODE("OR");
-    else if (ast->type == AND)
-        PRINT_NODE("AND");
-    // printf("left %p\n", ast->left.pipeline);
     if (ast->is_final)
-        print_node_pipeline(ast->left.and_or->left.pipeline, f);
+        print_node_pipeline(ast->left.pipeline, f);
+    else
+        print_node_and_or(ast->left.and_or, f);
     if (ast->right)
+    {
+        if (ast->type == OR)
+            PRINT_NODE("OR");
+        if (ast->type == AND) // NE MARCHE PAS AVEC "ELSE IF" bizarre...
+            PRINT_NODE("AND");
         print_node_pipeline(ast->right, f);
-    //printf("======> %p\n", (ast->left.and_or->left));
-    //print_node_pipeline(ast->left.and_or->left.pipeline, f);
+    }
+    /*
+    **if (!ast->is_final)
+    **{
+    **    PRINT_NODE("CHIBRE");
+    **    print_node_and_or(ast->left.and_or, f);
+    **    print_node_pipeline(ast->left.pipeline, f);
+    **}
+    **if (ast->type == OR)
+    **    PRINT_NODE("OR");
+    **else if (ast->type == AND)
+    **    PRINT_NODE("AND");
+    **printf("left %p\n", ast->left.pipeline);
+    **if (ast->is_final)
+    **    print_node_pipeline(ast->left.and_or->left.pipeline, f);
+    **if (ast->right)
+    **    print_node_pipeline(ast->right, f);
+    **printf("======> %p\n", (ast->left.and_or->left));
+    **print_node_pipeline(ast->left.and_or->left.pipeline, f);
+    */
 }
 
 void print_node_pipeline(struct node_pipeline *ast, FILE *f)
 {
+    //printf("is_not = %d\n", ast->is_not);
     if (ast->is_not)
         PRINT_NODE("!");
+    
     struct node_pipeline *c = ast;
     print_node_command(c->command, f);
     while (c->next_sibling)
     {
+        PRINT_NODE("PIPE");
         c = c->next_sibling;
         print_node_command(c->command, f);
     }
@@ -78,7 +95,7 @@ void print_node_command(struct node_command *ast, FILE *f)
             r = r->next;
         }
     }
-    else
+    else if(ast->type == FUNCDEC)
     {
         print_node_funcdec(ast->command.funcdec, f);
         struct node_redirection *r = ast->redirections;
@@ -116,19 +133,22 @@ void print_node_shell_command(struct node_shell_command *ast, FILE *f)
         break;
     case PARENTHESIS:
         PRINT_NODE("(");
-        print_node_compound_list(ast->shell.compound_list, f);
+       print_node_compound_list(ast->shell.compound_list, f);
         PRINT_NODE(")");
         break;
     case RULE:
-        if (ast->shell_type == FOR)
-            print_node_for(ast->shell.rule_for, f);
-        else if (ast->shell_type == WHILE)
+        if (ast->shell_type == WHILE)
             print_node_while(ast->shell.rule_while, f);
-        else if (ast->shell_type == UNTIL)
+        if (ast->shell_type == FOR)
+        {
+            printf("enter for\n");
+            print_node_for(ast->shell.rule_for, f);
+        }
+        if (ast->shell_type == UNTIL)
             print_node_until(ast->shell.rule_until, f);
-        else if (ast->shell_type == CASE)
+        if (ast->shell_type == CASE)
             print_node_case(ast->shell.rule_case, f);
-        else if (ast->shell_type == IF)
+        if (ast->shell_type == IF)
             print_node_if(ast->shell.rule_if, f);
         break;
     default:
@@ -148,8 +168,8 @@ void print_node_funcdec(struct node_funcdec *ast, FILE *f)
 
 void print_node_redirection(struct node_redirection *ast, FILE *f)
 {
-    PRINT_NODE(ast->left);
-
+    if (ast->left)
+        PRINT_NODE(ast->left);
     if (TOK_DLESSDASH == ast->type)
         PRINT_NODE("<<-");
     if (TOK_DLESS == ast->type)
@@ -178,14 +198,14 @@ void print_node_prefix(struct node_prefix *ast, FILE *f)
         PRINT_NODE(ast->prefix.assigment_word->value);
         PRINT_NODE("");
     }
-    else if (ast->type == REDIRECTION)
+    if (ast->type == REDIRECTION)
         print_node_redirection(ast->prefix.redirection, f);
 }
 void print_node_element(struct node_element *ast, FILE *f)
 {
     if (ast->type == WORD)
         PRINT_NODE(ast->element.word);
-    else if (ast->type == TOKEN_REDIRECTION)
+    if (ast->type == TOKEN_REDIRECTION)
         print_node_redirection(ast->element.redirection, f);
 }
 void print_node_compound_list(struct node_compound_list *ast, FILE *f)
@@ -193,8 +213,8 @@ void print_node_compound_list(struct node_compound_list *ast, FILE *f)
     struct node_compound_list *c = ast;
     while (c)
     {
-        print_node_and_or(ast->and_or, f);
-        c = ast->next_sibling;
+        print_node_and_or(c->and_or, f);
+        c = c->next_sibling;
     }
 }
 void print_node_while(struct node_while *ast, FILE *f)
@@ -212,12 +232,14 @@ void print_node_until(struct node_until *ast, FILE *f)
 void print_node_case(struct node_case *ast, FILE *f)
 {
     PRINT_NODE("CASE");
-    PRINT_NODE(ast->word);
+    printf("%s\n", ast->word);
     PRINT_NODE("IN");
-    if(ast->is_case_clause)
-        PRINT_NODE("CASE CLAUSE");
+    if (ast->is_case_clause)
+    {
+        //PRINT_NODE("CASE CLAUSE");
+        print_node_case_clause(ast->case_clause, f);
+    }
     PRINT_NODE("ESAC");
-    
 }
 void print_node_if(struct node_if *ast, FILE *f)
 {
@@ -268,13 +290,16 @@ void print_node_do_group(struct node_do_group *ast, FILE *f)
 }
 void print_node_case_clause(struct node_case_clause *ast, FILE *f)
 {
-    print_node_case_item(ast->case_item, f);
-
-
-        // Trouver le moyen de gerer les ;; et plusieurs fois 
-
-    if(ast->is_sepand)
+    PRINT_NODE("CASE CLAUSE");
+    struct node_case_clause *c = ast;
+    print_node_case_item(c->case_item, f);
+    while (c->next)
+    {
         PRINT_NODE(";;");
+        c = c->next;
+        print_node_case_item(c->case_item, f);
+    }
+    PRINT_NODE(";;");
 }
 void print_node_case_item(struct node_case_item *ast, FILE *f)
 {

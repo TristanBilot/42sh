@@ -118,7 +118,7 @@ struct node_redirection *build_redirection(struct parser *parser)
 struct node_prefix *build_prefix(struct parser *parser)
 {
     struct node_prefix *new = calloc(1, sizeof(struct node_prefix));
-    printf("pointer pref : %p\n", new);
+    //printf("pointer pref : %p\n", new);
     if (is_type(parser->current_token, TOK_ASS_WORD))
     {
         new->prefix.assigment_word = calloc(1, sizeof(struct assigment_word));

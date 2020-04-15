@@ -12,7 +12,7 @@
     free(ast); \
     ast = NULL;
 
-#define DEBUG_FLAG true
+#define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s", msg);
 
@@ -21,7 +21,6 @@ void free_input(struct node_input *ast)
 {
     DEBUG("free_input\n");
     AST_EXISTS(ast);
-    free_list(ast->node_list);
     FREE_AST(ast);
 }
 

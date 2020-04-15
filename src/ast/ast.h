@@ -246,7 +246,6 @@ struct node_do_group
 
 struct node_case_clause
 {
-    bool is_sepand;
     struct node_case_item *case_item;
     struct node_case_clause *next;
 };
