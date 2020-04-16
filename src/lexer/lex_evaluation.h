@@ -5,7 +5,8 @@ struct token *lex_great_less_and(const char *c, size_t i);
 struct token *lex_io_number(char *c, size_t i);
 char *lex_backslash(const char *c, size_t i);
 struct token *lex_great_less(char *c, size_t i);
-struct token *lex_semicolon_newline(char *c, size_t i);
+struct token *lex_comments(char *c, size_t i);
+struct token *lex_uni_character(char *c, size_t i);
 struct token *lex_assignment_word(char *c, size_t *i);
 struct token *lex_assignment_value(char *c, size_t i);
 

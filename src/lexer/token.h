@@ -8,10 +8,10 @@
 */
 enum token_type
 {
-    TOK_ERROR,
-    TOK_NEWLINE,	// \n
-    TOK_EOF,		// EOF
-    TOK_AND,		// &&
+    TOK_ERROR,      //                                      0
+    TOK_NEWLINE,	// \n                                   1
+    TOK_EOF,		// EOF                                  2
+    TOK_AND,		// &&                                   3
     TOK_SEPAND,		// &
     TOK_OR,		    // ||
     TOK_PIPE,		// |
@@ -28,10 +28,11 @@ enum token_type
     TOK_DGREAT,		// >>
     TOK_GREATAND,	// >&
     TOK_CLOBBER,	// >|
-    TOK_ASS_WORD,    // =
+    TOK_ASS_WORD,   // =
     TOK_GREAT,		// >
     TOK_IONUMBER,	// number juste before '>' or '<'
     TOK_NOT,        // !
+    TOK_COMM,       // #
     TOK_WORD,		// all others
 
     KW_IF,          // if

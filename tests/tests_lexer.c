@@ -283,7 +283,7 @@ Test(lexer, assignment_word)
 
     const char *input2 = "=223";
     struct lexer *lexer2 = new_lexer(input2);
-    cr_assert(peek(lexer2)->type == TOK_ERROR);
+    cr_assert(peek(lexer2)->type == TOK_WORD);
 
     const char *input3 = "a=a=42";
     struct lexer *lexer3 = new_lexer(input3);
@@ -291,4 +291,56 @@ Test(lexer, assignment_word)
     cr_assert(is(pop(lexer3)->value, "a"));
     cr_assert(peek(lexer3)->type == TOK_WORD);
     cr_assert(is(pop(lexer3)->value, "a=42"));
+}
+
+Test(lexer, parenthesis)
+{
+    const char *input1 = "(some content)";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == TOK_LPAREN);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_RPAREN);
+
+    const char *input2 = "(if elif)";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == TOK_LPAREN);
+    cr_assert(pop(lexer2)->type == KW_IF);
+    cr_assert(pop(lexer2)->type == KW_ELIF);
+    cr_assert(pop(lexer2)->type == TOK_RPAREN);
+
+    const char *input3 = "((if elif)))";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(pop(lexer3)->type == TOK_LPAREN);
+    cr_assert(pop(lexer3)->type == TOK_LPAREN);
+    cr_assert(pop(lexer3)->type == KW_IF);
+    cr_assert(pop(lexer3)->type == KW_ELIF);
+    cr_assert(pop(lexer3)->type == TOK_RPAREN);
+    cr_assert(pop(lexer3)->type == TOK_RPAREN);
+    cr_assert(pop(lexer3)->type == TOK_RPAREN);
+}
+
+Test(lexer, comments)
+{
+    const char *input1 = "#some comments";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == TOK_COMM);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+
+    const char *input2 = "a # =b";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(pop(lexer2)->type == TOK_COMM);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+
+    const char *input3 = "a#b";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+    cr_assert(pop(lexer3)->type == TOK_EOF);
+
+    const char *input4 = "ab #";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == TOK_COMM);
 }

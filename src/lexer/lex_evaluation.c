@@ -88,7 +88,16 @@ struct token *lex_great_less(char *c, size_t i)
     return NULL;
 }
 
-struct token *lex_semicolon_newline(char *c, size_t i)
+struct token *lex_comments(char *c, size_t i)
+{
+    if (!c || !c[i] || c[i] != '#')
+        return NULL;
+    if (!c[i - 1] || c[i - 1] == ' ' || c[i - 1] == '\n')
+        return new_token_type(TOK_COMM);
+    return NULL;
+}
+
+struct token *lex_uni_character(char *c, size_t i)
 {
     if (!c || !c[i])
         return NULL;
@@ -116,7 +125,7 @@ struct token *lex_assignment_word(char *c, size_t *i)
     if (!(c[*i] == '='))
         return NULL;
     if (*i == 0)
-        return new_token_error("Assignment rules can not start with '='");
+        return NULL;
     
     char *var_name = substr(c, 0, *i);
     struct token *token = new_token_type(TOK_ASS_WORD);
@@ -209,5 +218,7 @@ enum token_type evaluate_token(char *c)
         return TOK_GREAT;
     else if (is(c, "!"))
         return TOK_NOT;
+    else if (is(c, "#"))
+        return TOK_COMM;
     return TOK_WORD;
 }

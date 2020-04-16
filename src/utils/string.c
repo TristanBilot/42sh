@@ -29,6 +29,7 @@ char *type_to_str(int type)
         "TOK_GREAT",	
         "TOK_IONUMBER",
         "TOK_NOT",
+        "TOK_COMM",
         "TOK_WORD",
         "KW_IF",
         "KW_THEN",

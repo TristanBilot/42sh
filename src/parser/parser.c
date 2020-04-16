@@ -47,11 +47,22 @@ struct token *get_next_token(struct parser *p)
     return p->current_token->next;
 }
 
+void parser_comment(struct parser *p)
+{
+    if (is_type(p->current_token, TOK_COMM))
+        while (!is_type(p->current_token, TOK_NEWLINE))
+            p->current_token = get_next_token(p);
+}
+
 void parser_eat(struct parser *p)
 {
     DEBUG("parser_eat\n");
+    //parser_comment(p);
     while (is_type(p->current_token, TOK_NEWLINE))
+    {
         p->current_token = get_next_token(p);
+        //parser_comment(p);
+    }
 }
 
 void next_token(struct parser *parser)
@@ -83,22 +94,30 @@ void *parse(struct lexer *lexer)
 bool parse_input(struct parser *parser, struct node_input **ast)
 {
     DEBUG("parse_input\n");
+    printf("pa\n");
     if (!parser->lexer)
     {
         return true;
     }
-    if (is_type(parser->current_token, TOK_NEWLINE) ||
+    //parser_comment(parser);
+    if ((is_type(parser->current_token, TOK_NEWLINE) &&
+        is_type(parser->current_token->next, TOK_EOF)) ||
         is_type(parser->current_token, TOK_EOF))
     {
         return false;
     }
     *ast = build_input();
     if (!parse_list(parser, &((*ast)->node_list)))
+    {
+        //parser_comment(parser);
+        //printf("curr : %d\n", parser->current_token->next->type);
         if (is_type(parser->current_token, TOK_EOF) ||
-            is_type(parser->current_token, TOK_NEWLINE))
+            (is_type(parser->current_token, TOK_NEWLINE) &&
+            is_type(parser->current_token->next, TOK_EOF)))
         {
             return false;
         }
+    }
     free_list((*ast)->node_list);
     return true;
 }
