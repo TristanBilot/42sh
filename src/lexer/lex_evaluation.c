@@ -102,6 +102,10 @@ struct token *lex_semicolon_newline(char *c, size_t i)
         return new_token_type(TOK_LCURL);
     if (c[i] == '}')
         return new_token_type(TOK_RCURL);
+    if (c[i] == '(')
+        return new_token_type(TOK_LPAREN);
+    if (c[i] == ')')
+        return new_token_type(TOK_RPAREN);
     return NULL;
 }
 
