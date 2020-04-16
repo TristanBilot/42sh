@@ -24,9 +24,13 @@ void print_node_list(struct node_list *ast, FILE *f)
     {
         c = c->next_sibling;
         if (c->type == SEMI)
+        {
             PRINT_NODE("SEMI");
+        }
         else if (c->type == SEPAND)
+        {
             PRINT_NODE("SEPAND");
+        }
         print_node_and_or(c->and_or, f);
     }
 }
@@ -303,9 +307,14 @@ void print_node_case_clause(struct node_case_clause *ast, FILE *f)
 }
 void print_node_case_item(struct node_case_item *ast, FILE *f)
 {
-    PRINT_NODE(ast->word);
-    if (ast->type == COMPOUND)
-        print_node_compound_list(ast->next.compound_list, f);
+    PRINT_NODE(ast->words->word);
+    while (ast->words->next)
+    {
+        ast->words = ast->words->next;
+        PRINT_NODE(ast->words->word);
+    }
+    if (ast->compound_list)
+        print_node_compound_list(ast->compound_list, f);
 
 }
 

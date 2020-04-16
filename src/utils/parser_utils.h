@@ -16,4 +16,7 @@ struct range *append_value_to_for(
     struct node_for *ast,
     char *value) ;
 
+struct word_list *append_word_list(struct node_case_item *ast, char *value);
+enum shell_type get_shell_command_type(int type);
+
 #endif /* PARSER_UTILS_H */

@@ -124,6 +124,31 @@ struct range *append_value_to_for(
     return ast->range;
 }
 
+struct word_list *append_word_list(struct node_case_item *ast, char *value)
+{
+    if (!ast)
+        return NULL;
+    struct word_list *new = malloc(sizeof(struct word_list));
+    new->next = NULL;
+    new->word = value;
+    if (!ast->words)
+    {
+        ast->words = new;
+        return ast->words;
+    }
+    struct word_list *first = ast->words;
+    while (first)
+    {
+        if (!first->next)
+        {
+            first->next = new;
+            return ast->words;
+        }
+        first = first->next;
+    }
+    return ast->words;
+}
+
 enum shell_type get_shell_command_type(int type)
 {
     switch (type)

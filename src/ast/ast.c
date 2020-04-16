@@ -245,10 +245,10 @@ struct node_case_clause *build_case_clause(void)     // ; &
     return new;
 }
 
-struct node_case_item *build_case_item(struct parser *parser)
+struct node_case_item *build_case_item(void)
 {
     struct node_case_item *new = calloc(1, sizeof(struct node_case_item));
-    new->word = parser->current_token->value;
+    new->words = NULL/*parser->current_token->value*/;
     // printf("CASE_ITEM\n");
     return new;
 }

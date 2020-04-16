@@ -250,19 +250,26 @@ struct node_case_clause
     struct node_case_clause *next;
 };
 
-struct node_case_item
+/* ONLY FOR NODE_CASE_ITEM */
+struct word_list
 {
     char *word;
-    enum item
+    struct word_list *next;
+};
+struct node_case_item
+{
+    struct word_list *words;
+    /*enum item
     {
         COMPOUND,
         NEXT
-    } type;
-    union next
+    } type;*/
+    struct node_compound_list *compound_list;
+    /*union next
     {
-        struct node_compound_list *compound_list;
+        
         struct node_case_item *next;
-    } next;
+    } next;*/
 };
 
 struct node_input *build_input(void);
@@ -286,7 +293,7 @@ struct node_for *build_for(void);
 struct node_else_clause *build_else_clause(struct parser *parser);
 struct node_do_group *build_do_group(void);
 struct node_case_clause *build_case_clause(void);
-struct node_case_item *build_case_item(struct parser *parser);
+struct node_case_item *build_case_item(void);
 
 void free_shell_command(struct node_shell_command *p);
 
