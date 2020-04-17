@@ -280,7 +280,7 @@ struct node_pipeline *build_pipeline(bool is_not);
 struct node_command *build_command(void);
 struct node_simple_command *build_simple_command(void);
 struct node_shell_command *build_shell_command(struct parser *parser);
-struct node_funcdec *build_funcdec(bool is_function, char *func_name);
+struct node_funcdec *build_funcdec();
 struct node_redirection *build_redirection(struct parser *parser);
 struct node_prefix *build_prefix(struct parser *parser);
 struct node_element *build_element(struct parser *parser);

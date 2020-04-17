@@ -12,44 +12,44 @@ enum token_type
     TOK_NEWLINE,	// \n                                   1
     TOK_EOF,		// EOF                                  2
     TOK_AND,		// &&                                   3
-    TOK_SEPAND,		// &
-    TOK_OR,		    // ||
-    TOK_PIPE,		// |
-    TOK_SEMI,		// ;
-    TOK_LPAREN,		// (
-    TOK_RPAREN,		// )
-    TOK_LCURL,		// {
-    TOK_RCURL,		// }
-    TOK_DLESSDASH,	// <<-
-    TOK_DLESS,		// <<
-    TOK_LESSGREAT,	// <>
-    TOK_LESSAND,	// <&
-    TOK_LESS,		// <
-    TOK_DGREAT,		// >>
-    TOK_GREATAND,	// >&
-    TOK_CLOBBER,	// >|
-    TOK_ASS_WORD,   // =
-    TOK_GREAT,		// >
-    TOK_IONUMBER,	// number juste before '>' or '<'
-    TOK_NOT,        // !
-    TOK_COMM,       // #
-    TOK_WORD,		// all others
+    TOK_SEPAND,		// &                                    4
+    TOK_OR,		    // ||                                   5
+    TOK_PIPE,		// |                                    6
+    TOK_SEMI,		// ;                                    7   
+    TOK_LPAREN,		// (                                    8
+    TOK_RPAREN,		// )                                    9
+    TOK_LCURL,		// {                                    10
+    TOK_RCURL,		// }                                    11
+    TOK_DLESSDASH,	// <<-                                  12
+    TOK_DLESS,		// <<                                   13
+    TOK_LESSGREAT,	// <>                                   14
+    TOK_LESSAND,	// <&                                   15
+    TOK_LESS,		// <                                    16
+    TOK_DGREAT,		// >>                                   17
+    TOK_GREATAND,	// >&                                   18
+    TOK_CLOBBER,	// >|                                   19
+    TOK_ASS_WORD,   // =                                    20
+    TOK_GREAT,		// >                                    21
+    TOK_IONUMBER,	// number juste before '>' or '<'       22
+    TOK_NOT,        // !                                    23
+    TOK_COMM,       // #                                    24
+    TOK_WORD,		// all others                           25
 
-    KW_IF,          // if
-    KW_THEN,        // then
-    KW_ELSE,        // else
-    KW_ELIF,        // elif
-    KW_FI,          // fi
-    KW_DO,          // do
-    KW_DONE,        // done
-    KW_FOR,         // for
-    KW_WHILE,       // while
-    KW_UNTIL,       // until
-    KW_CASE,        // case
-    KW_ESAC,        // esac
-    KW_IN,          // in
-    KW_DSEMI,       // ;;
-    KW_UNKNOWN      // ??
+    KW_IF,          // if                                   26
+    KW_THEN,        // then                                 27
+    KW_ELSE,        // else                                 28
+    KW_ELIF,        // elif                                 29
+    KW_FI,          // fi                                   30
+    KW_DO,          // do                                   31
+    KW_DONE,        // done                                 32
+    KW_FOR,         // for                                  33
+    KW_WHILE,       // while                                34
+    KW_UNTIL,       // until                                35
+    KW_CASE,        // case                                 36
+    KW_ESAC,        // esac                                 37
+    KW_IN,          // in                                   38
+    KW_DSEMI,       // ;;                                   39
+    KW_UNKNOWN      // ??                                   40
     /*...*/
 };
 

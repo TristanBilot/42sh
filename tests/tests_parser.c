@@ -76,14 +76,14 @@ Test(parser, parse_simple_if)
 Test(parser, parser_and_or_simple)
 {
     cr_assert(success("ls | cat test"));
-    cr_assert(success("ls | cat test"));   // ne pas oublier de tester les ! (n));
+    cr_assert(success("ls | cat test")); 
     cr_assert(success("ls & cat Makefile"));
     cr_assert(success("ls && cat Makefile"));
     cr_assert(fail("ls && || cat Makefile"));
     cr_assert(fail("ls || cat Makefile &&"));
 }
 
-Test(parser, parser_multi_logical)          //marche
+Test(parser, parser_multi_logical)          
 {
     cr_assert(success("ls | echo test || cat test"));
     cr_assert(success("ls || echo test || cat test"));
@@ -127,8 +127,7 @@ Test(parser, rule_while)
 Test(parser, funcdec)
 {
     cr_assert(success("function print_hello ( ) { echo hello }"));
-    // A GERER DANS LE LEXER : parenthèses collées au 
-    //cr_assert(success("function print_hello() { echo hello }"));
+    cr_assert(success("function print_hello() { echo hello }"));
     cr_assert(success("print_hello ( ) { echo hello }"));
     cr_assert(fail("print_hello ( ) { echo hello "));
     cr_assert(fail("print_hello ( { echo hello }"));
@@ -149,9 +148,9 @@ Test(parser, rule_until)
     cr_assert(success("until a + b do echo toto done"));
     cr_assert(success("until ( a+b ) do echo toto done"));
     cr_assert(success("until ( a+b && ( 2 * 3 ) ) do echo toto done"));
-    //cr_assert(success("until ( a + b ) echo toto done"));                    //1   ça bug encore mais j'attend les modif de tristan
-    //cr_assert(fail("\nuntil a + b do echo toto"));            //2     ça bug encore mais j'attend les modif de tristan
-    cr_assert(fail("until a + b echo toto done"));
+    cr_assert(success("until ( a + b ) do echo toto done"));                    
+    cr_assert(fail("\nuntil a + b do echo toto"));  
+    cr_assert(fail("until a + b  echo toto done"));
     cr_assert(fail("until a + b echo toto done"));
     cr_assert(fail("until do echo toto done"));
 }
@@ -186,8 +185,16 @@ Test(parser, parenthesis_near)
     cr_assert(success("print_hello () { echo hello }"));
     cr_assert(success("print_hello() { echo hello }"));
     cr_assert(success("! case str in hello | totoro) echo hello ;; bye | totolo) echo test ;; esac | function print() { for i in range 1 2 ; do echo test ; ( if a then b elif c && j then d else e fi ) ; done ; ls } 1>&2")); 
-    //cr_assert(success("(if a then b elif c && j then d else e fi)")); // jattend modif de tristan
-
-   
+    cr_assert(success("(if a then b elif c && j then d else e fi)"));
 }
 
+Test(parser, comments)
+{
+    cr_assert(success("#commentaire"));   //marche sur le terminal
+    cr_assert(success("# commentaire"));  // marche aussi sur le terminal
+    // Marche car le lexer prend bien ls#commentaire comme un WORD => le parser accepte les simple word => ne marchera pas à l'exécution
+    //cr_assert(fail("ls#commentaire")); // pas censé marcher ça marche pas sur le terminal donc mis en fail
+    cr_assert(success("ls # commentaire")); // ça marche sur le terminal
+    cr_assert(success("ls;#commentaire")); // ça marche sur le terminal
+    cr_assert(fail("#commentaire\necho test"));
+}

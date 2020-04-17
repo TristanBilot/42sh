@@ -86,11 +86,11 @@ struct node_shell_command *build_shell_command(struct parser *parser)
     return new;
 }
 
-struct node_funcdec *build_funcdec(bool is_function, char *func_name)
+struct node_funcdec *build_funcdec()
 {
     struct node_funcdec *new = calloc(1, sizeof(struct node_funcdec));
-    new->is_function = is_function;
-    new->function_name = func_name;
+    new->is_function = false;
+    new->function_name = "";
     new->shell_command = NULL;
     // printf("FUNCDEC\n");
     return new;

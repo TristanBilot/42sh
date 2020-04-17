@@ -50,18 +50,20 @@ struct token *get_next_token(struct parser *p)
 void parser_comment(struct parser *p)
 {
     if (is_type(p->current_token, TOK_COMM))
-        while (!is_type(p->current_token, TOK_NEWLINE))
+        while (!is_type(p->current_token, TOK_NEWLINE) && !is_type(p->current_token, TOK_EOF))
+        {
             p->current_token = get_next_token(p);
+        }
 }
 
 void parser_eat(struct parser *p)
 {
     DEBUG("parser_eat\n");
-    //parser_comment(p);
+    parser_comment(p);
     while (is_type(p->current_token, TOK_NEWLINE))
     {
         p->current_token = get_next_token(p);
-        //parser_comment(p);
+        parser_comment(p);
     }
 }
 
@@ -94,12 +96,12 @@ void *parse(struct lexer *lexer)
 bool parse_input(struct parser *parser, struct node_input **ast)
 {
     DEBUG("parse_input\n");
-    printf("pa\n");
+    //printf("pa\n");
     if (!parser->lexer)
     {
         return true;
     }
-    //parser_comment(parser);
+    parser_comment(parser);
     if ((is_type(parser->current_token, TOK_NEWLINE) &&
         is_type(parser->current_token->next, TOK_EOF)) ||
         is_type(parser->current_token, TOK_EOF))
@@ -109,7 +111,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
     *ast = build_input();
     if (!parse_list(parser, &((*ast)->node_list)))
     {
-        //parser_comment(parser);
+        parser_comment(parser);
         //printf("curr : %d\n", parser->current_token->next->type);
         if (is_type(parser->current_token, TOK_EOF) ||
             (is_type(parser->current_token, TOK_NEWLINE) &&
@@ -148,11 +150,15 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             return true;
         }
         //printf("parser.c / parse_LIST :  ===> %d\n", (*ast)->and_or->left.and_or->left.and_or->left.and_or->is_final/*left.pipeline->command->command.simple_command->elements->element.word*/);
+        parser_comment(parser);
         if (!is_type(parser->current_token, TOK_SEMI) && 
             !is_type(parser->current_token, TOK_SEPAND) &&
             !is_type(parser->current_token, TOK_NEWLINE) && 
             !is_type(parser->current_token, TOK_EOF))
+        {
+            // printf("ko\n");
             return true;
+        }
         if (is_type(parser->current_token, TOK_SEMI))
         {
             tmp->type = SEMI;
@@ -163,6 +169,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             tmp->type = SEPAND;
             next_token(parser);
         }
+        parser_comment(parser);
     } while (!is_type(parser->current_token, TOK_NEWLINE) && 
         !is_type(parser->current_token, TOK_EOF));
     //printf("ast %p\n", (*ast)->next_sibling);
@@ -255,10 +262,16 @@ bool parse_command(struct parser *p, struct node_command **ast)
         //free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
+            // free_funcdec((*ast)->command.funcdec);
             // FREE ast->command.funcdec
             (*ast)->type = SIMPLE_COMMAND;
             p->current_token = current;
-            return parse_simple_command(p, &((*ast)->command.simple_command));
+            if (parse_simple_command(p, &((*ast)->command.simple_command)))
+            {
+                free_simple_command((*ast)->command.simple_command);
+                return true;
+            }
+            return false;
         }
         while (is_redirection(p->current_token))
         {
@@ -291,7 +304,6 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
     if (parse_prefix(parser, &p))
     {
         // FREE p
-        // printf("FAILED PARSE PREFIX\n");
         free_prefix(p);
         parser->current_token = current;
         struct node_element *e = NULL;
@@ -301,30 +313,22 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             return true;
         }
         append_element(*ast, e);
-        // struct node_element *a = xmalloc(sizeof(struct node_element));
-        // struct node_element *b = xmalloc(sizeof(struct node_element));
-        // struct node_element *c = xmalloc(sizeof(struct node_element));
-        // append_element(*ast, a);
-        // append_element(*ast, b);
-        // append_element(*ast, c);
-        // struct node_element *d = (*ast)->elements;
-        // while (d)
-        // {
-        //     // printf("-> %p ", d);
-        //     d = d->next;
-        // }
-        // // printf("\n");
-        
         e = NULL;
         current = parser->current_token;
-        //printf("parcer.c / parse_SC : current token = %s\n", type_to_str(parser->current_token->type));
+        /*
+        ** if le current n'est pas un token de séparation (follow de simple command)
+        **      token = word avec type de keyword comme value
+        */
         while (!parse_element(parser, &e))
         {
             
             current = parser->current_token;
-            append_element(*ast, e); // rajouter (*ast)->elements = ?
-            // (*ast)->elements = e;
+            append_element(*ast, e);
             e = NULL;
+            /*
+            ** if le current n'est pas un token de séparation
+            **      token = word avec type de tken comme value
+            */
         }
         free_element(e);
         parser->current_token = current;
@@ -437,7 +441,9 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
         return true;
     next_token(parser);
     parser_eat(parser);
-    *ast = build_funcdec(is_function, function_name);
+    *ast = build_funcdec();
+    (*ast)->function_name = function_name;
+    (*ast)->is_function = is_function;
     if (parse_shell_command(parser, &((*ast)->shell_command)))
     {
         free_shell_command((*ast)->shell_command);
@@ -528,6 +534,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
         free_and_or(tmp->and_or);
         return true;
     }
+    parser_comment(parser);
     while (is_type(parser->current_token, TOK_SEMI) ||
         is_type(parser->current_token, TOK_SEPAND) ||
         is_type(parser->current_token, TOK_NEWLINE)
@@ -543,6 +550,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
             parser_eat(parser);
             return false;
         }
+        parser_comment(parser);
         //next_token(parser);
         //printf("parser.c / parse_CL : current_token : %d\n", parser->current_token->type);
     }
@@ -593,6 +601,7 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
             next_token(parser);
             current = parser->current_token;
         }
+        parser_comment(parser);
         if (!(is_type(current, TOK_SEMI) || is_type(current, TOK_NEWLINE)))
         {
             return true;
