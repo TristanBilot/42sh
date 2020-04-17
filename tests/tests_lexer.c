@@ -318,6 +318,38 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
+
+    const char *input4 = "word((if)word";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == TOK_LPAREN);
+    cr_assert(pop(lexer4)->type == TOK_LPAREN);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == TOK_RPAREN);
+    cr_assert(pop(lexer4)->type == TOK_WORD);
+    
+    const char *input5 = "if(";
+    struct lexer *lexer5 = new_lexer(input5);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_LPAREN);
+
+    const char *input6 = ")if";
+    struct lexer *lexer6 = new_lexer(input6);
+    cr_assert(pop(lexer6)->type == TOK_RPAREN);
+    cr_assert(pop(lexer6)->type == TOK_WORD);
+
+    const char *input7 = "(if case b then(echo toto))";
+    struct lexer *lexer7 = new_lexer(input7);
+    cr_assert(pop(lexer7)->type == TOK_LPAREN);
+    cr_assert(pop(lexer7)->type == KW_IF);
+    cr_assert(pop(lexer7)->type == KW_CASE);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_LPAREN);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_WORD);
+    cr_assert(pop(lexer7)->type == TOK_RPAREN);
+    cr_assert(pop(lexer7)->type == TOK_RPAREN);
 }
 
 Test(lexer, comments)

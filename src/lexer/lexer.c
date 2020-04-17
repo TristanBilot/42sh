@@ -71,14 +71,22 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
     return token ? 1 : 0;
 }
 
+/*
+* return 1: break
+* return -1: continue
+* return 0: nothing
+*/
 int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *j)
 {
-    // printf("%zu %s %d\n", *j, substr(strdup(c), 0, *j), c[*j] == ')');
-    if (c[*j] != '(' && c[*j] != ')')
-        return 0;
     int type;
     if (c[*j] == ')')
     {
+        if (!c[*j - 1]) /* )if */
+        {
+            append(lexer, new_token_type(TOK_RPAREN));
+            flush(buffer);
+            return -1;
+        }
         char *content = substr(strdup(c), 0, *j);
         if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
         {
@@ -94,14 +102,15 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, const char *c, s
     }
     else if (c[*j] == '(')
     {
-        if (c[(*j - 1)] && c[(*j - 1)] != '\n')
-            return 0;
-        char *content = substr(strdup(c), (*j + 1), strlen(c));
-        if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
+        if (c[(*j + 1)])
         {
-            append(lexer, new_token_type(TOK_LPAREN));
-            append(lexer, new_token_type(type));
-            return 1;
+            char *content = substr(strdup(c), (*j + 1), strlen(c));
+            if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
+            {
+                append(lexer, new_token_type(TOK_LPAREN));
+                append(lexer, new_token_type(type));
+                return 1;
+            }
         }
     }
     return 0;
