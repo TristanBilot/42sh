@@ -33,10 +33,12 @@ TEST_OBJS = \
       # tests/tests_ast.o \
       
 BINS = \
+      42sh        \
       token_printer \
       ast_print
 
 BINS_OBJS = \
+            src/main.o              \
             src/eval/token_printer.o \
             src/eval/ast_print.o \
             src/eval/rpn_print.o \
@@ -56,6 +58,9 @@ debug: all
 tests: LDFLAGS+= -lcriterion
 tests: LDFLAGS+= # -fsanitize=address
 tests: run_test_lexer run_test_ast run_test_parser
+
+42sh: src/main.o ${OBJS}
+	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}

@@ -7,13 +7,49 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "my_42sh.h"
+#include "main.h"
+#include "parser/parser.h"
+#include "lexer/lexer.h"
 #include "utils/xalloc.h"
 
 void print_usage()
 {
     fprintf(stdout, USAGE);
     exit(1);
+}
+
+void print_prompt()
+{
+    char *buff;
+
+    if ((buff = getcwd(NULL, 0)) == NULL)
+        exit(1);
+    if (isatty(0) == 1)
+    {
+        dprintf(0, "%s[%s%s%s", START_COLOR, CYAN, buff, END_COLOR);
+        dprintf(0, "%s[%s %s> %s", START_COLOR, CYAN, BLINK, END_COLOR);
+    }
+    else
+        printf("%s>", buff);
+    free(buff);
+}
+
+void init_42sh_process()
+{
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    struct parser *parser = NULL;
+    struct node_input *ast = NULL;
+    print_prompt();
+    while ((read = getline(&line, &len, stdin)) != -1)
+    {
+        parser = init_parser(new_lexer(line));
+        parse_input(parser, &ast);
+        print_prompt();
+    }
+    if (line)
+        free(line);
 }
 
 static struct option_sh *init_option_sh()
@@ -57,4 +93,6 @@ int main(int ac, char **av)
         else
             print_usage();
     }
+    init_42sh_process();
 }
+
