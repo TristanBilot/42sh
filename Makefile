@@ -24,6 +24,7 @@ OBJS= \
       src/utils/string.o \
       src/utils/buffer.o \
       src/utils/parser_utils.o \
+      src/print/ast_print_dot.o \
       ${NONE}
 
 TEST_OBJS = \

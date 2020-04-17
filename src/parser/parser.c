@@ -259,27 +259,32 @@ bool parse_command(struct parser *p, struct node_command **ast)
     *ast = build_command();
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
-        //free_shell_command((*ast)->command.shell_command);
+        free_shell_command((*ast)->command.shell_command);
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
-            // free_funcdec((*ast)->command.funcdec);
+            free_funcdec((*ast)->command.funcdec);
             // FREE ast->command.funcdec
-            (*ast)->type = SIMPLE_COMMAND;
             p->current_token = current;
             if (parse_simple_command(p, &((*ast)->command.simple_command)))
             {
                 free_simple_command((*ast)->command.simple_command);
                 return true;
             }
+            (*ast)->type = SIMPLE_COMMAND;
             return false;
         }
+        (*ast)->type = FUNCDEC;
         while (is_redirection(p->current_token))
         {
             struct node_redirection *r = NULL;
             if (parse_redirection(p, &r))
+            {
+                free_redirection(r);
                 return true;
+            }
             (*ast)->redirections = append_redirection(*ast, r);
         }
+        return false;
     }
     (*ast)->type = SHELL_COMMAND;
     while (is_redirection(p->current_token))
@@ -421,6 +426,7 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
 bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
 {
     DEBUG("parse_funcdec\n");
+    *ast = build_funcdec();
     // printf("AMAZONIA\n");
     struct token *current = parser->current_token;
     bool is_function = false;
@@ -431,8 +437,9 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
     }
     if (!is_type(parser->current_token, TOK_WORD))
         return true;
-    
     char *function_name = parser->current_token->value;
+    (*ast)->function_name = function_name;
+    (*ast)->is_function = is_function;
     next_token(parser);
     if (!is_type(parser->current_token, TOK_LPAREN))
         return true;
@@ -441,9 +448,6 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
         return true;
     next_token(parser);
     parser_eat(parser);
-    *ast = build_funcdec();
-    (*ast)->function_name = function_name;
-    (*ast)->is_function = is_function;
     if (parse_shell_command(parser, &((*ast)->shell_command)))
     {
         free_shell_command((*ast)->shell_command);
@@ -544,12 +548,16 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
         next_token(parser);
         parser_eat(parser);
         tmp->next_sibling = build_compound_list();
-        tmp = tmp->next_sibling;
-        if (parse_and_or(parser, &(tmp->and_or)))
+        
+        if (parse_and_or(parser, &(tmp->next_sibling->and_or)))
         {
+            free_and_or(tmp->next_sibling->and_or);
+            free_compound_list(tmp->next_sibling);
+            tmp->next_sibling = NULL;
             parser_eat(parser);
             return false;
         }
+        tmp = tmp->next_sibling;
         parser_comment(parser);
         //next_token(parser);
         //printf("parser.c / parse_CL : current_token : %d\n", parser->current_token->type);

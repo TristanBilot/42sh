@@ -28,11 +28,14 @@ void free_and_or(struct node_and_or *ast)
 {
     DEBUG("free_andor\n");
     AST_EXISTS(ast);
+    /*
     free_pipeline(ast->right);
+
     if (ast->left.pipeline)
         free_pipeline(ast->left.pipeline);
     else if (ast->left.and_or)
         free_and_or(ast->left.and_or);
+        */
     FREE_AST(ast);
 }
 
@@ -54,9 +57,11 @@ void free_prefix(struct node_prefix *ast)
 {
     DEBUG("free_prefix\n");
     AST_EXISTS(ast);
+    /*
     free_prefix(ast->next);
     if (ast->type == REDIRECTION)
         free_redirection(ast->prefix.redirection);
+        */
     FREE_AST(ast);
 }
 
@@ -85,10 +90,12 @@ void free_else_clause(struct node_else_clause *ast)
 {
     DEBUG("free_else\n");
     AST_EXISTS(ast);
+    /*
     if (ast->clause.elif)
         free_if(ast->clause.elif);
     else if (ast->clause.else_body)
         free_compound_list(ast->clause.else_body);
+        */
     FREE_AST(ast);
 }
 

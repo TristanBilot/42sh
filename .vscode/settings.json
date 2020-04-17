@@ -57,7 +57,8 @@
         "string": "c",
         "string_view": "c",
         "typeinfo": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "ast_print_dot.h": "c"
     },
     "cmake.configureOnOpen": false
 }
