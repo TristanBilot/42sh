@@ -20,8 +20,7 @@ void print_usage()
 
 void print_prompt()
 {
-    char *buff;
-
+    char *buff = NULL;
     if ((buff = getcwd(NULL, 0)) == NULL)
         exit(1);
     if (isatty(0) == 1)
@@ -29,8 +28,6 @@ void print_prompt()
         dprintf(0, "%s[%s%s%s", START_COLOR, CYAN, buff, END_COLOR);
         dprintf(0, "%s[%s %s> %s", START_COLOR, CYAN, BLINK, END_COLOR);
     }
-    else
-        printf("%s>", buff);
     free(buff);
 }
 
@@ -44,6 +41,7 @@ void init_42sh_process()
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
+        printf("passe");
         parser = init_parser(new_lexer(line));
         parse_input(parser, &ast);
         print_prompt();
