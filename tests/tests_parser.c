@@ -184,6 +184,7 @@ Test(parser, parenthesis_near)
     cr_assert(success("(a && b) || c"));
     cr_assert(success("print_hello () { echo hello }"));
     cr_assert(success("print_hello() { echo hello }"));
+    cr_assert(success("print_hello() { echo hello } | hello caca"));
     cr_assert(success("! case str in hello | totoro) echo hello ;; bye | totolo) echo test ;; esac | function print() { for i in range 1 2 ; do echo test ; ( if a then b elif c && j then d else e fi ) ; done ; ls } 1>&2")); 
     cr_assert(success("(if a then b elif c && j then d else e fi)"));
 }

@@ -262,6 +262,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
     if (parse_shell_command(p, &((*ast)->command.shell_command)))
     {
         free_shell_command((*ast)->command.shell_command);
+        p->current_token = current;
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             free_funcdec((*ast)->command.funcdec);
@@ -276,8 +277,10 @@ bool parse_command(struct parser *p, struct node_command **ast)
             return false;
         }
         (*ast)->type = FUNCDEC;
-        while (is_redirection(p->current_token))
+        printf("red : %s\n", type_to_str(p->current_token->type));
+        while (is_redirection(p->current_token) || is_type(p->current_token, TOK_IONUMBER))
         {
+            
             struct node_redirection *r = NULL;
             if (parse_redirection(p, &r))
             {
@@ -289,7 +292,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
         return false;
     }
     (*ast)->type = SHELL_COMMAND;
-    while (is_redirection(p->current_token))
+    while (is_redirection(p->current_token) || is_type(p->current_token, TOK_IONUMBER))
     {
         struct node_redirection *r = NULL;
         if (parse_redirection(p, &r))
@@ -453,9 +456,9 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
     if (parse_shell_command(parser, &((*ast)->shell_command)))
     {
         free_shell_command((*ast)->shell_command);
+        
         return true;
     }
-    next_token(parser);
     return false;
 }
 
@@ -463,6 +466,7 @@ bool parse_redirection(struct parser *parser, struct node_redirection **ast)
 {
     DEBUG("parse_redirection\n");
     *ast = build_redirection(parser);
+    printf("curr tok in redirection : %s\n", type_to_str(parser->current_token->type));
     if (is_type(parser->current_token, TOK_IONUMBER))
         next_token(parser);
     struct token *curr = parser->current_token;
@@ -507,7 +511,8 @@ bool parse_prefix(struct parser *parser, struct node_prefix **ast)
 
 bool parse_element(struct parser *parser, struct node_element **ast)
 {
-    DEBUG("parse_element\n");    
+    DEBUG("parse_element\n"); 
+    printf("curr tok = %s\n", type_to_str(parser->current_token->type));   
     *ast = build_element(parser);
     if (is_type(parser->current_token, TOK_WORD))
     {
@@ -516,7 +521,7 @@ bool parse_element(struct parser *parser, struct node_element **ast)
         next_token(parser);
         return false;
     }
-    if (is_redirection(parser->current_token))
+    if (is_redirection(parser->current_token) || is_type(parser->current_token, TOK_IONUMBER))
     {
         (*ast)->type = TOKEN_REDIRECTION;
         if (parse_redirection(parser, &((*ast)->element.redirection)))

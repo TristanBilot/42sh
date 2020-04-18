@@ -1,19 +1,11 @@
 digraph AST {
-	node_0x7f8eb7401960 [label=PIPE];
-	node_0x7f8eb74019a0 [label=echo];
-	node_0x7f8eb7401960 -> node_0x7f8eb74019a0;
-	node_0x7f8eb74019d0 [label=ls];
-	node_0x7f8eb74019a0 -> node_0x7f8eb74019d0;
-	node_0x7f8eb74026d0 [label=FUNCTION];
-	node_0x7f8eb7401960 -> node_0x7f8eb74026d0;
-	node_0x7f8eb7401fd0 [label=a];
-	node_0x7f8eb74026d0 -> node_0x7f8eb7401fd0;
-	node_0x7f8eb74026f0 [label=PARENTHESIS];
-	node_0x7f8eb74026d0 -> node_0x7f8eb74026f0;
-	node_0x7f8eb7402780 [label=echo];
-	node_0x7f8eb74026f0 -> node_0x7f8eb7402780;
-	node_0x7f8eb74027b0 [label=CHIBRAX];
-	node_0x7f8eb7402780 -> node_0x7f8eb74027b0;
-	node_0x7f8eb7402840 [label=ls];
-	node_0x7f8eb74026f0 -> node_0x7f8eb7402840;
+	node_0x7f9138d000c0 [label=echo];
+	node_0x7f9138d000f0 [label=a];
+	node_0x7f9138d000c0 -> node_0x7f9138d000f0;
+	node_0x7f9138d005e0 [label=TOK_GREATAND];
+	node_0x7f9138d000f0 -> node_0x7f9138d005e0;
+	node_0x7f9138d00430 [label=2];
+	node_0x7f9138d005e0 -> node_0x7f9138d00430;
+	node_0x7f9138d004c0 [label=1];
+	node_0x7f9138d005e0 -> node_0x7f9138d004c0;
 }

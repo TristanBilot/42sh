@@ -125,16 +125,16 @@ void print_node_pipeline(struct node_pipeline *ast, FILE *f, void *node)
            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast); 
         PRINT_NODE("!");
 
-        c = ast;
+        // c = ast;
     
-        if (c->next_sibling)
-        {
-            fprintf(f, "\tnode_%p [label=PIPE];\n", (void *) c);
-            fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)c);
-            print_node_command(c->command, f, (void *) c);
-        }
-        else
-            print_node_command(c->command, f, (void*) ast);
+        // if (c->next_sibling)
+        // {
+        //     fprintf(f, "\tnode_%p [label=PIPE];\n", (void *) c);
+        //     fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)c);
+        //     print_node_command(c->command, f, (void *) c);
+        // }
+        // else
+        print_node_command(c->command, f, (void*) ast);
     }
     else
     {
@@ -264,29 +264,22 @@ void print_node_funcdec(struct node_funcdec *ast, FILE *f, void *node)
 void print_node_redirection(struct node_redirection *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT REDIRECTION");
-    if (ast->left)
+    char *redirection = type_to_str(ast->type);
+    fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast, redirection);
+    fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+    if (ast->left && !is(ast->left, ""))
     {
-        printf("a\n");
+        fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast->left, ast->left);
+        fprintf(f, "\tnode_%p -> node_%p;\n", ast, (void *)ast->left);
         PRINT_NODE(ast->left);
     }
-    if (TOK_DLESSDASH == ast->type)
-        PRINT_NODE("<<-");
-    if (TOK_DLESS == ast->type)
-        PRINT_NODE("<<");
-    if (TOK_LESSGREAT == ast->type)
-        PRINT_NODE("<>");
-    if (TOK_LESS == ast->type)
-        PRINT_NODE("<");
-    if (TOK_DGREAT == ast->type)
-        PRINT_NODE(">>");
-    if (TOK_GREATAND == ast->type)
-        PRINT_NODE(">&");
-    if (TOK_CLOBBER == ast->type)
-        PRINT_NODE(">|");
-    if (TOK_GREAT == ast->type)
-        PRINT_NODE(">");
-
-    PRINT_NODE(ast->right);
+    if (ast->right && !is(ast->right, ""))
+    {
+        fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast->right, ast->right);
+        fprintf(f, "\tnode_%p -> node_%p;\n", ast, (void *)ast->right);
+        PRINT_NODE(ast->right);
+    }
+    
 }
 void print_node_prefix(struct node_prefix *ast, FILE *f, void *node)
 {
@@ -308,7 +301,8 @@ void print_node_element(struct node_element *ast, FILE *f, void *node)
     {
         PRINT_NODE(ast->element.word);
         fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast, ast->element.word);
-        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     }
     if (ast->type == TOKEN_REDIRECTION)
         print_node_redirection(ast->element.redirection, f, node);
