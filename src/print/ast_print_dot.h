@@ -12,6 +12,13 @@
 #define DEFAULT_DOT_FILE_NAME "ast.dot"
 #define DEFAULT_PNG_FILE_NAME "ast.png"
 
+#define AST_STYLE_LOGIC \
+  "style=filled color=\"1.0 .3 .7\" fontname=\"Helvetica\" fontsize=12 "
+
+# define AST_STYLE_FUNCTION \
+  "style=filled,dotted "    \
+  "fontname=\"Helvetica\" fontsize=9"
+
 FILE *new_dot(void);
 bool append_to_dot(FILE *dot_file, const char *str, bool is_new_line);
 bool close_dot(FILE *dot_file);

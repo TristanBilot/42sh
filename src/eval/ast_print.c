@@ -117,17 +117,43 @@ void print_node_and_or(struct node_and_or *ast, FILE *f, void *node)
 void print_node_pipeline(struct node_pipeline *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT PIPELINE");
-    //printf("is_not = %d\n", ast->is_not);
-    if (ast->is_not)
-        PRINT_NODE("!");
-    
     struct node_pipeline *c = ast;
-    print_node_command(c->command, f, node);
+    if (ast->is_not)
+    {
+        fprintf(f, "\tnode_%p [label=NOT];\n", (void *)ast);
+        if (node)
+           fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast); 
+        PRINT_NODE("!");
+
+        c = ast;
+    
+        if (c->next_sibling)
+        {
+            fprintf(f, "\tnode_%p [label=PIPE];\n", (void *) c);
+            fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)c);
+            print_node_command(c->command, f, (void *) c);
+        }
+        else
+            print_node_command(c->command, f, (void*) ast);
+    }
+    else
+    {
+        if (c->next_sibling)
+        {
+            fprintf(f, "\tnode_%p [label=PIPE];\n", (void *) ast);
+            if (node)
+                fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+            print_node_command(c->command, f, (void *) ast);
+        }
+        else
+            print_node_command(c->command, f, node);
+    }
     while (c->next_sibling)
     {
         PRINT_NODE("PIPE");
+        //fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)c->next_sibling->command);
         c = c->next_sibling;
-        print_node_command(c->command, f, node);
+        print_node_command(c->command, f, (void *) ast);
     }
 }
 
@@ -169,7 +195,7 @@ void print_node_simple_command(struct node_simple_command *ast, FILE *f, void *n
     }
     if (e) /* link the root node to the first element (ex: echo) */
         print_node_element(e, f, node);
-    while (e->next) /* link each child */
+    while (e->next) /* link each child between them */
     {
         print_node_element(e->next, f, e);
         e = e->next;
@@ -183,13 +209,18 @@ void print_node_shell_command(struct node_shell_command *ast, FILE *f, void *nod
     {
     case C_BRACKETS:
         PRINT_NODE("{");
-        print_node_compound_list(ast->shell.compound_list, f, node);
+        fprintf(f, "\tnode_%p [label=C_BRACKET];\n", (void *)ast);
+        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        print_node_compound_list(ast->shell.compound_list, f, ast);
         PRINT_NODE("}");
         break;
     case PARENTHESIS:
         PRINT_NODE("(");
-        print_node_compound_list(ast->shell.compound_list, f, node);
+        fprintf(f, "\tnode_%p [label=PARENTHESIS];\n", (void *)ast);
+        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        print_node_compound_list(ast->shell.compound_list, f, ast);
         PRINT_NODE(")");
+        //fprintf(f, "\tnode_%p [label=C_PARENTHESIS_CLOSE];\n", (void *)ast);
         break;
     case RULE:
         if (ast->shell_type == WHILE)
@@ -212,15 +243,23 @@ void print_node_shell_command(struct node_shell_command *ast, FILE *f, void *nod
 }
 void print_node_funcdec(struct node_funcdec *ast, FILE *f, void *node)
 {
-    PRINT_NODE("PRINT FUNCDEC");   
+    PRINT_NODE("PRINT FUNCDEC");
     if (ast->is_function)
+    {
+        fprintf(f, "\tnode_%p [label=FUNCTION];\n", (void *)ast);
         PRINT_NODE("function");
+    }
+    else
+        fprintf(f, "\tnode_%p [label=FUNCTION_CALL];\n", (void *)ast);
+    fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        
+    fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast->function_name, ast->function_name);
+    fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)ast->function_name);
     PRINT_NODE(ast->function_name);
     PRINT_NODE("(");
     PRINT_NODE(")");
-    print_node_shell_command(ast->shell_command, f, node);
+    print_node_shell_command(ast->shell_command, f, (void *)ast);
 }
-
 
 void print_node_redirection(struct node_redirection *ast, FILE *f, void *node)
 {
@@ -280,7 +319,7 @@ void print_node_compound_list(struct node_compound_list *ast, FILE *f, void *nod
     struct node_compound_list *c = ast;
     while (c)
     {
-        print_node_and_or(c->and_or, f, NULL);
+        print_node_and_or(c->and_or, f, node);
         c = c->next_sibling;
     }
 }
