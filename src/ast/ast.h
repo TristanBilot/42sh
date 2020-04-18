@@ -41,7 +41,8 @@ struct node_list
     enum type
     {
         SEMI,
-        SEPAND
+        SEPAND,
+        NONE
     } type;
 };
 

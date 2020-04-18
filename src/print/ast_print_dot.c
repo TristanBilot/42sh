@@ -14,7 +14,7 @@ FILE *new_dot(void)
 {
     remove(DEFAULT_DOT_FILE_NAME);
     FILE *f = fopen(DEFAULT_DOT_FILE_NAME, "a");
-    append_to_dot(f, "strict graph G {", true);
+    append_to_dot(f, "digraph AST {", true);
     return f;
 }
 
@@ -39,31 +39,13 @@ bool close_dot(FILE *dot_file)
 void convert_dot_to_png(void)
 {
     char *dot_program = "dot";
-    char *args[] = { dot_program, " -Tpng", DEFAULT_DOT_FILE_NAME, "-o", DEFAULT_PNG_FILE_NAME, NULL };
     
     pid_t pid = 0;
     int status = 0;
-
+    int success = 0;
     if ((pid = fork()) == 0)
-        execvp(dot_program, args);
+        success = execlp(dot_program, dot_program, " -Tpng", DEFAULT_DOT_FILE_NAME, "-o", DEFAULT_PNG_FILE_NAME, NULL) != -1;
     else
         waitpid(pid, &status, 0);
-}
-
-char *str(void *ptr)
-{
-    char *s = "";
-    sprintf(s, "%p", (void *)&ptr);
-    return s;
-}
-
-char *concat(char *arr[])
-{
-    char *str = "";
-    int i = 0;
-    while (arr && arr[i])
-    {
-        strcat(str, arr[i++]);
-    }
-    return str;
+    // success ? printf("[+] DOT file converted.\n") : printf("[+] DOT file conversion failed.\n");
 }

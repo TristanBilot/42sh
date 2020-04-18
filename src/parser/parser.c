@@ -169,6 +169,8 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             tmp->type = SEPAND;
             next_token(parser);
         }
+        else
+            tmp->type = NONE;
         parser_comment(parser);
     } while (!is_type(parser->current_token, TOK_NEWLINE) && 
         !is_type(parser->current_token, TOK_EOF));
