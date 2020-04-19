@@ -1,7 +1,13 @@
 digraph AST {
-	node_0x55b88b12c370 [label=PIPE];
-	node_0x55b88b12c8c0 [label=ls];
-	node_0x55b88b12c370 -> node_0x55b88b12c8c0;
-	node_0x55b88b12c940 [label=cd];
-	node_0x55b88b12c370 -> node_0x55b88b12c940;
+	node_0xedfa60 [label=WHILE];
+	node_0xedf050 [label=CONDITION];
+	node_0xedfa60 -> node_0xedf050;
+	node_0xedf510 [label=a];
+	node_0xedf050 -> node_0xedf510;
+	node_0xedf530 [label=BODY];
+	node_0xedfa60 -> node_0xedf530;
+	node_0xedf600 [label=echo];
+	node_0xedf530 -> node_0xedf600;
+	node_0xedf620 [label=toto];
+	node_0xedf600 -> node_0xedf620;
 }

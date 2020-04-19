@@ -318,15 +318,34 @@ void print_node_compound_list(struct node_compound_list *ast, FILE *f, void *nod
     }
 }
 void print_node_while(struct node_while *ast, FILE *f, void *node)
-{
+{   //while a do echo toto done
     PRINT_NODE("PRINT WHILE");
+    fprintf(f, "\tnode_%p [label=WHILE];\n", (void *)ast);
+    node = ast->condition;
+    if (node)
+        fprintf(f, "\tnode_%p [label=CONDITION];\n", node);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
     print_node_compound_list(ast->condition, f, node);
+    node = ast->body;
+    if (node)
+        fprintf(f, "\tnode_%p [label=BODY];\n", node);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
     print_node_do_group(ast->body, f, node);
+
 }
 void print_node_until(struct node_until *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT UNTIL");
+    fprintf(f, "\tnode_%p [label=UNTIL];\n", (void *)ast);
+    node = ast->condition;
+    if (node)
+        fprintf(f, "\tnode_%p [label=CONDITION];\n", node);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
     print_node_compound_list(ast->condition, f, node);
+    node = ast->body;
+    if (node)
+        fprintf(f, "\tnode_%p [label=BODY];\n", node);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
     print_node_do_group(ast->body, f, node);
 }
 void print_node_case(struct node_case *ast, FILE *f, void *node)
@@ -425,7 +444,7 @@ void print_ast(struct node_input *ast)
     FILE *f = new_dot();
     print_node_input(ast, f);
     close_dot(f);
-    // convert_dot_to_png();
+    convert_dot_to_png();
 }
 
 
