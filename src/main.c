@@ -36,14 +36,16 @@ void init_42sh_process()
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
+    struct lexer *lexer = NULL;
     struct parser *parser = NULL;
     struct node_input *ast = NULL;
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
-        printf("passe");
-        parser = init_parser(new_lexer(line));
-        parse_input(parser, &ast);
+        lexer = new_lexer(line);
+        parser = init_parser(lexer);
+        ast = parse(lexer);
+
         print_prompt();
     }
     if (line)

@@ -417,7 +417,7 @@ void print_node_case_item(struct node_case_item *ast, FILE *f, void *node)
 
 }
 
-static void print_ast(struct node_input *ast)
+void print_ast(struct node_input *ast)
 {
     if (!ast)
         return;
