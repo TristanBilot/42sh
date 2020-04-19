@@ -1,13 +1,19 @@
 digraph AST {
-	node_0xedfa60 [label=WHILE];
-	node_0xedf050 [label=CONDITION];
-	node_0xedfa60 -> node_0xedf050;
-	node_0xedf510 [label=a];
-	node_0xedf050 -> node_0xedf510;
-	node_0xedf530 [label=BODY];
-	node_0xedfa60 -> node_0xedf530;
-	node_0xedf600 [label=echo];
-	node_0xedf530 -> node_0xedf600;
-	node_0xedf620 [label=toto];
-	node_0xedf600 -> node_0xedf620;
+	node_0x562ef4062410 [label=IF];
+	node_0x562ef4062950 [label=a];
+	node_0x562ef4062410 -> node_0x562ef4062950;
+	node_0x562ef4062a20 [label=b];
+	node_0x562ef4062410 -> node_0x562ef4062a20;
+	node_0x562ef4062a40 [label=ELSE];
+	node_0x562ef4062410 -> node_0x562ef4062a40;
+	node_0x562ef4062a60 [label=IF];
+	node_0x562ef4062a60 -> node_0x562ef4062a40;
+	node_0x562ef4063b40 [label=x];
+	node_0x562ef4062a60 -> node_0x562ef4063b40;
+	node_0x562ef4063c10 [label=y];
+	node_0x562ef4062a60 -> node_0x562ef4063c10;
+	node_0x562ef4063c30 [label=ELSE];
+	node_0x562ef4062a60 -> node_0x562ef4063c30;
+	node_0x562ef4063d00 [label=c];
+	node_0x562ef4063c30 -> node_0x562ef4063d00;
 }

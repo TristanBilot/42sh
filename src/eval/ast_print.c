@@ -188,18 +188,45 @@ void print_node_simple_command(struct node_simple_command *ast, FILE *f, void *n
     PRINT_NODE("PRINT SIMPLE COMMAND");
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
-    while (p)
+    if ((p && p->next) || (e && p))
     {
-        print_node_prefix(p, f, node);
-        p = p->next;
+        fprintf(f, "\tnode_%p [label=SIMPLECOMMAND];\n", (void *)ast);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        while (p)
+        {
+            print_node_prefix(p, f, (void *) ast);
+            p = p->next;
+        }
+        if (e) /* link the root node to the first element (ex: echo) */
+        {
+            print_node_element(e, f, (void *) ast);
+            while (e->next) /* link each child between them */
+            {
+                print_node_element(e->next, f, e);
+                e = e->next;
+            }
+        }
     }
-    if (e) /* link the root node to the first element (ex: echo) */
-        print_node_element(e, f, node);
-    while (e->next) /* link each child between them */
+    else
     {
-        print_node_element(e->next, f, e);
-        e = e->next;
+        while (p)
+        {
+            print_node_prefix(p, f, node);
+            p = p->next;
+        }
+        if (e) /* link the root node to the first element (ex: echo) */
+        {
+            print_node_element(e, f, node);
+            while (e->next) /* link each child between them */
+            {
+                print_node_element(e->next, f, e);
+                e = e->next;
+            }
+        }
     }
+    
+    
 }
 /* NE PAS OUBLIER D'IMPLEMENTER LES TYPES POUR UNIONS  */
 void print_node_shell_command(struct node_shell_command *ast, FILE *f, void *node)
@@ -210,14 +237,16 @@ void print_node_shell_command(struct node_shell_command *ast, FILE *f, void *nod
     case C_BRACKETS:
         PRINT_NODE("{");
         fprintf(f, "\tnode_%p [label=C_BRACKET];\n", (void *)ast);
-        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
         print_node_compound_list(ast->shell.compound_list, f, ast);
         PRINT_NODE("}");
         break;
     case PARENTHESIS:
         PRINT_NODE("(");
         fprintf(f, "\tnode_%p [label=PARENTHESIS];\n", (void *)ast);
-        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
         print_node_compound_list(ast->shell.compound_list, f, ast);
         PRINT_NODE(")");
         //fprintf(f, "\tnode_%p [label=C_PARENTHESIS_CLOSE];\n", (void *)ast);
@@ -270,13 +299,13 @@ void print_node_redirection(struct node_redirection *ast, FILE *f, void *node)
     if (ast->left && !is(ast->left, ""))
     {
         fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast->left, ast->left);
-        fprintf(f, "\tnode_%p -> node_%p;\n", ast, (void *)ast->left);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void*)ast, (void *)ast->left);
         PRINT_NODE(ast->left);
     }
     if (ast->right && !is(ast->right, ""))
     {
         fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast->right, ast->right);
-        fprintf(f, "\tnode_%p -> node_%p;\n", ast, (void *)ast->right);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void*)ast, (void *)ast->right);
         PRINT_NODE(ast->right);
     }
     
@@ -284,8 +313,14 @@ void print_node_redirection(struct node_redirection *ast, FILE *f, void *node)
 void print_node_prefix(struct node_prefix *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT PREFIX");
+    
     if (ast->type == ASSIGMENT_WORD)
     {
+        char *s = strcat(ast->prefix.assigment_word->variable_name, "_");
+        char *s1 = strcat(s, ast->prefix.assigment_word->value);
+        fprintf(f, "\tnode_%p [label=%s];\n", (void *)ast, s1);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
         PRINT_NODE(ast->prefix.assigment_word->variable_name);
         PRINT_NODE("=");
         PRINT_NODE(ast->prefix.assigment_word->value);
@@ -309,6 +344,7 @@ void print_node_element(struct node_element *ast, FILE *f, void *node)
 }
 void print_node_compound_list(struct node_compound_list *ast, FILE *f, void *node)
 {
+
     PRINT_NODE("PRINT COMPOUND LIST");
     struct node_compound_list *c = ast;
     while (c)
@@ -321,42 +357,33 @@ void print_node_while(struct node_while *ast, FILE *f, void *node)
 {   //while a do echo toto done
     PRINT_NODE("PRINT WHILE");
     fprintf(f, "\tnode_%p [label=WHILE];\n", (void *)ast);
-    node = ast->condition;
     if (node)
-        fprintf(f, "\tnode_%p [label=CONDITION];\n", node);
         fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
-    print_node_compound_list(ast->condition, f, node);
-    node = ast->body;
-    if (node)
-        fprintf(f, "\tnode_%p [label=BODY];\n", node);
-        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
-    print_node_do_group(ast->body, f, node);
+    print_node_compound_list(ast->condition, f, (void*)ast);
+    print_node_do_group(ast->body, f, (void*)ast);
 
 }
 void print_node_until(struct node_until *ast, FILE *f, void *node)
 {
-    PRINT_NODE("PRINT UNTIL");
+     PRINT_NODE("PRINT UNTIL");
     fprintf(f, "\tnode_%p [label=UNTIL];\n", (void *)ast);
-    node = ast->condition;
     if (node)
-        fprintf(f, "\tnode_%p [label=CONDITION];\n", node);
         fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
-    print_node_compound_list(ast->condition, f, node);
-    node = ast->body;
-    if (node)
-        fprintf(f, "\tnode_%p [label=BODY];\n", node);
-        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
-    print_node_do_group(ast->body, f, node);
+    print_node_compound_list(ast->condition, f, (void*)ast);
+    print_node_do_group(ast->body, f, (void*)ast);
 }
 void print_node_case(struct node_case *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINTCASE");
     //printf("%s\n", ast->word);
     PRINT_NODE("IN");
+    fprintf(f, "\tnode_%p [label=CASE];\n", (void *)ast);
+    if (node)
+        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     if (ast->is_case_clause)
     {
         //PRINT_NODE("CASE CLAUSE");
-        print_node_case_clause(ast->case_clause, f, node);
+        print_node_case_clause(ast->case_clause, f, (void *)ast);
     }
     PRINT_NODE("ESAC");
 }
@@ -364,13 +391,18 @@ void print_node_case(struct node_case *ast, FILE *f, void *node)
 void print_node_if(struct node_if *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT IF");
-    print_node_compound_list(ast->condition, f, node);
+    fprintf(f, "\tnode_%p [label=IF];\n", (void *)ast);
+    if (node)
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, node);
+    print_node_compound_list(ast->condition, f, (void*)ast);
     PRINT_NODE("THEN");
-    print_node_compound_list(ast->if_body, f, node);
+    print_node_compound_list(ast->if_body, f, (void*)ast);
     if (ast->else_clause)
     {
         PRINT_NODE("ELSE");
-        print_node_else_clause(ast->else_clause, f, node);
+        fprintf(f, "\tnode_%p [label=ELSE];\n", (void *) ast->else_clause);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *) ast->else_clause);
+        print_node_else_clause(ast->else_clause, f, (void*)ast->else_clause);
     }
     PRINT_NODE("FI");
 }
@@ -380,14 +412,21 @@ void print_node_for(struct node_for *ast, FILE *f, void *node)
     PRINT_NODE("PRINT FOR");
     PRINT_NODE(ast->variable_name);
     PRINT_NODE("IN");
-    // trouver le moyen de gerer les ;;                             
+    // trouver le moyen de gerer les ;;
+    fprintf(f, "\tnode_%p [label=FOR];\n", (void *) ast);
+    if (node)
+        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
+    fprintf(f, "\tnode_%p [label=%s];\n", (void *) ast->variable_name, ast->variable_name);
+    fprintf(f, "\tnode_%p -> node_%p;\n", (void *) ast, (void *) ast->variable_name);
     struct range *r = ast->range;
     while (r)
     {
+        fprintf(f, "\tnode_%p [label=%s];\n", (void *) r, r->value);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void *) ast, (void *) r);
         PRINT_NODE(r->value);
         r = r->next;
     }
-    print_node_do_group(ast->body, f, node);
+    print_node_do_group(ast->body, f, (void *) ast);
 }
 void print_node_else_clause(struct node_else_clause *ast, FILE *f, void *node)
 {
