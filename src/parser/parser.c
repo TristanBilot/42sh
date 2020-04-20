@@ -106,6 +106,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         is_type(parser->current_token->next, TOK_EOF)) ||
         is_type(parser->current_token, TOK_EOF))
     {
+        printf("RETFALSE\n");
         return false;
     }
     *ast = build_input();
@@ -117,10 +118,12 @@ bool parse_input(struct parser *parser, struct node_input **ast)
             (is_type(parser->current_token, TOK_NEWLINE) &&
             is_type(parser->current_token->next, TOK_EOF)))
         {
+            printf("RETFALSE\n");
             return false;
         }
     }
     free_list((*ast)->node_list);
+    
     return true;
 }
 
@@ -147,6 +150,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
         if (parse_and_or(parser, &(tmp->and_or)))
         {
             free_and_or(tmp->and_or);
+            printf("RETTRUE1\n");
             return true;
         }
         //printf("parser.c / parse_LIST :  ===> %d\n", (*ast)->and_or->left.and_or->left.and_or->left.and_or->is_final/*left.pipeline->command->command.simple_command->elements->element.word*/);
@@ -157,6 +161,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             !is_type(parser->current_token, TOK_EOF))
         {
             // printf("ko\n");
+            printf("RETTRUE2\n");
             return true;
         }
         if (is_type(parser->current_token, TOK_SEMI))
@@ -512,7 +517,7 @@ bool parse_prefix(struct parser *parser, struct node_prefix **ast)
 bool parse_element(struct parser *parser, struct node_element **ast)
 {
     DEBUG("parse_element\n"); 
-    printf("curr tok = %s\n", type_to_str(parser->current_token->type));   
+    //printf("curr tok = %s\n", type_to_str(parser->current_token->type));   
     *ast = build_element(parser);
     if (is_type(parser->current_token, TOK_WORD))
     {

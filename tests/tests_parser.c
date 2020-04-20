@@ -169,7 +169,6 @@ Test(parser, rule_case)
     cr_assert(fail("case a in b | c | ) hello ;; esac"));
     cr_assert(fail("case str in hello | totoro ) echo hello ;; bye | totolo ) echo test ;; "));
 }
-
 Test(parser, hardcore_test)         // erreur sur les ; -> a corriger ;-> doit etre considerer comme un WORD
 {
     cr_assert(success("! case str in hello | totoro ) echo hello ;; bye | totolo ) echo test ;; esac | function print ( ) { for i in range 1 2 ; do echo test ; ( if a then b elif c && j then d else e fi ) ; done ; ls } 1>&2"));

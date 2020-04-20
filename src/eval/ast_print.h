@@ -21,6 +21,7 @@ void print_node_while(struct node_while *ast, FILE *f, void *node);
 void print_node_until(struct node_until *ast, FILE *f, void *node);
 void print_node_case(struct node_case *ast, FILE *f, void *node);
 void print_node_if(struct node_if *ast, FILE *f, void *node);
+void print_node_elif(struct node_if *ast, FILE *f, void *node);
 void print_node_for(struct node_for *ast, FILE *f, void *node);
 void print_node_else_clause(struct node_else_clause *ast, FILE *f, void *node);
 void print_node_do_group(struct node_do_group *ast, FILE *f, void *node);
