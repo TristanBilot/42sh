@@ -11,6 +11,7 @@
 #include "parser/parser.h"
 #include "lexer/lexer.h"
 #include "utils/xalloc.h"
+#include "exec/exec.h"
 
 void print_usage()
 {
@@ -37,14 +38,15 @@ void init_42sh_process()
     size_t len = 0;
     ssize_t read;
     struct lexer *lexer = NULL;
-    struct parser *parser = NULL;
     struct node_input *ast = NULL;
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         lexer = new_lexer(line);
-        parser = init_parser(lexer);
         ast = parse(lexer);
+        
+        if (exec_node_input(ast))
+            printf("Error");
 
         print_prompt();
     }

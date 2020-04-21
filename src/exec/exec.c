@@ -261,7 +261,6 @@ bool exec_node_redirection(struct node_redirection *ast)
         // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *)ast->right, ast->right);
         // fprintf(f, "\tnode_%p -> node_%p;\n", (void*)ast, (void *)ast->right);
     }
-    
 }
 bool exec_node_prefix(struct node_prefix *ast)
 {
