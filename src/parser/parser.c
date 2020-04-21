@@ -1,9 +1,3 @@
-/*#include "parser/parser.h"
-#include "lexer/lexer.h"
-#include "lexer/token.h"
-#include "utils/string.h"
-#include "ast/ast.h"
-*/
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -106,7 +100,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         is_type(parser->current_token->next, TOK_EOF)) ||
         is_type(parser->current_token, TOK_EOF))
     {
-        printf("RETFALSE\n");
+        // printf("RETFALSE\n");
         return false;
     }
     *ast = build_input();
@@ -118,7 +112,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
             (is_type(parser->current_token, TOK_NEWLINE) &&
             is_type(parser->current_token->next, TOK_EOF)))
         {
-            printf("RETFALSE\n");
+            // printf("RETFALSE\n");
             return false;
         }
     }

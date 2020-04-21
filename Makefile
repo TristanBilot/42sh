@@ -25,6 +25,7 @@ OBJS= \
       src/utils/buffer.o \
       src/utils/parser_utils.o \
       src/print/ast_print_dot.o \
+      src/exec/exec.o \
       ${NONE}
 
 TEST_OBJS = \
@@ -35,13 +36,15 @@ TEST_OBJS = \
 BINS = \
       42sh        \
       token_printer \
-      ast_print
+      ast_print \
+      exec
 
 BINS_OBJS = \
             src/main.o              \
             src/eval/token_printer.o \
             src/eval/ast_print.o \
             src/eval/rpn_print.o \
+            src/exec/exec.o \
             #${NONE}
 
 TEST_BINS = \
@@ -66,6 +69,9 @@ token_printer: src/eval/token_printer.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 ast_print: src/eval/ast_print.o ${OBJS}
+	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
+exec: src/exec/ast_exec.o ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
 
 rpn_print: src/eval/rpn_print.o ${OBJS}

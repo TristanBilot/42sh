@@ -438,7 +438,7 @@ void print_node_for(struct node_for *ast, FILE *f, void *node)
     while (r)
     {
         fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) r, r->value);
-        fprintf(f, "\tnode_%p -> node_%p;\n", tmp, (void *) r);
+        fprintf(f, "\tnode_%p -> node_%p;\n", (void*) tmp, (void *) r);
         tmp = r;
         PRINT_NODE(r->value);
         r = r->next;
