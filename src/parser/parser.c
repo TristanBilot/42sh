@@ -141,10 +141,11 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             tmp = tmp->next_sibling;
             //printf("asttttt %p\n", (*ast)->next_sibling);
         }
+        //printf("uuu %s\n", type_to_str(parser->current_token->type));
         if (parse_and_or(parser, &(tmp->and_or)))
         {
             free_and_or(tmp->and_or);
-            printf("RETTRUE1\n");
+            // printf("RETTRUE1 %s\n", type_to_str(parser->current_token->type));
             return true;
         }
         //printf("parser.c / parse_LIST :  ===> %d\n", (*ast)->and_or->left.and_or->left.and_or->left.and_or->is_final/*left.pipeline->command->command.simple_command->elements->element.word*/);
@@ -155,7 +156,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
             !is_type(parser->current_token, TOK_EOF))
         {
             // printf("ko\n");
-            printf("RETTRUE2\n");
+            // printf("RETTRUE2\n");
             return true;
         }
         if (is_type(parser->current_token, TOK_SEMI))
@@ -276,7 +277,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
             return false;
         }
         (*ast)->type = FUNCDEC;
-        printf("red : %s\n", type_to_str(p->current_token->type));
+        // printf("red : %s\n", type_to_str(p->current_token->type));
         while (is_redirection(p->current_token) || is_type(p->current_token, TOK_IONUMBER))
         {
             
@@ -465,7 +466,7 @@ bool parse_redirection(struct parser *parser, struct node_redirection **ast)
 {
     DEBUG("parse_redirection\n");
     *ast = build_redirection(parser);
-    printf("curr tok in redirection : %s\n", type_to_str(parser->current_token->type));
+    // printf("curr tok in redirection : %s\n", type_to_str(parser->current_token->type));
     if (is_type(parser->current_token, TOK_IONUMBER))
         next_token(parser);
     struct token *curr = parser->current_token;
@@ -550,7 +551,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
         is_type(parser->current_token, TOK_NEWLINE)
         )
     {
-        printf("line\n");
+        // printf("line\n");
         next_token(parser);
         parser_eat(parser);
         tmp->next_sibling = build_compound_list();
@@ -739,7 +740,7 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
         return true;
     }
     curr = parser->current_token;
-    printf("parser.c / parse_if : current token = %s\n", type_to_str(curr->type));
+    // printf("Avant : parser.c / parse_if : current token = %s\n", type_to_str(curr->type));
     if (is_type(curr, KW_ELSE) || is_type(curr, KW_ELIF))
     {
         if (parse_else_clause(parser, &((*ast)->else_clause)))
@@ -749,6 +750,7 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
         }
         curr = parser->current_token;
     }
+    // printf("Après : parser.c / parse_if : current token = %s\n", type_to_str(curr->type));
     if (!(is_type(curr, KW_FI)))
     {
         return true;
@@ -854,7 +856,7 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
         free_case_item((*ast)->case_item);
         return true;
     }
-    printf("cas_clause : ct = %d\n", parser->current_token->type);
+    // printf("cas_clause : ct = %d\n", parser->current_token->type);
     struct node_case_clause *tmp = *ast;
     while (is_type(parser->current_token, KW_DSEMI) && !is_type(get_next_token(parser), KW_ESAC))
     {
@@ -875,11 +877,11 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
     {
         // break;
         //créer node semicolon
-        printf("zbl\n");
+        // printf("zbl\n");
         next_token(parser);
     }
     parser_eat(parser);
-    printf("parse_CC : curr tok : %d\n", parser->current_token->type);
+    // printf("parse_CC : curr tok : %d\n", parser->current_token->type);
     return false;
 }
 
@@ -898,14 +900,14 @@ bool parse_case_item(struct parser *parser, struct node_case_item **ast)
     // struct node_case_item *tmp = *ast;
     while (is_type(parser->current_token, TOK_PIPE))
     {
-        printf("oui\n");
+        // printf("oui\n");
         next_token(parser);
         // tmp->next.next = build_case_item();
         // tmp = tmp->next.next;
         // tmp->type = NEXT;
         if (!is_type(parser->current_token, TOK_WORD))
             return true;
-        printf("oui\n");
+        // printf("oui\n");
         (*ast)->words = append_word_list((*ast), parser->current_token->value);
         next_token(parser);
     }
@@ -921,16 +923,16 @@ bool parse_case_item(struct parser *parser, struct node_case_item **ast)
         !is_type(parser->current_token, TOK_NEWLINE) &&
         !is_type(parser->current_token, KW_ESAC))
     {
-        printf("ok\n");
+        // printf("ok\n");
         //(*ast)->type = COMPOUND;
-        printf("Current token type 3 : %d\n", parser->current_token->type);
+        // printf("Current token type 3 : %d\n", parser->current_token->type);
         if (parse_compound_list(parser, &((*ast)->compound_list)))
         {
             free_compound_list((*ast)->compound_list);
             return true;
         }
-        printf("Current token type 4 : %d\n", parser->current_token->type);
-        printf("parseee : curr tok %d\n", parser->current_token->type);
+        // printf("Current token type 4 : %d\n", parser->current_token->type);
+        // printf("parseee : curr tok %d\n", parser->current_token->type);
     }
 
     //next_token(parser);

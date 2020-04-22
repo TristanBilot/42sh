@@ -535,6 +535,7 @@ int main(int argc, char *argv[])
 
     if ((ast = parse(lexer)))
     {
+        exec_node_input(ast);
         print_ast(ast);
     }
     // else

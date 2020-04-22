@@ -81,7 +81,7 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, const char *c, s
     int type;
     if (c[*j] == ')')
     {
-        if (!c[*j - 1]) /* )if */
+        if (*j == 0) /* )if */
         {
             append(lexer, new_token_type(TOK_RPAREN));
             flush(buffer);

@@ -52,7 +52,7 @@ char *type_to_str(int type)
 
 int is(const char *a, const char *b)
 {
-    return strcmp(a, b) == 0;
+    return a && b && strcmp(a, b) == 0;
 }
 
 int is_number(char c)

@@ -1,29 +1,20 @@
 #include "exec.h"
 #include "utils/string.h"
+#include <fcntl.h>
+#include <unistd.h>
 
-char** add_string(char** array, int* size, const char* string)
-{
-   char* newArray = realloc(array, (*size + 1) * sizeof(char*));
-   newArray[*size] = malloc(strlen(string) + 1);
-   strncpy(newArray[*size], string, strlen(string));
-   *size += 1;
-}
-
-void free_dynamic_array(char **array, int *size)
-{
-    for (int i = 0; i < *size; i++)
-        free(array[i]);
-    free(array);
-}
+#define READ_END 0
+#define WRITE_END 1
+#define STDOUT_FILENO 1       /* Standard output.  */
 
 bool execute(char **args)
 {
-    int	status = 0;
-    int	child = 0;
-    if ((child = fork()) == -1)
-        return true;
-    if (child == 0)
-    {
+    // int	status = 0;
+    // int	child = 0;
+    // if ((child = fork()) == -1)
+    //     return true;
+    // if (child == 0)
+    // {
         // if (!should_print)
         //     strcat(args[0], " >/dev/null");
         if ((execvp(args[0], args)) == -1)
@@ -31,12 +22,23 @@ bool execute(char **args)
             err(1, "command not found: %s\n", args[0]);
             return true;
         }
-        return false;
-    }
-    else
-        wait(&status);
-    // if (WIFEXITED(status))
-    //     printf("exit status = %d\n", WEXITSTATUS(status));
+    // close(fd[READ_END]);
+    // close(fd[WRITE_END]);
+        // return false;
+    // }
+    // else
+    // {
+    //     wait(&status);
+    //     if (WIFEXITED(status))
+    //     {
+    //         printf("exit status = %d\n", WEXITSTATUS(status));
+    //         close(fd[READ_END]);
+    //         close(fd[WRITE_END]);
+    //         return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
+    //     }
+    // }
+    // close(fd[READ_END]);
+    // close(fd[WRITE_END]);
     return false;
 }
 
@@ -88,86 +90,274 @@ bool exec_node_and_or(struct node_and_or *ast)
     {
         if (ast->type == OR)
         {
-            // fprintf(f, "\tnode_%p [label=OR];\n", (void *)ast);
-            // if (node)
-                // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
+            if (ast->is_final)
+            {
+                if (exec_node_pipeline(ast->left.pipeline))
+                    return exec_node_pipeline(ast->right);
+            }
+            else
+            {
+                if (exec_node_and_or(ast->left.and_or))
+                    return exec_node_pipeline(ast->right);
+            }
         }
         if (ast->type == AND)
         {
-            // fprintf(f, "\tnode_%p [label=AND];\n", (void *)ast);
-            // if (node)
-                // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-            
+            if (ast->is_final)
+            {
+                if (!exec_node_pipeline(ast->left.pipeline))
+                    return exec_node_pipeline(ast->right);
+            }
+            else
+            {
+                if (!exec_node_and_or(ast->left.and_or))
+                    return exec_node_pipeline(ast->right);
+            }
         }
-        exec_node_pipeline(ast->right);
-
-        if (ast->is_final)
-            exec_node_pipeline(ast->left.pipeline);
-        else
-            exec_node_and_or(ast->left.and_or);
     }
     else
     {
-        if (ast->is_final)
+        return exec_node_pipeline(ast->left.pipeline);
+        /*if (ast->is_final)
             exec_node_pipeline(ast->left.pipeline);
         else
-            exec_node_and_or(ast->left.and_or);
+            exec_node_and_or(ast->left.and_or);*/
     }
 }
+
+// int exec_pipeline_rec(int fd[], struct node_pipeline *c, int *fdd)
+// {
+//     pid_t pid;
+//     pipe(fd);
+//     if ((pid = fork()) == -1) {
+//         perror("fork");
+//         exit(1);
+//     }
+//     else if (pid == 0) {
+//         close(fd[1]);
+//         dup2(*fdd, STDIN_FILENO);
+//         exec_node_command(c->command);
+//         dup2(fd[WRITE_END], STDOUT_FILENO);
+//         close(fd[READ_END]);
+        
+//         exit(1);
+//     }
+//     else {
+//         if (c->next_sibling)
+//             exec_pipeline_rec(fd, c->next_sibling, fdd);
+//         else
+//         {
+//             int status;
+//             //printf("kill son");
+//             wait(&status);
+//             close(fd[1]);
+//             *fdd = fd[0];
+//         }
+//     }
+// }
 
 bool exec_node_pipeline(struct node_pipeline *ast)
 {
     struct node_pipeline *c = ast;
-    if (ast->is_not)
+
+    if (!c->next_sibling)
     {
-        // fprintf(f, "\tnode_%p [label=NOT];\n", (void *)ast);
-        // if (node)
-        //    fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast); 
-        exec_node_command(c->command);
+        if (ast->is_not)
+            return !exec_node_command(c->command);
+        return exec_node_command(c->command);
     }
     else
     {
-        if (c->next_sibling)
+        int pid[NB_MAX_PIPE] = {-1};
+        int fd[NB_MAX_PIPE][2];
+        int status;
+        int is_first = true;
+        int nb = 0;
+            
+        while (c)
         {
-            // fprintf(f, "\tnode_%p [label=PIPE];\n", (void *) ast);
-            // if (node)
-                // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-            exec_node_command(c->command);
+            status = pipe(fd[nb]);
+            if (status < 0)
+            {
+                ERROR("pipe() failed (node_pipeline)")
+            }
+            pid[nb] = fork();
+            if (pid[nb] < 0)
+            {
+                ERROR("fork() failed (node_pipeline)");
+            }
+            else if (pid[nb])
+            {
+                if (c->next_sibling)
+                {
+                    c = c->next_sibling;
+                    nb++;
+                    continue;
+                }
+                for (int i = 0; i <= nb; i++)
+                {
+                    close(fd[i][READ_END]);
+                    close(fd[i][WRITE_END]);
+                }
+                for (int i = 0; i <= nb; i++)
+                    waitpid(pid[i], NULL, 0);
+                return false;			
+            }
+            else
+            {
+                if (nb == 0)
+                    close(fd[0][READ_END]);
+                else
+                    dup2(fd[nb-1][READ_END], 0);
+                if (!c->next_sibling)
+                    close(fd[nb][WRITE_END]);
+                else
+                    dup2(fd[nb][WRITE_END],1);
+                for (int i = 0; i <= nb; i++)
+                {
+                    close(fd[i][READ_END]);
+                    close(fd[i][WRITE_END]);
+                }
+                exec_node_command(c->command);
+                printf("failed to execute");
+                return true;
+            }
         }
-        else
-            exec_node_command(c->command);
     }
-    while (c->next_sibling)
-    {
-        c = c->next_sibling;
-        exec_node_command(c->command);
-    }
+
+    // bool state = false;
+    // bool is_not = ast->is_not;
+
+    //save_Stdout = dup(1);
+    // while (c->next_sibling)
+    // {
+    //     pipe(fd);
+    //     if (fork())
+    //     {
+    //         close(fd[READ_END]);
+    //         dup2(fd[WRITE_END], 1);
+    //         close(fd[WRITE_END]);
+    //         exec_node_command(c->command);
+    //     }
+    //     else
+    //     {
+    //         close(fd[WRITE_END]);
+    //         dup2(fd[READ_END], 0);
+    //         close(fd[READ_END]);
+    //         exec_node_command(c->next_sibling->command);
+    //     }
+    //     c =  c->next_sibling;
+    // }
+	
+
+
+
+        // if (pipe(fd) == -1)
+        // {
+        //     perror("pipe error (node_pipeline)");
+        //     return true;
+        // }
+        // if ((pid = fork()) == 0)
+        // {
+        //     close(fd[READ_END]);
+        //     dup2(fd[WRITE_END], STDOUT_FILENO);
+        //     close(fd[WRITE_END]);
+        //     state = is_not ? !exec_node_command(c->command) : exec_node_command(c->command);
+        //     exit(state);
+
+        // }
+        // else
+        // {
+        //     while (c->next_sibling)
+        //     {
+        //         pid = fork();
+        //         if (pid == 0)
+        //         {
+        //             close(fd[WRITE_END]);
+        //             dup2(fd[READ_END], STDIN_FILENO);
+                    
+        //             close(fd[READ_END]);
+        //             dup2(fd[WRITE_END], STDOUT_FILENO);
+        //             state = exec_node_command(c->next_sibling->command);
+        //             exit(state);
+                    
+        //             // close(fd[WRITE_END]);
+                    
+        //             // execlp(scmd, scmd, secarg,(char*) NULL);
+        //             // execlp("echo", "echo", "b",(char*) NULL);
+        //             // fprintf(stderr, "Failed to execute '%s'\n", "echo b");
+        //             // exit(1);
+        //         }
+        //         else
+        //         {
+        //         //     // int status;
+        //             // fdd = fd[0];
+        //             fd[0] = fd[1];
+        //             // int status;
+        //             // wait(&status);
+        //             // waitpid(pid, &status, 0);
+        //         }
+        //         c = c->next_sibling;
+        //         is_not = false;
+        //     }
+        //     int status;
+        //     // close(fd[READ_END]);
+        //     // close(fd[WRITE_END]);
+        //     // wait(&status);
+        //     waitpid(pid, &status, 0);
+        // }
+    // }
+    return false;
 }
+
+
+
+// => PERE (ls | cd)
+// ===> FILS 1: ls
+// ===> FILS 2: cd
+
+    // if (ast->is_not)
+    // {
+    //     state = !exec_node_command(c->command);
+    // }
+    // else
+    // {
+    //     state = exec_node_command(c->command);
+    // }
+    // while (c->next_sibling)
+    // {
+    //     c = c->next_sibling;
+    //     state = exec_node_command(c->command);
+    // }
+    // return state;
+// }
 
 bool exec_node_command(struct node_command *ast)
 {
+    bool state = false;
     if (ast->type == SIMPLE_COMMAND)
-        exec_node_simple_command(ast->command.simple_command);
+        return exec_node_simple_command(ast->command.simple_command);
     else if (ast->type == SHELL_COMMAND)
     {
-        exec_node_shell_command(ast->command.shell_command);
+        state = exec_node_shell_command(ast->command.shell_command);
         struct node_redirection *r = ast->redirections;
         while(r)
         {
-            exec_node_redirection(r);
+            state = exec_node_redirection(r);
             r = r->next;
         }
     }
-    else if(ast->type == FUNCDEC)
+    else if (ast->type == FUNCDEC)
     {
-        exec_node_funcdec(ast->command.funcdec);
+        state = exec_node_funcdec(ast->command.funcdec);
         struct node_redirection *r = ast->redirections;
         while(r)
         {
-            exec_node_redirection(r);
+            state = exec_node_redirection(r);
             r = r->next;
         }
     }
+    return state;
 }
 bool exec_node_simple_command(struct node_simple_command *ast)
 {
@@ -264,7 +454,6 @@ bool exec_node_redirection(struct node_redirection *ast)
 }
 bool exec_node_prefix(struct node_prefix *ast)
 {
-    
     if (ast->type == ASSIGMENT_WORD)
     {
         char *s = strcat(ast->prefix.assigment_word->variable_name, "=");
@@ -289,13 +478,16 @@ bool exec_node_element(struct node_element *ast)
 }
 bool exec_node_compound_list(struct node_compound_list *ast)
 {
-
     struct node_compound_list *c = ast;
     while (c)
     {
-        exec_node_and_or(c->and_or);
+        if (exec_node_and_or(c->and_or))
+        {
+            return true;
+        }
         c = c->next_sibling;
     }
+    return false;
 }
 bool exec_node_while(struct node_while *ast)
 {
@@ -327,15 +519,15 @@ bool exec_node_case(struct node_case *ast)
 
 bool exec_node_if(struct node_if *ast)
 {
+    printf("NODE_IF");
     // fprintf(f, "\tnode_%p [label=IF];\n", (void *)ast);
     // if (node)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    exec_node_compound_list(ast->condition);
-    exec_node_compound_list(ast->if_body);
-    if (ast->else_clause)
-    {
-        exec_node_else_clause(ast->else_clause);
-    }
+    if (!exec_node_compound_list(ast->condition))
+        return exec_node_compound_list(ast->if_body);
+    else if (ast->else_clause)
+        return exec_node_else_clause(ast->else_clause);
+    return false;
 }
 
 bool exec_node_elif(struct node_if *ast)
@@ -343,12 +535,11 @@ bool exec_node_elif(struct node_if *ast)
     // fprintf(f, "\tnode_%p [label=ELIF];\n", (void *)ast);
     // if (node)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    exec_node_compound_list(ast->condition);
-    exec_node_compound_list(ast->if_body);
-    if (ast->else_clause)
-    {
-        exec_node_else_clause(ast->else_clause);
-    }
+    if (!exec_node_compound_list(ast->condition))
+        return exec_node_compound_list(ast->if_body);
+    else if (ast->else_clause)
+        return exec_node_else_clause(ast->else_clause);
+    return false;
 }
 
 bool exec_node_for(struct node_for *ast)
@@ -411,5 +602,4 @@ bool exec_node_case_item(struct node_case_item *ast)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
     if (ast->compound_list)
         exec_node_compound_list(ast->compound_list);
-
 }

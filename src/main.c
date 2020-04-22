@@ -12,6 +12,7 @@
 #include "lexer/lexer.h"
 #include "utils/xalloc.h"
 #include "exec/exec.h"
+#include "utils/string.h"
 
 void print_usage()
 {
@@ -42,9 +43,16 @@ void init_42sh_process()
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
+        //printf("==>%zu", len);
+        //line[len - 2] = '\0';
         lexer = new_lexer(line);
-        ast = parse(lexer);
+        struct token *token = NULL;
+        /*while ((token = pop(lexer)))
+            printf("%s %s\n", type_to_str(token->type), token->value);*/
+
         
+        ast = parse(lexer);
+
         if (exec_node_input(ast))
             printf("Error");
 

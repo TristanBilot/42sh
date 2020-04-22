@@ -39,7 +39,7 @@ struct token *lex_io_number(char *c, size_t i)
     if (!c[i+2])
         return (c[i+1] =='<' || c[i+1] == '>') ? new_token_io_number(c[i]) : NULL;
     
-    if (is_number(c[i]) && ((c[i-1] && (c[i-1] == ' ')) || !c[i-1])) /* 2>a */
+    if (is_number(c[i]) && ((i == 0) || ((c[i-1] && (c[i-1] == ' ')) || !c[i-1]))) /* 2>a */
     {
         char io[3];
         io[0] = c[i+1];
@@ -92,7 +92,7 @@ struct token *lex_comments(char *c, size_t i)
 {
     if (!c || !c[i] || c[i] != '#')
         return NULL;
-    if (!c[i - 1] || c[i - 1] == ' ' || c[i - 1] == '\n')
+    if (/*!c[i - 1]*/i == 0 || c[i - 1] == ' ' || c[i - 1] == '\n')
         return new_token_type(TOK_COMM);
     return NULL;
 }

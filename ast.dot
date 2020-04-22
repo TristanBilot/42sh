@@ -1,13 +1,7 @@
 digraph AST {
-	node_0x556a53209470 [label="echo"];
-	node_0x556a53209490 [label="a"];
-	node_0x556a53209470 -> node_0x556a53209490;
-	node_0x556a532094d0 [label="TOK_GREAT"];
-	node_0x556a53209490 -> node_0x556a532094d0;
-	node_0x556a5320a080 [label="b"];
-	node_0x556a532094d0 -> node_0x556a5320a080;
-	node_0x556a53209930 [label="TOK_GREAT"];
-	node_0x556a532094b0 -> node_0x556a53209930;
-	node_0x556a5320a320 [label="c"];
-	node_0x556a53209930 -> node_0x556a5320a320;
+	node_0x6030000019c0 [label=IF];
+	node_0x603000001ba0 [label="a"];
+	node_0x6030000019c0 -> node_0x603000001ba0;
+	node_0x603000001db0 [label="b"];
+	node_0x6030000019c0 -> node_0x603000001db0;
 }

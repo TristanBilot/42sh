@@ -65,6 +65,7 @@ Test(parser, parser_simple_command2){
 Test(parser, parse_simple_if)
 {
     cr_assert(success("if a then b fi"));
+    //cr_assert(success("if a then b fi\n"));
     cr_assert(success("if a then b else c fi"));
     cr_assert(success("if a then b elif c then d else e fi"));
     cr_assert(success("if a then b elif c then d fi"));
@@ -190,7 +191,7 @@ Test(parser, parenthesis_near)
 
 Test(parser, comments)
 {
-    cr_assert(success("#commentaire"));   //marche sur le terminal
+    cr_assert(success("#commentaire  ter"));   //marche sur le terminal
     cr_assert(success("# commentaire"));  // marche aussi sur le terminal
     // Marche car le lexer prend bien ls#commentaire comme un WORD => le parser accepte les simple word => ne marchera pas à l'exécution
     //cr_assert(fail("ls#commentaire")); // pas censé marcher ça marche pas sur le terminal donc mis en fail
