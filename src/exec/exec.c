@@ -125,40 +125,10 @@ bool exec_node_and_or(struct node_and_or *ast)
     }
 }
 
-// int exec_pipeline_rec(int fd[], struct node_pipeline *c, int *fdd)
-// {
-//     pid_t pid;
-//     pipe(fd);
-//     if ((pid = fork()) == -1) {
-//         perror("fork");
-//         exit(1);
-//     }
-//     else if (pid == 0) {
-//         close(fd[1]);
-//         dup2(*fdd, STDIN_FILENO);
-//         exec_node_command(c->command);
-//         dup2(fd[WRITE_END], STDOUT_FILENO);
-//         close(fd[READ_END]);
-        
-//         exit(1);
-//     }
-//     else {
-//         if (c->next_sibling)
-//             exec_pipeline_rec(fd, c->next_sibling, fdd);
-//         else
-//         {
-//             int status;
-//             //printf("kill son");
-//             wait(&status);
-//             close(fd[1]);
-//             *fdd = fd[0];
-//         }
-//     }
-// }
-
 bool exec_node_pipeline(struct node_pipeline *ast)
 {
     struct node_pipeline *c = ast;
+    bool state = false;
 
     if (!c->next_sibling)
     {
@@ -171,9 +141,8 @@ bool exec_node_pipeline(struct node_pipeline *ast)
         int pid[NB_MAX_PIPE] = {-1};
         int fd[NB_MAX_PIPE][2];
         int status;
-        int is_first = true;
         int nb = 0;
-            
+        
         while (c)
         {
             status = pipe(fd[nb]);
@@ -200,8 +169,13 @@ bool exec_node_pipeline(struct node_pipeline *ast)
                     close(fd[i][WRITE_END]);
                 }
                 for (int i = 0; i <= nb; i++)
-                    waitpid(pid[i], NULL, 0);
-                return false;			
+                {
+                    waitpid(pid[i], &status, 0);
+                    if (status > 0) /* failure > 0, success = 0 */
+                        state = true;
+                }
+                // exit(is_not ? !state : state); /* only for tests */
+                return ast->is_not ? !state : state;
             }
             else
             {
@@ -218,119 +192,12 @@ bool exec_node_pipeline(struct node_pipeline *ast)
                     close(fd[i][READ_END]);
                     close(fd[i][WRITE_END]);
                 }
-                exec_node_command(c->command);
-                printf("failed to execute");
-                return true;
+                exit(exec_node_command(c->command));
             }
         }
     }
-
-    // bool state = false;
-    // bool is_not = ast->is_not;
-
-    //save_Stdout = dup(1);
-    // while (c->next_sibling)
-    // {
-    //     pipe(fd);
-    //     if (fork())
-    //     {
-    //         close(fd[READ_END]);
-    //         dup2(fd[WRITE_END], 1);
-    //         close(fd[WRITE_END]);
-    //         exec_node_command(c->command);
-    //     }
-    //     else
-    //     {
-    //         close(fd[WRITE_END]);
-    //         dup2(fd[READ_END], 0);
-    //         close(fd[READ_END]);
-    //         exec_node_command(c->next_sibling->command);
-    //     }
-    //     c =  c->next_sibling;
-    // }
-	
-
-
-
-        // if (pipe(fd) == -1)
-        // {
-        //     perror("pipe error (node_pipeline)");
-        //     return true;
-        // }
-        // if ((pid = fork()) == 0)
-        // {
-        //     close(fd[READ_END]);
-        //     dup2(fd[WRITE_END], STDOUT_FILENO);
-        //     close(fd[WRITE_END]);
-        //     state = is_not ? !exec_node_command(c->command) : exec_node_command(c->command);
-        //     exit(state);
-
-        // }
-        // else
-        // {
-        //     while (c->next_sibling)
-        //     {
-        //         pid = fork();
-        //         if (pid == 0)
-        //         {
-        //             close(fd[WRITE_END]);
-        //             dup2(fd[READ_END], STDIN_FILENO);
-                    
-        //             close(fd[READ_END]);
-        //             dup2(fd[WRITE_END], STDOUT_FILENO);
-        //             state = exec_node_command(c->next_sibling->command);
-        //             exit(state);
-                    
-        //             // close(fd[WRITE_END]);
-                    
-        //             // execlp(scmd, scmd, secarg,(char*) NULL);
-        //             // execlp("echo", "echo", "b",(char*) NULL);
-        //             // fprintf(stderr, "Failed to execute '%s'\n", "echo b");
-        //             // exit(1);
-        //         }
-        //         else
-        //         {
-        //         //     // int status;
-        //             // fdd = fd[0];
-        //             fd[0] = fd[1];
-        //             // int status;
-        //             // wait(&status);
-        //             // waitpid(pid, &status, 0);
-        //         }
-        //         c = c->next_sibling;
-        //         is_not = false;
-        //     }
-        //     int status;
-        //     // close(fd[READ_END]);
-        //     // close(fd[WRITE_END]);
-        //     // wait(&status);
-        //     waitpid(pid, &status, 0);
-        // }
-    // }
     return false;
 }
-
-
-
-// => PERE (ls | cd)
-// ===> FILS 1: ls
-// ===> FILS 2: cd
-
-    // if (ast->is_not)
-    // {
-    //     state = !exec_node_command(c->command);
-    // }
-    // else
-    // {
-    //     state = exec_node_command(c->command);
-    // }
-    // while (c->next_sibling)
-    // {
-    //     c = c->next_sibling;
-    //     state = exec_node_command(c->command);
-    // }
-    // return state;
-// }
 
 bool exec_node_command(struct node_command *ast)
 {
