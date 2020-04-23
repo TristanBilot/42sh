@@ -12,7 +12,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o"
   "CMakeFiles/42sh.dir/src/utils/buffer.c.o"
   "CMakeFiles/42sh.dir/src/utils/parser_utils.c.o"
-  "CMakeFiles/42sh.dir/src/utils/string.c.o"
+  "CMakeFiles/42sh.dir/src/utils/string_utils.c.o"
   "CMakeFiles/42sh.dir/src/utils/xalloc.c.o"
 )
 

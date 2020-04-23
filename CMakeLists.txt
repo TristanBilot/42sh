@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 project(42sh)
 
 set(CMAKE_CXX_STANDARD 11)
-set (CMAKE_C_FLAGS "-g -Wall -Wextra")
+set (CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic") #-Werror 
 
 set(SOURCE_FILES
 	src/parser/parser.c
@@ -14,7 +14,7 @@ set(SOURCE_FILES
 	src/lexer/lexer.c
 	src/lexer/lex_evaluation.c
 	src/utils/xalloc.c
-	src/utils/string.c
+	src/utils/string_utils.c
 	src/utils/buffer.c
 	src/utils/parser_utils.c
 	src/print/ast_print_dot.c

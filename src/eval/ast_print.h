@@ -1,7 +1,7 @@
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../lexer/token.h"
-#include "../utils/string.h"
+#include "../utils/string_utils.h"
 #include "../ast/ast.h"
 #include <stdio.h>
 

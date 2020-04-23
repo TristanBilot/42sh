@@ -60,7 +60,8 @@
         "unordered_map": "c",
         "ast_print_dot.h": "c",
         "exec.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "string_utils.h": "c"
     },
     "cmake.configureOnOpen": false
 }

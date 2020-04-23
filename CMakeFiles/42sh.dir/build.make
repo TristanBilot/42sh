@@ -148,18 +148,18 @@ CMakeFiles/42sh.dir/src/utils/xalloc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/utils/xalloc.c.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.c -o CMakeFiles/42sh.dir/src/utils/xalloc.c.s
 
-CMakeFiles/42sh.dir/src/utils/string.c.o: CMakeFiles/42sh.dir/flags.make
-CMakeFiles/42sh.dir/src/utils/string.c.o: src/utils/string.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/42sh.dir/src/utils/string.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/42sh.dir/src/utils/string.c.o   -c /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string.c
+CMakeFiles/42sh.dir/src/utils/string_utils.c.o: CMakeFiles/42sh.dir/flags.make
+CMakeFiles/42sh.dir/src/utils/string_utils.c.o: src/utils/string_utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/42sh.dir/src/utils/string_utils.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/42sh.dir/src/utils/string_utils.c.o   -c /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c
 
-CMakeFiles/42sh.dir/src/utils/string.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/42sh.dir/src/utils/string.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string.c > CMakeFiles/42sh.dir/src/utils/string.c.i
+CMakeFiles/42sh.dir/src/utils/string_utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/42sh.dir/src/utils/string_utils.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c > CMakeFiles/42sh.dir/src/utils/string_utils.c.i
 
-CMakeFiles/42sh.dir/src/utils/string.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/utils/string.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string.c -o CMakeFiles/42sh.dir/src/utils/string.c.s
+CMakeFiles/42sh.dir/src/utils/string_utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/utils/string_utils.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c -o CMakeFiles/42sh.dir/src/utils/string_utils.c.s
 
 CMakeFiles/42sh.dir/src/utils/buffer.c.o: CMakeFiles/42sh.dir/flags.make
 CMakeFiles/42sh.dir/src/utils/buffer.c.o: src/utils/buffer.c
@@ -235,7 +235,7 @@ CMakeFiles/42sh.dir/src/main.c.s: cmake_force
 "CMakeFiles/42sh.dir/src/lexer/lexer.c.o" \
 "CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o" \
 "CMakeFiles/42sh.dir/src/utils/xalloc.c.o" \
-"CMakeFiles/42sh.dir/src/utils/string.c.o" \
+"CMakeFiles/42sh.dir/src/utils/string_utils.c.o" \
 "CMakeFiles/42sh.dir/src/utils/buffer.c.o" \
 "CMakeFiles/42sh.dir/src/utils/parser_utils.c.o" \
 "CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o" \
@@ -252,7 +252,7 @@ CMakeFiles/42sh.dir/src/main.c.s: cmake_force
 42sh: CMakeFiles/42sh.dir/src/lexer/lexer.c.o
 42sh: CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o
 42sh: CMakeFiles/42sh.dir/src/utils/xalloc.c.o
-42sh: CMakeFiles/42sh.dir/src/utils/string.c.o
+42sh: CMakeFiles/42sh.dir/src/utils/string_utils.c.o
 42sh: CMakeFiles/42sh.dir/src/utils/buffer.c.o
 42sh: CMakeFiles/42sh.dir/src/utils/parser_utils.c.o
 42sh: CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o

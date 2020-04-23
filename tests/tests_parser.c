@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include "lexer/lexer.h"
 #include "parser/parser.h"
-#include "utils/string.h"
+#include "utils/string_utils.h"
 
 bool success(const char *expr)
 {

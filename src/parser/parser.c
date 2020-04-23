@@ -1,13 +1,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "../parser/parser.h"
 #include "../ast/free.h"
 #include "../ast/ast.h"
 #include "../utils/parser_utils.h"
 #include "../utils/xalloc.h"
-#include "../utils/string.h"
+#include "../utils/string_utils.h"
 
 #define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
@@ -848,7 +849,7 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
 bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
 {
     DEBUG("parse_case_clause\n");
-    struct token *current = parser->current_token;
+    //struct token *current = parser->current_token;
     *ast = build_case_clause();
     
     if (parse_case_item(parser, &((*ast)->case_item)))

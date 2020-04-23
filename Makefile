@@ -420,32 +420,32 @@ src/utils/parser_utils.c.s:
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/parser_utils.c.s
 .PHONY : src/utils/parser_utils.c.s
 
-src/utils/string.o: src/utils/string.c.o
+src/utils/string_utils.o: src/utils/string_utils.c.o
 
-.PHONY : src/utils/string.o
+.PHONY : src/utils/string_utils.o
 
 # target to build an object file
-src/utils/string.c.o:
-	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string.c.o
-.PHONY : src/utils/string.c.o
+src/utils/string_utils.c.o:
+	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.o
+.PHONY : src/utils/string_utils.c.o
 
-src/utils/string.i: src/utils/string.c.i
+src/utils/string_utils.i: src/utils/string_utils.c.i
 
-.PHONY : src/utils/string.i
+.PHONY : src/utils/string_utils.i
 
 # target to preprocess a source file
-src/utils/string.c.i:
-	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string.c.i
-.PHONY : src/utils/string.c.i
+src/utils/string_utils.c.i:
+	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.i
+.PHONY : src/utils/string_utils.c.i
 
-src/utils/string.s: src/utils/string.c.s
+src/utils/string_utils.s: src/utils/string_utils.c.s
 
-.PHONY : src/utils/string.s
+.PHONY : src/utils/string_utils.s
 
 # target to generate assembly for a file
-src/utils/string.c.s:
-	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string.c.s
-.PHONY : src/utils/string.c.s
+src/utils/string_utils.c.s:
+	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.s
+.PHONY : src/utils/string_utils.c.s
 
 src/utils/xalloc.o: src/utils/xalloc.c.o
 
@@ -516,9 +516,9 @@ help:
 	@echo "... src/utils/parser_utils.o"
 	@echo "... src/utils/parser_utils.i"
 	@echo "... src/utils/parser_utils.s"
-	@echo "... src/utils/string.o"
-	@echo "... src/utils/string.i"
-	@echo "... src/utils/string.s"
+	@echo "... src/utils/string_utils.o"
+	@echo "... src/utils/string_utils.i"
+	@echo "... src/utils/string_utils.s"
 	@echo "... src/utils/xalloc.o"
 	@echo "... src/utils/xalloc.i"
 	@echo "... src/utils/xalloc.s"

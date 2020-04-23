@@ -18,7 +18,7 @@ void append_buffer(struct buffer *buffer, char c)
     buffer->buf[buffer->index++] = c;
 }
 
-int buffer_len(struct buffer *buffer)
+size_t buffer_len(struct buffer *buffer)
 {
     return strlen(buffer->buf);
 }

@@ -12,7 +12,7 @@
 #include "./lexer/lexer.h"
 #include "./utils/xalloc.h"
 #include "./exec/exec.h"
-#include "./utils/string.h"
+#include "./utils/string_utils.h"
 
 void print_usage()
 {

@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include "lexer/lexer.h"
 #include "ast/ast.h"
-#include "utils/string.h"
+#include "utils/string_utils.h"
 
 
 /*                                Création de l'arbre et de ses noeuds                                    */

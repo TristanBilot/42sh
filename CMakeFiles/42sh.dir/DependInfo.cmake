@@ -15,7 +15,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/print/ast_print_dot.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/utils/buffer.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/parser_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/utils/parser_utils.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/utils/string.c.o"
+  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/utils/string_utils.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/utils/xalloc.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")

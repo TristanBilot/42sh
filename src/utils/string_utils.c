@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <errno.h>
-#include "../utils/string.h"
+#include "../utils/string_utils.h"
 
 char *type_to_str(int type)
 {

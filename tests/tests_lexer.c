@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 #include "lexer/lexer.h"
-#include "utils/string.h"
+#include "utils/string_utils.h"
 
 Test(lexer, basic_tokens)
 {
