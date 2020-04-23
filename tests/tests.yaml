@@ -1,0 +1,181 @@
+####################################################### TEST BASE ####################################################### 
+- description: BASE
+  stdin: \n                               # Pour l'instant le entrer il segfault dans notre 42sh donc je met que \n -> Erreur pour l'instant
+  checks:
+    - has_stderr
+
+  stdin: gdjklgndgdl
+  checks:
+    - has_stderr
+
+
+####################################################### TEST ECHO ####################################################### 
+- description: ECHO 
+  stdin: echo
+  checks:
+    - returncode
+
+  stdin: echo toto
+  checks:
+    - returncode
+
+  stdin: echo toto;
+  checks:
+    - returncode
+
+  stdin: echo toto;echo tata;echo tati
+  checks:
+    - returncode
+
+####################################################### TEST LS ########################################################
+- description: LS
+  stdin: ls
+  checks:
+    - returncode
+
+  stdin: ls;
+  checks:
+    - returncode
+
+  stdin: ls -la
+  checks:
+    - returncode
+
+  stdin: ls Makefile
+  checks:
+    - returncode
+
+  stdin: ls -lt
+  checks:
+    - returncode
+
+  stdin: ls -a
+  checks:
+    - returncode
+
+  stdin: ls -l *.sh
+  checks:
+    - returncode
+
+  stdin: ls;ls -l ;ls -a;ls -la
+  checks:
+    - returncode
+
+  stdin: ls gjkdghkdfg
+  checks:
+    - has_stderr
+
+####################################################### TEST CAT ########################################################
+- description: CAT
+  stdin: cat Makefile
+  checks:
+    - returncode
+
+  stdin: cat Makefile;
+  checks:
+    - returncode
+
+  stdin: cat Makefile;cat Makefile;cat Makefile
+  checks:
+    - returncode
+
+####################################################### TEST MKDIR ########################################################
+- description: MKDIR
+  stdin: mkdir toto
+  checks:
+    - returncode
+
+####################################################### TEST CD ########################################################
+- description: CD
+  stdin: cd
+  checks:
+    - returncode
+
+  stdin: cd ../
+  checks:
+    - returncode
+
+  stdin: cd fdklsfhsd
+  checks:
+    - has_stderr
+
+####################################################### TEST PIPELINE ########################################################
+- description: PIPELINE
+  stdin: echo toto | echo tata
+  checks:
+    - returncode
+
+  stdin: echo toto | echo tata | echo tati
+  checks:
+    - returncode
+
+  stdin: echo toto | ls
+  checks:
+    - returncode
+
+  stdin: cat Makefile | grep -i a
+  checks:
+    - returncode
+
+  stdin: cat Makefile | grep -i a | echo toto | echo tata | echo tati
+  checks:
+    - returncode
+
+  stdin: echo toto | kdsfs
+  checks:
+    - has_stderr
+  
+####################################################### TEST LOGICAL ########################################################
+- description: LOGICAL
+  stdin: echo toto || echo tata
+  checks:
+    - returncode
+    
+  stdin: echo toto || echo tata || echo tati
+  checks:
+    - returncode
+    
+  stdin: echo toto && ls
+  checks:
+    - returncode
+    
+  stdin: echo toto && ls && tree
+  checks:
+    - returncode
+    
+  stdin: echo toto && ls && tree && echo tati
+  checks:
+    - returncode
+    
+  stdin: echo toto && ls || tree && echo tati || ls -la
+  checks:
+      - returncode
+  stdin: echo toto || gfdkgjfl
+  checks:
+    - returncode
+
+
+####################################################### TEST CONDITION ########################################################
+- description: CONDITION
+  stdin: if echo toto then echo success else echo failed fi
+  checks:
+    - returncode
+
+  stdin: if cat shgldsg then echo success elif ls then echo success else echo failed fi
+  checks:
+    - returncode
+
+  stdin: if cat shgldsg then echo success elif cat urilezrhze then echo success elif ls then echo success else echo failed fi
+  checks:
+    - returncode
+  
+  
+
+
+
+
+ 
+
+  
+
+  

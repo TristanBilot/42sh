@@ -13,6 +13,15 @@ CMakeFiles/42sh.dir/src/ast/free.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.c
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.h
+CMakeFiles/42sh.dir/src/eval/ast_print.c.o
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.c
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/print/ast_print_dot.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c
@@ -43,6 +52,7 @@ CMakeFiles/42sh.dir/src/lexer/token.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
 CMakeFiles/42sh.dir/src/main.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h

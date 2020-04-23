@@ -13,6 +13,15 @@
 #include "./utils/xalloc.h"
 #include "./exec/exec.h"
 #include "./utils/string_utils.h"
+#include "./eval/ast_print.h"
+
+static struct option long_options[] =
+{
+    {"c", required_argument, 0, 'c'},
+    {"ast-printer", no_argument, 0, 'a'},
+    {"norc", no_argument, 0, 'n'},
+    {0, 0, 0, 0}
+};
 
 void print_usage()
 {
@@ -55,6 +64,8 @@ void init_42sh_process()
 
         if (exec_node_input(ast))
             printf("Error");
+        if (long_options[1].flag)
+            print_ast(ast);
 
         print_prompt();
     }
@@ -76,13 +87,7 @@ int main(int ac, char **av)
     int option_index = 0;
     int opt = -1;
     struct option_sh *option = init_option_sh();
-    static struct option long_options[] =
-    {
-        {"c", required_argument, 0, 'c'},
-        {"ast-printer", no_argument, 0, 'a'},
-        {"norc", no_argument, 0, 'n'},
-        {0, 0, 0, 0}
-    };
+    
     while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)
     {
         if (opt == 'n')
@@ -91,7 +96,8 @@ int main(int ac, char **av)
             option->print_ast_flag = true;
         else if (opt == 'c')
             option->cmd = optarg;
-        else if (opt == '?') {
+        else if (opt == '?')
+        {
             if (optopt == 'c')
                 fprintf(stderr, "Option -%c requires an argument.\n", optopt);
             else if (isprint(optopt))

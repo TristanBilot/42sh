@@ -11,6 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.5/CMakeSystem.cmake"
   "CMakeLists.txt"
+  "cmake/Modules/FindCriterion.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/CMakeCInformation.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
@@ -25,6 +26,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Compiler/Clang.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Compiler/GNU.cmake"
+  "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+  "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/FindPackageMessage.cmake"
+  "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/FindPkgConfig.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Internal/CMakeCheckCompilerFlag.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake"
   "/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake"
@@ -50,4 +54,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/42sh.dir/DependInfo.cmake"
+  "CMakeFiles/tests_parser.dir/DependInfo.cmake"
+  "CMakeFiles/tests_lexer.dir/DependInfo.cmake"
   )

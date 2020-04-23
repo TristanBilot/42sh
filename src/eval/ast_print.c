@@ -503,6 +503,7 @@ void print_node_case_item(struct node_case_item *ast, FILE *f, void *node)
 
 void print_ast(struct node_input *ast)
 {
+    printf("AST PRINT HERE");
     if (!ast)
         return;
     // print_node_input(ast, stdout);
@@ -512,34 +513,24 @@ void print_ast(struct node_input *ast)
     convert_dot_to_png();
 }
 
-
-// void tree_traversal(struct ast_node *node)
+// int main(int argc, char *argv[])
 // {
-//     print_node(node);
-//     for (size_t index = 0; index < nb_children; index++)
-//         tree_traversal(node->children[index]);
+//     if (argc < 2)
+//     {
+//         puts("Usage: ./test \"expression\"");
+//         return 1;
+//     }
+
+//     struct lexer *lexer = new_lexer(argv[1]);
+//     struct node_input *ast = NULL;
+
+//     if ((ast = parse(lexer)))
+//     {
+//         exec_node_input(ast);
+//         print_ast(ast);
+//     }
+//     // else
+//     //     puts("Parsing error");
+
+//     free_lexer(lexer);
 // }
-
-
-
-int main(int argc, char *argv[])
-{
-    if (argc < 2)
-    {
-        puts("Usage: ./test \"expression\"");
-        return 1;
-    }
-
-    struct lexer *lexer = new_lexer(argv[1]);
-    struct node_input *ast = NULL;
-
-    if ((ast = parse(lexer)))
-    {
-        exec_node_input(ast);
-        print_ast(ast);
-    }
-    // else
-    //     puts("Parsing error");
-
-    free_lexer(lexer);
-}

@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/ast/ast.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/ast/free.c.o"
+  "/Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/eval/ast_print.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/exec/exec.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lex_evaluation.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir/src/lexer/lexer.c.o"
@@ -29,6 +30,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "src/utils"
   "src/exec"
   "src/print"
+  "/usr/local/include/criterion"
   )
 
 # Targets to which this target links.

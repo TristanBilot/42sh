@@ -1,7 +1,0 @@
-digraph AST {
-	node_0x6030000019c0 [label=IF];
-	node_0x603000001ba0 [label="a"];
-	node_0x6030000019c0 -> node_0x603000001ba0;
-	node_0x603000001db0 [label="b"];
-	node_0x6030000019c0 -> node_0x603000001db0;
-}

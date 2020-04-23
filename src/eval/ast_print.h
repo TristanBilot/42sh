@@ -27,3 +27,4 @@ void print_node_else_clause(struct node_else_clause *ast, FILE *f, void *node);
 void print_node_do_group(struct node_do_group *ast, FILE *f, void *node);
 void print_node_case_clause(struct node_case_clause *ast, FILE *f, void *node);
 void print_node_case_item(struct node_case_item *ast, FILE *f, void *node);
+void print_ast(struct node_input *ast);

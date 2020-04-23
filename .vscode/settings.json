@@ -61,7 +61,8 @@
         "ast_print_dot.h": "c",
         "exec.h": "c",
         "main.h": "c",
-        "string_utils.h": "c"
+        "string_utils.h": "c",
+        "ast_print.h": "c"
     },
     "cmake.configureOnOpen": false
 }

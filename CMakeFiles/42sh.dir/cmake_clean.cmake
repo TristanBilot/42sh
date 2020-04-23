@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "42sh.pdb"
   "CMakeFiles/42sh.dir/src/ast/ast.c.o"
   "CMakeFiles/42sh.dir/src/ast/free.c.o"
+  "CMakeFiles/42sh.dir/src/eval/ast_print.c.o"
   "CMakeFiles/42sh.dir/src/exec/exec.c.o"
   "CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o"
   "CMakeFiles/42sh.dir/src/lexer/lexer.c.o"

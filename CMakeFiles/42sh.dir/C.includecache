@@ -10,9 +10,39 @@
 stdbool.h
 -
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.h
+../parser/parser.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
+../lexer/lexer.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+../lexer/token.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+../utils/string_utils.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 ../ast/ast.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
+stdio.h
+-
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
+unistd.h
+-
+errno.h
+-
+stdlib.h
+-
+string.h
+-
+err.h
+-
+stdio.h
+-
+sys/types.h
+-
+sys/wait.h
+-
+../parser/parser.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
 ../lexer/token.h
@@ -20,27 +50,39 @@ stdbool.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.c
-stdbool.h
--
-stdlib.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/main.c
+ctype.h
 -
 stdio.h
 -
+stdlib.h
+-
+unistd.h
+-
+getopt.h
+-
+errno.h
+-
 string.h
 -
-../parser/parser.h
+stdbool.h
+-
+./main.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/main.h
+./parser/parser.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
-../ast/free.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.h
-../ast/ast.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
-../utils/parser_utils.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/parser_utils.h
-../utils/xalloc.h
+./lexer/lexer.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+./utils/xalloc.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
-../utils/string_utils.h
+./exec/exec.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
+./utils/string_utils.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+./eval/ast_print.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.h
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/main.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
 ../lexer/lexer.h
@@ -51,10 +93,6 @@ stdbool.h
 -
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
-
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/parser_utils.h
-stdbool.h
--
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 stdlib.h
