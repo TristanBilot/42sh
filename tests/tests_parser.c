@@ -65,7 +65,7 @@ Test(parser, parser_simple_command2){
 Test(parser, parse_simple_if)
 {
     cr_assert(success("if a then b fi"));
-    //cr_assert(success("if a then b fi\n"));
+    cr_assert(success("if a then b fi\n"));
     cr_assert(success("if a then b else c fi"));
     cr_assert(success("if a then b elif c then d else e fi"));
     cr_assert(success("if a then b elif c then d fi"));

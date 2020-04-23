@@ -116,6 +116,51 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, const char *c, s
     return 0;
 }
 
+size_t get_previous_newline_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (j > 1 && c[--j])
+        if (c[j-1] == '\n')
+            return j;
+    return 0;
+}
+
+/*
+* if\n should be IF NEWLINE
+*/
+int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *j)
+{
+    int type;
+    if (c[*j] == '\n')
+    {
+        if (*j == 0 && c[*j+1])
+        {
+            char *content = substr(strdup(c), (*j + 1), strlen(c));
+            if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
+            {
+                append(lexer, new_token_type(TOK_NEWLINE));
+                append(lexer, new_token_type(type));
+                return 1;
+            }
+        }
+        size_t starting_index = get_previous_newline_index(c, *j);
+        char *content = substr(strdup(c), starting_index, *j - starting_index);
+        if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
+        {
+            append(lexer, new_token_type(type));
+            append(lexer, new_token_type(TOK_NEWLINE));
+            if (c[*j + 1])
+            {
+                flush(buffer);
+                return -1;
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
@@ -135,6 +180,10 @@ void init_lexer(struct lexer *lexer)
                 if (lex_full(lexer, c, j))
                     break;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
+                    continue;
+                else if (type == 1)
+                    break;
+                if ((type = lex_stuck_newline(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
                     break;

@@ -376,3 +376,48 @@ Test(lexer, comments)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_COMM);
 }
+
+Test(lexer, stuck_newlines)
+{
+    const char *input1 = "if\na";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == KW_IF);
+    cr_assert(pop(lexer1)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+
+    const char *input2 = "if\na\nthen\nb";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == KW_IF);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == KW_THEN);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+
+    const char *input3 = "\nif\na\n\n\nthen\nb";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == KW_IF);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == KW_THEN);
+    cr_assert(pop(lexer3)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+
+    const char *input4 = "\n";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(pop(lexer4)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer4)->type == TOK_EOF);
+
+    const char *input5 = "\nifs sif\n";
+    struct lexer *lexer5 = new_lexer(input5);
+    cr_assert(pop(lexer5)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_WORD);
+    cr_assert(pop(lexer5)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer5)->type == TOK_EOF);
+}

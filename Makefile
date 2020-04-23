@@ -59,7 +59,7 @@ debug: LDFLAGS+= -fsanitize=address
 debug: all
 
 tests: LDFLAGS+= -lcriterion
-tests: LDFLAGS+= -fsanitize=address
+tests: LDFLAGS+= #-fsanitize=address
 tests: run_test_lexer run_test_ast run_test_parser
 
 42sh: src/main.o ${OBJS}

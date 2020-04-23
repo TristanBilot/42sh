@@ -140,7 +140,7 @@ bool exec_node_pipeline(struct node_pipeline *ast)
     {
         int pid[NB_MAX_PIPE] = {-1};
         int fd[NB_MAX_PIPE][2];
-        int status;
+        int status;// T'es la ??
         int nb = 0;
         
         while (c)
