@@ -1,7 +1,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include "lexer/lexer.h"
+#include "../lexer/lexer.h"
 #define BUFFER_SIZE 256
 
 struct buffer {

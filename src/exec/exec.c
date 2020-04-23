@@ -1,44 +1,46 @@
-#include "exec.h"
-#include "utils/string.h"
+#include "../exec/exec.h"
+#include "../utils/string.h"
 #include <fcntl.h>
 #include <unistd.h>
 
 #define READ_END 0
 #define WRITE_END 1
-#define STDOUT_FILENO 1       /* Standard output.  */
+#define STDOUT_FILENO 1
 
 bool execute(char **args)
 {
-    // int	status = 0;
-    // int	child = 0;
-    // if ((child = fork()) == -1)
-    //     return true;
-    // if (child == 0)
-    // {
-        // if (!should_print)
-        //     strcat(args[0], " >/dev/null");
+    if ((execvp(args[0], args)) == -1)
+    {
+        err(1, "command not found: %s\n", args[0]);
+        return true;
+    }
+    return false;
+}
+
+bool execute_with_fork(char **args)
+{
+    int	status = 0;
+    int	child = 0;
+    if ((child = fork()) == -1)
+        return true;
+    if (child == 0)
+    {
         if ((execvp(args[0], args)) == -1)
         {
             err(1, "command not found: %s\n", args[0]);
             return true;
         }
-    // close(fd[READ_END]);
-    // close(fd[WRITE_END]);
-        // return false;
-    // }
-    // else
-    // {
-    //     wait(&status);
-    //     if (WIFEXITED(status))
-    //     {
-    //         printf("exit status = %d\n", WEXITSTATUS(status));
-    //         close(fd[READ_END]);
-    //         close(fd[WRITE_END]);
-    //         return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
-    //     }
-    // }
-    // close(fd[READ_END]);
-    // close(fd[WRITE_END]);
+        return false;
+    }
+    else
+    {
+        wait(&status);
+        if (WIFEXITED(status))
+        {
+            // printf("exit status = %d\n", WEXITSTATUS(status));
+            return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
+        }
+    }
     return false;
 }
 
@@ -133,8 +135,8 @@ bool exec_node_pipeline(struct node_pipeline *ast)
     if (!c->next_sibling)
     {
         if (ast->is_not)
-            return !exec_node_command(c->command);
-        return exec_node_command(c->command);
+            return !exec_node_command(c->command, true);
+        return exec_node_command(c->command, true);
     }
     else
     {
@@ -192,18 +194,18 @@ bool exec_node_pipeline(struct node_pipeline *ast)
                     close(fd[i][READ_END]);
                     close(fd[i][WRITE_END]);
                 }
-                exit(exec_node_command(c->command));
+                exit(exec_node_command(c->command, false));
             }
         }
     }
     return false;
 }
 
-bool exec_node_command(struct node_command *ast)
+bool exec_node_command(struct node_command *ast, bool with_fork)
 {
     bool state = false;
     if (ast->type == SIMPLE_COMMAND)
-        return exec_node_simple_command(ast->command.simple_command);
+        return exec_node_simple_command(ast->command.simple_command, with_fork);
     else if (ast->type == SHELL_COMMAND)
     {
         state = exec_node_shell_command(ast->command.shell_command);
@@ -226,7 +228,7 @@ bool exec_node_command(struct node_command *ast)
     }
     return state;
 }
-bool exec_node_simple_command(struct node_simple_command *ast)
+bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
 {
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
@@ -249,7 +251,7 @@ bool exec_node_simple_command(struct node_simple_command *ast)
             args[size++] = e->element.word;
         }
         args[size++] = NULL;
-        return execute(args);
+        return with_fork ? execute_with_fork(args) : execute(args);
     }
 }
 
@@ -305,7 +307,7 @@ bool exec_node_funcdec(struct node_funcdec *ast)
 
 bool exec_node_redirection(struct node_redirection *ast)
 {
-    char *redirection = type_to_str(ast->type);
+    // char *redirection = type_to_str(ast->type);
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *)ast, redirection);
     // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     if (ast->left && !is(ast->left, ""))
@@ -323,8 +325,8 @@ bool exec_node_prefix(struct node_prefix *ast)
 {
     if (ast->type == ASSIGMENT_WORD)
     {
-        char *s = strcat(ast->prefix.assigment_word->variable_name, "=");
-        char *s1 = strcat(s, ast->prefix.assigment_word->value);
+        // char *s = strcat(ast->prefix.assigment_word->variable_name, "=");
+        // char *s1 = strcat(s, ast->prefix.assigment_word->value);
         // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *)ast, s1);
         // if (node)
             // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);

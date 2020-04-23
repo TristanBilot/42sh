@@ -1,6 +1,6 @@
-#include "lexer/token.h"
-#include "utils/xalloc.h"
-#include "utils/string.h"
+#include "../lexer/token.h"
+#include "../utils/xalloc.h"
+#include "../utils/string.h"
 
 #include <stdio.h>
 #include <stdlib.h>

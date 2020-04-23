@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "utils/string.h"
-#include "lexer/lexer.h"
+#include "../utils/string.h"
+#include "../lexer/lexer.h"
 
 char *lex_backslash(char *c, size_t i)
 {

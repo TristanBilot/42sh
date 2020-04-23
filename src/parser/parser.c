@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "parser.h"
-#include "ast/free.h"
-#include "ast/ast.h"
-#include "utils/parser_utils.h"
-#include "utils/xalloc.h"
-#include "utils/string.h"
+#include "../parser/parser.h"
+#include "../ast/free.h"
+#include "../ast/ast.h"
+#include "../utils/parser_utils.h"
+#include "../utils/xalloc.h"
+#include "../utils/string.h"
 
 #define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \

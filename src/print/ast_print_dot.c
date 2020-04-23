@@ -1,4 +1,4 @@
-#include "ast_print_dot.h"
+#include "../print/ast_print_dot.h"
 
  /*
  digraph G {

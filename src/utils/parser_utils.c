@@ -2,7 +2,7 @@
 #include "../lexer/token.h"
 #include "../parser/parser.h"
 #include "../ast/ast.h"
-#include "parser_utils.h"
+#include "../utils/parser_utils.h"
 
 bool is_redirection(struct token *token)
 {

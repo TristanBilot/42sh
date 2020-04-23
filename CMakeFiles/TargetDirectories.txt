@@ -1,0 +1,3 @@
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/rebuild_cache.dir
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/edit_cache.dir
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir

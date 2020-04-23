@@ -1,7 +1,7 @@
 #ifndef FREE_H
 #define FREE_H
 
-#include "ast/ast.h"
+#include "../ast/ast.h"
 
 void free_input(struct node_input *ast);
 void free_list(struct node_list *ast);

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "lexer/lexer.h"
-#include "utils/buffer.h"
+#include "../lexer/lexer.h"
+#include "../utils/buffer.h"
 
 struct buffer *new_buffer()
 {

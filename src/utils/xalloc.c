@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "utils/xalloc.h"
+#include "../utils/xalloc.h"
 
 void *xmalloc(size_t size)
 {

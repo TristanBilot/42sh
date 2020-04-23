@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "utils/xalloc.h"
-#include "utils/string.h"
-#include "utils/buffer.h"
-#include "lexer/token.h"
-#include "lexer/lexer.h"
-#include "lexer/lex_evaluation.h"
+#include "../utils/xalloc.h"
+#include "../utils/string.h"
+#include "../utils/buffer.h"
+#include "../lexer/token.h"
+#include "../lexer/lexer.h"
+#include "../lexer/lex_evaluation.h"
 
 char **split(const char *str)
 {

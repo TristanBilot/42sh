@@ -1,8 +1,8 @@
-#include "parser/parser.h"
-#include "lexer/lexer.h"
-#include "lexer/token.h"
-#include "utils/string.h"
-#include "ast/ast.h"
+#include "../parser/parser.h"
+#include "../lexer/lexer.h"
+#include "../lexer/token.h"
+#include "../utils/string.h"
+#include "../ast/ast.h"
 #include <stdio.h>
 
 void print_node_input(struct node_input *ast, FILE *f);

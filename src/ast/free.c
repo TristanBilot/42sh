@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "free.h"
-#include "ast/ast.h"
+#include "../ast/free.h"
+#include "../ast/ast.h"
 
 #define AST_EXISTS(ast) \
     if (!ast)\

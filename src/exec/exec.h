@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "parser/parser.h"
+#include "../parser/parser.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
@@ -21,8 +21,8 @@ bool exec_node_input(struct node_input *ast);
 bool exec_node_list(struct node_list *ast);
 bool exec_node_and_or(struct node_and_or *ast);
 bool exec_node_pipeline(struct node_pipeline *ast);
-bool exec_node_command(struct node_command *ast);
-bool exec_node_simple_command(struct node_simple_command *ast);
+bool exec_node_command(struct node_command *ast, bool with_fork);
+bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork);
 bool exec_node_shell_command(struct node_shell_command *ast);
 bool exec_node_funcdec(struct node_funcdec *ast);
 bool exec_node_redirection(struct node_redirection *ast);

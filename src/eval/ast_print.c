@@ -1,9 +1,9 @@
-#include "ast/ast.h"
-#include "lexer/lexer.h"
-#include "parser/parser.h"
-#include "eval/ast_print.h"
+#include "../ast/ast.h"
+#include "../lexer/lexer.h"
+#include "../parser/parser.h"
+#include "../eval/ast_print.h"
 #include <err.h>
-#include "print/ast_print_dot.h"
+#include "../print/ast_print_dot.h"
 
 #define PRINT_FLAG false
 #define PRINT_NODE(msg) if (PRINT_FLAG) \

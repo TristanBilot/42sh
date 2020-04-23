@@ -7,12 +7,12 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "main.h"
-#include "parser/parser.h"
-#include "lexer/lexer.h"
-#include "utils/xalloc.h"
-#include "exec/exec.h"
-#include "utils/string.h"
+#include "./main.h"
+#include "./parser/parser.h"
+#include "./lexer/lexer.h"
+#include "./utils/xalloc.h"
+#include "./exec/exec.h"
+#include "./utils/string.h"
 
 void print_usage()
 {
@@ -46,7 +46,7 @@ void init_42sh_process()
         //printf("==>%zu", len);
         //line[len - 2] = '\0';
         lexer = new_lexer(line);
-        struct token *token = NULL;
+        // struct token *token = NULL;
         /*while ((token = pop(lexer)))
             printf("%s %s\n", type_to_str(token->type), token->value);*/
 

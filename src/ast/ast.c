@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utils/xalloc.h"
-#include "parser/parser.h"
-#include "ast/ast.h"
+#include "../utils/xalloc.h"
+#include "../parser/parser.h"
+#include "../ast/ast.h"
 
 struct node_input *build_input(void)                 // \n EOF
 {
