@@ -1,6 +1,8 @@
 /Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/rebuild_cache.dir
-/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir
 /Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/edit_cache.dir
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/42sh.dir
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/ast_print.dir
 /Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_parser.dir
+/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/token_printer.dir
 /Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/test.dir
 /Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir

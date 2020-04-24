@@ -46,7 +46,9 @@ bool execute_with_fork(char **args)
 
 bool exec_node_input(struct node_input *ast)
 {
-    return exec_node_list(ast->node_list);
+    if(!ast)
+        return false;
+    return ast->node_list ? exec_node_list(ast->node_list) : false;
 }
 bool exec_node_list(struct node_list *ast)
 {

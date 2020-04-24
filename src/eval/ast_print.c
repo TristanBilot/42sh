@@ -512,25 +512,3 @@ void print_ast(struct node_input *ast)
     close_dot(f);
     convert_dot_to_png();
 }
-
-// int main(int argc, char *argv[])
-// {
-//     if (argc < 2)
-//     {
-//         puts("Usage: ./test \"expression\"");
-//         return 1;
-//     }
-
-//     struct lexer *lexer = new_lexer(argv[1]);
-//     struct node_input *ast = NULL;
-
-//     if ((ast = parse(lexer)))
-//     {
-//         exec_node_input(ast);
-//         print_ast(ast);
-//     }
-//     // else
-//     //     puts("Parsing error");
-
-//     free_lexer(lexer);
-// }

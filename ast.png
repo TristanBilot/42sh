@@ -1,0 +1,13 @@
+digraph AST {
+	graph [bb="0,0,55.579,108"];
+	node [label="\N"];
+	node_0x7f974c405990	[height=0.5,
+		label=hello,
+		pos="27.789,90",
+		width=0.77193];
+	node_0x7f974c4059c0	[height=0.5,
+		label=nora,
+		pos="27.789,18",
+		width=0.75];
+	node_0x7f974c405990 -> node_0x7f974c4059c0	[pos="e,27.789,36.104 27.789,71.697 27.789,63.983 27.789,54.712 27.789,46.112"];
+}

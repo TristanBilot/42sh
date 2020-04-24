@@ -1,0 +1,5 @@
+digraph AST {
+	node_0x7f974c405990 [label="hello"];
+	node_0x7f974c4059c0 [label="nora"];
+	node_0x7f974c405990 -> node_0x7f974c4059c0;
+}
