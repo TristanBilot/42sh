@@ -13,6 +13,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/token_printer.dir/src/utils/parser_utils.c.o"
   "CMakeFiles/token_printer.dir/src/utils/string_utils.c.o"
   "CMakeFiles/token_printer.dir/src/utils/xalloc.c.o"
+  "CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o"
   "token_printer"
   "token_printer.pdb"
 )

@@ -88,3 +88,9 @@ CMakeFiles/token_printer.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/token_printer.dir/src/utils/xalloc.c.o: src/utils/xalloc.c
 CMakeFiles/token_printer.dir/src/utils/xalloc.c.o: src/utils/xalloc.h
 
+CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o: src/utils/attr.h
+CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o: src/utils/string_utils.h
+CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o: src/utils/xalloc.h
+CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.c
+CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.h
+

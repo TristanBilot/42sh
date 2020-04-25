@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/42sh.dir/src/ast/free.c.o"
   "CMakeFiles/42sh.dir/src/eval/ast_print.c.o"
   "CMakeFiles/42sh.dir/src/exec/exec.c.o"
+  "CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o"
   "CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o"
   "CMakeFiles/42sh.dir/src/lexer/lexer.c.o"
   "CMakeFiles/42sh.dir/src/lexer/token.c.o"
@@ -12,9 +13,11 @@ file(REMOVE_RECURSE
   "CMakeFiles/42sh.dir/src/parser/parser.c.o"
   "CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o"
   "CMakeFiles/42sh.dir/src/utils/buffer.c.o"
+  "CMakeFiles/42sh.dir/src/utils/exec_utils.c.o"
   "CMakeFiles/42sh.dir/src/utils/parser_utils.c.o"
   "CMakeFiles/42sh.dir/src/utils/string_utils.c.o"
   "CMakeFiles/42sh.dir/src/utils/xalloc.c.o"
+  "CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o"
 )
 
 # Per-language clean rules from dependency scanning.

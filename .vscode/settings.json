@@ -62,7 +62,11 @@
         "exec.h": "c",
         "main.h": "c",
         "string_utils.h": "c",
-        "ast_print.h": "c"
+        "ast_print.h": "c",
+        "var_storage.h": "c",
+        "buffer.h": "c",
+        "exec_utils.h": "c",
+        "expansion.h": "c"
     },
     "cmake.configureOnOpen": false
 }

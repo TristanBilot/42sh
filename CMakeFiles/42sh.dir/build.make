@@ -239,6 +239,45 @@ CMakeFiles/42sh.dir/src/exec/exec.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/exec/exec.c.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c -o CMakeFiles/42sh.dir/src/exec/exec.c.s
 
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: CMakeFiles/42sh.dir/flags.make
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/utils/exec_utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/42sh.dir/src/utils/exec_utils.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/42sh.dir/src/utils/exec_utils.c.o   -c /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c
+
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/42sh.dir/src/utils/exec_utils.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c > CMakeFiles/42sh.dir/src/utils/exec_utils.c.i
+
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/utils/exec_utils.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c -o CMakeFiles/42sh.dir/src/utils/exec_utils.c.s
+
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: CMakeFiles/42sh.dir/flags.make
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o   -c /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c
+
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/42sh.dir/src/var_storage/var_storage.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c > CMakeFiles/42sh.dir/src/var_storage/var_storage.c.i
+
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/var_storage/var_storage.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c -o CMakeFiles/42sh.dir/src/var_storage/var_storage.c.s
+
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: CMakeFiles/42sh.dir/flags.make
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/expansion/var_expansion.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o   -c /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c
+
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/42sh.dir/src/expansion/var_expansion.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c > CMakeFiles/42sh.dir/src/expansion/var_expansion.c.i
+
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/42sh.dir/src/expansion/var_expansion.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c -o CMakeFiles/42sh.dir/src/expansion/var_expansion.c.s
+
 # Object files for target 42sh
 42sh_OBJECTS = \
 "CMakeFiles/42sh.dir/src/main.c.o" \
@@ -254,7 +293,10 @@ CMakeFiles/42sh.dir/src/exec/exec.c.s: cmake_force
 "CMakeFiles/42sh.dir/src/utils/parser_utils.c.o" \
 "CMakeFiles/42sh.dir/src/eval/ast_print.c.o" \
 "CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o" \
-"CMakeFiles/42sh.dir/src/exec/exec.c.o"
+"CMakeFiles/42sh.dir/src/exec/exec.c.o" \
+"CMakeFiles/42sh.dir/src/utils/exec_utils.c.o" \
+"CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o" \
+"CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o"
 
 # External object files for target 42sh
 42sh_EXTERNAL_OBJECTS =
@@ -273,9 +315,12 @@ CMakeFiles/42sh.dir/src/exec/exec.c.s: cmake_force
 42sh: CMakeFiles/42sh.dir/src/eval/ast_print.c.o
 42sh: CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o
 42sh: CMakeFiles/42sh.dir/src/exec/exec.c.o
+42sh: CMakeFiles/42sh.dir/src/utils/exec_utils.c.o
+42sh: CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o
+42sh: CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o
 42sh: CMakeFiles/42sh.dir/build.make
 42sh: CMakeFiles/42sh.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking C executable 42sh"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking C executable 42sh"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/42sh.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

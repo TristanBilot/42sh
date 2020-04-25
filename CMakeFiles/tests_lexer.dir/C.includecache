@@ -15,6 +15,10 @@ stdbool.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
 ../utils/string_utils.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+../var_storage/var_storage.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
+../expansion/expansion.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
 fcntl.h
 -
 unistd.h
@@ -39,6 +43,12 @@ sys/wait.h
 -
 ../parser/parser.h
 /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
+../utils/exec_utils.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
+stddef.h
+-
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
 ../lexer/token.h
@@ -54,9 +64,27 @@ sys/wait.h
 stdbool.h
 -
 
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
+
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 stdlib.h
 -
 string.h
 -
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+../utils/attr.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+stddef.h
+-
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
+stdbool.h
+-
+../utils/xalloc.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+../utils/string_utils.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 

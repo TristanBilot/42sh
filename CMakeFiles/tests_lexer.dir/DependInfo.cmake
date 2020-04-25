@@ -8,15 +8,18 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/ast/free.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/exec/exec.c.o"
+  "/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lex_evaluation.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/token.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/parser/parser.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/print/ast_print_dot.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o"
+  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/parser_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o"
+  "/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o"
   "/Users/tristanbilot/Documents/dev/epita/42sh/tests/tests_lexer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/tests/tests_lexer.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
@@ -24,6 +27,8 @@ set(CMAKE_C_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "src"
+  "src/var_storage"
+  "src/eval"
   "src/parser"
   "src/ast"
   "src/lexer"

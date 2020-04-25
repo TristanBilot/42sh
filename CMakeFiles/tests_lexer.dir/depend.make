@@ -25,10 +25,25 @@ CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o: src/utils/string_utils.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/ast/ast.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/exec/exec.c
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/exec/exec.h
+CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/expansion/expansion.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/lexer/lexer.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/lexer/token.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/parser/parser.h
+CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/utils/attr.h
+CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/utils/exec_utils.h
 CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/utils/string_utils.h
+CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/utils/xalloc.h
+CMakeFiles/tests_lexer.dir/src/exec/exec.c.o: src/var_storage/var_storage.h
+
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/expansion/expansion.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/expansion/var_expansion.c
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/lexer/lexer.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/lexer/token.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/utils/attr.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/utils/buffer.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/utils/string_utils.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/utils/xalloc.h
+CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o: src/var_storage/var_storage.h
 
 CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o: src/lexer/lex_evaluation.c
 CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o: src/lexer/lexer.h
@@ -69,6 +84,14 @@ CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o: src/lexer/token.h
 CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o: src/utils/buffer.c
 CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o: src/utils/buffer.h
 
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/ast/ast.h
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/exec/exec.h
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/lexer/lexer.h
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/lexer/token.h
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/parser/parser.h
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/utils/exec_utils.c
+CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o: src/utils/exec_utils.h
+
 CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/ast/ast.h
 CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/lexer/lexer.h
 CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/lexer/token.h
@@ -82,6 +105,12 @@ CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o: src/utils/string_utils.h
 CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o: src/utils/xalloc.c
 CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o: src/utils/xalloc.h
+
+CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o: src/utils/attr.h
+CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o: src/utils/string_utils.h
+CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o: src/utils/xalloc.h
+CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.c
+CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.h
 
 CMakeFiles/tests_lexer.dir/tests/tests_lexer.c.o: tests/tests_lexer.c
 CMakeFiles/tests_lexer.dir/tests/tests_lexer.c.o: /usr/local/include/criterion/abort.h

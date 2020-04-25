@@ -25,10 +25,25 @@ CMakeFiles/42sh.dir/src/eval/ast_print.c.o: src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/ast/ast.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/exec/exec.c
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/exec/exec.h
+CMakeFiles/42sh.dir/src/exec/exec.c.o: src/expansion/expansion.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/lexer/lexer.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/lexer/token.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/parser/parser.h
+CMakeFiles/42sh.dir/src/exec/exec.c.o: src/utils/attr.h
+CMakeFiles/42sh.dir/src/exec/exec.c.o: src/utils/exec_utils.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/utils/string_utils.h
+CMakeFiles/42sh.dir/src/exec/exec.c.o: src/utils/xalloc.h
+CMakeFiles/42sh.dir/src/exec/exec.c.o: src/var_storage/var_storage.h
+
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/expansion/expansion.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/expansion/var_expansion.c
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/lexer/lexer.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/lexer/token.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/utils/attr.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/utils/buffer.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/utils/string_utils.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/utils/xalloc.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o: src/var_storage/var_storage.h
 
 CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o: src/lexer/lex_evaluation.c
 CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o: src/lexer/lexer.h
@@ -59,8 +74,10 @@ CMakeFiles/42sh.dir/src/main.c.o: src/main.c
 CMakeFiles/42sh.dir/src/main.c.o: src/main.h
 CMakeFiles/42sh.dir/src/main.c.o: src/parser/parser.h
 CMakeFiles/42sh.dir/src/main.c.o: src/utils/attr.h
+CMakeFiles/42sh.dir/src/main.c.o: src/utils/exec_utils.h
 CMakeFiles/42sh.dir/src/main.c.o: src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/main.c.o: src/utils/xalloc.h
+CMakeFiles/42sh.dir/src/main.c.o: src/var_storage/var_storage.h
 
 CMakeFiles/42sh.dir/src/parser/parser.c.o: src/ast/ast.h
 CMakeFiles/42sh.dir/src/parser/parser.c.o: src/ast/free.h
@@ -81,6 +98,14 @@ CMakeFiles/42sh.dir/src/utils/buffer.c.o: src/lexer/token.h
 CMakeFiles/42sh.dir/src/utils/buffer.c.o: src/utils/buffer.c
 CMakeFiles/42sh.dir/src/utils/buffer.c.o: src/utils/buffer.h
 
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/ast/ast.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/exec/exec.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/lexer/lexer.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/lexer/token.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/parser/parser.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/utils/exec_utils.c
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o: src/utils/exec_utils.h
+
 CMakeFiles/42sh.dir/src/utils/parser_utils.c.o: src/ast/ast.h
 CMakeFiles/42sh.dir/src/utils/parser_utils.c.o: src/lexer/lexer.h
 CMakeFiles/42sh.dir/src/utils/parser_utils.c.o: src/lexer/token.h
@@ -94,4 +119,10 @@ CMakeFiles/42sh.dir/src/utils/string_utils.c.o: src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/42sh.dir/src/utils/xalloc.c.o: src/utils/xalloc.c
 CMakeFiles/42sh.dir/src/utils/xalloc.c.o: src/utils/xalloc.h
+
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/utils/attr.h
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/utils/string_utils.h
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/utils/xalloc.h
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.c
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.h
 

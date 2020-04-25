@@ -26,10 +26,25 @@ CMakeFiles/42sh.dir/src/exec/exec.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c
  /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
+CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
 CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lex_evaluation.c
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
@@ -60,8 +75,10 @@ CMakeFiles/42sh.dir/src/main.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/main.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
 CMakeFiles/42sh.dir/src/parser/parser.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.h
@@ -81,6 +98,14 @@ CMakeFiles/42sh.dir/src/utils/buffer.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.c
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.h
+CMakeFiles/42sh.dir/src/utils/exec_utils.c.o
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
 CMakeFiles/42sh.dir/src/utils/parser_utils.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
@@ -95,3 +120,9 @@ CMakeFiles/42sh.dir/src/utils/xalloc.c.o
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.c
  /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c
+ /Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h

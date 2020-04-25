@@ -14,6 +14,7 @@
 #include "./exec/exec.h"
 #include "./utils/string_utils.h"
 #include "./eval/ast_print.h"
+#include "./var_storage/var_storage.h"
 
 static struct option long_options[] =
 {
@@ -42,13 +43,21 @@ void print_prompt()
     free(buff);
 }
 
-void init_42sh_process()
+static void init_42sh_process(struct option_sh *option)
 {
+    new_var_storage();
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
+    if (option->cmd)
+    {
+        lexer = new_lexer(option->cmd);
+        ast = parse(lexer);
+        if (exec_node_input(ast))
+            printf("Error affiché dans le main");
+    }
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
@@ -63,9 +72,12 @@ void init_42sh_process()
         ast = parse(lexer);
 
         if (exec_node_input(ast))
-            printf("Error");
-        if (long_options[1].flag)
+            printf("Error affiché dans le main");
+        printf("%d", option->print_ast_flag);
+        if (option->print_ast_flag)
+        {
             print_ast(ast);
+        }
 
         print_prompt();
     }
@@ -109,6 +121,6 @@ int main(int ac, char **av)
         else
             print_usage();
     }
-    init_42sh_process();
+    init_42sh_process(option);
 }
 

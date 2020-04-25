@@ -11,12 +11,14 @@
 #include <sys/wait.h>
 
 #include "../parser/parser.h"
+#include "../utils/exec_utils.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
             fprintf(stderr, "%s\n", msg); \
             return true; \
-                
+
+struct tab_redirection *init_tab_redirection(void);
 bool exec_node_input(struct node_input *ast);
 bool exec_node_list(struct node_list *ast);
 bool exec_node_and_or(struct node_and_or *ast);

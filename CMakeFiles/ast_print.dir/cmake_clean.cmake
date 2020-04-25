@@ -13,6 +13,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/ast_print.dir/src/utils/parser_utils.c.o"
   "CMakeFiles/ast_print.dir/src/utils/string_utils.c.o"
   "CMakeFiles/ast_print.dir/src/utils/xalloc.c.o"
+  "CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o"
   "ast_print"
   "ast_print.pdb"
 )

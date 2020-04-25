@@ -54,8 +54,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/42sh.dir/DependInfo.cmake"
-  "CMakeFiles/ast_print.dir/DependInfo.cmake"
+  "CMakeFiles/tests_storage.dir/DependInfo.cmake"
   "CMakeFiles/tests_parser.dir/DependInfo.cmake"
-  "CMakeFiles/token_printer.dir/DependInfo.cmake"
   "CMakeFiles/tests_lexer.dir/DependInfo.cmake"
   )

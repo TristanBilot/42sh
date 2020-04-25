@@ -89,3 +89,9 @@ CMakeFiles/ast_print.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/ast_print.dir/src/utils/xalloc.c.o: src/utils/xalloc.c
 CMakeFiles/ast_print.dir/src/utils/xalloc.c.o: src/utils/xalloc.h
 
+CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o: src/utils/attr.h
+CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o: src/utils/string_utils.h
+CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o: src/utils/xalloc.h
+CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.c
+CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o: src/var_storage/var_storage.h
+

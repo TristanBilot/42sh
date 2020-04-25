@@ -7,7 +7,7 @@ project(42sh)
 set(CMAKE_CXX_STANDARD 11)
 set (CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic") #-Werror 
 
-include_directories(src src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
+include_directories(src src/var_storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
 
 set(SOURCE_FILES
 	src/parser/parser.c
@@ -22,12 +22,16 @@ set(SOURCE_FILES
 	src/utils/parser_utils.c
 	src/eval/ast_print.c
 	src/print/ast_print_dot.c
-	src/exec/exec.c)
+	src/exec/exec.c
+	src/utils/exec_utils.c
+	src/var_storage/var_storage.c
+	src/expansion/var_expansion.c)
 
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
-add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
-add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
+add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
+#add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
+#add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
@@ -38,3 +42,6 @@ target_include_directories(tests_lexer PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 target_link_libraries(tests_parser PRIVATE ${CRITERION_LIBRARIES})
 target_include_directories(tests_parser PRIVATE ${CRITERION_INCLUDE_DIRS})
+
+target_link_libraries(tests_storage PRIVATE ${CRITERION_LIBRARIES})
+target_include_directories(tests_storage PRIVATE ${CRITERION_INCLUDE_DIRS})

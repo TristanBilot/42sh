@@ -6,5 +6,5 @@ C_FLAGS = -g -Wall -Wextra -std=c99 -pedantic -isysroot /Applications/Xcode.app/
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/tristanbilot/Documents/dev/epita/42sh/src -I/Users/tristanbilot/Documents/dev/epita/42sh/src/parser -I/Users/tristanbilot/Documents/dev/epita/42sh/src/ast -I/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer -I/Users/tristanbilot/Documents/dev/epita/42sh/src/utils -I/Users/tristanbilot/Documents/dev/epita/42sh/src/exec -I/Users/tristanbilot/Documents/dev/epita/42sh/src/print -I/usr/local/include/criterion 
+C_INCLUDES = -I/Users/tristanbilot/Documents/dev/epita/42sh/src -I/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage -I/Users/tristanbilot/Documents/dev/epita/42sh/src/eval -I/Users/tristanbilot/Documents/dev/epita/42sh/src/parser -I/Users/tristanbilot/Documents/dev/epita/42sh/src/ast -I/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer -I/Users/tristanbilot/Documents/dev/epita/42sh/src/utils -I/Users/tristanbilot/Documents/dev/epita/42sh/src/exec -I/Users/tristanbilot/Documents/dev/epita/42sh/src/print -I/usr/local/include/criterion 
 
