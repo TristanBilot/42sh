@@ -11,7 +11,7 @@
 #define STDIN_FILENO 0
 #define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
-                        printf("%s\n\n\n", msg);
+                        printf("%s\n", msg);
 bool execute(char **args)
 {
     if ((execvp(args[0], args)) == -1)
@@ -30,28 +30,28 @@ bool execute_with_fork(char **args, struct tab_redirection *tab)
         return true;
     if (child == 0)
     {
-        printf("just entered stdout :%s\n", tab->stdout->dest);
-        while (tab && tab->stdout)
-        {
-            printf("enter while\n"); // ne s'affiche plus quand on affiche tab->stdout->dest
-            int out = open(tab->stdin->dest, O_WRONLY | O_CREAT);
-            printf("ok\n");
-            if (out == -1)
-            {
-                printf("RET1\n");
-                return true;
-            }
-            int fd = dup2(out, STDOUT_FILENO);
-            printf("fd %d\n", fd);
-            if (fd != 0)
-            {
-                printf("RET2\n");
-                return true;
-            }
-            close(out);
-            tab->stdin = tab->stdin->next;
-            printf ("finish while\n");
-        }
+        // printf("just entered stdout :%s\n", tab->stdout->dest);
+        // while (tab && tab->stdout)
+        // {
+        //     printf("enter while\n"); // ne s'affiche plus quand on affiche tab->stdout->dest
+            // int out = open(tab->stdin->dest, O_WRONLY | O_CREAT);
+            // printf("ok\n");
+            // if (out == -1)
+            // {
+            //     printf("RET1\n");
+            //     return true;
+            // }
+            // int fd = dup2(out, STDOUT_FILENO);
+            // printf("fd %d\n", fd);
+            // if (fd != 0)
+            // {
+            //     printf("RET2\n");
+            //     return true;
+            // }
+            // close(out);
+        //     tab->stdin = tab->stdin->next;
+        //     printf ("finish while\n");
+        // }
         if ((execvp(args[0], args)) == -1)
         {
             err(1, "command not found: %s\n", args[0]);
@@ -65,6 +65,7 @@ bool execute_with_fork(char **args, struct tab_redirection *tab)
         if (WIFEXITED(status))
         {
             // printf("exit status = %d\n", WEXITSTATUS(status));
+            update_last_status(WEXITSTATUS(status));
             return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
         }
     }
@@ -209,6 +210,7 @@ bool exec_node_pipeline(struct node_pipeline *ast)
                     if (status > 0) /* failure > 0, success = 0 */
                         state = true;
                 }
+                update_last_status(state);
                 // exit(is_not ? !state : state); /* only for tests */
                 return ast->is_not ? !state : state;
             }
@@ -409,13 +411,13 @@ bool exec_node_redirection(struct node_redirection *ast)
                 printf("2\n");
                 if(ast->type == TOK_GREAT)
                 {
-                    int out = open(ast->right, O_WRONLY | O_CREAT);
-                    if (out == -1)
-                        return true;
-                    int fd = dup2(out, STDOUT_FILENO);
-                    if (fd != 0)
-                        return true;
-                    close(out);
+                    // int out = open(ast->right, O_WRONLY | O_CREAT);
+                    // if (out == -1)
+                    //     return true;
+                    // int fd = dup2(out, STDOUT_FILENO);
+                    // if (fd != 0)
+                    //     return true;
+                    // close(out);
                     exec_node_command(ast, false);
                     exit(1);
                 }

@@ -1,3 +1,5 @@
 digraph AST {
-	node_0x7fab834059b0 [label="ls"];
+	node_0x7fc9ed405990 [label="echo"];
+	node_0x7fc9ed4059c0 [label="a"];
+	node_0x7fc9ed405990 -> node_0x7fc9ed4059c0;
 }

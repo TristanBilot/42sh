@@ -18,6 +18,13 @@ void append_buffer(struct buffer *buffer, char c)
     buffer->buf[buffer->index++] = c;
 }
 
+void append_string_to_buffer(struct buffer *buffer, char *str)
+{
+    for (size_t j = 0; j < strlen(str); j++)
+        if (!(j == strlen(str) - 1 && str[j] == '\n'))
+            append_buffer(buffer, str[j]);
+}
+
 size_t buffer_len(struct buffer *buffer)
 {
     return strlen(buffer->buf);

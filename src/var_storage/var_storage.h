@@ -9,24 +9,29 @@
 
 struct var_storage *var_storage;
 
-enum var_type {
+/* Variables */
+enum var_type
+{
     VAR_INT,
     VAR_FLOAT,
     VAR_STRING,
     VAR_ERROR
 };
 
-struct variable {
+struct variable
+{
     char *key;
     char *value;
     enum var_type type;
 };
 
-struct var_storage {
+struct var_storage
+{
     struct variable **variables;
 };
 
 struct var_storage *new_var_storage(void);
+void free_var_storage(void);
 bool var_exists(char *key);
 enum var_type get_var_type(char *value);
 bool put_var(char *key, char *val);

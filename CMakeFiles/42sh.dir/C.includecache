@@ -6,49 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
-stdbool.h
--
-
-/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c
-../exec/exec.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
-../utils/string_utils.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
-../var_storage/var_storage.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
-../expansion/expansion.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
-fcntl.h
--
-unistd.h
--
-
-/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.h
-unistd.h
--
-errno.h
--
-stdlib.h
--
-string.h
--
-err.h
--
-stdio.h
--
-sys/types.h
--
-sys/wait.h
--
-../parser/parser.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
-../utils/exec_utils.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
-
 /Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
 stddef.h
 -
+
+/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c
+time.h
+-
+stdlib.h
+-
+stdio.h
+-
+expansion.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/expansion.h
+../var_storage/var_storage.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.h
+../utils/buffer.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.h
+../utils/xalloc.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
 ../lexer/token.h
@@ -56,17 +32,11 @@ stddef.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.h
-../lexer/lexer.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
-../ast/ast.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.h
-stdbool.h
--
-
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/attr.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.h
+../lexer/lexer.h
+/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
 
 /Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
 stdlib.h

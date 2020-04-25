@@ -45,7 +45,6 @@ void print_prompt()
 
 static void init_42sh_process(struct option_sh *option)
 {
-    new_var_storage();
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
@@ -61,23 +60,13 @@ static void init_42sh_process(struct option_sh *option)
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
-        //printf("==>%zu", len);
-        //line[len - 2] = '\0';
         lexer = new_lexer(line);
-        // struct token *token = NULL;
-        /*while ((token = pop(lexer)))
-            printf("%s %s\n", type_to_str(token->type), token->value);*/
-
-        
         ast = parse(lexer);
 
         if (exec_node_input(ast))
-            printf("Error affiché dans le main");
-        printf("%d", option->print_ast_flag);
+            printf("Error on exec ast.");
         if (option->print_ast_flag)
-        {
             print_ast(ast);
-        }
 
         print_prompt();
     }
@@ -99,6 +88,9 @@ int main(int ac, char **av)
     int option_index = 0;
     int opt = -1;
     struct option_sh *option = init_option_sh();
+
+    new_var_storage();
+    new_program_data_storage(ac, av);
     
     while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)
     {
@@ -122,5 +114,7 @@ int main(int ac, char **av)
             print_usage();
     }
     init_42sh_process(option);
+    free_var_storage();
+    free_program_data_storage();
 }
 

@@ -8,6 +8,11 @@ struct var_storage *new_var_storage(void)
     return var_storage;
 }
 
+void free_var_storage(void)
+{
+    free(var_storage);
+}
+
 int hash(char *key)
 {
     int hash = 5381;

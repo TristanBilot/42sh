@@ -11,6 +11,7 @@ struct buffer {
 
 struct buffer *new_buffer();
 void append_buffer(struct buffer *buffer, char c);
+void append_string_to_buffer(struct buffer *buffer, char *str);
 void free_buffer(struct buffer *buffer);
 size_t buffer_len(struct buffer *buffer);
 void append_word_if_needed(struct lexer *lexer, struct buffer *buffer);

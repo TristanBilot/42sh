@@ -1,16 +1,41 @@
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "expansion.h"
 #include "../var_storage/var_storage.h"
 #include "../utils/buffer.h"
-#include <stdio.h>
+#include "../utils/xalloc.h"
 
-size_t get_next_brack_index(const char *c, size_t j)
+void new_program_data_storage(int argc, char *argv[])
 {
-    if (!c)
-        return 0;
-    while (++j < strlen(c))
-        if (c[j] == '}')
-            return j;
-    return -1;
+    program_data = xmalloc(sizeof(struct program_data_storage));
+    program_data->last_cmd_status = xcalloc(MAX_STR_LEN, 1);
+    program_data->binary_name = argv[0];
+    if (argc <= 1)
+    {
+        program_data->argv = NULL;
+        program_data->argc = 0;
+        return;
+    }
+    char **args = xcalloc(argc - 1, sizeof(char *));
+    for (int i = 1; i < argc; i++)
+        args[i - 1] = argv[i];
+    program_data->argv = args;
+    program_data->argc = argc - 1;
+}
+
+void free_program_data_storage(void)
+{
+    if (program_data->argv)
+        free(program_data->argv);
+    free(program_data->last_cmd_status);
+    free(program_data);
+}
+
+void update_last_status(int status)
+{
+    sprintf(program_data->last_cmd_status, "%d", status);
 }
 
 char *perform_var_expansion(char *word)
@@ -42,13 +67,42 @@ char *perform_var_expansion(char *word)
             }
             else
             {
+                int type = is_special_char(word[i]);
+                if (type != PAR_UNKNOWN)
+                {
+                    char *sub = NULL;
+                    struct buffer *b = NULL;
+                    switch (type)
+                    {
+                    case PAR_NUMBER:
+                        append_string_to_buffer(buf, substitute_number(word[i]));
+                        break;
+                    case PAR_STAR:
+                        b = substitute_star();
+                        append_string_to_buffer(buf, b->buf);
+                        free_buffer(b);
+                        break;
+                    case PAR_AT:
+                        b = substitute_star();
+                        append_string_to_buffer(buf, b->buf);
+                        free_buffer(b);
+                        break;
+                    case PAR_HASH:
+                        sub = substitute_hash();
+                        append_string_to_buffer(buf, sub);
+                        free(sub);
+                        break;
+                    case PAR_QUES:
+                        append_string_to_buffer(buf, substitute_ques());
+                        break;
+                    }
+                    break;
+                }
                 char *param = substr(word, i, strlen(word));
                 if (var_exists(param))
                 {
                     char *var = get_value(param);
-                    for (size_t j = 0; j < strlen(var); j++)
-                        if (!(j == strlen(var) - 1 && var[j] == '\n'))
-                            append_buffer(buf, var[j]);
+                    append_string_to_buffer(buf, var);
                     break;
                 }
                 else
@@ -59,5 +113,77 @@ char *perform_var_expansion(char *word)
             append_buffer(buf, word[i]);
     }
     append_buffer(buf, '\0');
-    return buf->buf;
+    char *exp = buf->buf;
+    free(buf);
+    return exp;
+}
+
+char *substitute_number(char c)
+{
+    return program_data->argv[(c - '0') - 1];
+}
+
+struct buffer *substitute_star(void)
+{
+    struct buffer *buf = new_buffer();
+    for (int i = 0; i < program_data->argc; i++)
+    {
+        append_string_to_buffer(buf, program_data->argv[i]);
+        if (i != program_data->argc - 1)
+            append_buffer(buf, ' ');
+    }
+    append_buffer(buf, '\0');
+    return buf;
+}
+
+struct buffer *substitute_at(void)
+{
+    return substitute_star();
+}
+
+char *substitute_hash(void)
+{
+    char *sub = xmalloc(MAX_STR_LEN);
+    sprintf(sub, "%d", program_data->argc);
+    return sub;
+}
+
+char *substitute_ques(void)
+{
+    return program_data->last_cmd_status;
+}
+
+enum param_type is_special_char(char c)
+{
+    if (is_number(c))
+        return PAR_NUMBER;
+    switch (c)
+    {
+    case '*':
+        return PAR_STAR;
+    case '@':
+        return PAR_AT;
+    case '?':
+        return PAR_QUES;
+    case '#':
+        return PAR_HASH;
+    default:
+        return PAR_UNKNOWN;
+    }
+}
+
+int get_random_int(void)
+{
+    srand(time(NULL));
+    return rand() % (32767 + 1);
+}
+
+size_t get_next_brack_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (++j < strlen(c))
+        if (c[j] == '}')
+            return j;
+    return -1;
 }
