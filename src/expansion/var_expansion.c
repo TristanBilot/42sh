@@ -48,6 +48,11 @@ char *perform_var_expansion(char *word)
         if (word[i] == '$')
         {
             i++;
+            if (word[i] == '\0' || word[i] == '\n')
+            {
+                append_buffer(buf, '$');
+                break;
+            }
             if (word[i] == '{')
             {
                 i++;
@@ -74,10 +79,12 @@ char *perform_var_expansion(char *word)
                 bool should_continue = false;
                 if ((sub = substitute_random(word, &i, &should_continue)))
                 {
-                    append_string_to_buffer(buf, sub);
-                    free(sub);
                     if (should_continue)
+                    {
+                        append_string_to_buffer(buf, sub);
+                        free(sub);
                         continue;
+                    }
                     else
                         break;
                 }
@@ -110,15 +117,14 @@ char *perform_var_expansion(char *word)
                     }
                     continue;
                 }
-                char *param = substr(word, i, strlen(word));
+                size_t end = get_next_dollar_index(word, i);
+                char *param = substr(word, i, end - i);
                 if (var_exists(param))
                 {
                     char *var = get_value(param);
                     append_string_to_buffer(buf, var);
-                    break;
+                    i += strlen(param) - 1;
                 }
-                else
-                    break;
             }
         }
         else
@@ -170,18 +176,19 @@ char *substitute_ques(void)
 
 char *substitute_random(char *word, size_t *i, bool *should_continue)
 {
-    size_t rd_len = strlen("RANDOM") - 1;
-    if ((*i + rd_len) >= strlen(word))
+    size_t rd_len = strlen("RANDOM");
+    if ((*i + rd_len) > strlen(word))
         return NULL;
-    if (is(substr(word, *i, *i + rd_len), "RANDOM"))
+    
+    if (is(substr(word, *i, rd_len), "RANDOM"))
     {
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%d", get_random_int());
-        if ((*i + rd_len) == strlen(word) - 1 || word[*i + rd_len + 1] == '$') // $RANDOM$1 should works
-        {
+        if (strlen(word) - (*i + rd_len) == 0 || word[*i + rd_len] == '$') // $RANDOM$1 should works
             *should_continue = true;
-            *i += rd_len;
-        }
+        else
+            *should_continue = false;
+        *i += (rd_len - 1);
         return sub;
     }
     return NULL;
@@ -220,4 +227,14 @@ size_t get_next_brack_index(const char *c, size_t j)
         if (c[j] == '}')
             return j;
     return -1;
+}
+
+size_t get_next_dollar_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (++j < strlen(c))
+        if (c[j] == '$')
+            return j;
+    return strlen(c);
 }

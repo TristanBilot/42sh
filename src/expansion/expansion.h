@@ -42,5 +42,6 @@ char *substitute_random(char *word, size_t *i, bool *should_continue);
 enum param_type is_special_char(char c);
 int get_random_int(void);
 size_t get_next_brack_index(const char *c, size_t j);
+size_t get_next_dollar_index(const char *c, size_t j);
 
 #endif /* EXPANSION_H */
