@@ -1,6 +1,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 #include "expansion.h"
 #include "../var_storage/var_storage.h"
@@ -68,9 +70,19 @@ char *perform_var_expansion(char *word)
             else
             {
                 int type = is_special_char(word[i]);
+                char *sub = NULL;
+                bool should_continue = false;
+                if ((sub = substitute_random(word, &i, &should_continue)))
+                {
+                    append_string_to_buffer(buf, sub);
+                    free(sub);
+                    if (should_continue)
+                        continue;
+                    else
+                        break;
+                }
                 if (type != PAR_UNKNOWN)
                 {
-                    char *sub = NULL;
                     struct buffer *b = NULL;
                     switch (type)
                     {
@@ -96,7 +108,7 @@ char *perform_var_expansion(char *word)
                         append_string_to_buffer(buf, substitute_ques());
                         break;
                     }
-                    break;
+                    continue;
                 }
                 char *param = substr(word, i, strlen(word));
                 if (var_exists(param))
@@ -120,7 +132,10 @@ char *perform_var_expansion(char *word)
 
 char *substitute_number(char c)
 {
-    return program_data->argv[(c - '0') - 1];
+    char *sub = program_data->argv[(c - '0') - 1];
+    if (c == '0')
+        return program_data->binary_name;
+    return sub ? sub : "";
 }
 
 struct buffer *substitute_star(void)
@@ -151,6 +166,25 @@ char *substitute_hash(void)
 char *substitute_ques(void)
 {
     return program_data->last_cmd_status;
+}
+
+char *substitute_random(char *word, size_t *i, bool *should_continue)
+{
+    size_t rd_len = strlen("RANDOM") - 1;
+    if ((*i + rd_len) >= strlen(word))
+        return NULL;
+    if (is(substr(word, *i, *i + rd_len), "RANDOM"))
+    {
+        char *sub = xmalloc(MAX_STR_LEN);
+        sprintf(sub, "%d", get_random_int());
+        if ((*i + rd_len) == strlen(word) - 1 || word[*i + rd_len + 1] == '$') // $RANDOM$1 should works
+        {
+            *should_continue = true;
+            *i += rd_len;
+        }
+        return sub;
+    }
+    return NULL;
 }
 
 enum param_type is_special_char(char c)
