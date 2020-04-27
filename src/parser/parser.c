@@ -77,14 +77,14 @@ void *parse(struct parser *parser, struct lexer *lexer)
     struct node_input *ast = NULL;//init_node_input();                           // = fonction ast_node_input a redefinir
     if (!lexer)
         error("Struct error");
-    parser = init_parser(lexer);
+    //parser = init_parser(lexer);
     if (parse_input(parser, &ast))
     {
         error("Parser error");
-        free_input(ast);
+        free(parser);
         ast = NULL;
     }
-    // free_parser(parser);
+    //free_parser(parser);
     return ast;
 }
 /* Pour les fonctions qui suivent, on a admis qu'on retourne False si on ne trouve pas d'erreur sinon on renvoie True */

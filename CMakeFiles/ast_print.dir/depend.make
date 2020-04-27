@@ -107,8 +107,10 @@ CMakeFiles/ast_print.dir/src/utils/parser_utils.c.o: src/parser/parser.h
 CMakeFiles/ast_print.dir/src/utils/parser_utils.c.o: src/utils/parser_utils.c
 CMakeFiles/ast_print.dir/src/utils/parser_utils.c.o: src/utils/parser_utils.h
 
+CMakeFiles/ast_print.dir/src/utils/string_utils.c.o: src/utils/attr.h
 CMakeFiles/ast_print.dir/src/utils/string_utils.c.o: src/utils/string_utils.c
 CMakeFiles/ast_print.dir/src/utils/string_utils.c.o: src/utils/string_utils.h
+CMakeFiles/ast_print.dir/src/utils/string_utils.c.o: src/utils/xalloc.h
 
 CMakeFiles/ast_print.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/ast_print.dir/src/utils/xalloc.c.o: src/utils/xalloc.c

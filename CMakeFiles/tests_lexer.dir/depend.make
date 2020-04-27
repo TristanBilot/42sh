@@ -93,8 +93,10 @@ CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/parser/parser.h
 CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/utils/parser_utils.c
 CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o: src/utils/parser_utils.h
 
+CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o: src/utils/attr.h
 CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o: src/utils/string_utils.c
 CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o: src/utils/string_utils.h
+CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o: src/utils/xalloc.h
 
 CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o: src/utils/attr.h
 CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o: src/utils/xalloc.c

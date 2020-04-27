@@ -68,14 +68,15 @@ static void init_42sh_process(struct option_sh *option)
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         lexer = new_lexer(line);
+        parser = init_parser(lexer);
         ast = parse(parser, lexer);
 
         if (exec_node_input(ast))
             printf("Error on exec ast.");
         if (option->print_ast_flag)
             print_ast(ast);
-        free_parser(parser);
         free_input(ast);
+        free_parser(parser);
         print_prompt();
     }
     if (line)

@@ -6,31 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+/home/enzar/delivery/EPITA/42sh/src/ast/ast.h
 stdbool.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/ast/free.h
+/home/enzar/delivery/EPITA/42sh/src/ast/free.h
 ../ast/ast.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+/home/enzar/delivery/EPITA/42sh/src/ast/ast.h
 
-/home/nora/Documents/ing1/projets/42sh/src/eval/ast_print.h
+/home/enzar/delivery/EPITA/42sh/src/eval/ast_print.h
 ../parser/parser.h
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.h
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.h
 ../lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/lexer.h
 ../lexer/token.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/token.h
 ../utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/string_utils.h
 ../ast/ast.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+/home/enzar/delivery/EPITA/42sh/src/ast/ast.h
 stdio.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/exec/commands.h
+/home/enzar/delivery/EPITA/42sh/src/exec/commands.h
 
-/home/nora/Documents/ing1/projets/42sh/src/exec/exec.h
+/home/enzar/delivery/EPITA/42sh/src/exec/exec.h
 unistd.h
 -
 errno.h
@@ -48,45 +48,23 @@ sys/types.h
 sys/wait.h
 -
 ../parser/parser.h
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.h
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.h
 ../exec/commands.h
-/home/nora/Documents/ing1/projets/42sh/src/exec/commands.h
+/home/enzar/delivery/EPITA/42sh/src/exec/commands.h
 
-/home/nora/Documents/ing1/projets/42sh/src/expansion/expansion.h
+/home/enzar/delivery/EPITA/42sh/src/expansion/expansion.h
 stddef.h
 -
 stdbool.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.h
-
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.c
-stdlib.h
--
-stdio.h
--
-string.h
--
-../utils/xalloc.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
-../utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
-../utils/buffer.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/buffer.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/lexer.h
 ../lexer/token.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
-../lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
-../lexer/lex_evaluation.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/token.h
 
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
-../lexer/token.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/token.h
 
-/home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
-
-/home/nora/Documents/ing1/projets/42sh/src/main.c
+/home/enzar/delivery/EPITA/42sh/src/main.c
 ctype.h
 -
 stdio.h
@@ -106,29 +84,29 @@ stdbool.h
 time.h
 -
 ./main.h
-/home/nora/Documents/ing1/projets/42sh/src/main.h
+/home/enzar/delivery/EPITA/42sh/src/main.h
 ./parser/parser.h
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.h
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.h
 ./lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/lexer.h
 ./ast/free.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/free.h
+/home/enzar/delivery/EPITA/42sh/src/ast/free.h
 ./utils/xalloc.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
+/home/enzar/delivery/EPITA/42sh/src/utils/xalloc.h
 ./exec/exec.h
-/home/nora/Documents/ing1/projets/42sh/src/exec/exec.h
+/home/enzar/delivery/EPITA/42sh/src/exec/exec.h
 ./utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/string_utils.h
 ./eval/ast_print.h
-/home/nora/Documents/ing1/projets/42sh/src/eval/ast_print.h
+/home/enzar/delivery/EPITA/42sh/src/eval/ast_print.h
 ./var_storage/var_storage.h
-/home/nora/Documents/ing1/projets/42sh/src/var_storage/var_storage.h
+/home/enzar/delivery/EPITA/42sh/src/var_storage/var_storage.h
 ./expansion/expansion.h
-/home/nora/Documents/ing1/projets/42sh/src/expansion/expansion.h
+/home/enzar/delivery/EPITA/42sh/src/expansion/expansion.h
 
-/home/nora/Documents/ing1/projets/42sh/src/main.h
+/home/enzar/delivery/EPITA/42sh/src/main.h
 
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.c
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.c
 stdbool.h
 -
 stdlib.h
@@ -138,53 +116,49 @@ stdio.h
 string.h
 -
 ../parser/parser.h
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.h
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.h
 ../ast/free.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/free.h
+/home/enzar/delivery/EPITA/42sh/src/ast/free.h
 ../ast/ast.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+/home/enzar/delivery/EPITA/42sh/src/ast/ast.h
 ../utils/parser_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/parser_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/parser_utils.h
 ../utils/xalloc.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
+/home/enzar/delivery/EPITA/42sh/src/utils/xalloc.h
 ../utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/string_utils.h
 
-/home/nora/Documents/ing1/projets/42sh/src/parser/parser.h
+/home/enzar/delivery/EPITA/42sh/src/parser/parser.h
 ../lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
+/home/enzar/delivery/EPITA/42sh/src/lexer/lexer.h
 ../ast/ast.h
-/home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+/home/enzar/delivery/EPITA/42sh/src/ast/ast.h
 stdbool.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/utils/attr.h
+/home/enzar/delivery/EPITA/42sh/src/utils/attr.h
 
-/home/nora/Documents/ing1/projets/42sh/src/utils/buffer.h
-../lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
-
-/home/nora/Documents/ing1/projets/42sh/src/utils/parser_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/parser_utils.h
 stdbool.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/string_utils.h
 stdlib.h
 -
 string.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
+/home/enzar/delivery/EPITA/42sh/src/utils/xalloc.h
 ../utils/attr.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/attr.h
+/home/enzar/delivery/EPITA/42sh/src/utils/attr.h
 stddef.h
 -
 
-/home/nora/Documents/ing1/projets/42sh/src/var_storage/var_storage.h
+/home/enzar/delivery/EPITA/42sh/src/var_storage/var_storage.h
 stdbool.h
 -
 ../utils/xalloc.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
+/home/enzar/delivery/EPITA/42sh/src/utils/xalloc.h
 ../utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
+/home/enzar/delivery/EPITA/42sh/src/utils/string_utils.h
 

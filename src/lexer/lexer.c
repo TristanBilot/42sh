@@ -14,8 +14,8 @@ char **split(char *str)
 {
     const char delim[] = " ";
     char **res = calloc(1, sizeof(char *) * MAX_TOKEN);
-    char *en_attendant = my_strdup(str);
-    char *splitted = strtok(en_attendant, delim);
+    //char *en_attendant = strdup(str);
+    char *splitted = strtok(str, delim);
     
     int i = 0;
     while (splitted != NULL)
@@ -254,9 +254,9 @@ void free_lexer(struct lexer *lexer)
         free(index);
     free(lexer->token_list);
     free(lexer);
-    free(en_attendant);
+    /*free(en_attendant);
     printf("FREE EN ATTENDANT\n");
-    en_attendant = NULL;
+    en_attendant = NULL;*/
     lexer = NULL;
 }
 

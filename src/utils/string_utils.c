@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include "../utils/string_utils.h"
+#include "../utils/xalloc.h"
 
 char *type_to_str(int type)
 {
@@ -76,7 +77,7 @@ char *substr(char *src, int pos, int len)
 
 char *my_strdup(const char *c)
 {
-    char *dup = malloc(strlen(c) + 1);
+    char *dup = xmalloc(strlen(c) + 1);
     if (dup != NULL)
        strcpy(dup, c);
     return dup;
