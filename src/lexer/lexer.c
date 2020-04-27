@@ -40,7 +40,7 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, const char *c, size_t *
 {
     struct token *token = NULL;
     char *copy = my_strdup(c);
-    if ((token = lex_io_number(copy, *j))) { }
+    if ((token = lex_io_number(copy, j))) { }
     else if ((token = lex_great_less_and(c, *j)))
     {
         append_word_if_needed(lexer, buffer);

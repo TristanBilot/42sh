@@ -165,6 +165,30 @@ Test(lexer, spaced_redirections)
     cr_assert(pop(lexer7)->type == TOK_WORD);
     cr_assert(pop(lexer7)->type == TOK_LESSGREAT);
     cr_assert(pop(lexer7)->type == TOK_WORD);
+
+    const char *input8 = "echo 'hello' 2>> file";
+    struct lexer *lexer8 = new_lexer(input8);
+    cr_assert(pop(lexer8)->type == TOK_WORD);
+    cr_assert(pop(lexer8)->type == TOK_WORD);
+    cr_assert(pop(lexer8)->type == TOK_IONUMBER);
+    cr_assert(pop(lexer8)->type == TOK_DGREAT);
+    cr_assert(pop(lexer8)->type == TOK_WORD);
+
+    const char *input9 = "echo 'hello' 2<< file";
+    struct lexer *lexer9 = new_lexer(input9);
+    cr_assert(pop(lexer9)->type == TOK_WORD);
+    cr_assert(pop(lexer9)->type == TOK_WORD);
+    cr_assert(pop(lexer9)->type == TOK_IONUMBER);
+    cr_assert(pop(lexer9)->type == TOK_DLESS);
+    cr_assert(pop(lexer9)->type == TOK_WORD);
+
+    const char *input10 = "echo 'hello' 2>file";
+    struct lexer *lexer10 = new_lexer(input10);
+    cr_assert(pop(lexer10)->type == TOK_WORD);
+    cr_assert(pop(lexer10)->type == TOK_WORD);
+    cr_assert(pop(lexer10)->type == TOK_IONUMBER);
+    cr_assert(pop(lexer10)->type == TOK_GREAT);
+    cr_assert(pop(lexer10)->type == TOK_WORD);
 }
 
 Test(lexer, no_spaced_redirections)

@@ -2,7 +2,7 @@
 #define LEX_EVALUATION_H
 
 struct token *lex_great_less_and(const char *c, size_t i);
-struct token *lex_io_number(char *c, size_t i);
+struct token *lex_io_number(char *c, size_t *i);
 char *lex_backslash(const char *c, size_t i);
 struct token *lex_great_less(char *c, size_t i);
 struct token *lex_comments(char *c, size_t i);
