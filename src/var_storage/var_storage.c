@@ -19,11 +19,15 @@ int hash(char *key)
     int c;
     while ((c = *key++))
         hash = ((hash << 5) + hash) + c;
+    if (hash < 0)
+        hash *= -1;
     return hash % STORAGE_SIZE;
 }
 
 bool var_exists(char *key)
 {
+    if (!key)
+        return false;
     int h = hash(key);
     return var_storage->variables[h] != NULL;
 }

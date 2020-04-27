@@ -6,7 +6,7 @@
 bool success(const char *expr)
 {
     struct parser *parser = init_parser(new_lexer(expr));
-    void *ast = NULL;
+    struct node_input *ast = NULL;
     bool result = parse_input(parser, &ast);
     return !result;
 }
@@ -14,7 +14,7 @@ bool success(const char *expr)
 bool fail(const char *expr)
 {
     struct parser *parser = init_parser(new_lexer(expr));
-    void *ast = NULL;
+    struct node_input *ast = NULL;
     bool result = parse_input(parser, &ast);
     return result;
 }

@@ -4,25 +4,25 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/ast.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/ast/ast.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/ast/free.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/ast/free.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/eval/ast_print.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/exec/exec.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/exec/exec.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/expansion/var_expansion.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lex_evaluation.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/lexer/token.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/parser/parser.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/parser/parser.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/print/ast_print_dot.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/buffer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/exec_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/exec_utils.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/parser_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/xalloc.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/src/var_storage/var_storage.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o"
-  "/Users/tristanbilot/Documents/dev/epita/42sh/tests/tests_lexer.c" "/Users/tristanbilot/Documents/dev/epita/42sh/CMakeFiles/tests_lexer.dir/tests/tests_lexer.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/ast/ast.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/ast/ast.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/ast/free.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/ast/free.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/eval/ast_print.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/exec/commands.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/exec/commands.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/exec/exec.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/exec/exec.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/expansion/var_expansion.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/lexer/token.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/lexer/token.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/parser/parser.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/parser/parser.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/print/ast_print_dot.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/utils/buffer.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/utils/parser_utils.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/src/var_storage/var_storage.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o"
+  "/home/nora/Documents/ing1/projets/42sh/tests/tests_lexer.c" "/home/nora/Documents/ing1/projets/42sh/CMakeFiles/tests_lexer.dir/tests/tests_lexer.c.o"
   )
-set(CMAKE_C_COMPILER_ID "AppleClang")
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
@@ -36,7 +36,6 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "src/exec"
   "src/print"
   "/usr/local/include/criterion"
-  "/usr/local/include"
   )
 
 # Targets to which this target links.

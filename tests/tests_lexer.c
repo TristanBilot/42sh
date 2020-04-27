@@ -291,6 +291,23 @@ Test(lexer, assignment_word)
     cr_assert(is(pop(lexer3)->value, "a"));
     cr_assert(peek(lexer3)->type == TOK_WORD);
     cr_assert(is(pop(lexer3)->value, "a=42"));
+
+    const char *input4 = "var1=hello;var2=123\nvar3=$1";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(peek(lexer4)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer4)->value, "var1"));
+    cr_assert(peek(lexer4)->type == TOK_WORD);
+    cr_assert(is(pop(lexer4)->value, "hello"));
+    cr_assert(pop(lexer4)->type == TOK_SEMI);
+    cr_assert(peek(lexer4)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer4)->value, "var2"));
+    cr_assert(peek(lexer4)->type == TOK_WORD);
+    cr_assert(is(pop(lexer4)->value, "123"));
+    cr_assert(pop(lexer4)->type == TOK_NEWLINE);
+    cr_assert(peek(lexer4)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer4)->value, "var3"));
+    cr_assert(peek(lexer4)->type == TOK_WORD);
+    cr_assert(is(pop(lexer4)->value, "$1"));
 }
 
 Test(lexer, parenthesis)
@@ -420,4 +437,13 @@ Test(lexer, stuck_newlines)
     cr_assert(pop(lexer5)->type == TOK_WORD);
     cr_assert(pop(lexer5)->type == TOK_NEWLINE);
     cr_assert(pop(lexer5)->type == TOK_EOF);
+}
+
+Test(lexer, dollar)
+{
+    const char *input1 = "echo $1";
+    struct lexer *lexer2 = new_lexer(input1);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(pop(lexer2)->type == TOK_EOF);
 }

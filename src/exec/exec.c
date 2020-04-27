@@ -1,9 +1,12 @@
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
 #include "../exec/exec.h"
 #include "../utils/string_utils.h"
 #include "../var_storage/var_storage.h"
 #include "../expansion/expansion.h"
-#include <fcntl.h>
-#include <unistd.h>
+#include "../exec/commands.h"
 
 #define READ_END 0
 #define WRITE_END 1
@@ -12,8 +15,77 @@
 #define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s\n", msg);
-bool execute(char **args)
+
+const struct commands cmd[3] = {
+    {"cd", &cd}, {"echo", &echo}, {"export", &export}, {NULL, NULL}};
+
+static bool extra_command(char **args)
 {
+    for (int i = 0; cmd[i].name; i++)
+    {
+        if (strcmp(args[0], cmd[i].name) == 0)
+        {
+            cmd[i].function(args);
+            return false;
+        }
+    }
+    return true;
+}
+
+bool dup_file(char *file, char *flag, int io)
+{
+    FILE *f = fopen(file, flag);
+    int out = fileno(f);
+    if (out == -1)
+    {
+        return true;
+    }
+    int fd = dup2(out, io);
+    if (fd == -1)
+    {
+        return true;
+    }
+    close(out);
+}
+
+bool manage_redirections(struct tab_redi tab)
+{
+    if (!is(tab.great.out, ""))
+        if (dup_file(tab.great.out, "w+", STDOUT_FILENO))
+            return true;
+    if (!is(tab.great.in, ""))
+        if (dup_file(tab.great.in, "w+", STDIN_FILENO))
+            return true;
+    if (!is(tab.great.err, ""))
+        if (dup_file(tab.great.err, "w+", STDERR_FILENO))
+            return true;
+    if (!is(tab.less.in, ""))
+        if (dup_file(tab.less.in, "r", STDIN_FILENO))
+            return true;
+    if (!is(tab.less.out, ""))
+        if (dup_file(tab.less.out, "r", STDOUT_FILENO))
+            return true;
+    if (!is(tab.less.err, ""))
+        if (dup_file(tab.less.err, "r", STDERR_FILENO))
+            return true;
+    if (!is(tab.dgreat.in, ""))
+        if (dup_file(tab.dgreat.in, "a+", STDIN_FILENO))
+            return true;
+    if (!is(tab.dgreat.out, ""))
+        if (dup_file(tab.dgreat.out, "a+", STDOUT_FILENO))
+            return true;
+    if (!is(tab.dgreat.err, ""))
+        if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO))
+            return true;
+    return false;
+}
+
+bool execute(char **args, struct tab_redi tab)
+{
+    if (manage_redirections(tab))
+        return true;
+    if (!extra_command(args))
+        return false;
     if ((execvp(args[0], args)) == -1)
     {
         err(1, "command not found: %s\n", args[0]);
@@ -22,36 +94,16 @@ bool execute(char **args)
     return false;
 }
 
-bool execute_with_fork(char **args, struct tab_redirection *tab)
+bool execute_with_fork(char **args, struct tab_redi tab)
 {
-    int	status = 0;
-    int	child = 0;
+    int status = 0;
+    int child = 0;
     if ((child = fork()) == -1)
         return true;
     if (child == 0)
     {
-        // printf("just entered stdout :%s\n", tab->stdout->dest);
-        // while (tab && tab->stdout)
-        // {
-        //     printf("enter while\n"); // ne s'affiche plus quand on affiche tab->stdout->dest
-            // int out = open(tab->stdin->dest, O_WRONLY | O_CREAT);
-            // printf("ok\n");
-            // if (out == -1)
-            // {
-            //     printf("RET1\n");
-            //     return true;
-            // }
-            // int fd = dup2(out, STDOUT_FILENO);
-            // printf("fd %d\n", fd);
-            // if (fd != 0)
-            // {
-            //     printf("RET2\n");
-            //     return true;
-            // }
-            // close(out);
-        //     tab->stdin = tab->stdin->next;
-        //     printf ("finish while\n");
-        // }
+        if (manage_redirections(tab))
+            return true;
         if ((execvp(args[0], args)) == -1)
         {
             err(1, "command not found: %s\n", args[0]);
@@ -129,11 +181,13 @@ bool exec_node_and_or(struct node_and_or *ast)
             {
                 if (exec_node_pipeline(ast->left.pipeline))
                     return exec_node_pipeline(ast->right);
+                return false;
             }
             else
             {
                 if (exec_node_and_or(ast->left.and_or))
                     return exec_node_pipeline(ast->right);
+                return false;
             }
         }
         if (ast->type == AND)
@@ -142,11 +196,13 @@ bool exec_node_and_or(struct node_and_or *ast)
             {
                 if (!exec_node_pipeline(ast->left.pipeline))
                     return exec_node_pipeline(ast->right);
+                return false;
             }
             else
             {
                 if (!exec_node_and_or(ast->left.and_or))
                     return exec_node_pipeline(ast->right);
+                return false;
             }
         }
     }
@@ -265,44 +321,145 @@ bool exec_node_command(struct node_command *ast, bool with_fork)
     return state;
 }
 
-struct tab_redirection *init_tab_redirection(void)
+struct tab_redi init_tab_redi(struct tab_redi tab)
 {
-    struct tab_redirection *new = xcalloc(1, sizeof(struct tab_redirection));
-    return new;
+    tab.great.out = "";
+    tab.great.in = "";
+    tab.great.err = "";
+    tab.less.out = "";
+    tab.less.in = "";
+    tab.less.err = "";
+    tab.dgreat.out = "";
+    tab.dgreat.in = "";
+    tab.dgreat.err = "";
+    tab.dless.out = "";
+    tab.dless.in = "";
+    tab.dless.err = "";
+    tab.dlessdash.out = "";
+    tab.dlessdash.in = "";
+    tab.dlessdash.err = "";
+    tab.greatand.out = "";
+    tab.greatand.in = "";
+    tab.greatand.err = "";
+    tab.lessand.out = "";
+    tab.lessand.in = "";
+    tab.lessand.err = "";
+    tab.lessgreat.out = "";
+    tab.lessgreat.in = "";
+    tab.lessgreat.err = "";
+    tab.clobber.out = "";
+    tab.clobber.in = "";
+    tab.clobber.err = "";
+    return tab;
+}
+
+struct tab_redi append_tab_redi(struct tab_redi tab, struct node_redirection *e)
+{
+    if (is(type_to_str(e->type), "TOK_GREAT"))
+    {
+        if (!e->left || is(e->left, "") || is(e->left, "1"))
+            tab.great.out = e->right;
+        else if (is(e->left, "0"))
+            tab.great.in = e->right;
+        else if (is(e->left, "2"))
+            tab.great.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_LESS"))
+    {
+        if (is(e->left, "") || is(e->left, "0"))
+            tab.less.in = e->right;
+        else if (is(e->left, "1"))
+            tab.less.out = e->right;
+        else if (is(e->left, "2"))
+            tab.less.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_DLESS"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.dless.out = e->right;
+        else if (is(e->left, "0"))
+            tab.dless.in = e->right;
+        else if (is(e->left, "2"))
+            tab.dless.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_DLESSDASH"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.dlessdash.out = e->right;
+        else if (is(e->left, "0"))
+            tab.dlessdash.in = e->right;
+        else if (is(e->left, "2"))
+            tab.dlessdash.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_LESSGREAT"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.lessgreat.out = e->right;
+        else if (is(e->left, "0"))
+            tab.lessgreat.in = e->right;
+        else if (is(e->left, "2"))
+            tab.lessgreat.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_LESSAND"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.lessand.out = e->right;
+        else if (is(e->left, "0"))
+            tab.lessand.in = e->right;
+        else if (is(e->left, "2"))
+            tab.lessand.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_DGREAT"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.dgreat.out = e->right;
+        else if (is(e->left, "0"))
+            tab.dgreat.in = e->right;
+        else if (is(e->left, "2"))
+            tab.dgreat.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_GREATAND"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.greatand.out = e->right;
+        else if (is(e->left, "0"))
+            tab.greatand.in = e->right;
+        else if (is(e->left, "2"))
+            tab.greatand.err = e->right;
+    }
+    else if (is(type_to_str(e->type), "TOK_CLOBBER"))
+    {
+        if (is(e->left, "") || is(e->left, "1"))
+            tab.clobber.out = e->right;
+        else if (is(e->left, "0"))
+            tab.clobber.in = e->right;
+        else if (is(e->left, "2"))
+            tab.clobber.err = e->right;
+    }
+    return tab;
 }
 
 bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
 {
     DEBUG("SIMPLE_COMMAND")
+    
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
-    // fprintf(f, "\tnode_%p [label=SIMPLECOMMAND];\n", (void *)ast);
-    // if (node)
-        // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    /*if(p->type == 0)
-        printf("prefix is redirection\n");
-    if(e->type == 0)
-        printf("element is redirection\n");*/
     while (p)
     {
         exec_node_prefix(p);
 
         p = p->next;
     }
+    
     if (e) /* link the root node to the first element (ex: echo) */
     {
         char *args[256]; // love satan
-        struct tab_redirection *tab = init_tab_redirection();
+        struct tab_redi tab = init_tab_redi(tab);
         int size = 0;
         if (e->type == REDIRECTION)
         {
-            printf("e->type = redirection\n");
-            if (!e->element.redirection->left || is(e->element.redirection->left, "1"))
-                tab->stdout = append_list_stdout(tab, e->element.redirection->right);
-            else if (is(e->element.redirection->left, "0"))
-                tab->stdin = append_list_stdin(tab, e->element.redirection->right);
-            else if (is(e->element.redirection->left, "2"))
-                tab->stderr = append_list_stderr(tab, e->element.redirection->right);
+            tab = append_tab_redi(tab, e->element.redirection);
         }
         else
             args[size++] = e->element.word;
@@ -311,17 +468,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             e = e->next;
             if (e->type == REDIRECTION)
             {
-                printf("e->type = redirection\n");
-                if (!e->element.redirection->left || is(e->element.redirection->left, "") || is(e->element.redirection->left, "1"))
-                {
-                    printf("add one %s\n", e->element.redirection->right);
-                    tab->stdout = append_list_stdout(tab, e->element.redirection->right);
-                    printf("added\n");
-                }
-                else if (is(e->element.redirection->left, "0"))
-                    tab->stdin = append_list_stdin(tab, e->element.redirection->right);
-                else if (is(e->element.redirection->left, "2"))
-                    tab->stderr = append_list_stderr(tab, e->element.redirection->right);
+                tab = append_tab_redi(tab, e->element.redirection);
             }
             else
             {
@@ -331,8 +478,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
         }
         args[size++] = NULL;
-        bool ret = with_fork ? execute_with_fork(args, tab) : execute(args); // add tab in parameters
-        free_tab(tab);
+        bool ret = with_fork ? execute_with_fork(args, tab) : execute(args, tab);
         return ret;
     }
 }

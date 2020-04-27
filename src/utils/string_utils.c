@@ -62,6 +62,8 @@ int is_number(char c)
 
 char *substr(char *src, int pos, int len)
 {
+    if (!src)
+        return NULL;
     char *dest = NULL;
     if (len > 0)
     {
@@ -70,6 +72,14 @@ char *substr(char *src, int pos, int len)
             strncat(dest, src + pos, len);
     }
     return dest;
+}
+
+char *my_strdup(const char *c)
+{
+    char *dup = malloc(strlen(c) + 1);
+    if (dup != NULL)
+       strcpy(dup, c);
+    return dup;
 }
 
 void error(char *msg)

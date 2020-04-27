@@ -11,12 +11,39 @@
 #include <sys/wait.h>
 
 #include "../parser/parser.h"
-#include "../utils/exec_utils.h"
+#include "../exec/commands.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
             fprintf(stderr, "%s\n", msg); \
             return true; \
+
+struct commands
+{
+    const char *name;
+    void (*function)(char **args);
+};
+
+struct std 
+{
+    char *in;
+    char *out;
+    char *err;
+};
+
+struct tab_redi
+{
+    struct std dless;
+    struct std lessgreat;
+    struct std lessand;
+    struct std less;
+    struct std dgreat;
+    struct std greatand;
+    struct std clobber;
+    struct std great;
+    struct std dlessdash;
+};
+
 
 struct tab_redirection *init_tab_redirection(void);
 bool exec_node_input(struct node_input *ast);

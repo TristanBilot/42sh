@@ -118,6 +118,26 @@ struct token *lex_uni_character(char *c, size_t i)
     return NULL;
 }
 
+size_t get_next_separator_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (++j < strlen(c))
+        if (c[j] == '\n' || c[j] == ';')
+            return j;
+    return strlen(c);
+}
+
+size_t get_previous_separator_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (--j > 0)
+        if (c[j] == '\n' || c[j] == ';')
+            return j + 1;
+    return 0;
+}
+
 struct token *lex_assignment_word(char *c, size_t *i)
 {
     if (!c || !c[*i])
@@ -127,17 +147,20 @@ struct token *lex_assignment_word(char *c, size_t *i)
     if (*i == 0)
         return NULL;
     
-    char *var_name = substr(c, 0, *i);
+    size_t prev_sep = get_previous_separator_index(c, *i);
+    char *var_name = substr(c, prev_sep, *i - prev_sep);
     struct token *token = new_token_type(TOK_ASS_WORD);
     token->value = var_name;
     return token;
 }
 
-struct token *lex_assignment_value(char *c, size_t i)
+struct token *lex_assignment_value(char *c, size_t *i)
 {
-    if (!c || !c[i])
+    size_t next_i = *i + 1;
+    if (!c || !c[next_i])
         return NULL;
-    char *value = substr(c, i, strlen(c));
+    char *value = substr(c, next_i, get_next_separator_index(c, next_i) - next_i);
+    *i += strlen(value);
     return new_token_word(value);
 }
 

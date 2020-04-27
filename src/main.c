@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 #include "./main.h"
 #include "./parser/parser.h"
@@ -15,7 +16,8 @@
 #include "./utils/string_utils.h"
 #include "./eval/ast_print.h"
 #include "./var_storage/var_storage.h"
-
+#include "./expansion/expansion.h"
+#define _POSIX_C_SOURCE 200809L
 static struct option long_options[] =
 {
     {"c", required_argument, 0, 'c'},
@@ -88,9 +90,9 @@ int main(int ac, char **av)
     int option_index = 0;
     int opt = -1;
     struct option_sh *option = init_option_sh();
-
     new_var_storage();
-    new_program_data_storage(ac, av);
+    new_program_data_storage(ac, my_strdup(av));
+    srand(time(NULL));
     
     while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)
     {

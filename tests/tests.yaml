@@ -15,15 +15,19 @@
   - stdin: echo
     checks:
       - returncode
+      - stdout
   - stdin: echo toto
     checks:
       - returncode
+      - stdout
   - stdin: echo toto;
     checks:
       - returncode
+      - stdout
   - stdin: echo toto;echo tata;echo tati
     checks:
       - returncode
+      - stdout
 
 ####################################################### TEST LS ########################################################
 - description:
@@ -31,29 +35,37 @@
   - stdin: ls
     checks:
       - returncode
+      - stdout
   - stdin: ls;
     checks:
       - returncode
+      - stdout
   - stdin: ls -la
     checks:
       - returncode
+      - stdout
   - stdin: ls Makefile
     checks:
       - returncode
+      - stdout
   - stdin: ls -lt
     checks:
       - returncode
+      - stdout
   - stdin: ls -a
     checks:
       - returncode
+      - stdout
 
   - stdin: ls -l *.sh
     checks:
       - returncode
+      - stdout
 
   - stdin: ls;ls -l ;ls -a;ls -la
     checks:
       - returncode
+      - stdout
 
   - stdin: ls gjkdghkdfg
     checks:
@@ -65,14 +77,17 @@
   - stdin: cat Makefile
     checks:
       - returncode
+      - stdout
 
   - stdin: cat Makefile;
     checks:
       - returncode
+      - stdout
 
   - stdin: cat Makefile;cat Makefile;cat Makefile
     checks:
       - returncode
+      - stdout
 
 ####################################################### TEST MKDIR ########################################################
 - description:
@@ -80,6 +95,7 @@
   - stdin: mkdir toto
     checks:
       - returncode
+      - stdout
 
 ####################################################### TEST CD ########################################################
 - description:
@@ -87,10 +103,12 @@
   - stdin: cd
     checks:
       - returncode
+      - stdout
 
   - stdin: cd ../
     checks:
       - returncode
+      - stdout
 
   - stdin: cd fdklsfhsd
     checks:
@@ -102,22 +120,27 @@
   - stdin: echo toto | echo tata
     checks:
       - returncode
+      - stdout
 
   - stdin: echo toto | echo tata | echo tati
     checks:
       - returncode
+      - stdout
 
   - stdin: echo toto | ls
     checks:
       - returncode
+      - stdout
 
   - stdin: cat Makefile | grep -i a
     checks:
       - returncode
+      - stdout
 
   - stdin: cat Makefile | grep -i a | echo toto | echo tata | echo tati
     checks:
       - returncode
+      - stdout
 
   - stdin: echo toto | kdsfs
     checks:
@@ -129,29 +152,36 @@
   - stdin: echo toto || echo tata
     checks:
       - returncode
+      - stdout
     
   - stdin: echo toto || echo tata || echo tati
     checks:
     - returncode
+    - stdout
     
   - stdin: echo toto && ls
     checks:
       - returncode
+      - stdout
     
   - stdin: echo toto && ls && tree
     checks:
       - returncode
+      - stdout
     
   - stdin: echo toto && ls && tree && echo tati
     checks:
       - returncode
+      - stdout
     
   - stdin: echo toto && ls || tree && echo tati || ls -la
     checks:
       - returncode
+      - stdout
   - stdin: echo toto || gfdkgjfl
     checks:
       - returncode
+      - stdout
 
 
 ####################################################### TEST CONDITION ########################################################
@@ -160,12 +190,33 @@
   - stdin: if echo toto then echo success else echo failed fi
     checks:
       - returncode
+      - stdout
 
   - stdin: if cat shgldsg then echo success elif ls then echo success else echo failed fi
     checks:
       - returncode
+      - stdout
 
   - stdin: if cat shgldsg then echo success elif cat urilezrhze then echo success elif ls then echo success else echo failed fi
     checks:
       - returncode
+      - stdout
+
+  ####################################################### TEST CONDITION ########################################################
+- description:
+  - name : VARIABLES
+  - stdin: a=42; echo $a
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: if cat shgldsg then echo success elif ls then echo success else echo failed fi
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: if cat shgldsg then echo success elif cat urilezrhze then echo success elif ls then echo success else echo failed fi
+    checks:
+      - returncode
+      - stdout
   

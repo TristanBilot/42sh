@@ -43,5 +43,6 @@ char *substr(char *src, int pos, int len);
 ** \param msg the message to display.
 */
 void error(char *msg);
+char *my_strdup(const char *c);
 
 #endif /* ! STRING_H */

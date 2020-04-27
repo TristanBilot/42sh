@@ -77,7 +77,9 @@ char *perform_var_expansion(char *word)
                 int type = is_special_char(word[i]);
                 char *sub = NULL;
                 bool should_continue = false;
-                if ((sub = substitute_random(word, &i, &should_continue)))
+                if ((sub = substitute_random(word, &i, &should_continue)) ||
+                    (sub = substitute_uid(word, &i, &should_continue)) ||
+                    (sub = substitute_oldpwd(word, &i, &should_continue)))
                 {
                     if (should_continue)
                     {
@@ -123,8 +125,8 @@ char *perform_var_expansion(char *word)
                 {
                     char *var = get_value(param);
                     append_string_to_buffer(buf, var);
-                    i += strlen(param) - 1;
                 }
+                i += strlen(param) - 1;
             }
         }
         else
@@ -138,9 +140,11 @@ char *perform_var_expansion(char *word)
 
 char *substitute_number(char c)
 {
-    char *sub = program_data->argv[(c - '0') - 1];
     if (c == '0')
         return program_data->binary_name;
+    if (!program_data->argv)
+        return "";
+    char *sub = program_data->argv[(c - '0') - 1];
     return sub ? sub : "";
 }
 
@@ -174,21 +178,100 @@ char *substitute_ques(void)
     return program_data->last_cmd_status;
 }
 
+/*
+* The successor string of a parameter should be another parameter or nothing.
+* $RANDOM$UID$1 is right
+* $RANDOMstring is wrong
+*/
+bool next_param_is_printable(char *word, size_t i, size_t param_len)
+{
+    return strlen(word) - (i + param_len) == 0 || word[i + param_len] == '$';
+}
+
 char *substitute_random(char *word, size_t *i, bool *should_continue)
 {
-    size_t rd_len = strlen("RANDOM");
-    if ((*i + rd_len) > strlen(word))
+    size_t len = strlen("RANDOM");
+    if ((*i + len) > strlen(word))
         return NULL;
     
-    if (is(substr(word, *i, rd_len), "RANDOM"))
+    if (is(substr(word, *i, len), "RANDOM"))
     {
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%d", get_random_int());
-        if (strlen(word) - (*i + rd_len) == 0 || word[*i + rd_len] == '$') // $RANDOM$1 should works
+        if (next_param_is_printable(word, *i, len))
             *should_continue = true;
         else
             *should_continue = false;
-        *i += (rd_len - 1);
+        *i += (len - 1);
+        return sub;
+    }
+    return NULL;
+}
+
+char *substitute_uid(char *word, size_t *i, bool *should_continue)
+{
+    size_t len = strlen("UID");
+    if ((*i + len) > strlen(word))
+        return NULL;
+    
+    if (is(substr(word, *i, len), "UID"))
+    {
+        unsigned long int uid = (unsigned long int) getuid();
+        char *sub = xmalloc(MAX_STR_LEN);
+        sprintf(sub, "%ld", uid);
+        if (next_param_is_printable(word, *i, len))
+            *should_continue = true;
+        else
+            *should_continue = false;
+        *i += len - 1;
+        return sub;
+    }
+    return NULL;
+}
+
+char *substitute_oldpwd(char *word, size_t *i, bool *should_continue)
+{
+    char *old_pwd = getenv("OLDPWD");
+    if (!old_pwd)
+        return NULL;
+
+    size_t len = strlen("OLDPWD");
+    if ((*i + len) > strlen(word))
+        return NULL;
+    
+    if (is(substr(word, *i, len), "OLDPWD"))
+    {
+        char *sub = xmalloc(MAX_STR_LEN);
+        sprintf(sub, "%s", old_pwd);
+        if (next_param_is_printable(word, *i, len))
+            *should_continue = true;
+        else
+            *should_continue = false;
+        *i += len - 1;
+        return sub;
+    }
+    return NULL;
+}
+
+char *substitute_ifs(char *word, size_t *i, bool *should_continue)
+{
+    char *ifs = getenv("IFS");
+    if (!ifs)
+        return NULL;
+
+    size_t len = strlen("IFS");
+    if ((*i + len) > strlen(word))
+        return NULL;
+    
+    if (is(substr(word, *i, len), "IFS"))
+    {
+        char *sub = xmalloc(MAX_STR_LEN);
+        sprintf(sub, "%s", ifs);
+        if (next_param_is_printable(word, *i, len))
+            *should_continue = true;
+        else
+            *should_continue = false;
+        *i += len - 1;
         return sub;
     }
     return NULL;
@@ -215,7 +298,6 @@ enum param_type is_special_char(char c)
 
 int get_random_int(void)
 {
-    srand(time(NULL));
     return rand() % (32767 + 1);
 }
 

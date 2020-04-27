@@ -24,7 +24,6 @@ void print_node_input(struct node_input *ast, FILE *f)
 void print_node_list(struct node_list *ast, FILE *f)
 {
     PRINT_NODE("PRINT NODE LIST");
-    // printf("====> %p\n", ast->and_or->left.pipeline->command->command.simple_command->prefixes);
     struct node_list *c = ast;
     if (c->next_sibling)
     {
