@@ -2,12 +2,15 @@
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "utils/string_utils.h"
+#include "ast/free.h"
 
 bool success(const char *expr)
 {
     struct parser *parser = init_parser(new_lexer(expr));
     struct node_input *ast = NULL;
     bool result = parse_input(parser, &ast);
+    free_parser(parser);
+    free_input(ast);
     return !result;
 }
 
@@ -16,6 +19,8 @@ bool fail(const char *expr)
     struct parser *parser = init_parser(new_lexer(expr));
     struct node_input *ast = NULL;
     bool result = parse_input(parser, &ast);
+    free_parser(parser);
+    free_input(ast);
     return result;
 }
 

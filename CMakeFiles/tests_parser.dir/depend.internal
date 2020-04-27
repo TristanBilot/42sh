@@ -109,6 +109,7 @@ CMakeFiles/tests_parser.dir/src/var_storage/var_storage.c.o
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o
  /home/nora/Documents/ing1/projets/42sh/tests/tests_parser.c
  src/ast/ast.h
+ src/ast/free.h
  src/lexer/lexer.h
  src/lexer/token.h
  src/parser/parser.h

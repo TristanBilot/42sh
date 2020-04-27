@@ -67,7 +67,8 @@
         "buffer.h": "c",
         "exec_utils.h": "c",
         "expansion.h": "c",
-        "commands.h": "c"
+        "commands.h": "c",
+        "*.tcc": "c"
     },
     "cmake.configureOnOpen": false
 }

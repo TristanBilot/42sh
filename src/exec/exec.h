@@ -56,7 +56,7 @@ bool exec_node_shell_command(struct node_shell_command *ast);
 bool exec_node_funcdec(struct node_funcdec *ast);
 bool exec_node_redirection(struct node_redirection *ast);
 bool exec_node_prefix(struct node_prefix *ast);
-bool exec_node_element(struct node_element *ast);
+// bool exec_node_element(struct node_element *ast);
 bool exec_node_compound_list(struct node_compound_list *ast);
 bool exec_node_while(struct node_while *ast);
 bool exec_node_until(struct node_until *ast);

@@ -6,51 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.h
-
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.c
+/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.c
 stdlib.h
 -
 stdio.h
 -
 string.h
 -
-../utils/xalloc.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
 ../utils/string_utils.h
 /home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
-../utils/buffer.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/buffer.h
-../lexer/token.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
 ../lexer/lexer.h
 /home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
-../lexer/lex_evaluation.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lex_evaluation.h
-../utils/string_utils.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
 
 /home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
 ../lexer/token.h
 /home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
 
 /home/nora/Documents/ing1/projets/42sh/src/lexer/token.h
-
-/home/nora/Documents/ing1/projets/42sh/src/utils/attr.h
-
-/home/nora/Documents/ing1/projets/42sh/src/utils/buffer.h
-../lexer/lexer.h
-/home/nora/Documents/ing1/projets/42sh/src/lexer/lexer.h
 
 /home/nora/Documents/ing1/projets/42sh/src/utils/string_utils.h
 stdlib.h
 -
 string.h
--
-
-/home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
-../utils/attr.h
-/home/nora/Documents/ing1/projets/42sh/src/utils/attr.h
-stddef.h
 -
 

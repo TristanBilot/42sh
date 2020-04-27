@@ -10,7 +10,7 @@
 ** \param token_list the linked-list of tokens.
 */
 struct lexer {
-    const char *input;
+    char *input;
     struct token_list *token_list;
 };
 
@@ -18,7 +18,7 @@ struct lexer {
 ** \brief Allocate and init a new lexer.
 ** \param str the string to use as input stream.
 */
-struct lexer *new_lexer(const char *str);
+struct lexer *new_lexer(char *str);
 
 /**
 ** \brief Free all ressources allocated in the lexer.

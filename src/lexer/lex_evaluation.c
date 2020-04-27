@@ -140,7 +140,9 @@ struct token *lex_assignment_value(char *c, size_t *i)
         return NULL;
     char *value = substr(c, next_i, get_next_separator_index(c, next_i) - next_i);
     *i += strlen(value);
-    return new_token_word(value);
+    struct token *new = new_token_type(TOK_WORD);
+    new->value = value;
+    return new;
 }
 
 enum token_type evaluate_keyword(char *c)

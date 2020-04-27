@@ -108,6 +108,7 @@ CMakeFiles/tests_parser.dir/src/var_storage/var_storage.c.o: src/var_storage/var
 
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: tests/tests_parser.c
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: src/ast/ast.h
+CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: src/ast/free.h
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: src/lexer/lexer.h
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: src/lexer/token.h
 CMakeFiles/tests_parser.dir/tests/tests_parser.c.o: src/parser/parser.h

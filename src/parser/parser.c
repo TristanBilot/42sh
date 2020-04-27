@@ -118,7 +118,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         }
     }
     free_list((*ast)->node_list);
-    
+    //free(ast);        //2704
     return true;
 }
 
@@ -146,6 +146,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
         if (parse_and_or(parser, &(tmp->and_or)))
         {
             free_and_or(tmp->and_or);
+            //free(ast); //2704
             // printf("RETTRUE1 %s\n", type_to_str(parser->current_token->type));
             return true;
         }
@@ -868,6 +869,7 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
         if (parse_compound_list(parser, &((*ast)->body)))
         {
             free_compound_list((*ast)->body);
+            //free_do_group(ast);
             return true;
         }
         current = parser->current_token;
