@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -16,21 +17,21 @@
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s\n", msg);
 
-const struct commands cmd[3] = {
-    {"cd", &cd}, {"echo", &echo}, {"export", &export}, {NULL, NULL}};
+// const struct commands cmd[3] = {
+//     {"cd", &cd}, {"echo", &echo}, {"export", &export}, {NULL, NULL}};
 
-static bool extra_command(char **args)
-{
-    for (int i = 0; cmd[i].name; i++)
-    {
-        if (strcmp(args[0], cmd[i].name) == 0)
-        {
-            cmd[i].function(args);
-            return false;
-        }
-    }
-    return true;
-}
+// static bool extra_command(char **args)
+// {
+//     for (int i = 0; cmd[i].name; i++)
+//     {
+//         if (strcmp(args[0], cmd[i].name) == 0)
+//         {
+//             cmd[i].function(args);
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
 bool dup_file(char *file, char *flag, int io)
 {
@@ -46,6 +47,7 @@ bool dup_file(char *file, char *flag, int io)
         return true;
     }
     close(out);
+    return false; // provisoire
 }
 
 bool manage_redirections(struct tab_redi tab)
@@ -84,8 +86,8 @@ bool execute(char **args, struct tab_redi tab)
 {
     if (manage_redirections(tab))
         return true;
-    if (!extra_command(args))
-        return false;
+    // if (!extra_command(args))
+    //     return false;
     if ((execvp(args[0], args)) == -1)
     {
         err(1, "command not found: %s\n", args[0]);
@@ -169,6 +171,7 @@ bool exec_node_list(struct node_list *ast)
             exec_node_and_or(c->next_sibling->and_or);
         c = c->next_sibling;
     }
+    return false; // provisoire
 }
 bool exec_node_and_or(struct node_and_or *ast)
 {
@@ -214,6 +217,7 @@ bool exec_node_and_or(struct node_and_or *ast)
         else
             exec_node_and_or(ast->left.and_or);*/
     }
+    return false; // provisoire
 }
 
 bool exec_node_pipeline(struct node_pipeline *ast)
@@ -232,7 +236,7 @@ bool exec_node_pipeline(struct node_pipeline *ast)
     {
         int pid[NB_MAX_PIPE] = {-1};
         int fd[NB_MAX_PIPE][2];
-        int status;// T'es la ??
+        int status;
         int nb = 0;
         
         while (c)
@@ -457,7 +461,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         char *args[256]; // love satan
         struct tab_redi tab = init_tab_redi(tab);
         int size = 0;
-        if (e->type == REDIRECTION)
+        if (e->type == TOKEN_REDIRECTION)
         {
             tab = append_tab_redi(tab, e->element.redirection);
         }
@@ -466,7 +470,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         while (e->next) /* link each child between them */
         {
             e = e->next;
-            if (e->type == REDIRECTION)
+            if (e->type == TOKEN_REDIRECTION)
             {
                 tab = append_tab_redi(tab, e->element.redirection);
             }
@@ -481,6 +485,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         bool ret = with_fork ? execute_with_fork(args, tab) : execute(args, tab);
         return ret;
     }
+    return false; // provisoire
 }
 
 bool exec_node_shell_command(struct node_shell_command *ast)
@@ -518,6 +523,7 @@ bool exec_node_shell_command(struct node_shell_command *ast)
     default:
         break;
     }
+    return false; // provisoire
 }
 bool exec_node_funcdec(struct node_funcdec *ast)
 {
@@ -533,6 +539,7 @@ bool exec_node_funcdec(struct node_funcdec *ast)
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *)ast->function_name, ast->function_name);
     // fprintf(f, "\tnode_%p -> node_%p;\n", (void *)ast, (void *)ast->function_name);
     exec_node_shell_command(ast->shell_command);
+    return false; // provisoire
 }
 
 bool exec_node_redirection(struct node_redirection *ast)
@@ -542,7 +549,7 @@ bool exec_node_redirection(struct node_redirection *ast)
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *)ast, redirection);
     // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     // printf("0\n");
-    int status;
+    // int status;
     int pid = fork();
     if(pid < 0)
         exit(1);
@@ -564,7 +571,7 @@ bool exec_node_redirection(struct node_redirection *ast)
                     // if (fd != 0)
                     //     return true;
                     // close(out);
-                    exec_node_command(ast, false);
+                    // exec_node_command(ast, false);
                     exit(1);
                 }
                 if(ast->type == TOK_LESS)
@@ -576,7 +583,7 @@ bool exec_node_redirection(struct node_redirection *ast)
                     if (fd != 0)
                         return true;
                     close(in);
-                    exec_node_command(ast, false);
+                    // exec_node_command(ast, false);
                     exit(1);
                 }
             }
@@ -606,6 +613,7 @@ bool exec_node_prefix(struct node_prefix *ast)
     }
     if (ast->type == REDIRECTION)
         exec_node_redirection(ast->prefix.redirection);
+    return false; // provisoire
 }
 bool exec_node_element(struct node_element *ast)
 {
@@ -618,6 +626,7 @@ bool exec_node_element(struct node_element *ast)
     }
     if (ast->type == TOKEN_REDIRECTION)
         exec_node_redirection(ast->element.redirection);
+    return false; // provisoire
 }
 bool exec_node_compound_list(struct node_compound_list *ast)
 {
@@ -641,7 +650,7 @@ bool exec_node_while(struct node_while *ast)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     exec_node_compound_list(ast->condition);
     exec_node_do_group(ast->body);
-
+    return false; // provisoire
 }
 bool exec_node_until(struct node_until *ast)
 {
@@ -651,6 +660,7 @@ bool exec_node_until(struct node_until *ast)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     exec_node_compound_list(ast->condition);
     exec_node_do_group(ast->body);
+    return false; // provisoire
 }
 bool exec_node_case(struct node_case *ast)
 {
@@ -662,6 +672,7 @@ bool exec_node_case(struct node_case *ast)
     {
         exec_node_case_clause(ast->case_clause);
     }
+    return false; // provisoire
 }
 
 bool exec_node_if(struct node_if *ast)
@@ -699,15 +710,16 @@ bool exec_node_for(struct node_for *ast)
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) ast->variable_name, ast->variable_name);
     // fprintf(f, "\tnode_%p -> node_%p;\n", (void *) ast, (void *) ast->variable_name);
     struct range *r = ast->range;
-    struct range *tmp = (void *) ast;
+    // struct range *tmp = (void *) ast;
     while (r)
     {
         // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) r, r->value);
         // fprintf(f, "\tnode_%p -> node_%p;\n", (void*) tmp, (void *) r);
-        tmp = r;
+        // tmp = r;
         r = r->next;
     }
     exec_node_do_group(ast->body);
+    return false; // provisoire
 }
 bool exec_node_else_clause(struct node_else_clause *ast)
 {
@@ -723,11 +735,12 @@ bool exec_node_else_clause(struct node_else_clause *ast)
     {
         exec_node_elif(ast->clause.elif);
     }
+    return false; // provisoire
 }
 bool exec_node_do_group(struct node_do_group *ast)
 {
     DEBUG("DO_GROUP")
-    exec_node_compound_list(ast->body);
+    return exec_node_compound_list(ast->body); // provisoire
 }
 bool exec_node_case_clause(struct node_case_clause *ast)
 {
@@ -739,6 +752,7 @@ bool exec_node_case_clause(struct node_case_clause *ast)
         c = c->next;
         exec_node_case_item(c->case_item);
     }
+    return false; // provisoire
 }
 bool exec_node_case_item(struct node_case_item *ast)
 {
@@ -755,4 +769,5 @@ bool exec_node_case_item(struct node_case_item *ast)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
     if (ast->compound_list)
         exec_node_compound_list(ast->compound_list);
+    return false; // provisoire
 }

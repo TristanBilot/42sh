@@ -60,7 +60,7 @@
   - stdin: ls -l *.sh
     checks:
       - returncode
-      - stdout
+      - has_stderr
 
   - stdin: ls;ls -l ;ls -a;ls -la
     checks:
@@ -85,14 +85,6 @@
       - stdout
 
   - stdin: cat Makefile;cat Makefile;cat Makefile
-    checks:
-      - returncode
-      - stdout
-
-####################################################### TEST MKDIR ########################################################
-- description:
-  - name: MKDIR
-  - stdin: mkdir toto
     checks:
       - returncode
       - stdout
@@ -187,17 +179,27 @@
 ####################################################### TEST CONDITION ########################################################
 - description:
   - name : CONDITION
-  - stdin: if echo toto then echo success else echo failed fi
+  - stdin: if echo toto; then echo success; else echo failed; fi
     checks:
       - returncode
       - stdout
 
-  - stdin: if cat shgldsg then echo success elif ls then echo success else echo failed fi
+  - stdin: if cat shgldsg; then echo success; elif ls; then echo success; else echo failed; fi
     checks:
       - returncode
       - stdout
 
-  - stdin: if cat shgldsg then echo success elif cat urilezrhze then echo success elif ls then echo success else echo failed fi
+  - stdin: if cat shgldsg; then echo success; elif cat urilezrhze; then echo success; elif ls; then echo success; else echo failed; fi
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: if cat shgldsg; then echo success; elif ls; then echo success; else echo failed; fi
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: if cat shgldsg; then echo success; elif cat urilezrhze; then echo success; elif ls; then echo success; else echo failed; fi
     checks:
       - returncode
       - stdout
@@ -210,13 +212,7 @@
       - returncode
       - stdout
 
-  - stdin: if cat shgldsg then echo success elif ls then echo success else echo failed fi
+  - stdin: long=hello;long2=world;echo $long$long2
     checks:
       - returncode
       - stdout
-
-  - stdin: if cat shgldsg then echo success elif cat urilezrhze then echo success elif ls then echo success else echo failed fi
-    checks:
-      - returncode
-      - stdout
-  

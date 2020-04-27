@@ -11,6 +11,7 @@ Test(lexer, basic_tokens)
     cr_assert(peek(lex)->type == TOK_OR); 
     cr_assert(pop(lex)->type == TOK_OR);
     cr_assert(pop(lex)->type == KW_DSEMI);
+    free_lexer(lex);
 }
 
 Test(lexer, basic_word_tokens)
@@ -23,6 +24,7 @@ Test(lexer, basic_word_tokens)
     cr_assert(pop(lexer)->type == TOK_AND);
     cr_assert(pop(lexer)->type == TOK_WORD);
     cr_assert(pop(lexer)->type == TOK_WORD);
+    free_lexer(lexer);
 }
 
 Test(lexer, newline)
@@ -32,6 +34,7 @@ Test(lexer, newline)
     cr_assert(pop(lexer)->type == TOK_WORD);
     cr_assert(pop(lexer)->type == TOK_NEWLINE);
     cr_assert(pop(lexer)->type == TOK_WORD);
+    free_lexer(lexer);
 }
 
 Test(lexer, eof)
@@ -41,6 +44,7 @@ Test(lexer, eof)
     cr_assert(pop(lexer)->type == TOK_WORD);
     cr_assert(pop(lexer)->type == TOK_EOF);
     cr_assert(pop(lexer) == NULL);
+    free_lexer(lexer);
 }
 
 Test(lexer, backslash)
@@ -113,6 +117,10 @@ Test(lexer, io_number)
     pop(lexer4);
     cr_assert(pop(lexer4)->type == TOK_GREATAND);
     cr_assert(peek(lexer4)->type == TOK_WORD);
+    free_lexer(lexer);
+    free_lexer(lexer2);
+    free_lexer(lexer3);
+    free_lexer(lexer4);
 }
 
 Test(lexer, spaced_redirections)
@@ -189,6 +197,16 @@ Test(lexer, spaced_redirections)
     cr_assert(pop(lexer10)->type == TOK_IONUMBER);
     cr_assert(pop(lexer10)->type == TOK_GREAT);
     cr_assert(pop(lexer10)->type == TOK_WORD);
+    free_lexer(lexer1);
+    free_lexer(lexer2);
+    free_lexer(lexer3);
+    free_lexer(lexer4);
+    free_lexer(lexer5);
+    free_lexer(lexer6);
+    free_lexer(lexer7);
+    free_lexer(lexer8);
+    free_lexer(lexer9);
+    free_lexer(lexer10);
 }
 
 Test(lexer, no_spaced_redirections)
@@ -241,6 +259,13 @@ Test(lexer, no_spaced_redirections)
     cr_assert(pop(lexer7)->type == TOK_WORD);
     cr_assert(pop(lexer7)->type == TOK_LESSGREAT);
     cr_assert(pop(lexer7)->type == TOK_WORD);
+    free_lexer(lexer1);
+    free_lexer(lexer2);
+    free_lexer(lexer3);
+    free_lexer(lexer4);
+    free_lexer(lexer6);
+    free_lexer(lexer5);
+    free_lexer(lexer7);
 }
 
 Test(lexer, semicolon)
@@ -273,6 +298,10 @@ Test(lexer, semicolon)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == KW_DSEMI);
+    free_lexer(lexer1);
+    free_lexer(lexer2);
+    free_lexer(lexer3);
+    free_lexer(lexer4);
 }
 
 Test(lexer, not)
@@ -282,6 +311,7 @@ Test(lexer, not)
     cr_assert(pop(lexer1)->type == KW_IF);
     cr_assert(pop(lexer1)->type == TOK_NOT);
     cr_assert(pop(lexer1)->type == TOK_WORD);
+    free_lexer(lexer1);
 }
 
 Test(lexer, curly_braces)
@@ -294,6 +324,7 @@ Test(lexer, curly_braces)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_RCURL);
+    free_lexer(lexer1);
 }
 
 Test(lexer, assignment_word)
@@ -304,10 +335,12 @@ Test(lexer, assignment_word)
     cr_assert(is(pop(lexer1)->value, "var"));
     cr_assert(is(peek(lexer1)->value, "123"));
     cr_assert(pop(lexer1)->type == TOK_WORD);
+    free_lexer(lexer1);
 
     const char *input2 = "=223";
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(peek(lexer2)->type == TOK_WORD);
+    free_lexer(lexer2);
 
     const char *input3 = "a=a=42";
     struct lexer *lexer3 = new_lexer(input3);
@@ -315,6 +348,7 @@ Test(lexer, assignment_word)
     cr_assert(is(pop(lexer3)->value, "a"));
     cr_assert(peek(lexer3)->type == TOK_WORD);
     cr_assert(is(pop(lexer3)->value, "a=42"));
+    free_lexer(lexer3);
 
     const char *input4 = "var1=hello;var2=123\nvar3=$1";
     struct lexer *lexer4 = new_lexer(input4);
@@ -332,6 +366,7 @@ Test(lexer, assignment_word)
     cr_assert(is(pop(lexer4)->value, "var3"));
     cr_assert(peek(lexer4)->type == TOK_WORD);
     cr_assert(is(pop(lexer4)->value, "$1"));
+    free_lexer(lexer4);
 }
 
 Test(lexer, parenthesis)
@@ -342,6 +377,7 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_RPAREN);
+    free_lexer(lexer1);
 
     const char *input2 = "(if elif)";
     struct lexer *lexer2 = new_lexer(input2);
@@ -349,6 +385,7 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer2)->type == KW_IF);
     cr_assert(pop(lexer2)->type == KW_ELIF);
     cr_assert(pop(lexer2)->type == TOK_RPAREN);
+    free_lexer(lexer2);
 
     const char *input3 = "((if elif)))";
     struct lexer *lexer3 = new_lexer(input3);
@@ -359,6 +396,7 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
     cr_assert(pop(lexer3)->type == TOK_RPAREN);
+    free_lexer(lexer3);
 
     const char *input4 = "word((if)word";
     struct lexer *lexer4 = new_lexer(input4);
@@ -368,16 +406,19 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_RPAREN);
     cr_assert(pop(lexer4)->type == TOK_WORD);
+    free_lexer(lexer4); 
     
     const char *input5 = "if(";
     struct lexer *lexer5 = new_lexer(input5);
     cr_assert(pop(lexer5)->type == TOK_WORD);
     cr_assert(pop(lexer5)->type == TOK_LPAREN);
+    free_lexer(lexer5);
 
     const char *input6 = ")if";
     struct lexer *lexer6 = new_lexer(input6);
     cr_assert(pop(lexer6)->type == TOK_RPAREN);
     cr_assert(pop(lexer6)->type == TOK_WORD);
+    free_lexer(lexer6);
 
     const char *input7 = "(if case b then(echo toto))";
     struct lexer *lexer7 = new_lexer(input7);
@@ -391,6 +432,7 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer7)->type == TOK_WORD);
     cr_assert(pop(lexer7)->type == TOK_RPAREN);
     cr_assert(pop(lexer7)->type == TOK_RPAREN);
+    free_lexer(lexer7);
 }
 
 Test(lexer, comments)
@@ -400,22 +442,26 @@ Test(lexer, comments)
     cr_assert(pop(lexer1)->type == TOK_COMM);
     cr_assert(pop(lexer1)->type == TOK_WORD);
     cr_assert(pop(lexer1)->type == TOK_WORD);
+    free_lexer(lexer1);
 
     const char *input2 = "a # =b";
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(pop(lexer2)->type == TOK_WORD);
     cr_assert(pop(lexer2)->type == TOK_COMM);
     cr_assert(pop(lexer2)->type == TOK_WORD);
+    free_lexer(lexer2);
 
     const char *input3 = "a#b";
     struct lexer *lexer3 = new_lexer(input3);
     cr_assert(pop(lexer3)->type == TOK_WORD);
     cr_assert(pop(lexer3)->type == TOK_EOF);
+    free_lexer(lexer3);
 
     const char *input4 = "ab #";
     struct lexer *lexer4 = new_lexer(input4);
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == TOK_COMM);
+    free_lexer(lexer4);
 }
 
 Test(lexer, stuck_newlines)
@@ -425,6 +471,7 @@ Test(lexer, stuck_newlines)
     cr_assert(pop(lexer1)->type == KW_IF);
     cr_assert(pop(lexer1)->type == TOK_NEWLINE);
     cr_assert(pop(lexer1)->type == TOK_WORD);
+    free_lexer(lexer1);
 
     const char *input2 = "if\na\nthen\nb";
     struct lexer *lexer2 = new_lexer(input2);
@@ -435,6 +482,7 @@ Test(lexer, stuck_newlines)
     cr_assert(pop(lexer2)->type == KW_THEN);
     cr_assert(pop(lexer2)->type == TOK_NEWLINE);
     cr_assert(pop(lexer2)->type == TOK_WORD);
+    free_lexer(lexer2);
 
     const char *input3 = "\nif\na\n\n\nthen\nb";
     struct lexer *lexer3 = new_lexer(input3);
@@ -448,11 +496,13 @@ Test(lexer, stuck_newlines)
     cr_assert(pop(lexer3)->type == KW_THEN);
     cr_assert(pop(lexer3)->type == TOK_NEWLINE);
     cr_assert(pop(lexer3)->type == TOK_WORD);
+    free_lexer(lexer3);
 
     const char *input4 = "\n";
     struct lexer *lexer4 = new_lexer(input4);
     cr_assert(pop(lexer4)->type == TOK_NEWLINE);
     cr_assert(pop(lexer4)->type == TOK_EOF);
+    free_lexer(lexer4);
 
     const char *input5 = "\nifs sif\n";
     struct lexer *lexer5 = new_lexer(input5);
@@ -461,6 +511,7 @@ Test(lexer, stuck_newlines)
     cr_assert(pop(lexer5)->type == TOK_WORD);
     cr_assert(pop(lexer5)->type == TOK_NEWLINE);
     cr_assert(pop(lexer5)->type == TOK_EOF);
+    free_lexer(lexer5);
 }
 
 Test(lexer, dollar)
@@ -470,4 +521,5 @@ Test(lexer, dollar)
     cr_assert(pop(lexer2)->type == TOK_WORD);
     cr_assert(pop(lexer2)->type == TOK_WORD);
     cr_assert(pop(lexer2)->type == TOK_EOF);
+    free_lexer(lexer2);
 }

@@ -45,7 +45,7 @@ void convert_dot_to_png(void)
     // int success = 0;
     if ((pid = fork()) == 0)
         //success = execlp(dot_program, dot_program, " -Tpng", DEFAULT_DOT_FILE_NAME, "-o", DEFAULT_PNG_FILE_NAME, NULL) != -1;
-        execlp(dot_program, dot_program, " -Tpng", DEFAULT_DOT_FILE_NAME, "-o", DEFAULT_PNG_FILE_NAME, NULL) != -1;
+        execlp(dot_program, dot_program, " -Tpng", DEFAULT_DOT_FILE_NAME, "-o", DEFAULT_PNG_FILE_NAME, NULL);
     else
         waitpid(pid, &status, 0);
     //success ? printf("[+] DOT file converted.\n") : printf("[+] DOT file conversion failed.\n");

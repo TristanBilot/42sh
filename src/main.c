@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +18,7 @@
 #include "./eval/ast_print.h"
 #include "./var_storage/var_storage.h"
 #include "./expansion/expansion.h"
-#define _POSIX_C_SOURCE 200809L
+
 static struct option long_options[] =
 {
     {"c", required_argument, 0, 'c'},
@@ -91,7 +92,7 @@ int main(int ac, char **av)
     int opt = -1;
     struct option_sh *option = init_option_sh();
     new_var_storage();
-    new_program_data_storage(ac, my_strdup(av));
+    new_program_data_storage(ac, av);
     srand(time(NULL));
     
     while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)

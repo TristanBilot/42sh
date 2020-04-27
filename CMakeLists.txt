@@ -5,7 +5,7 @@ enable_testing()
 project(42sh)
 
 set(CMAKE_CXX_STANDARD 11)
-set (CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic ") #-Werror  -fsanitize=address
+set (CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic ") #-Werror -fsanitize=address
 
 include_directories(src src/var_storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
 

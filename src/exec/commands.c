@@ -7,7 +7,8 @@
 
 void echo(char **args)
 {
-    printf(args[1]);
+    args = args;
+    // printf(args[1]);
 }
 
 void cd(char **args)
@@ -18,6 +19,7 @@ void cd(char **args)
 
 void export(char **args)
 {
-    wordexp_t p;
-    putenv(args[1]);
+    args = args;
+    // wordexp_t p;
+    // putenv(args[1]);
 }

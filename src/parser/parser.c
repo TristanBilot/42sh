@@ -547,30 +547,61 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
         return true;
     }
     parser_comment(parser);
-    while (is_type(parser->current_token, TOK_SEMI) ||
+    if (is_type(parser->current_token, TOK_SEMI) ||
         is_type(parser->current_token, TOK_SEPAND) ||
         is_type(parser->current_token, TOK_NEWLINE)
         )
     {
-        // printf("line\n");
         next_token(parser);
         parser_eat(parser);
         tmp->next_sibling = build_compound_list();
-        
-        if (parse_and_or(parser, &(tmp->next_sibling->and_or)))
+        while (!parse_and_or(parser, &(tmp->next_sibling->and_or)))
         {
-            free_and_or(tmp->next_sibling->and_or);
-            free_compound_list(tmp->next_sibling);
-            tmp->next_sibling = NULL;
+            
+            tmp = tmp->next_sibling;
+            parser_comment(parser);
+            if (!(is_type(parser->current_token, TOK_SEMI) ||
+                is_type(parser->current_token, TOK_SEPAND) ||
+                is_type(parser->current_token, TOK_NEWLINE)
+                ))
+            {
+                return true;
+            }
+            next_token(parser);
             parser_eat(parser);
-            return false;
+            tmp->next_sibling = build_compound_list();
         }
-        tmp = tmp->next_sibling;
-        parser_comment(parser);
-        //next_token(parser);
-        //printf("parser.c / parse_CL : current_token : %d\n", parser->current_token->type);
+        free_and_or(tmp->next_sibling->and_or);
+        free_compound_list(tmp->next_sibling);
+        tmp->next_sibling = NULL;
+        parser_eat(parser);
+        return false;
     }
-    return false;
+    return true;
+    // while (is_type(parser->current_token, TOK_SEMI) ||
+    //     is_type(parser->current_token, TOK_SEPAND) ||
+    //     is_type(parser->current_token, TOK_NEWLINE)
+    //     )
+    // {
+    //     // printf("line\n");
+    //     next_token(parser);
+    //     parser_eat(parser);
+    //     tmp->next_sibling = build_compound_list();
+        
+    //     if (parse_and_or(parser, &(tmp->next_sibling->and_or)))
+    //     {
+    //         free_and_or(tmp->next_sibling->and_or);
+    //         free_compound_list(tmp->next_sibling);
+    //         tmp->next_sibling = NULL;
+    //         parser_eat(parser);
+    //         return false;
+    //     }
+    //     tmp = tmp->next_sibling;
+    //     parser_comment(parser);
+    //     //next_token(parser);
+    //     //printf("parser.c / parse_CL : current_token : %d\n", parser->current_token->type);
+    // }
+    // return false;
 }
 
 

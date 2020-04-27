@@ -6,25 +6,35 @@
 
 #IncludeRegexTransform: 
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lex_evaluation.c
-stdlib.h
+/home/nora/Documents/ing1/projets/42sh/tests/tests_parser.c
+criterion/criterion.h
 -
-stdio.h
--
-string.h
--
-../utils/string_utils.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
-../lexer/lexer.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+lexer/lexer.h
+/home/nora/Documents/ing1/projets/42sh/tests/lexer/lexer.h
+parser/parser.h
+/home/nora/Documents/ing1/projets/42sh/tests/parser/parser.h
+utils/string_utils.h
+/home/nora/Documents/ing1/projets/42sh/tests/utils/string_utils.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/lexer.h
+src/ast/ast.h
+stdbool.h
+-
+
+src/lexer/lexer.h
 ../lexer/token.h
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+src/lexer/token.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/lexer/token.h
+src/lexer/token.h
 
-/Users/tristanbilot/Documents/dev/epita/42sh/src/utils/string_utils.h
+src/parser/parser.h
+../lexer/lexer.h
+src/lexer/lexer.h
+../ast/ast.h
+src/ast/ast.h
+stdbool.h
+-
+
+src/utils/string_utils.h
 stdlib.h
 -
 string.h

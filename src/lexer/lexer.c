@@ -226,13 +226,14 @@ void free_lexer(struct lexer *lexer)
     if (!lexer)
         return;
     struct token *index = lexer->token_list->first;
-    // struct token *tmp = NULL;
+    struct token *tmp = NULL;
     while (index && index->next)
     {
-        // tmp = index;
+        tmp = index;
         index = index->next;
-        //free(tmp);
+        free(tmp);
     }
+    free(lexer);
 }
 
 struct token *peek(struct lexer *lexer)
