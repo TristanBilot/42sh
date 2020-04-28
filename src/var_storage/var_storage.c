@@ -3,13 +3,14 @@
 
 struct var_storage *new_var_storage(void)
 {
-    var_storage = malloc(sizeof(struct var_storage));
+    var_storage = xmalloc(sizeof(struct var_storage));
     var_storage->variables = xcalloc(STORAGE_SIZE, sizeof(struct variable));
     return var_storage;
 }
 
 void free_var_storage(void)
 {
+    free(var_storage->variables);
     free(var_storage);
 }
 

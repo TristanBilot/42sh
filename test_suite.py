@@ -75,4 +75,3 @@ if __name__ == "__main__":
         
         if should_print:
             test(binary, test_case['description'], debug_description, int(flag_t[0]))
-            

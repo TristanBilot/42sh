@@ -10,7 +10,7 @@
 #include "../utils/xalloc.h"
 
 void new_program_data_storage(int argc, char *argv[])
-{
+{ // va voir gdb ouais je regarde la struct logable est null, comment ça peut marcher alors lol logable ?
     program_data = xmalloc(sizeof(struct program_data_storage));
     program_data->last_cmd_status = xcalloc(MAX_STR_LEN, 1);
     program_data->binary_name = argv[0];
@@ -134,7 +134,8 @@ char *perform_var_expansion(char *word)
     }
     append_buffer(buf, '\0');
     char *exp = buf->buf;
-    free(buf);
+    free_buffer(buf);
+    buf = NULL;
     return exp;
 }
 

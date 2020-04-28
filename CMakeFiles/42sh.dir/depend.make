@@ -68,6 +68,7 @@ CMakeFiles/42sh.dir/src/lexer/token.c.o: src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/lexer/token.c.o: src/utils/xalloc.h
 
 CMakeFiles/42sh.dir/src/main.c.o: src/ast/ast.h
+CMakeFiles/42sh.dir/src/main.c.o: src/ast/free.h
 CMakeFiles/42sh.dir/src/main.c.o: src/eval/ast_print.h
 CMakeFiles/42sh.dir/src/main.c.o: src/exec/commands.h
 CMakeFiles/42sh.dir/src/main.c.o: src/exec/exec.h

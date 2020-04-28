@@ -10,7 +10,7 @@ struct parser *init_parser(struct lexer *lexer);
 
 bool parse_look_ahead(struct parser *parser, struct token *expected_token);
 
-void *parse(struct lexer *lexer);
+void *parse(struct parser *parser, struct lexer *lexer);
 
 bool parse_input(struct parser *parser, struct node_input **ast);
 

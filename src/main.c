@@ -12,6 +12,7 @@
 #include "./main.h"
 #include "./parser/parser.h"
 #include "./lexer/lexer.h"
+#include "./ast/free.h"
 #include "./utils/xalloc.h"
 #include "./exec/exec.h"
 #include "./utils/string_utils.h"
@@ -44,6 +45,7 @@ void print_prompt()
         dprintf(0, "%s[%s %s> %s", START_COLOR, CYAN, BLINK, END_COLOR);
     }
     free(buff);
+    buff = NULL;
 }
 
 static void init_42sh_process(struct option_sh *option)
@@ -52,25 +54,28 @@ static void init_42sh_process(struct option_sh *option)
     size_t len = 0;
     ssize_t read;
     struct lexer *lexer = NULL;
+    struct parser *parser = NULL;
     struct node_input *ast = NULL;
     if (option->cmd)
     {
         lexer = new_lexer(option->cmd);
-        ast = parse(lexer);
+        ast = parse(parser, lexer);
         if (exec_node_input(ast))
             printf("Error affiché dans le main");
+        free_parser(parser);
     }
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         lexer = new_lexer(line);
-        ast = parse(lexer);
+        ast = parse(parser, lexer);
 
         if (exec_node_input(ast))
             printf("Error on exec ast.");
         if (option->print_ast_flag)
             print_ast(ast);
-
+        free_parser(parser);
+        free_input(ast);
         print_prompt();
     }
     if (line)
@@ -120,4 +125,3 @@ int main(int ac, char **av)
     free_var_storage();
     free_program_data_storage();
 }
-

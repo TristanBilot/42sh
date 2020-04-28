@@ -69,6 +69,7 @@ CMakeFiles/42sh.dir/src/lexer/token.c.o
  /home/nora/Documents/ing1/projets/42sh/src/utils/xalloc.h
 CMakeFiles/42sh.dir/src/main.c.o
  /home/nora/Documents/ing1/projets/42sh/src/ast/ast.h
+ /home/nora/Documents/ing1/projets/42sh/src/ast/free.h
  /home/nora/Documents/ing1/projets/42sh/src/eval/ast_print.h
  /home/nora/Documents/ing1/projets/42sh/src/exec/commands.h
  /home/nora/Documents/ing1/projets/42sh/src/exec/exec.h

@@ -1,5 +1,19 @@
 digraph AST {
-	node_0x7fc9ed405990 [label="echo"];
-	node_0x7fc9ed4059c0 [label="a"];
-	node_0x7fc9ed405990 -> node_0x7fc9ed4059c0;
+	node_0x5564cb8e8540 [label=WHILE];
+	node_0x5564cb8e8930 [label=AND];
+	node_0x5564cb8e8540 -> node_0x5564cb8e8930;
+	node_0x5564cb8e8730 [label=PARENTHESIS];
+	node_0x5564cb8e8930 -> node_0x5564cb8e8730;
+	node_0x5564cb8e8800 [label="2"];
+	node_0x5564cb8e8730 -> node_0x5564cb8e8800;
+	node_0x5564cb8e8820 [label="*"];
+	node_0x5564cb8e8800 -> node_0x5564cb8e8820;
+	node_0x5564cb8e8840 [label="3"];
+	node_0x5564cb8e8820 -> node_0x5564cb8e8840;
+	node_0x5564cb8e86d0 [label="a+b"];
+	node_0x5564cb8e8930 -> node_0x5564cb8e86d0;
+	node_0x5564cb8e89c0 [label="echo"];
+	node_0x5564cb8e8540 -> node_0x5564cb8e89c0;
+	node_0x5564cb8e89e0 [label="toto"];
+	node_0x5564cb8e89c0 -> node_0x5564cb8e89e0;
 }

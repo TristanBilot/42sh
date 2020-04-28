@@ -36,6 +36,8 @@
 bool dup_file(char *file, char *flag, int io)
 {
     FILE *f = fopen(file, flag);
+    // if (!f)
+    //     return true;
     int out = fileno(f);
     if (out == -1)
     {

@@ -29,6 +29,7 @@ void free_parser(struct parser *p)
     {
         free_lexer(p->lexer);
         free(p);
+        p = NULL;
     }
 }
 
@@ -70,20 +71,20 @@ void next_token(struct parser *parser)
 }
 
 
-void *parse(struct lexer *lexer)
+void *parse(struct parser *parser, struct lexer *lexer)
 {
     DEBUG("parse\n");
     struct node_input *ast = NULL;//init_node_input();                           // = fonction ast_node_input a redefinir
     if (!lexer)
         error("Struct error");
-    struct parser *parser = init_parser(lexer);
+    parser = init_parser(lexer);
     if (parse_input(parser, &ast))
     {
         error("Parser error");
         free_input(ast);
         ast = NULL;
     }
-    free_parser(parser);
+    // free_parser(parser);
     return ast;
 }
 /* Pour les fonctions qui suivent, on a admis qu'on retourne False si on ne trouve pas d'erreur sinon on renvoie True */
@@ -118,7 +119,7 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         }
     }
     free_list((*ast)->node_list);
-    //free(ast);        //2704
+    (*ast)->node_list = NULL;
     return true;
 }
 
@@ -146,6 +147,7 @@ bool parse_list(struct parser *parser, struct node_list **ast)
         if (parse_and_or(parser, &(tmp->and_or)))
         {
             free_and_or(tmp->and_or);
+            tmp->and_or = NULL;
             //free(ast); //2704
             // printf("RETTRUE1 %s\n", type_to_str(parser->current_token->type));
             return true;
@@ -190,6 +192,7 @@ bool parse_and_or(struct parser *parser, struct node_and_or **ast)
     if (parse_pipeline(parser, &(node_and_or->left.pipeline)))
     {
         free_pipeline(node_and_or->left.pipeline);
+        node_and_or->left.pipeline = NULL;
         return true;
     }
     int count = 0;
@@ -202,6 +205,7 @@ bool parse_and_or(struct parser *parser, struct node_and_or **ast)
         if (parse_pipeline(parser, &(node_and_or->right)))
         {
             free_pipeline(node_and_or->right);
+            node_and_or->right = NULL;
             return true;
         }
         if (count == 0)
@@ -245,6 +249,7 @@ bool parse_pipeline(struct parser *parser, struct node_pipeline **ast)
             if (parse_command(parser, &(tmp->command)))
             {
                 free_command(tmp->command);
+                tmp->command = NULL;
                 return true;
             }
         }
@@ -253,6 +258,7 @@ bool parse_pipeline(struct parser *parser, struct node_pipeline **ast)
     }
     else
         free_command((*ast)->command);
+    (*ast)->command = NULL;
     return true;
 }
 
@@ -268,11 +274,13 @@ bool parse_command(struct parser *p, struct node_command **ast)
         if (parse_funcdec(p, &((*ast)->command.funcdec)))
         {
             free_funcdec((*ast)->command.funcdec);
+            (*ast)->command.funcdec = NULL;
             // FREE ast->command.funcdec
             p->current_token = current;
             if (parse_simple_command(p, &((*ast)->command.simple_command)))
             {
                 free_simple_command((*ast)->command.simple_command);
+                (*ast)->command.simple_command = NULL;
                 return true;
             }
             (*ast)->type = SIMPLE_COMMAND;
@@ -287,6 +295,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
             if (parse_redirection(p, &r))
             {
                 free_redirection(r);
+                r = NULL;
                 return true;
             }
             (*ast)->redirections = append_redirection(*ast, r);
@@ -300,6 +309,7 @@ bool parse_command(struct parser *p, struct node_command **ast)
         if (parse_redirection(p, &r))
         {
             free_redirection(r);
+            r = NULL;
             return true;
         }
         (*ast)->redirections = append_redirection(*ast, r);
@@ -317,11 +327,13 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
     {
         // FREE p
         free_prefix(p);
+        p = NULL;
         parser->current_token = current;
         struct node_element *e = NULL;
         if (parse_element(parser, &e))
         {
             free_element(e);
+            e = NULL;
             return true;
         }
         append_element(*ast, e);
@@ -386,6 +398,7 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
         if (parse_compound_list(parser, &((*ast)->shell.compound_list)))
         {
             free_compound_list((*ast)->shell.compound_list);
+            (*ast)->shell.compound_list = NULL;
             return true;
         }
         current = parser->current_token;
@@ -419,6 +432,7 @@ bool parse_shell_command(struct parser *parser, struct node_shell_command **ast)
                         if (parse_rule_if(parser, &((*ast)->shell.rule_if)))
                         {
                             free_if((*ast)->shell.rule_if);
+                            (*ast)->shell.rule_if = NULL;
                             parser->current_token = current;
                             return true;
                         }
@@ -458,7 +472,7 @@ bool parse_funcdec(struct parser *parser, struct node_funcdec **ast)
     if (parse_shell_command(parser, &((*ast)->shell_command)))
     {
         free_shell_command((*ast)->shell_command);
-        
+        ast = NULL;
         return true;
     }
     return false;
@@ -504,6 +518,7 @@ bool parse_prefix(struct parser *parser, struct node_prefix **ast)
         if (parse_redirection(parser, &((*ast)->prefix.redirection)))
         {
             free_redirection((*ast)->prefix.redirection);
+            (*ast)->prefix.redirection = NULL;
             return true;
         }
         return false;
@@ -529,6 +544,7 @@ bool parse_element(struct parser *parser, struct node_element **ast)
         if (parse_redirection(parser, &((*ast)->element.redirection)))
         {
             free_redirection((*ast)->element.redirection);
+            (*ast)->element.redirection = NULL;
             return true;
         }
         return false;
@@ -545,6 +561,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
     if (parse_and_or(parser, &(tmp->and_or)))
     {
         free_and_or(tmp->and_or);
+        tmp->and_or = NULL;
         return true;
     }
     parser_comment(parser);
@@ -573,6 +590,7 @@ bool parse_compound_list(struct parser *parser, struct node_compound_list **ast)
             tmp->next_sibling = build_compound_list();
         }
         free_and_or(tmp->next_sibling->and_or);
+        tmp->next_sibling->and_or = NULL;
         free_compound_list(tmp->next_sibling);
         tmp->next_sibling = NULL;
         parser_eat(parser);
@@ -661,6 +679,7 @@ bool parse_rule_for(struct parser *parser, struct node_for **ast)
     if (parse_do_group(parser, &((*ast)->body)))
     {
         free_do_group((*ast)->body);
+        (*ast)->body = NULL;
         return true;
     }
     return false;
@@ -678,11 +697,13 @@ bool parse_rule_while(struct parser *parser, struct node_while **ast)
         if (parse_compound_list(parser, &((*ast)->condition)))
         {
             free_compound_list((*ast)->condition);
+            (*ast)->condition = NULL;
             return true;
         }
         if (parse_do_group(parser, &((*ast)->body)))
         {
             free_do_group((*ast)->body);
+            (*ast)->body = NULL;
             return true;
         }
         return false;
@@ -702,11 +723,13 @@ bool parse_rule_until(struct parser *parser, struct node_until **ast)
         if (parse_compound_list(parser, &((*ast)->condition)))
         {
             free_compound_list((*ast)->condition);
+            (*ast)->condition = NULL;
             return true;
         }
         if (parse_do_group(parser, &((*ast)->body)))
         {
             free_do_group((*ast)->body);
+            (*ast)->body = NULL;
             return true;
         }
         else
@@ -738,6 +761,7 @@ bool parse_rule_case(struct parser *parser, struct node_case **ast)
         {
             //printf("DAUPHIN");
             free_case_clause((*ast)->case_clause);
+            (*ast)->case_clause = NULL;
             return true;
         }
         if (!is_type(parser->current_token, KW_ESAC))
@@ -760,6 +784,7 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
     if (parse_compound_list(parser, &((*ast)->condition)))
     {
         free_compound_list((*ast)->condition);
+        (*ast)->condition = NULL;
         return true;
     }
     curr = parser->current_token;
@@ -770,6 +795,7 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
     if (parse_compound_list(parser, &((*ast)->if_body)))
     {
         free_compound_list((*ast)->if_body);
+        (*ast)->if_body = NULL;
         return true;
     }
     curr = parser->current_token;
@@ -779,6 +805,7 @@ bool parse_rule_if(struct parser *parser, struct node_if **ast)
         if (parse_else_clause(parser, &((*ast)->else_clause)))
         {
             free_else_clause((*ast)->else_clause);
+            (*ast)->else_clause = NULL;
             return true;
         }
         curr = parser->current_token;
@@ -803,6 +830,7 @@ bool parse_rule_elif(struct parser *parser, struct node_if **ast)
     if (parse_compound_list(parser, &((*ast)->condition)))
     {
         free_compound_list((*ast)->condition);
+        (*ast)->condition = NULL;
         return true;
     }
     curr = parser->current_token;
@@ -812,6 +840,7 @@ bool parse_rule_elif(struct parser *parser, struct node_if **ast)
     if (parse_compound_list(parser, &((*ast)->if_body)))
     {
         free_compound_list((*ast)->condition);
+        (*ast)->condition = NULL;
         return true;
     }
     curr = parser->current_token;
@@ -820,6 +849,7 @@ bool parse_rule_elif(struct parser *parser, struct node_if **ast)
         if (parse_else_clause(parser, &((*ast)->else_clause)))
         {
             free_else_clause((*ast)->else_clause);
+            (*ast)->else_clause = NULL;
             return true;
         }
         curr = parser->current_token;
@@ -839,6 +869,7 @@ bool parse_else_clause(struct parser *parser, struct node_else_clause **ast)
         if (parse_compound_list(parser, &((*ast)->clause.else_body)))
         {
             free_compound_list((*ast)->clause.else_body);
+            (*ast)->clause.else_body = NULL;
             return true;
         }
         return false;
@@ -850,6 +881,7 @@ bool parse_else_clause(struct parser *parser, struct node_else_clause **ast)
         if (parse_rule_elif(parser, &((*ast)->clause.elif)))
         {
             free_if((*ast)->clause.elif);
+            (*ast)->clause.elif = NULL;
             return true;
         }
         return false;
@@ -869,6 +901,7 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
         if (parse_compound_list(parser, &((*ast)->body)))
         {
             free_compound_list((*ast)->body);
+            (*ast)->body = NULL;
             //free_do_group(ast);
             return true;
         }
@@ -888,6 +921,7 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
     if (parse_case_item(parser, &((*ast)->case_item)))
     {
         free_case_item((*ast)->case_item);
+        (*ast)->case_item = NULL;
         return true;
     }
     // printf("cas_clause : ct = %d\n", parser->current_token->type);
@@ -902,6 +936,7 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast)
         if (parse_case_item(parser, &(tmp->case_item)))
         {
             free_case_item(tmp->case_item);
+            tmp->case_item = NULL;
             return true;
         }
         //next_token(parser);
@@ -963,6 +998,7 @@ bool parse_case_item(struct parser *parser, struct node_case_item **ast)
         if (parse_compound_list(parser, &((*ast)->compound_list)))
         {
             free_compound_list((*ast)->compound_list);
+            (*ast)->compound_list = NULL;
             return true;
         }
         // printf("Current token type 4 : %d\n", parser->current_token->type);

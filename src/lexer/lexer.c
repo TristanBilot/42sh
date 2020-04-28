@@ -1,4 +1,3 @@
-#define _POSIX_C_SOURCE 200112L
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,19 +7,16 @@
 #include "../lexer/token.h"
 #include "../lexer/lexer.h"
 #include "../lexer/lex_evaluation.h"
-#include "../utils/string_utils.h"
+
+char *en_attendant = NULL;
 
 char **split(char *str)
 {
-    if (!str)
-        return NULL;
-    const char delim[2] = " ";
+    const char delim[] = " ";
     char **res = calloc(1, sizeof(char *) * MAX_TOKEN);
-    // char *copy = my_strdup(str);
-    // printf("str %s$\n", strtok_r("aa aa", " "));
-    //char test[7] = "aa aa ";
+    char *en_attendant = my_strdup(str);
+    char *splitted = strtok(en_attendant, delim);
     
-    char *splitted = strtok(str, delim);  //char *strtok(char *s1, const char *s2);
     int i = 0;
     while (splitted != NULL)
     {
@@ -28,10 +24,11 @@ char **split(char *str)
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
-    
     res[i] = NULL;
     free(splitted);
+    splitted = NULL;
     // free(copy);
+    // copy = NULL;
     return res;
 }
 
@@ -100,9 +97,9 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
         char *content = substr(c, 0, *j);
         if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
         {
-            free(content);
             append(lexer, new_token_type(type));
             append(lexer, new_token_type(TOK_RPAREN));
+            free(content);
             if (c[*j + 1])
             {
                 flush(buffer);
@@ -119,9 +116,9 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
             char *content = substr(c, (*j + 1), strlen(c));
             if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
             {
-                free(content);
                 append(lexer, new_token_type(TOK_LPAREN));
                 append(lexer, new_token_type(type));
+                free(content);
                 return 1;
             }
             free(content);
@@ -153,9 +150,9 @@ int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_
             char *content = substr(c, (*j + 1), strlen(c));
             if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
             {
-                free(content);
                 append(lexer, new_token_type(TOK_NEWLINE));
                 append(lexer, new_token_type(type));
+                free(content);
                 return 1;
             }
             free(content);
@@ -164,9 +161,9 @@ int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_
         char *content = substr(c, starting_index, *j - starting_index);
         if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
         {
-            free(content);
             append(lexer, new_token_type(type));
             append(lexer, new_token_type(TOK_NEWLINE));
+            free(content);
             if (c[*j + 1])
             {
                 flush(buffer);
@@ -195,8 +192,8 @@ void init_lexer(struct lexer *lexer)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
-                // if (lex_full(lexer, c, j))
-                //     break;
+                if (lex_full(lexer, c, j))
+                    break;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
@@ -238,22 +235,29 @@ struct lexer *new_lexer(char *str) {
 
 void free_lexer(struct lexer *lexer)
 {
+    printf("FREE LEXER\n");
     if (!lexer)
         return;
+    printf("NOT NULL\n");
     struct token *index = lexer->token_list->first;
     struct token *tmp = NULL;
-    while (index)
+    while (index && index->next)
     {
         tmp = index;
         index = index->next;
-        if (tmp->type == TOK_IONUMBER || tmp->type == TOK_WORD || tmp->type == TOK_ASS_WORD)
+        if (tmp->type == TOK_ASS_WORD || tmp->type == TOK_WORD || tmp->type == TOK_IONUMBER)
             free(tmp->value);
         free(tmp);
+        tmp = NULL;
     }
     if (index)
         free(index);
     free(lexer->token_list);
     free(lexer);
+    free(en_attendant);
+    printf("FREE EN ATTENDANT\n");
+    en_attendant = NULL;
+    lexer = NULL;
 }
 
 struct token *peek(struct lexer *lexer)

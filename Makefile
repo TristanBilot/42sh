@@ -84,17 +84,6 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -105,6 +94,17 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -165,6 +165,19 @@ tests_parser/fast:
 .PHONY : 42sh/fast
 
 #=============================================================================
+# Target rules for targets named tests_storage
+
+# Build rule for target.
+tests_storage: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tests_storage
+.PHONY : tests_storage
+
+# fast build rule for target.
+tests_storage/fast:
+	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/build
+.PHONY : tests_storage/fast
+
+#=============================================================================
 # Target rules for targets named tests_lexer
 
 # Build rule for target.
@@ -178,17 +191,17 @@ tests_lexer/fast:
 .PHONY : tests_lexer/fast
 
 #=============================================================================
-# Target rules for targets named tests_storage
+# Target rules for targets named ast_print
 
 # Build rule for target.
-tests_storage: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tests_storage
-.PHONY : tests_storage
+ast_print: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ast_print
+.PHONY : ast_print
 
 # fast build rule for target.
-tests_storage/fast:
-	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/build
-.PHONY : tests_storage/fast
+ast_print/fast:
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/build
+.PHONY : ast_print/fast
 
 #=============================================================================
 # Target rules for targets named token_printer
@@ -211,8 +224,9 @@ src/ast/ast.o: src/ast/ast.c.o
 src/ast/ast.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/ast.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/ast.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/ast.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/ast.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/ast.c.o
 .PHONY : src/ast/ast.c.o
 
@@ -224,8 +238,9 @@ src/ast/ast.i: src/ast/ast.c.i
 src/ast/ast.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/ast.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/ast.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/ast.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/ast.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/ast.c.i
 .PHONY : src/ast/ast.c.i
 
@@ -237,8 +252,9 @@ src/ast/ast.s: src/ast/ast.c.s
 src/ast/ast.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/ast.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/ast.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/ast.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/ast.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/ast.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/ast.c.s
 .PHONY : src/ast/ast.c.s
 
@@ -250,8 +266,9 @@ src/ast/free.o: src/ast/free.c.o
 src/ast/free.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/free.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/free.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/free.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/free.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/free.c.o
 .PHONY : src/ast/free.c.o
 
@@ -263,8 +280,9 @@ src/ast/free.i: src/ast/free.c.i
 src/ast/free.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/free.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/free.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/free.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/free.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/free.c.i
 .PHONY : src/ast/free.c.i
 
@@ -276,8 +294,9 @@ src/ast/free.s: src/ast/free.c.s
 src/ast/free.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/ast/free.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/ast/free.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/ast/free.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/ast/free.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/ast/free.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/ast/free.c.s
 .PHONY : src/ast/free.c.s
 
@@ -289,8 +308,9 @@ src/eval/ast_print.o: src/eval/ast_print.c.o
 src/eval/ast_print.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/eval/ast_print.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/eval/ast_print.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/eval/ast_print.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/eval/ast_print.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/eval/ast_print.c.o
 .PHONY : src/eval/ast_print.c.o
 
@@ -302,8 +322,9 @@ src/eval/ast_print.i: src/eval/ast_print.c.i
 src/eval/ast_print.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/eval/ast_print.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/eval/ast_print.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/eval/ast_print.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/eval/ast_print.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/eval/ast_print.c.i
 .PHONY : src/eval/ast_print.c.i
 
@@ -315,8 +336,9 @@ src/eval/ast_print.s: src/eval/ast_print.c.s
 src/eval/ast_print.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/eval/ast_print.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/eval/ast_print.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/eval/ast_print.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/eval/ast_print.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/eval/ast_print.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/eval/ast_print.c.s
 .PHONY : src/eval/ast_print.c.s
 
@@ -355,8 +377,9 @@ src/exec/commands.o: src/exec/commands.c.o
 src/exec/commands.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/commands.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/commands.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/commands.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/commands.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/commands.c.o
 .PHONY : src/exec/commands.c.o
 
@@ -368,8 +391,9 @@ src/exec/commands.i: src/exec/commands.c.i
 src/exec/commands.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/commands.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/commands.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/commands.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/commands.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/commands.c.i
 .PHONY : src/exec/commands.c.i
 
@@ -381,8 +405,9 @@ src/exec/commands.s: src/exec/commands.c.s
 src/exec/commands.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/commands.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/commands.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/commands.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/commands.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/commands.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/commands.c.s
 .PHONY : src/exec/commands.c.s
 
@@ -394,8 +419,9 @@ src/exec/exec.o: src/exec/exec.c.o
 src/exec/exec.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/exec.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/exec.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/exec.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/exec.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/exec.c.o
 .PHONY : src/exec/exec.c.o
 
@@ -407,8 +433,9 @@ src/exec/exec.i: src/exec/exec.c.i
 src/exec/exec.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/exec.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/exec.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/exec.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/exec.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/exec.c.i
 .PHONY : src/exec/exec.c.i
 
@@ -420,8 +447,9 @@ src/exec/exec.s: src/exec/exec.c.s
 src/exec/exec.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/exec/exec.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/exec/exec.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/exec/exec.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/exec/exec.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/exec/exec.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/exec/exec.c.s
 .PHONY : src/exec/exec.c.s
 
@@ -433,8 +461,9 @@ src/expansion/var_expansion.o: src/expansion/var_expansion.c.o
 src/expansion/var_expansion.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/expansion/var_expansion.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/expansion/var_expansion.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/expansion/var_expansion.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/expansion/var_expansion.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/expansion/var_expansion.c.o
 .PHONY : src/expansion/var_expansion.c.o
 
@@ -446,8 +475,9 @@ src/expansion/var_expansion.i: src/expansion/var_expansion.c.i
 src/expansion/var_expansion.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/expansion/var_expansion.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/expansion/var_expansion.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/expansion/var_expansion.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/expansion/var_expansion.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/expansion/var_expansion.c.i
 .PHONY : src/expansion/var_expansion.c.i
 
@@ -459,8 +489,9 @@ src/expansion/var_expansion.s: src/expansion/var_expansion.c.s
 src/expansion/var_expansion.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/expansion/var_expansion.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/expansion/var_expansion.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/expansion/var_expansion.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/expansion/var_expansion.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/expansion/var_expansion.c.s
 .PHONY : src/expansion/var_expansion.c.s
 
@@ -472,8 +503,9 @@ src/lexer/lex_evaluation.o: src/lexer/lex_evaluation.c.o
 src/lexer/lex_evaluation.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lex_evaluation.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lex_evaluation.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lex_evaluation.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lex_evaluation.c.o
 .PHONY : src/lexer/lex_evaluation.c.o
 
@@ -485,8 +517,9 @@ src/lexer/lex_evaluation.i: src/lexer/lex_evaluation.c.i
 src/lexer/lex_evaluation.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lex_evaluation.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lex_evaluation.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lex_evaluation.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lex_evaluation.c.i
 .PHONY : src/lexer/lex_evaluation.c.i
 
@@ -498,8 +531,9 @@ src/lexer/lex_evaluation.s: src/lexer/lex_evaluation.c.s
 src/lexer/lex_evaluation.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lex_evaluation.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lex_evaluation.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lex_evaluation.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lex_evaluation.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lex_evaluation.c.s
 .PHONY : src/lexer/lex_evaluation.c.s
 
@@ -511,8 +545,9 @@ src/lexer/lexer.o: src/lexer/lexer.c.o
 src/lexer/lexer.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lexer.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lexer.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lexer.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lexer.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lexer.c.o
 .PHONY : src/lexer/lexer.c.o
 
@@ -524,8 +559,9 @@ src/lexer/lexer.i: src/lexer/lexer.c.i
 src/lexer/lexer.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lexer.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lexer.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lexer.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lexer.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lexer.c.i
 .PHONY : src/lexer/lexer.c.i
 
@@ -537,8 +573,9 @@ src/lexer/lexer.s: src/lexer/lexer.c.s
 src/lexer/lexer.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/lexer.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/lexer.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/lexer.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/lexer.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/lexer.c.s
 .PHONY : src/lexer/lexer.c.s
 
@@ -550,8 +587,9 @@ src/lexer/token.o: src/lexer/token.c.o
 src/lexer/token.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/token.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/token.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/token.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/token.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/token.c.o
 .PHONY : src/lexer/token.c.o
 
@@ -563,8 +601,9 @@ src/lexer/token.i: src/lexer/token.c.i
 src/lexer/token.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/token.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/token.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/token.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/token.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/token.c.i
 .PHONY : src/lexer/token.c.i
 
@@ -576,8 +615,9 @@ src/lexer/token.s: src/lexer/token.c.s
 src/lexer/token.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/lexer/token.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/lexer/token.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/lexer/token.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/lexer/token.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/lexer/token.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/lexer/token.c.s
 .PHONY : src/lexer/token.c.s
 
@@ -616,8 +656,9 @@ src/parser/parser.o: src/parser/parser.c.o
 src/parser/parser.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/parser/parser.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/parser/parser.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/parser/parser.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/parser/parser.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/parser/parser.c.o
 .PHONY : src/parser/parser.c.o
 
@@ -629,8 +670,9 @@ src/parser/parser.i: src/parser/parser.c.i
 src/parser/parser.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/parser/parser.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/parser/parser.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/parser/parser.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/parser/parser.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/parser/parser.c.i
 .PHONY : src/parser/parser.c.i
 
@@ -642,8 +684,9 @@ src/parser/parser.s: src/parser/parser.c.s
 src/parser/parser.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/parser/parser.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/parser/parser.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/parser/parser.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/parser/parser.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/parser/parser.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/parser/parser.c.s
 .PHONY : src/parser/parser.c.s
 
@@ -655,8 +698,9 @@ src/print/ast_print_dot.o: src/print/ast_print_dot.c.o
 src/print/ast_print_dot.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/print/ast_print_dot.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/print/ast_print_dot.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/print/ast_print_dot.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_dot.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/print/ast_print_dot.c.o
 .PHONY : src/print/ast_print_dot.c.o
 
@@ -668,8 +712,9 @@ src/print/ast_print_dot.i: src/print/ast_print_dot.c.i
 src/print/ast_print_dot.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/print/ast_print_dot.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/print/ast_print_dot.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/print/ast_print_dot.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_dot.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/print/ast_print_dot.c.i
 .PHONY : src/print/ast_print_dot.c.i
 
@@ -681,10 +726,38 @@ src/print/ast_print_dot.s: src/print/ast_print_dot.c.s
 src/print/ast_print_dot.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/print/ast_print_dot.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/print/ast_print_dot.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/print/ast_print_dot.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/print/ast_print_dot.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_dot.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/print/ast_print_dot.c.s
 .PHONY : src/print/ast_print_dot.c.s
+
+src/print/ast_print_main.o: src/print/ast_print_main.c.o
+
+.PHONY : src/print/ast_print_main.o
+
+# target to build an object file
+src/print/ast_print_main.c.o:
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_main.c.o
+.PHONY : src/print/ast_print_main.c.o
+
+src/print/ast_print_main.i: src/print/ast_print_main.c.i
+
+.PHONY : src/print/ast_print_main.i
+
+# target to preprocess a source file
+src/print/ast_print_main.c.i:
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_main.c.i
+.PHONY : src/print/ast_print_main.c.i
+
+src/print/ast_print_main.s: src/print/ast_print_main.c.s
+
+.PHONY : src/print/ast_print_main.s
+
+# target to generate assembly for a file
+src/print/ast_print_main.c.s:
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/print/ast_print_main.c.s
+.PHONY : src/print/ast_print_main.c.s
 
 src/utils/buffer.o: src/utils/buffer.c.o
 
@@ -694,8 +767,9 @@ src/utils/buffer.o: src/utils/buffer.c.o
 src/utils/buffer.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/buffer.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/buffer.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/buffer.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/buffer.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/buffer.c.o
 .PHONY : src/utils/buffer.c.o
 
@@ -707,8 +781,9 @@ src/utils/buffer.i: src/utils/buffer.c.i
 src/utils/buffer.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/buffer.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/buffer.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/buffer.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/buffer.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/buffer.c.i
 .PHONY : src/utils/buffer.c.i
 
@@ -720,8 +795,9 @@ src/utils/buffer.s: src/utils/buffer.c.s
 src/utils/buffer.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/buffer.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/buffer.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/buffer.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/buffer.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/buffer.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/buffer.c.s
 .PHONY : src/utils/buffer.c.s
 
@@ -733,8 +809,9 @@ src/utils/parser_utils.o: src/utils/parser_utils.c.o
 src/utils/parser_utils.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/parser_utils.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/parser_utils.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/parser_utils.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/parser_utils.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/parser_utils.c.o
 .PHONY : src/utils/parser_utils.c.o
 
@@ -746,8 +823,9 @@ src/utils/parser_utils.i: src/utils/parser_utils.c.i
 src/utils/parser_utils.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/parser_utils.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/parser_utils.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/parser_utils.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/parser_utils.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/parser_utils.c.i
 .PHONY : src/utils/parser_utils.c.i
 
@@ -759,8 +837,9 @@ src/utils/parser_utils.s: src/utils/parser_utils.c.s
 src/utils/parser_utils.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/parser_utils.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/parser_utils.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/parser_utils.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/parser_utils.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/parser_utils.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/parser_utils.c.s
 .PHONY : src/utils/parser_utils.c.s
 
@@ -772,8 +851,9 @@ src/utils/string_utils.o: src/utils/string_utils.c.o
 src/utils/string_utils.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/string_utils.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/string_utils.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/string_utils.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/string_utils.c.o
 .PHONY : src/utils/string_utils.c.o
 
@@ -785,8 +865,9 @@ src/utils/string_utils.i: src/utils/string_utils.c.i
 src/utils/string_utils.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/string_utils.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/string_utils.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/string_utils.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/string_utils.c.i
 .PHONY : src/utils/string_utils.c.i
 
@@ -798,8 +879,9 @@ src/utils/string_utils.s: src/utils/string_utils.c.s
 src/utils/string_utils.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/string_utils.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/string_utils.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/string_utils.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/string_utils.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/string_utils.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/string_utils.c.s
 .PHONY : src/utils/string_utils.c.s
 
@@ -811,8 +893,9 @@ src/utils/xalloc.o: src/utils/xalloc.c.o
 src/utils/xalloc.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/xalloc.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/xalloc.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/xalloc.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/xalloc.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/xalloc.c.o
 .PHONY : src/utils/xalloc.c.o
 
@@ -824,8 +907,9 @@ src/utils/xalloc.i: src/utils/xalloc.c.i
 src/utils/xalloc.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/xalloc.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/xalloc.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/xalloc.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/xalloc.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/xalloc.c.i
 .PHONY : src/utils/xalloc.c.i
 
@@ -837,8 +921,9 @@ src/utils/xalloc.s: src/utils/xalloc.c.s
 src/utils/xalloc.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/utils/xalloc.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/utils/xalloc.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/utils/xalloc.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/utils/xalloc.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/utils/xalloc.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/utils/xalloc.c.s
 .PHONY : src/utils/xalloc.c.s
 
@@ -850,8 +935,9 @@ src/var_storage/var_storage.o: src/var_storage/var_storage.c.o
 src/var_storage/var_storage.c.o:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/var_storage/var_storage.c.o
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/var_storage/var_storage.c.o
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/var_storage/var_storage.c.o
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.o
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.o
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.o
 .PHONY : src/var_storage/var_storage.c.o
 
@@ -863,8 +949,9 @@ src/var_storage/var_storage.i: src/var_storage/var_storage.c.i
 src/var_storage/var_storage.c.i:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/var_storage/var_storage.c.i
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/var_storage/var_storage.c.i
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.i
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/var_storage/var_storage.c.i
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.i
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.i
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.i
 .PHONY : src/var_storage/var_storage.c.i
 
@@ -876,8 +963,9 @@ src/var_storage/var_storage.s: src/var_storage/var_storage.c.s
 src/var_storage/var_storage.c.s:
 	$(MAKE) -f CMakeFiles/tests_parser.dir/build.make CMakeFiles/tests_parser.dir/src/var_storage/var_storage.c.s
 	$(MAKE) -f CMakeFiles/42sh.dir/build.make CMakeFiles/42sh.dir/src/var_storage/var_storage.c.s
-	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.s
 	$(MAKE) -f CMakeFiles/tests_storage.dir/build.make CMakeFiles/tests_storage.dir/src/var_storage/var_storage.c.s
+	$(MAKE) -f CMakeFiles/tests_lexer.dir/build.make CMakeFiles/tests_lexer.dir/src/var_storage/var_storage.c.s
+	$(MAKE) -f CMakeFiles/ast_print.dir/build.make CMakeFiles/ast_print.dir/src/var_storage/var_storage.c.s
 	$(MAKE) -f CMakeFiles/token_printer.dir/build.make CMakeFiles/token_printer.dir/src/var_storage/var_storage.c.s
 .PHONY : src/var_storage/var_storage.c.s
 
@@ -972,6 +1060,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... 42sh"
+	@echo "... ast_print"
 	@echo "... tests_lexer"
 	@echo "... tests_parser"
 	@echo "... tests_storage"
@@ -1015,6 +1104,9 @@ help:
 	@echo "... src/print/ast_print_dot.o"
 	@echo "... src/print/ast_print_dot.i"
 	@echo "... src/print/ast_print_dot.s"
+	@echo "... src/print/ast_print_main.o"
+	@echo "... src/print/ast_print_main.i"
+	@echo "... src/print/ast_print_main.s"
 	@echo "... src/utils/buffer.o"
 	@echo "... src/utils/buffer.i"
 	@echo "... src/utils/buffer.s"
