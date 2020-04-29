@@ -15,7 +15,7 @@ char **split(char *str)
     if (!str)
         return NULL;
     const char delim[2] = " ";
-    char **res = calloc(1, sizeof(char *) * MAX_TOKEN);
+    char **res = xcalloc(1, sizeof(char *) * MAX_TOKEN);
     // char *copy = my_strdup(str);
     // printf("str %s$\n", strtok_r("aa aa", " "));
     //char test[7] = "aa aa ";
@@ -100,7 +100,6 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
         char *content = substr(c, 0, *j);
         if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
         {
-            free(content);
             append(lexer, new_token_type(type));
             append(lexer, new_token_type(TOK_RPAREN));
             if (c[*j + 1])
@@ -110,7 +109,6 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
             }
             return 1;
         }
-        free(content);
     }
     else if (c[*j] == '(')
     {
@@ -119,12 +117,10 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
             char *content = substr(c, (*j + 1), strlen(c));
             if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
             {
-                free(content);
                 append(lexer, new_token_type(TOK_LPAREN));
                 append(lexer, new_token_type(type));
                 return 1;
             }
-            free(content);
         }
     }
     return 0;
@@ -153,18 +149,15 @@ int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_
             char *content = substr(c, (*j + 1), strlen(c));
             if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
             {
-                free(content);
                 append(lexer, new_token_type(TOK_NEWLINE));
                 append(lexer, new_token_type(type));
                 return 1;
             }
-            free(content);
         }
         size_t starting_index = get_previous_newline_index(c, *j);
         char *content = substr(c, starting_index, *j - starting_index);
         if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
         {
-            free(content);
             append(lexer, new_token_type(type));
             append(lexer, new_token_type(TOK_NEWLINE));
             if (c[*j + 1])
@@ -174,7 +167,6 @@ int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_
             }
             return 1;
         }
-        free(content);
     }
     return 0;
 }
@@ -182,14 +174,12 @@ int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_
 void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
-    char *c;
     int i = 0;
     int type;
-    struct buffer *buffer = NULL;
     while (splitted[i])
     {
-        buffer = new_buffer();
-        c = splitted[i];
+        struct buffer *buffer = new_buffer();
+        char *c = splitted[i];
 
         if ((type = evaluate_token(c)) == TOK_WORD)
         {
@@ -219,10 +209,9 @@ void init_lexer(struct lexer *lexer)
         else
             append(lexer, new_token_type(type));
         i++;
-        free_buffer(buffer);
+        // free_buffer(buffer);
     }
     append(lexer, new_token_type(TOK_EOF));
-    free(splitted);
 }
 
 struct lexer *new_lexer(char *str) {

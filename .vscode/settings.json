@@ -68,7 +68,8 @@
         "exec_utils.h": "c",
         "expansion.h": "c",
         "commands.h": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "garbage_collector.h": "c"
     },
     "cmake.configureOnOpen": false
 }

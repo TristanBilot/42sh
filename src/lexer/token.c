@@ -25,7 +25,7 @@ struct token *new_token_type(int type)
 struct token *new_token_io_number(char number)
 {
     struct token *new = new_token_type(TOK_IONUMBER);
-    char *tmp = malloc(2 * sizeof(char));
+    char *tmp = xmalloc(2 * sizeof(char));
     tmp[0] = number;
     tmp[1] = '\0';
     new->value = tmp;
@@ -36,7 +36,7 @@ struct token *new_token_word(char *value)
 {
     struct token *new = new_token();
     new->type = TOK_WORD;
-    new->value = malloc(MAX_TOKEN);  /* FREE */
+    new->value = xmalloc(MAX_TOKEN);  /* FREE */
     strcpy(new->value, value);
     return new;
 }

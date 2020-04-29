@@ -4,7 +4,7 @@
 #include "utils/string_utils.h"
 #include "ast/free.h"
 
-bool success(const char *expr)
+bool success(char *expr)
 {
     struct parser *parser = init_parser(new_lexer(expr));
     struct node_input *ast = NULL;
@@ -14,7 +14,7 @@ bool success(const char *expr)
     return !result;
 }
 
-bool fail(const char *expr)
+bool fail(char *expr)
 {
     struct parser *parser = init_parser(new_lexer(expr));
     struct node_input *ast = NULL;

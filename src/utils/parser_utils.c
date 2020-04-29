@@ -3,6 +3,7 @@
 #include "../parser/parser.h"
 #include "../ast/ast.h"
 #include "../utils/parser_utils.h"
+#include "../utils/xalloc.h"
 
 bool is_redirection(struct token *token)
 {
@@ -103,7 +104,7 @@ struct range *append_value_to_for(
 {
     if (!ast)
         return NULL;
-    struct range *new = malloc(sizeof(struct range));
+    struct range *new = xmalloc(sizeof(struct range));
     new->next = NULL;
     new->value = value;
     if (!ast->range)
@@ -128,7 +129,7 @@ struct word_list *append_word_list(struct node_case_item *ast, char *value)
 {
     if (!ast)
         return NULL;
-    struct word_list *new = malloc(sizeof(struct word_list));
+    struct word_list *new = xmalloc(sizeof(struct word_list));
     new->next = NULL;
     new->word = value;
     if (!ast->words)

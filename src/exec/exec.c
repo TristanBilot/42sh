@@ -17,21 +17,25 @@
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s\n", msg);
 
-// const struct commands cmd[3] = {
-//     {"cd", &cd}, {"echo", &echo}, {"export", &export}, {NULL, NULL}};
+const struct commands cmd[3] = {
+    {"cd", &cd}, 
+    //{"echo", &echo},
+    //{"exit", &exit},
+    {"export", &export}, 
+    {NULL, NULL}};
 
-// static bool extra_command(char **args)
-// {
-//     for (int i = 0; cmd[i].name; i++)
-//     {
-//         if (strcmp(args[0], cmd[i].name) == 0)
-//         {
-//             cmd[i].function(args);
-//             return false;
-//         }
-//     }
-//     return true;
-// }
+static bool extra_command(char **args)
+{
+    for (int i = 0; cmd[i].name; i++)
+    {
+        if (strcmp(args[0], cmd[i].name) == 0)
+        {
+            cmd[i].function(args);
+            return false;
+        }
+    }
+    return true;
+}
 
 bool dup_file(char *file, char *flag, int io)
 {
@@ -86,8 +90,6 @@ bool execute(char **args, struct tab_redi tab)
 {
     if (manage_redirections(tab))
         return true;
-    // if (!extra_command(args))
-    //     return false;
     if ((execvp(args[0], args)) == -1)
     {
         err(1, "command not found: %s\n", args[0]);
@@ -106,6 +108,8 @@ bool execute_with_fork(char **args, struct tab_redi tab)
     {
         if (manage_redirections(tab))
             return true;
+        if (!extra_command(args))
+            return false;
         if ((execvp(args[0], args)) == -1)
         {
             err(1, "command not found: %s\n", args[0]);

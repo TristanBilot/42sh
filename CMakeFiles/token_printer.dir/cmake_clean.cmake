@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/token_printer.dir/src/exec/commands.c.o"
   "CMakeFiles/token_printer.dir/src/exec/exec.c.o"
   "CMakeFiles/token_printer.dir/src/expansion/var_expansion.c.o"
+  "CMakeFiles/token_printer.dir/src/garbage_collector/garbage_collector.c.o"
   "CMakeFiles/token_printer.dir/src/lexer/lex_evaluation.c.o"
   "CMakeFiles/token_printer.dir/src/lexer/lexer.c.o"
   "CMakeFiles/token_printer.dir/src/lexer/token.c.o"

@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/tests_lexer.dir/src/exec/commands.c.o"
   "CMakeFiles/tests_lexer.dir/src/exec/exec.c.o"
   "CMakeFiles/tests_lexer.dir/src/expansion/var_expansion.c.o"
+  "CMakeFiles/tests_lexer.dir/src/garbage_collector/garbage_collector.c.o"
   "CMakeFiles/tests_lexer.dir/src/lexer/lex_evaluation.c.o"
   "CMakeFiles/tests_lexer.dir/src/lexer/lexer.c.o"
   "CMakeFiles/tests_lexer.dir/src/lexer/token.c.o"

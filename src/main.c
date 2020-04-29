@@ -18,6 +18,7 @@
 #include "./eval/ast_print.h"
 #include "./var_storage/var_storage.h"
 #include "./expansion/expansion.h"
+#include "./garbage_collector/garbage_collector.h"
 
 static struct option long_options[] =
 {
@@ -60,9 +61,11 @@ static void init_42sh_process(struct option_sh *option)
         if (exec_node_input(ast))
             printf("Error affiché dans le main");
     }
+    // free_garbage_collector();
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
+        // new_garbage_collector();
         lexer = new_lexer(line);
         ast = parse(lexer);
 
@@ -71,6 +74,7 @@ static void init_42sh_process(struct option_sh *option)
         if (option->print_ast_flag)
             print_ast(ast);
 
+        free_garbage_collector();
         print_prompt();
     }
     if (line)
@@ -79,7 +83,7 @@ static void init_42sh_process(struct option_sh *option)
 
 static struct option_sh *init_option_sh()
 {
-    struct option_sh *option = xmalloc(sizeof(struct option_sh));
+    struct option_sh *option = malloc(sizeof(struct option_sh));
     option->norc_flag = false;
     option->print_ast_flag = false;
     option->cmd = NULL;
@@ -90,6 +94,7 @@ int main(int ac, char **av)
 {
     int option_index = 0;
     int opt = -1;
+    new_garbage_collector();
     struct option_sh *option = init_option_sh();
     new_var_storage();
     new_program_data_storage(ac, av);
@@ -117,6 +122,7 @@ int main(int ac, char **av)
             print_usage();
     }
     init_42sh_process(option);
+    free(option);
     free_var_storage();
     free_program_data_storage();
 }

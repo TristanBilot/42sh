@@ -11,8 +11,8 @@
 
 void new_program_data_storage(int argc, char *argv[])
 {
-    program_data = xmalloc(sizeof(struct program_data_storage));
-    program_data->last_cmd_status = xcalloc(MAX_STR_LEN, 1);
+    program_data = malloc(sizeof(struct program_data_storage));
+    program_data->last_cmd_status = calloc(MAX_STR_LEN, 1);
     program_data->binary_name = argv[0];
     if (argc <= 1)
     {
@@ -20,7 +20,7 @@ void new_program_data_storage(int argc, char *argv[])
         program_data->argc = 0;
         return;
     }
-    char **args = xcalloc(argc - 1, sizeof(char *));
+    char **args = calloc(argc - 1, sizeof(char *));
     for (int i = 1; i < argc; i++)
         args[i - 1] = argv[i];
     program_data->argv = args;
@@ -84,7 +84,6 @@ char *perform_var_expansion(char *word)
                     if (should_continue)
                     {
                         append_string_to_buffer(buf, sub);
-                        free(sub);
                         continue;
                     }
                     else
@@ -101,17 +100,14 @@ char *perform_var_expansion(char *word)
                     case PAR_STAR:
                         b = substitute_star();
                         append_string_to_buffer(buf, b->buf);
-                        free_buffer(b);
                         break;
                     case PAR_AT:
                         b = substitute_star();
                         append_string_to_buffer(buf, b->buf);
-                        free_buffer(b);
                         break;
                     case PAR_HASH:
                         sub = substitute_hash();
                         append_string_to_buffer(buf, sub);
-                        free(sub);
                         break;
                     case PAR_QUES:
                         append_string_to_buffer(buf, substitute_ques());
@@ -133,9 +129,7 @@ char *perform_var_expansion(char *word)
             append_buffer(buf, word[i]);
     }
     append_buffer(buf, '\0');
-    char *exp = buf->buf;
-    free(buf);
-    return exp;
+    return buf->buf;
 }
 
 char *substitute_number(char c)

@@ -25,7 +25,8 @@ set(SOURCE_FILES
 	src/exec/exec.c
 	src/var_storage/var_storage.c
 	src/expansion/var_expansion.c
-	src/exec/commands.c)
+	src/exec/commands.c
+	src/garbage_collector/garbage_collector.c)
 
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})

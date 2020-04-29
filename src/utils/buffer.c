@@ -2,11 +2,12 @@
 #include <string.h>
 #include "../lexer/lexer.h"
 #include "../utils/buffer.h"
+#include "../utils/xalloc.h"
 
 struct buffer *new_buffer()
 {
-    struct buffer *buffer = calloc(sizeof(struct buffer), 1);
-    buffer->buf = calloc(BUFFER_SIZE, 1);
+    struct buffer *buffer = xcalloc(sizeof(struct buffer), 1);
+    buffer->buf = xcalloc(BUFFER_SIZE, 1);
     buffer->index = 0;
     return buffer;
 }
