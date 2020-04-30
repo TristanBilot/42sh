@@ -1,4 +1,4 @@
-# Install script for directory: /home/madushanthambithurai/EPITA/firstAn/projet/42sh/42sh
+# Install script for directory: /home/nora/Documents/ing1/projets/garbage_branch/42sh
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/madushanthambithurai/EPITA/firstAn/projet/42sh/42sh/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/nora/Documents/ing1/projets/garbage_branch/42sh/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

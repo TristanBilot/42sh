@@ -31,7 +31,7 @@ set(SOURCE_FILES
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
 add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
-#add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
+add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
 add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
 

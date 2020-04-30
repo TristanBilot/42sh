@@ -9,6 +9,7 @@ struct token *lex_comments(char *c, size_t i);
 struct token *lex_uni_character(char *c, size_t i);
 struct token *lex_assignment_word(char *c, size_t *i);
 struct token *lex_assignment_value(char *c, size_t *i);
+size_t get_previous_separator_index(const char *c, size_t j);
 
 /**
 ** \brief Return the associated keyword of a string token.

@@ -3,25 +3,27 @@
 #include "parser/parser.h"
 #include "utils/string_utils.h"
 #include "ast/free.h"
+#include "../garbage_collector/garbage_collector.h"
+
+bool test(char *expr)
+{
+    new_garbage_collector();
+    struct lexer *lexer = new_lexer(expr);
+    struct node_input *ast = parse(lexer);
+    bool res = ast == NULL;
+    free_garbage_collector();
+    free(garbage_collector);
+    return res;
+}
 
 bool success(char *expr)
 {
-    struct parser *parser = init_parser(new_lexer(expr));
-    struct node_input *ast = NULL;
-    bool result = parse_input(parser, &ast);
-    free_parser(parser);
-    free_input(ast);
-    return !result;
+    return !test(expr);
 }
 
 bool fail(char *expr)
 {
-    struct parser *parser = init_parser(new_lexer(expr));
-    struct node_input *ast = NULL;
-    bool result = parse_input(parser, &ast);
-    free_parser(parser);
-    free_input(ast);
-    return result;
+    return test(expr);
 }
 
 Test(parser, parse_redirection)
@@ -45,7 +47,7 @@ Test(parser, more_redirection)
 Test(parser, parse_simple_command)
 {
     cr_assert(success("ls"));
-    cr_assert(success("echo test"));
+    cr_assert(success("echo test\n"));
 }
 
 Test(parser, parser_assigment_word)
@@ -206,9 +208,11 @@ Test(parser, rule_case)
 }
 Test(parser, hardcore_test)         // erreur sur les ; -> a corriger ;-> doit etre considerer comme un WORD
 {
-    cr_assert(success("! case str in hello | totoro ) echo hello; ;; bye | totolo ) echo test\n ;; esac | function print ( ) { for i in range 1 2 ; do echo test & ( if a\n then b; elif c && j & then d; else e\n fi\n ) ; done ; ls\n } 1>&2"));
+    cr_assert(success("! case str in hello | totoro ) echo hello; ;; bye | totolo ) echo test\n ;; esac | function print ( ) { for i in range 1 2 ; do echo test & ( if a\n then b; elif c && j & then d; else e\n fi; ) ; done ; ls\n } 1>&2"));
     cr_assert(success("while a > b; do case res in 1 )  cd ../../../../../../../../../../../../../../../../../../../ ; pwd\n ;; 2 ) until a + b; do echo hello world; done & ;; 3 ) for i in range;\n\n\n do echo test; echo tata\necho toto ; done ;\n ;; 4) if a; then b\n elif c & then d\n elif e\n then f; else g & \n fi \n ;; 5 ) ls | echo test && cat test | echo tata & cat tata ; ;; 6 ) a=1 echo a; ;; esac\n\n\n done"));
 }
+
+
 
 Test(parser, parenthesis_near)
 {

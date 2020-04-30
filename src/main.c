@@ -125,5 +125,6 @@ int main(int ac, char **av)
     free(option);
     free_var_storage();
     free_program_data_storage();
+    free(garbage_collector);
 }
 

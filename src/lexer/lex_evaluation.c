@@ -102,7 +102,7 @@ size_t get_next_separator_index(const char *c, size_t j)
     if (!c)
         return 0;
     while (++j < strlen(c))
-        if (c[j] == '\n' || c[j] == ';')
+        if (c[j] == '\n' || c[j] == ';' || c[j] == '&')
             return j;
     return strlen(c);
 }
@@ -112,7 +112,7 @@ size_t get_previous_separator_index(const char *c, size_t j)
     if (!c)
         return 0;
     while (--j > 0)
-        if (c[j] == '\n' || c[j] == ';')
+        if (c[j] == '\n' || c[j] == ';' || c[j] == '&')
             return j + 1;
     return 0;
 }

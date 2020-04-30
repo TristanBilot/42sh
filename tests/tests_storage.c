@@ -1,28 +1,38 @@
 #include <criterion/criterion.h>
 #include "var_storage.h"
+#include "../src/garbage_collector/garbage_collector.h"
 
 Test(var_storage, basic_operation)
 {
     new_var_storage();
+    new_garbage_collector();
 
     put_var("key", "val");
     struct variable *var = get_var("key");
     cr_assert(var != NULL);
     cr_assert(is(var->key, "key"));
     cr_assert(is(var->value, "val"));
+    free_var_storage();
+    free_garbage_collector();
+    free(garbage_collector);
 }
 
 Test(var_storage, unknown_key)
 {
     new_var_storage();
+    new_garbage_collector();
 
     struct variable *var = get_var("key");
     cr_assert(!var);
+    free_var_storage();
+    free_garbage_collector();
+    free(garbage_collector);
 }
 
 Test(var_storage, hard_operations)
 {
     new_var_storage();
+    new_garbage_collector();
     struct variable *var = NULL;
 
     put_var("key", "val");
@@ -35,11 +45,15 @@ Test(var_storage, hard_operations)
     var = get_var("key2");
     cr_assert(is(var->value, ""));
     cr_assert(var->type == VAR_STRING);
+    free_var_storage();
+    free_garbage_collector();
+    free(garbage_collector);
 }
 
 Test(var_storage, types)
 {
     new_var_storage();
+    new_garbage_collector();
     struct variable *var = NULL;
 
     put_var("keyX", "val");
@@ -77,4 +91,7 @@ Test(var_storage, types)
     cr_assert(is(var->key, "key6"));
     cr_assert(is(var->value, "23212g3"));
     cr_assert(var->type == VAR_STRING);
+    free_var_storage();
+    free_garbage_collector();
+    free(garbage_collector);
 }

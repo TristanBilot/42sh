@@ -16,22 +16,16 @@ char **split(char *str)
         return NULL;
     const char delim[2] = " ";
     char **res = xcalloc(1, sizeof(char *) * MAX_TOKEN);
-    // char *copy = my_strdup(str);
-    // printf("str %s$\n", strtok_r("aa aa", " "));
-    //char test[7] = "aa aa ";
-    
-    char *splitted = strtok(str, delim);  //char *strtok(char *s1, const char *s2);
+    char *splitted = strtok(my_strdup(str), delim);
     int i = 0;
     while (splitted != NULL)
     {
-        // res[i] = xmalloc(sizeof(char *));
+        // res[i] = xmalloc(sizeof(char *) * MAX_TOKEN);
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
-    
     res[i] = NULL;
     free(splitted);
-    // free(copy);
     return res;
 }
 

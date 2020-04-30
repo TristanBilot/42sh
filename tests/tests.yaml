@@ -102,9 +102,9 @@
       - returncode
       - stdout
 
-  - stdin: cd fdklsfhsd
-    checks:
-      - has_stderr
+  # - stdin: cd fdklsfhsd
+  #   checks:
+  #     - has_stderr
 
 ####################################################### TEST PIPELINE ########################################################
 - description:

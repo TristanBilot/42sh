@@ -750,6 +750,8 @@ bool exec_node_case_clause(struct node_case_clause *ast)
 {
     DEBUG("CASE_CLAUSE")
     struct node_case_clause *c = ast;
+    if (!c || !c->case_item)
+        return true;
     exec_node_case_item(c->case_item);
     while (c->next)
     {

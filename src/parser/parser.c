@@ -96,14 +96,15 @@ bool parse_input(struct parser *parser, struct node_input **ast)
         return true;
     }
     parser_comment(parser);
+    struct node_input *node = build_input(); //
     if ((is_type(parser->current_token, TOK_NEWLINE) &&
         is_type(parser->current_token->next, TOK_EOF)) ||
         is_type(parser->current_token, TOK_EOF))
     {
+        *ast = node;
         return false;
     }
     //*ast = build_input();
-    struct node_input *node = build_input(); //
     if (!parse_list(parser, &(node->node_list))) // &((*ast)->node_list)
     {
         parser_comment(parser);
@@ -915,7 +916,7 @@ bool parse_do_group(struct parser *parser, struct node_do_group **ast)
         }
         current = parser->current_token;
         next_token(parser);
-        if (is_type(current, KW_DONE))
+        if (!is_type(current, KW_DONE))
             return true;
         *ast = new;
         return false;
