@@ -19,7 +19,8 @@
 void print_node_input(struct node_input *ast, FILE *f)
 {
     PRINT_NODE("PRINT INPUT");
-    print_node_list(ast->node_list, f);
+    if (ast->node_list)
+        print_node_list(ast->node_list, f);
 }
 void print_node_list(struct node_list *ast, FILE *f)
 {
@@ -502,7 +503,6 @@ void print_node_case_item(struct node_case_item *ast, FILE *f, void *node)
 
 void print_ast(struct node_input *ast)
 {
-    printf("AST PRINT HERE");
     if (!ast)
         return;
     // print_node_input(ast, stdout);

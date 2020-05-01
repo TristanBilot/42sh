@@ -94,6 +94,8 @@ struct token *lex_uni_character(char *c, size_t i)
         return new_token_type(TOK_LPAREN);
     if (c[i] == ')')
         return new_token_type(TOK_RPAREN);
+    if (c[i] == '&')
+        return new_token_type(TOK_SEPAND);
     return NULL;
 }
 
@@ -102,7 +104,7 @@ size_t get_next_separator_index(const char *c, size_t j)
     if (!c)
         return 0;
     while (++j < strlen(c))
-        if (c[j] == '\n' || c[j] == ';' || c[j] == '&')
+        if (is_separator(c[j]))
             return j;
     return strlen(c);
 }
@@ -111,8 +113,8 @@ size_t get_previous_separator_index(const char *c, size_t j)
 {
     if (!c)
         return 0;
-    while (--j > 0)
-        if (c[j] == '\n' || c[j] == ';' || c[j] == '&')
+    while (j > 1 && c[--j])
+        if (is_separator(c[j]))
             return j + 1;
     return 0;
 }

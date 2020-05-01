@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include  <signal.h>
 
 #include "./main.h"
 #include "./parser/parser.h"
@@ -27,6 +28,13 @@ static struct option long_options[] =
     {"norc", no_argument, 0, 'n'},
     {0, 0, 0, 0}
 };
+
+void  INThandler(int sig)
+{
+    signal(sig, SIGTERM);
+    printf("\n");
+    exit(0);
+}
 
 void print_usage()
 {
@@ -59,10 +67,11 @@ static void init_42sh_process(struct option_sh *option)
         lexer = new_lexer(option->cmd);
         ast = parse(lexer);
         if (exec_node_input(ast))
-            printf("Error affiché dans le main");
-    }
+            printf("Error affiché dans le main\n");
+    }// noraaaaa
     // free_garbage_collector();
     print_prompt();
+    //signal(SIGTERM, INThandler);
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         // new_garbage_collector();
@@ -70,12 +79,13 @@ static void init_42sh_process(struct option_sh *option)
         ast = parse(lexer);
 
         if (exec_node_input(ast))
-            printf("Error on exec ast.");
+            printf("Error on exec ast.\n");
         if (option->print_ast_flag)
             print_ast(ast);
 
         free_garbage_collector();
         print_prompt();
+        //signal(SIGTERM, INThandler);
     }
     if (line)
         free(line);

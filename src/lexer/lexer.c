@@ -120,46 +120,26 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
     return 0;
 }
 
-size_t get_previous_newline_index(char *c, size_t j)
+int is_separator(char c)
 {
-    if (!c)
-        return 0;
-    while (j > 1 && c[--j])
-        if (c[j-1] == '\n')
-            return j;
-    return 0;
+    return c == '\n' || c == ';' || c == '&';
 }
 
-/*
-* if\n should be IF NEWLINE
-*/
-int lex_stuck_newline(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
+int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
 {
-    int type;
-    if (c[*j] == '\n')
+    if (is_separator(c[*j]))
     {
-        if (*j == 0 && c[*j+1])
-        {
-            char *content = substr(c, (*j + 1), strlen(c));
-            if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
-            {
-                append(lexer, new_token_type(TOK_NEWLINE));
-                append(lexer, new_token_type(type));
-                return 1;
-            }
-        }
-        size_t starting_index = get_previous_newline_index(c, *j);
-        char *content = substr(c, starting_index, *j - starting_index);
-        if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
+        int type;
+        char tmp[2];
+        tmp[0] = c[*j];
+        tmp[1] = '\0';
+        int separator = evaluate_token(tmp);
+        if ((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN)
         {
             append(lexer, new_token_type(type));
-            append(lexer, new_token_type(TOK_NEWLINE));
-            if (c[*j + 1])
-            {
-                flush(buffer);
-                return -1;
-            }
-            return 1;
+            append(lexer, new_token_type(separator));
+            flush(buffer);
+            return -1;
         }
     }
     return 0;
@@ -185,7 +165,7 @@ void init_lexer(struct lexer *lexer)
                     continue;
                 else if (type == 1)
                     break;
-                if ((type = lex_stuck_newline(lexer, buffer, c, &j)) == -1)
+                if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
                     break;

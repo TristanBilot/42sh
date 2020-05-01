@@ -28,12 +28,14 @@ set(SOURCE_FILES
 	src/exec/commands.c
 	src/garbage_collector/garbage_collector.c)
 
+
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
 add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
 add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
 add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
+
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 

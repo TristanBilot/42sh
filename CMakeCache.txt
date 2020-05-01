@@ -221,6 +221,12 @@ CRITERION_INCLUDE_DIR:PATH=/usr/include
 //Path to a library.
 CRITERION_LIBRARY:FILEPATH=/usr/lib/libcriterion.so
 
+//Dot tool for use with Doxygen
+DOXYGEN_DOT_EXECUTABLE:FILEPATH=/usr/bin/dot
+
+//Doxygen documentation generation tool (http://www.doxygen.org)
+DOXYGEN_EXECUTABLE:FILEPATH=/usr/bin/doxygen
+
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
 
@@ -376,8 +382,14 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 CRITERION_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CRITERION_LIBRARY
 CRITERION_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: DOXYGEN_DOT_EXECUTABLE
+DOXYGEN_DOT_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: DOXYGEN_EXECUTABLE
+DOXYGEN_EXECUTABLE-ADVANCED:INTERNAL=1
 //Details about finding Criterion
 FIND_PACKAGE_MESSAGE_DETAILS_Criterion:INTERNAL=[/usr/lib/libcriterion.so][/usr/include][v()]
+//Details about finding Doxygen
+FIND_PACKAGE_MESSAGE_DETAILS_Doxygen:INTERNAL=[/usr/bin/doxygen][cfound components: doxygen dot ][v1.8.13()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29.1()]
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE

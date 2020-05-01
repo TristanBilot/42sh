@@ -69,7 +69,11 @@
         "expansion.h": "c",
         "commands.h": "c",
         "*.tcc": "c",
-        "garbage_collector.h": "c"
+        "garbage_collector.h": "c",
+        "deque": "c",
+        "initializer_list": "c",
+        "istream": "c",
+        "signal.h": "c"
     },
     "cmake.configureOnOpen": false
 }

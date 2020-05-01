@@ -26,6 +26,12 @@ bool fail(char *expr)
     return test(expr);
 }
 
+Test(parser, parse_export)
+{
+    //cr_assert(success("a=toto"));
+    cr_assert(success("export a=toto"));
+}
+
 Test(parser, parse_redirection)
 {
     cr_assert(success("1>2"));

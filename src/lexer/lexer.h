@@ -59,4 +59,6 @@ void append(struct lexer *lexer, struct token *token);
 */
 void init_lexer(struct lexer *lexer);
 
+int is_separator(char c);
+
 #endif /* ! LEXER_H */

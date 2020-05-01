@@ -5,6 +5,7 @@ from termcolor import colored
 import subprocess as sp
 import multiprocessing
 import yaml
+import math
 
 tests_file = 'tests/tests.yaml'
 
@@ -74,5 +75,7 @@ if __name__ == "__main__":
         should_print = check_flag_c_conditions(flag_c, args.flag_c, desc)
         
         if should_print:
-            test(binary, test_case['description'], debug_description, int(flag_t[0]))
-            
+            if flag_t:
+                test(binary, test_case['description'], debug_description, int(flag_t[0]))
+            else:
+                test(binary, test_case['description'], debug_description, int(1000000))

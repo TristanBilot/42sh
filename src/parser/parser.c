@@ -538,6 +538,13 @@ bool parse_element(struct parser *parser, struct node_element **ast)
     DEBUG("parse_element\n"); 
     //printf("curr tok = %s\n", type_to_str(parser->current_token->type));   
     struct node_element *new = build_element(parser);//*ast = build_element(parser);
+    if (is_type(parser->current_token, TOK_WORD) && strcmp(parser->current_token->value, "export") == 0){
+        next_token(parser);
+        struct node_input *new2 = build_input();                    //EXPORT
+        if(parse_input(parser, new2))
+            return true;
+        return false;;
+    }
     if (is_type(parser->current_token, TOK_WORD))
     {
         new->type = WORD;
