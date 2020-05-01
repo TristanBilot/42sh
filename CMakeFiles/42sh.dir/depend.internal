@@ -24,6 +24,7 @@ CMakeFiles/42sh.dir/src/eval/ast_print.c.o
  /home/nora/Documents/ing1/projets/garbage_branch/42sh/src/utils/string_utils.h
 CMakeFiles/42sh.dir/src/exec/commands.c.o
  /home/nora/Documents/ing1/projets/garbage_branch/42sh/src/exec/commands.c
+ /home/nora/Documents/ing1/projets/garbage_branch/42sh/src/exec/commands.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o
  /home/nora/Documents/ing1/projets/garbage_branch/42sh/src/ast/ast.h
  /home/nora/Documents/ing1/projets/garbage_branch/42sh/src/exec/commands.h

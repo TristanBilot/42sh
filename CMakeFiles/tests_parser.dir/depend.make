@@ -23,6 +23,7 @@ CMakeFiles/tests_parser.dir/src/eval/ast_print.c.o: src/print/ast_print_dot.h
 CMakeFiles/tests_parser.dir/src/eval/ast_print.c.o: src/utils/string_utils.h
 
 CMakeFiles/tests_parser.dir/src/exec/commands.c.o: src/exec/commands.c
+CMakeFiles/tests_parser.dir/src/exec/commands.c.o: src/exec/commands.h
 
 CMakeFiles/tests_parser.dir/src/exec/exec.c.o: src/ast/ast.h
 CMakeFiles/tests_parser.dir/src/exec/exec.c.o: src/exec/commands.h

@@ -17,10 +17,10 @@
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s\n", msg);
 
-const struct commands cmd[3] = {
+const struct commands cmd[4] = {
     {"cd", &cd}, 
     //{"echo", &echo},
-    //{"exit", &exit},
+    {"exit", &exit_shell},
     {"export", &export}, 
     {NULL, NULL}};
 

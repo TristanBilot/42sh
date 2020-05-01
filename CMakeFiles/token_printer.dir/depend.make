@@ -29,6 +29,7 @@ CMakeFiles/token_printer.dir/src/eval/token_printer.c.o: src/lexer/token.h
 CMakeFiles/token_printer.dir/src/eval/token_printer.c.o: src/utils/string_utils.h
 
 CMakeFiles/token_printer.dir/src/exec/commands.c.o: src/exec/commands.c
+CMakeFiles/token_printer.dir/src/exec/commands.c.o: src/exec/commands.h
 
 CMakeFiles/token_printer.dir/src/exec/exec.c.o: src/ast/ast.h
 CMakeFiles/token_printer.dir/src/exec/exec.c.o: src/exec/commands.h

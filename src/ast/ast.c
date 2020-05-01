@@ -253,3 +253,41 @@ struct node_case_item *build_case_item(void)
     return new;
 }
 
+
+/*struct node_prefix *build_prefix(struct parser *parser)
+{
+    struct node_prefix *new = xcalloc(1, sizeof(struct node_prefix));
+    //printf("pointer pref : %p\n", new);
+    if (is_type(parser->current_token, TOK_ASS_WORD))
+    {
+        new->prefix.assigment_word = xcalloc(1, sizeof(struct assigment_word));
+        new->prefix.assigment_word->variable_name = "";
+        new->prefix.assigment_word->value = "";
+        new->type = ASSIGMENT_WORD;
+    }
+    else
+    {
+        new->prefix.redirection = NULL;
+        new->type = REDIRECTION;
+    }
+    // printf("PREFIX \n");
+    return new;
+}*/
+
+// struct node_export *build_export(unsigned int flag)
+// {
+//     struct node_export *new = xcalloc(1, sizeof(struct node_export));
+//     if (flag == N)
+//         new->type = N;
+//     if (flag == P)
+//         new->type = P;
+//     if (flag == N)
+//         new->type = NO_FLAG;
+//     if (flag == N)
+//         new->type = E_NONE;
+
+//     new->export.elements = NULL;
+//     new->export.prefix = NULL;
+
+//     return new;
+// }

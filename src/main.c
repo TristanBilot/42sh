@@ -31,7 +31,7 @@ static struct option long_options[] =
 
 void  INThandler(int sig)
 {
-    signal(sig, SIGTERM);
+    signal(sig, SIGINT);
     printf("\n");
     exit(0);
 }
@@ -68,10 +68,10 @@ static void init_42sh_process(struct option_sh *option)
         ast = parse(lexer);
         if (exec_node_input(ast))
             printf("Error affiché dans le main\n");
-    }// noraaaaa
+    }
     // free_garbage_collector();
     print_prompt();
-    //signal(SIGTERM, INThandler);
+    //signal(SIGINT, INThandler);
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         // new_garbage_collector();
@@ -85,8 +85,9 @@ static void init_42sh_process(struct option_sh *option)
 
         free_garbage_collector();
         print_prompt();
-        //signal(SIGTERM, INThandler);
+        //signal(SIGINT, INThandler);
     }
+    // printf("\n");
     if (line)
         free(line);
 }

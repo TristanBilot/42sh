@@ -91,6 +91,7 @@ struct node_simple_command
 {
     struct node_prefix *prefixes; /* LIST */
     struct node_element *elements; /* LIST */
+    // struct node_export *export;
 };
 
 struct node_shell_command
@@ -273,6 +274,23 @@ struct node_case_item
     } next;*/
 };
 
+// struct node_export
+// {
+//     struct node_export *next;
+//     enum type_export
+//     {
+//         N,
+//         P,
+//         NO_FLAG,
+//         E_NONE
+//     } type;
+//     union export
+//     {
+//         struct node_element *elements;
+//         struct node_prefix *prefix;
+//     } export;
+// };
+
 struct node_input *build_input(void);
 struct node_list *build_list(void);
 struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, struct node_pipeline *right);
@@ -295,6 +313,7 @@ struct node_else_clause *build_else_clause(struct parser *parser);
 struct node_do_group *build_do_group(void);
 struct node_case_clause *build_case_clause(void);
 struct node_case_item *build_case_item(void);
+// struct node_export *build_export(unsigned int flag);
 
 void free_shell_command(struct node_shell_command *p);
 

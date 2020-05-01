@@ -316,28 +316,25 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
 {
     DEBUG("parse_simple_command\n");
     struct token *current = parser->current_token;
+
+    // if (is_type(current, TOK_WORD) && strcmp(current->value, "export"))
+    // {
+        
+    // }
+
     struct node_prefix *p = NULL;
     //*ast = build_simple_command();
     struct node_simple_command *new = build_simple_command(); //
     if (parse_prefix(parser, &p))
     {
-        // FREE p
-        //free_prefix(p); //
         parser->current_token = current;
         struct node_element *e = NULL;
         if (parse_element(parser, &e))
-        {
-            //free_element(e); //
             return true;
-        }
         append_element(new, e);
         //append_element(*ast, e); //
         e = NULL;
         current = parser->current_token;
-        /*
-        ** if le current n'est pas un token de séparation (follow de simple command)
-        **      token = word avec type de keyword comme value
-        */
         while (!parse_element(parser, &e))
         {
             
@@ -345,17 +342,11 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             //append_element(*ast, e);
             append_element(new, e);
             e = NULL;
-            /*
-            ** if le current n'est pas un token de séparation
-            **      token = word avec type de tken comme value
-            */
         }
-        //free_element(e); //
         parser->current_token = current;
     }
     else
     {
-        // printf("SUCCEED PARSE PREFIX\n");
         current = parser->current_token;
         new->prefixes = append_prefix(new, p);
         //(*ast)->prefixes = append_prefix(*ast, p);
@@ -366,19 +357,16 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             new->prefixes = append_prefix(new, p); //(*ast)->prefixes = append_prefix(*ast, p);
             p = NULL;
         }
-        //free_prefix(p);
         parser->current_token = current;
         struct node_element *e = NULL;
         while (!parse_element(parser, &e))
         {
             current = parser->current_token;
-             append_element(new, e);//append_element(*ast, e);
+            append_element(new, e);//append_element(*ast, e);
             e = NULL;
         }
-        //free_element(e);
         parser->current_token = current;
     }
-    // printf("prefixes = %p elements = %p\n", (*ast)->prefixes, (*ast)->elements);
     *ast = new;
     return false;
 }
@@ -538,13 +526,14 @@ bool parse_element(struct parser *parser, struct node_element **ast)
     DEBUG("parse_element\n"); 
     //printf("curr tok = %s\n", type_to_str(parser->current_token->type));   
     struct node_element *new = build_element(parser);//*ast = build_element(parser);
-    if (is_type(parser->current_token, TOK_WORD) && strcmp(parser->current_token->value, "export") == 0){
-        next_token(parser);
-        struct node_input *new2 = build_input();                    //EXPORT
-        if(parse_input(parser, new2))
-            return true;
-        return false;;
-    }
+    // if (is_type(parser->current_token, TOK_WORD) && strcmp(parser->current_token->value, "export") == 0){
+    //     next_token(parser);
+
+        // struct node_input *new2 = build_input();                    //EXPORT
+        // if(parse_input(parser, new2))
+        //     return true;                                 export [-f] [-n] [name[=value] ...]      // export -f function_name // export -n variable_name // export name=value
+    //     return false;
+    // }
     if (is_type(parser->current_token, TOK_WORD))
     {
         new->type = WORD;

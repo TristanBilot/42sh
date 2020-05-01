@@ -23,6 +23,7 @@ CMakeFiles/42sh.dir/src/eval/ast_print.c.o: src/print/ast_print_dot.h
 CMakeFiles/42sh.dir/src/eval/ast_print.c.o: src/utils/string_utils.h
 
 CMakeFiles/42sh.dir/src/exec/commands.c.o: src/exec/commands.c
+CMakeFiles/42sh.dir/src/exec/commands.c.o: src/exec/commands.h
 
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/ast/ast.h
 CMakeFiles/42sh.dir/src/exec/exec.c.o: src/exec/commands.h
