@@ -53,77 +53,62 @@ char *perform_var_expansion(char *word)
                 append_buffer(buf, '$');
                 break;
             }
+            bool is_brack = false;
             if (word[i] == '{')
             {
+                is_brack = true;
                 i++;
-                if (word[i] == '{') // ${{ is not an expansion
-                    continue;
-                int next_brack_idx = get_next_brack_index(word, i);
-                if (next_brack_idx == -1)
-                    continue;
-                char *param = substr(word, i, next_brack_idx - i);
-                if (var_exists(param))
+            }
+            int type = is_special_char(word[i]);
+            char *sub = NULL;
+            bool should_continue = false;
+            if ((sub = substitute_random(word, &i, &should_continue, is_brack)) ||
+                (sub = substitute_uid(word, &i, &should_continue, is_brack)) ||
+                (sub = substitute_oldpwd(word, &i, &should_continue, is_brack)) ||
+                (sub = substitute_ifs(word, &i, &should_continue, is_brack)))
+            {
+                if (should_continue)
                 {
-                    char *var = get_value(param);
-                    for (size_t j = 0; j < strlen(var); j++)
-                        append_buffer(buf, var[i]);
-                    i = next_brack_idx;
+                    append_string_to_buffer(buf, sub);
+                    continue;
                 }
                 else
                     break;
             }
-            else
+            if (type != PAR_UNKNOWN)
             {
-                int type = is_special_char(word[i]);
-                char *sub = NULL;
-                bool should_continue = false;
-                if ((sub = substitute_random(word, &i, &should_continue)) ||
-                    (sub = substitute_uid(word, &i, &should_continue)) ||
-                    (sub = substitute_oldpwd(word, &i, &should_continue)))
+                struct buffer *b = NULL;
+                switch (type)
                 {
-                    if (should_continue)
-                    {
-                        append_string_to_buffer(buf, sub);
-                        continue;
-                    }
-                    else
-                        break;
+                case PAR_NUMBER:
+                    append_string_to_buffer(buf, substitute_number(word[i]));
+                    break;
+                case PAR_STAR:
+                    b = substitute_star();
+                    append_string_to_buffer(buf, b->buf);
+                    break;
+                case PAR_AT:
+                    b = substitute_star();
+                    append_string_to_buffer(buf, b->buf);
+                    break;
+                case PAR_HASH:
+                    sub = substitute_hash();
+                    append_string_to_buffer(buf, sub);
+                    break;
+                case PAR_QUES:
+                    append_string_to_buffer(buf, substitute_ques());
+                    break;
                 }
-                if (type != PAR_UNKNOWN)
-                {
-                    struct buffer *b = NULL;
-                    switch (type)
-                    {
-                    case PAR_NUMBER:
-                        append_string_to_buffer(buf, substitute_number(word[i]));
-                        break;
-                    case PAR_STAR:
-                        b = substitute_star();
-                        append_string_to_buffer(buf, b->buf);
-                        break;
-                    case PAR_AT:
-                        b = substitute_star();
-                        append_string_to_buffer(buf, b->buf);
-                        break;
-                    case PAR_HASH:
-                        sub = substitute_hash();
-                        append_string_to_buffer(buf, sub);
-                        break;
-                    case PAR_QUES:
-                        append_string_to_buffer(buf, substitute_ques());
-                        break;
-                    }
-                    continue;
-                }
-                size_t end = get_next_dollar_index(word, i);
-                char *param = substr(word, i, end - i);
-                if (var_exists(param))
-                {
-                    char *var = get_value(param);
-                    append_string_to_buffer(buf, var);
-                }
-                i += strlen(param) - 1;
+                continue;
             }
+            size_t end = get_next_dollar_index(word, i);
+            char *param = substr(word, i, end - i);
+            if (var_exists(param))
+            {
+                char *var = get_value(param);
+                append_string_to_buffer(buf, var);
+            }
+            i += strlen(param) - 1;
         }
         else
             append_buffer(buf, word[i]);
@@ -177,12 +162,14 @@ char *substitute_ques(void)
 * $RANDOM$UID$1 is right
 * $RANDOMstring is wrong
 */
-bool next_param_is_printable(char *word, size_t i, size_t param_len)
+bool next_param_is_printable(char *word, size_t i, size_t param_len, bool is_brack)
 {
+    if (is_brack && word[i +param_len] != '}')
+        return false;
     return strlen(word) - (i + param_len) == 0 || word[i + param_len] == '$';
 }
 
-char *substitute_random(char *word, size_t *i, bool *should_continue)
+char *substitute_random(char *word, size_t *i, bool *should_continue, bool is_brack)
 {
     size_t len = strlen("RANDOM");
     if ((*i + len) > strlen(word))
@@ -192,7 +179,7 @@ char *substitute_random(char *word, size_t *i, bool *should_continue)
     {
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%d", get_random_int());
-        if (next_param_is_printable(word, *i, len))
+        if (next_param_is_printable(word, *i, len, is_brack))
             *should_continue = true;
         else
             *should_continue = false;
@@ -202,7 +189,7 @@ char *substitute_random(char *word, size_t *i, bool *should_continue)
     return NULL;
 }
 
-char *substitute_uid(char *word, size_t *i, bool *should_continue)
+char *substitute_uid(char *word, size_t *i, bool *should_continue, bool is_brack)
 {
     size_t len = strlen("UID");
     if ((*i + len) > strlen(word))
@@ -213,7 +200,7 @@ char *substitute_uid(char *word, size_t *i, bool *should_continue)
         unsigned long int uid = (unsigned long int) getuid();
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%ld", uid);
-        if (next_param_is_printable(word, *i, len))
+        if (next_param_is_printable(word, *i, len, is_brack))
             *should_continue = true;
         else
             *should_continue = false;
@@ -223,7 +210,7 @@ char *substitute_uid(char *word, size_t *i, bool *should_continue)
     return NULL;
 }
 
-char *substitute_oldpwd(char *word, size_t *i, bool *should_continue)
+char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, bool is_brack)
 {
     char *old_pwd = getenv("OLDPWD");
     if (!old_pwd)
@@ -237,7 +224,7 @@ char *substitute_oldpwd(char *word, size_t *i, bool *should_continue)
     {
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%s", old_pwd);
-        if (next_param_is_printable(word, *i, len))
+        if (next_param_is_printable(word, *i, len, is_brack))
             *should_continue = true;
         else
             *should_continue = false;
@@ -247,7 +234,7 @@ char *substitute_oldpwd(char *word, size_t *i, bool *should_continue)
     return NULL;
 }
 
-char *substitute_ifs(char *word, size_t *i, bool *should_continue)
+char *substitute_ifs(char *word, size_t *i, bool *should_continue, bool is_brack)
 {
     char *ifs = getenv("IFS");
     if (!ifs)
@@ -261,7 +248,7 @@ char *substitute_ifs(char *word, size_t *i, bool *should_continue)
     {
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%s", ifs);
-        if (next_param_is_printable(word, *i, len))
+        if (next_param_is_printable(word, *i, len, is_brack))
             *should_continue = true;
         else
             *should_continue = false;

@@ -108,7 +108,7 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
     {
         if (c[(*j + 1)])
         {
-            char *content = substr(c, (*j + 1), strlen(c));
+            char *content = substr(c, (*j + 1), strlen(c)); // a revoir le strlen: fi);
             if ((type = evaluate_keyword(content)) != KW_UNKNOWN)
             {
                 append(lexer, new_token_type(TOK_LPAREN));
@@ -145,6 +145,21 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
     return 0;
 }
 
+int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
+{
+    if (c[*j] == '$' && (c[*j+1] && c[*j+1] == '{'))
+    {
+        append_word_if_needed(lexer, buffer);
+        size_t close_curl_index = get_next_close_curl_index(c, *j);
+        char *content = substr(c, *j, close_curl_index - *j);
+        append(lexer, new_token_word(content));
+        *j += strlen(content) - 1;
+        flush(buffer);
+        return -1;
+    }
+    return 0;
+}
+
 void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
@@ -159,16 +174,14 @@ void init_lexer(struct lexer *lexer)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
-                // if (lex_full(lexer, c, j))
-                //     break;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
                     break;
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
-                else if (type == 1)
-                    break;
+                if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
+                    continue;
                 if (lex_part(lexer, buffer, c, &j))
                     continue;
 

@@ -47,7 +47,7 @@ bool put_var(char *key, char *val)
         var_storage->variables[h]->type = get_var_type(val);
         return true;
     }
-    struct variable *new = xmalloc(sizeof(struct variable));
+    struct variable *new = malloc(sizeof(struct variable));
     new->key = key;
     new->value = val;
     new->type = get_var_type(val);

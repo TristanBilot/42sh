@@ -396,6 +396,32 @@ Test(lexer, assignment_word)
     free(garbage_collector);
 }
 
+Test(lexer, variables)
+{
+    new_garbage_collector();
+    char input1[] = "before${var}";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(peek(lexer1)->type == TOK_WORD);
+    cr_assert(is(pop(lexer1)->value, "before"));
+    cr_assert(is(peek(lexer1)->value, "${var}"));
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    free_garbage_collector();
+
+    new_garbage_collector();
+    char input2[] = "${v}${v2}before${var";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(peek(lexer2)->type == TOK_WORD);
+    cr_assert(is(pop(lexer2)->value, "${v}"));
+    cr_assert(is(peek(lexer2)->value, "${v2}"));
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(is(peek(lexer2)->value, "before"));
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(is(peek(lexer2)->value, "${var"));
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    free_garbage_collector();
+    free(garbage_collector);
+}
+
 Test(lexer, parenthesis)
 {
     new_garbage_collector();

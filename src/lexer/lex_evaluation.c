@@ -119,6 +119,16 @@ size_t get_previous_separator_index(const char *c, size_t j)
     return 0;
 }
 
+size_t get_next_close_curl_index(const char *c, size_t j)
+{
+    if (!c)
+        return 0;
+    while (++j < strlen(c))
+        if (c[j] == '}')
+            return j + 1;
+    return strlen(c);
+}
+
 struct token *lex_assignment_word(char *c, size_t *i)
 {
     if (!c || !c[*i])

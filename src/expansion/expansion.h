@@ -38,10 +38,10 @@ struct buffer *substitute_at(void);
 char *substitute_hash(void);
 char *substitute_ques(void);
 
-char *substitute_random(char *word, size_t *i, bool *should_continue);
-char *substitute_uid(char *word, size_t *i, bool *should_continue);
-char *substitute_oldpwd(char *word, size_t *i, bool *should_continue);
-char *substitute_ifs(char *word, size_t *i, bool *should_continue);
+char *substitute_random(char *word, size_t *i, bool *should_continue, bool is_brack);
+char *substitute_uid(char *word, size_t *i, bool *should_continue, bool is_brack);
+char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, bool is_brack);
+char *substitute_ifs(char *word, size_t *i, bool *should_continue, bool is_brack);
 
 enum param_type is_special_char(char c);
 int get_random_int(void);
