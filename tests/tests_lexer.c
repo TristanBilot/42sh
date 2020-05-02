@@ -407,7 +407,6 @@ Test(lexer, variables)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     free_garbage_collector();
 
-    new_garbage_collector();
     char input2[] = "${v}${v2}before${var";
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(peek(lexer2)->type == TOK_WORD);

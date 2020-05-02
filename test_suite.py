@@ -46,11 +46,11 @@ def test(binary, test_case, debug_description, time):
                     elif check == 'has_stderr':
                         assert our_shell.stderr != ''
                 except AssertionError:
-                    print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'])
+                    print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], "ref : ", ref.returncode, " et our_shell : ", our_shell.returncode)
                 else:
-                    print(colored('[ OK ]', 'green'), debug_description, test_case[i]['stdin'])
+                    print(colored('[ OK ]', 'green'), debug_description, test_case[i]['stdin'], "ref : ", ref.returncode, " et our_shell : ", our_shell.returncode)
             else:
-                print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'])
+                print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], " time out")
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Our Testsuite")

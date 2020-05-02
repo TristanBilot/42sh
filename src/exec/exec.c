@@ -8,6 +8,7 @@
 #include "../var_storage/var_storage.h"
 #include "../expansion/expansion.h"
 #include "../exec/commands.h"
+#include <errno.h>
 
 #define READ_END 0
 #define WRITE_END 1
@@ -98,7 +99,7 @@ bool execute(char **args, struct tab_redi tab)
     return false;
 }
 
-bool execute_with_fork(char **args, struct tab_redi tab)
+int execute_with_fork(char **args, struct tab_redi tab)
 {
     int status = 0;
     int child = 0;
@@ -124,60 +125,43 @@ bool execute_with_fork(char **args, struct tab_redi tab)
         {
             // printf("exit status = %d\n", WEXITSTATUS(status));
             update_last_status(WEXITSTATUS(status));
-            return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
+            return WEXITSTATUS(status); /* 1 = no output in stdout */
         }
     }
     return false;
 }
 
-bool exec_node_input(struct node_input *ast)
+int exec_node_input(struct node_input *ast)
 {
     DEBUG("INPUT")
     if(!ast)
         return false;
     return ast->node_list ? exec_node_list(ast->node_list) : false;
 }
-bool exec_node_list(struct node_list *ast)
+int exec_node_list(struct node_list *ast)
 {
     DEBUG("LIST")
     struct node_list *c = ast;
     if (c->next_sibling)
     {
-        if (c->type == SEMI)
-        {
-            // fprintf(f, "\tnode_%p [label=SEMI];\n", (void *)c);
-        }
-        else if (c->type == SEPAND)
-        {
-            // fprintf(f, "\tnode_%p [label=SEPAND];\n", (void *)c);
-        }
         exec_node_and_or(c->and_or);
     }
     else
-        exec_node_and_or(c->and_or);
+        return exec_node_and_or(c->and_or);
+    int state = 0;
     while (c->next_sibling)
     {
         if (c->next_sibling->next_sibling)
         {
-            if (c->next_sibling->type == SEMI)
-            {
-                // fprintf(f, "\tnode_%p [label=SEMI];\n", (void *)c->next_sibling);
-                // fprintf(f, "\tnode_%p -> node_%p;\n", (void *) c, (void *) c->next_sibling);
-            }
-            else if (c->next_sibling->type == SEPAND)
-            {
-                // fprintf(f, "\tnode_%p [label=SEPAND];\n", (void *)c->next_sibling);
-                // fprintf(f, "\tnode_%p -> node_%p;\n", (void *) c, (void *) c->next_sibling);
-            }
-            exec_node_and_or(c->next_sibling->and_or);
+            state = exec_node_and_or(c->next_sibling->and_or);
         }
         else
-            exec_node_and_or(c->next_sibling->and_or);
+            state = exec_node_and_or(c->next_sibling->and_or);
         c = c->next_sibling;
     }
-    return false; // provisoire
+    return state; // provisoire
 }
-bool exec_node_and_or(struct node_and_or *ast)
+int exec_node_and_or(struct node_and_or *ast)
 {
     DEBUG("AND_OR")
     if (ast->right)
@@ -224,11 +208,11 @@ bool exec_node_and_or(struct node_and_or *ast)
     return false; // provisoire
 }
 
-bool exec_node_pipeline(struct node_pipeline *ast)
+int exec_node_pipeline(struct node_pipeline *ast)
 {
     DEBUG("PIPELINE")
     struct node_pipeline *c = ast;
-    bool state = false;
+    int state = false;
 
     if (!c->next_sibling)
     {
@@ -300,10 +284,10 @@ bool exec_node_pipeline(struct node_pipeline *ast)
     return false;
 }
 
-bool exec_node_command(struct node_command *ast, bool with_fork)
+int exec_node_command(struct node_command *ast, int with_fork)
 {
     DEBUG("COMMAND")
-    bool state = false;
+    int state = false;
     if (ast->type == SIMPLE_COMMAND)
         return exec_node_simple_command(ast->command.simple_command, with_fork);
     else if (ast->type == SHELL_COMMAND)
@@ -447,7 +431,7 @@ struct tab_redi append_tab_redi(struct tab_redi tab, struct node_redirection *e)
     return tab;
 }
 
-bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
+int exec_node_simple_command(struct node_simple_command *ast, int with_fork)
 {
     DEBUG("SIMPLE_COMMAND")
     
@@ -486,13 +470,13 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
         }
         args[size++] = NULL;
-        bool ret = with_fork ? execute_with_fork(args, tab) : execute(args, tab);
+        int ret = with_fork ? execute_with_fork(args, tab) : execute(args, tab);
         return ret;
     }
     return false; // provisoire
 }
 
-bool exec_node_shell_command(struct node_shell_command *ast)
+int exec_node_shell_command(struct node_shell_command *ast)
 {
     DEBUG("SHELL_COMMAND")
     switch (ast->type)
@@ -529,7 +513,7 @@ bool exec_node_shell_command(struct node_shell_command *ast)
     }
     return false; // provisoire
 }
-bool exec_node_funcdec(struct node_funcdec *ast)
+int exec_node_funcdec(struct node_funcdec *ast)
 {
     DEBUG("FUNCDEC")
     if (ast->is_function)
@@ -546,7 +530,7 @@ bool exec_node_funcdec(struct node_funcdec *ast)
     return false; // provisoire
 }
 
-bool exec_node_redirection(struct node_redirection *ast)
+int exec_node_redirection(struct node_redirection *ast)
 {
     DEBUG("REDIRECTION")
     // char *redirection = type_to_str(ast->type);
@@ -606,7 +590,7 @@ bool exec_node_redirection(struct node_redirection *ast)
     }
     return false;
 }
-bool exec_node_prefix(struct node_prefix *ast)
+int exec_node_prefix(struct node_prefix *ast)
 {
     DEBUG("PREFIX")
     if (ast->type == ASSIGMENT_WORD)
@@ -619,7 +603,7 @@ bool exec_node_prefix(struct node_prefix *ast)
         exec_node_redirection(ast->prefix.redirection);
     return false; // provisoire
 }
-bool exec_node_element(struct node_element *ast)
+int exec_node_element(struct node_element *ast)
 {
     DEBUG("ELEMENT")
     if (ast->type == WORD)
@@ -632,7 +616,7 @@ bool exec_node_element(struct node_element *ast)
         exec_node_redirection(ast->element.redirection);
     return false; // provisoire
 }
-bool exec_node_compound_list(struct node_compound_list *ast)
+int exec_node_compound_list(struct node_compound_list *ast)
 {
     DEBUG("COMPOUND_LIST")
     struct node_compound_list *c = ast;
@@ -646,7 +630,7 @@ bool exec_node_compound_list(struct node_compound_list *ast)
     }
     return false;
 }
-bool exec_node_while(struct node_while *ast)
+int exec_node_while(struct node_while *ast)
 {
     DEBUG("WHILE")
     // fprintf(f, "\tnode_%p [label=WHILE];\n", (void *)ast);
@@ -656,7 +640,7 @@ bool exec_node_while(struct node_while *ast)
     exec_node_do_group(ast->body);
     return false; // provisoire
 }
-bool exec_node_until(struct node_until *ast)
+int exec_node_until(struct node_until *ast)
 {
     DEBUG("UNTIL")
     // fprintf(f, "\tnode_%p [label=UNTIL];\n", (void *)ast);
@@ -666,7 +650,7 @@ bool exec_node_until(struct node_until *ast)
     exec_node_do_group(ast->body);
     return false; // provisoire
 }
-bool exec_node_case(struct node_case *ast)
+int exec_node_case(struct node_case *ast)
 {
     DEBUG("CASE")
     // fprintf(f, "\tnode_%p [label=\"CASE\n%s\"];\n", (void *)ast, ast->word);
@@ -679,7 +663,7 @@ bool exec_node_case(struct node_case *ast)
     return false; // provisoire
 }
 
-bool exec_node_if(struct node_if *ast)
+int exec_node_if(struct node_if *ast)
 {
     DEBUG("IF")
     // fprintf(f, "\tnode_%p [label=IF];\n", (void *)ast);
@@ -692,7 +676,7 @@ bool exec_node_if(struct node_if *ast)
     return false;
 }
 
-bool exec_node_elif(struct node_if *ast)
+int exec_node_elif(struct node_if *ast)
 {
     DEBUG("ELIF")
     // fprintf(f, "\tnode_%p [label=ELIF];\n", (void *)ast);
@@ -705,7 +689,7 @@ bool exec_node_elif(struct node_if *ast)
     return false;
 }
 
-bool exec_node_for(struct node_for *ast)
+int exec_node_for(struct node_for *ast)
 {
     DEBUG("FOR")
     // fprintf(f, "\tnode_%p [label=FOR];\n", (void *) ast);
@@ -725,7 +709,7 @@ bool exec_node_for(struct node_for *ast)
     exec_node_do_group(ast->body);
     return false; // provisoire
 }
-bool exec_node_else_clause(struct node_else_clause *ast)
+int exec_node_else_clause(struct node_else_clause *ast)
 {
     DEBUG("ELSE_CLAUSE")
     if (ast->type == ELSE)
@@ -741,12 +725,12 @@ bool exec_node_else_clause(struct node_else_clause *ast)
     }
     return false; // provisoire
 }
-bool exec_node_do_group(struct node_do_group *ast)
+int exec_node_do_group(struct node_do_group *ast)
 {
     DEBUG("DO_GROUP")
     return exec_node_compound_list(ast->body); // provisoire
 }
-bool exec_node_case_clause(struct node_case_clause *ast)
+int exec_node_case_clause(struct node_case_clause *ast)
 {
     DEBUG("CASE_CLAUSE")
     struct node_case_clause *c = ast;
@@ -760,7 +744,7 @@ bool exec_node_case_clause(struct node_case_clause *ast)
     }
     return false; // provisoire
 }
-bool exec_node_case_item(struct node_case_item *ast)
+int exec_node_case_item(struct node_case_item *ast)
 {
     DEBUG("CASE_ITEM")
     char *s = ast->words->word;

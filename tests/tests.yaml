@@ -1,9 +1,10 @@
 ####################################################### TEST BASE ####################################################### 
 - description:
     - name: BASE
-    - stdin: \n                               # Pour l'instant le entrer il segfault dans notre 42sh donc je met que \n -> Erreur pour l'instant
+    - stdin: "\n"                               
       checks:
-        - has_stderr
+        - returncode
+        - stdout
       
     - stdin: gdjklgndgdl
       checks:

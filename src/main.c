@@ -55,41 +55,39 @@ void print_prompt()
     free(buff);
 }
 
-static void init_42sh_process(struct option_sh *option)
+int init_42sh_process(struct option_sh *option)
 {
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
     struct lexer *lexer = NULL;
+    int ret = 0;
     struct node_input *ast = NULL;
     if (option->cmd)
     {
         lexer = new_lexer(option->cmd);
         ast = parse(lexer);
-        if (exec_node_input(ast))
-            printf("Error affiché dans le main\n");
+        ret = exec_node_input(ast);
     }
     // free_garbage_collector();
     print_prompt();
-    //signal(SIGINT, INThandler);
     while ((read = getline(&line, &len, stdin)) != -1)
     {
         // new_garbage_collector();
         lexer = new_lexer(line);
         ast = parse(lexer);
 
-        if (exec_node_input(ast))
-            printf("Error on exec ast.\n");
+        ret = exec_node_input(ast);
+            //printf("Error on exec ast.\n");
         if (option->print_ast_flag)
             print_ast(ast);
 
         free_garbage_collector();
         print_prompt();
-        //signal(SIGINT, INThandler);
     }
-    // printf("\n");
     if (line)
         free(line);
+    return ret;
 }
 
 static struct option_sh *init_option_sh()
@@ -132,10 +130,11 @@ int main(int ac, char **av)
         else
             print_usage();
     }
-    init_42sh_process(option);
+    int ret = init_42sh_process(option);
     free(option);
     free_var_storage();
     free_program_data_storage();
     free(garbage_collector);
+    return ret;
 }
 

@@ -10,6 +10,9 @@ struct var_storage *new_var_storage(void)
 
 void free_var_storage(void)
 {
+    for (int i = 0; i < STORAGE_SIZE; i++)
+        if (var_storage->variables[i])
+            free(var_storage->variables[i]);
     free(var_storage->variables);
     free(var_storage);
 }

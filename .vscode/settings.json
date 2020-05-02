@@ -73,7 +73,8 @@
         "deque": "c",
         "initializer_list": "c",
         "istream": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "sstream": "c"
     },
     "cmake.configureOnOpen": false
 }

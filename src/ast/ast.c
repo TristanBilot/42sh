@@ -5,6 +5,7 @@
 #include "../parser/parser.h"
 #include "../ast/ast.h"
 
+
 struct node_input *build_input(void)                 // \n EOF
 {
     struct node_input *new = xcalloc(1, sizeof(struct node_input));

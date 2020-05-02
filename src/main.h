@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-# define USAGE "alors il faut mettre le usage là mais c casse couille"
+# define USAGE "Usage : ./42sh [GNU long option] [option] [file]\n"
 
 # define START_COLOR    "\033"
 # define CYAN           "36m"
