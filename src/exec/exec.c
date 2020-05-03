@@ -261,7 +261,6 @@ bool exec_node_pipeline(struct node_pipeline *ast)
                 update_last_status(state);
                 // exit(is_not ? !state : state); /* only for tests */
                 return ast->is_not ? !state : state;
-                echo $(ls zdz | ls zzz) 2>a; echo $(echo "ls zdz | ls zzz" | ./build/42sh) 2>b
             }
             else
             {
