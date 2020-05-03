@@ -8,7 +8,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include  <signal.h>
+#include <signal.h>
+#include <stdlib.h>
 
 #include "./main.h"
 #include "./parser/parser.h"
@@ -55,29 +56,26 @@ void print_prompt()
     free(buff);
 }
 
-int init_42sh_process(struct option_sh *option)
+void init_42sh_process(struct option_sh *option)
 {
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
     struct lexer *lexer = NULL;
-    int ret = 0;
     struct node_input *ast = NULL;
     if (option->cmd)
     {
         lexer = new_lexer(option->cmd);
         ast = parse(lexer);
-        ret = exec_node_input(ast);
+        exec_node_input(ast);
     }
-    // free_garbage_collector();
     print_prompt();
     while ((read = getline(&line, &len, stdin)) != -1)
     {
-        // new_garbage_collector();
         lexer = new_lexer(line);
         ast = parse(lexer);
 
-        ret = exec_node_input(ast);
+        exec_node_input(ast);
             //printf("Error on exec ast.\n");
         if (option->print_ast_flag)
             print_ast(ast);
@@ -87,7 +85,6 @@ int init_42sh_process(struct option_sh *option)
     }
     if (line)
         free(line);
-    return ret;
 }
 
 static struct option_sh *init_option_sh()
@@ -130,11 +127,11 @@ int main(int ac, char **av)
         else
             print_usage();
     }
-    int ret = init_42sh_process(option);
+    init_42sh_process(option);
+    int ret = atoi(program_data->last_cmd_status);
     free(option);
     free_var_storage();
     free_program_data_storage();
     free(garbage_collector);
     return ret;
 }
-

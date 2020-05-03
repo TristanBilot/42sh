@@ -1,5 +1,4 @@
 #include "var_storage.h"
-#include <stdio.h>
 
 struct var_storage *new_var_storage(void)
 {

@@ -58,7 +58,7 @@ struct tab_redirection *init_tab_redirection(void);
 ** \return true 
 ** \return false 
 */
-int exec_node_input(struct node_input *ast);
+bool exec_node_input(struct node_input *ast);
 
 /**
 ** \brief execute list
@@ -67,7 +67,7 @@ int exec_node_input(struct node_input *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_list(struct node_list *ast);
+bool exec_node_list(struct node_list *ast);
 
 /**
 ** \brief execute and/or
@@ -76,7 +76,7 @@ int exec_node_list(struct node_list *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_and_or(struct node_and_or *ast);
+bool exec_node_and_or(struct node_and_or *ast);
 
 /**
 ** \brief execute pipeline
@@ -85,7 +85,7 @@ int exec_node_and_or(struct node_and_or *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_pipeline(struct node_pipeline *ast);
+bool exec_node_pipeline(struct node_pipeline *ast);
 
 /**
 ** \brief execute command
@@ -95,7 +95,7 @@ int exec_node_pipeline(struct node_pipeline *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_command(struct node_command *ast, int with_fork);
+bool exec_node_command(struct node_command *ast, bool with_fork);
 
 /**
 ** \brief execute simple command
@@ -105,7 +105,7 @@ int exec_node_command(struct node_command *ast, int with_fork);
 ** \return true 
 ** \return false 
 */
-int exec_node_simple_command(struct node_simple_command *ast, int with_fork);
+bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork);
 
 /**
 ** \brief execute shell command
@@ -114,7 +114,7 @@ int exec_node_simple_command(struct node_simple_command *ast, int with_fork);
 ** \return true 
 ** \return false 
 */
-int exec_node_shell_command(struct node_shell_command *ast);
+bool exec_node_shell_command(struct node_shell_command *ast);
 
 /**
 ** \brief execute funcdec
@@ -123,7 +123,7 @@ int exec_node_shell_command(struct node_shell_command *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_funcdec(struct node_funcdec *ast);
+bool exec_node_funcdec(struct node_funcdec *ast);
 
 /**
 ** \brief execute redirection
@@ -132,7 +132,7 @@ int exec_node_funcdec(struct node_funcdec *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_redirection(struct node_redirection *ast);
+bool exec_node_redirection(struct node_redirection *ast);
 
 /**
 ** \brief execute prefix
@@ -141,7 +141,7 @@ int exec_node_redirection(struct node_redirection *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_prefix(struct node_prefix *ast);
+bool exec_node_prefix(struct node_prefix *ast);
 
 /**
 ** \brief execute element
@@ -150,7 +150,7 @@ int exec_node_prefix(struct node_prefix *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_element(struct node_element *ast);
+bool exec_node_element(struct node_element *ast);
 
 /**
 ** \brief execute compound list
@@ -159,7 +159,7 @@ int exec_node_element(struct node_element *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_compound_list(struct node_compound_list *ast);
+bool exec_node_compound_list(struct node_compound_list *ast);
 
 /**
 ** \brief execute while
@@ -168,7 +168,7 @@ int exec_node_compound_list(struct node_compound_list *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_while(struct node_while *ast);
+bool exec_node_while(struct node_while *ast);
 
 /**
 ** \brief execute until
@@ -177,7 +177,7 @@ int exec_node_while(struct node_while *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_until(struct node_until *ast);
+bool exec_node_until(struct node_until *ast);
 
 /**
 ** \brief execute case
@@ -186,7 +186,7 @@ int exec_node_until(struct node_until *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_case(struct node_case *ast);
+bool exec_node_case(struct node_case *ast);
 
 /**
 ** \brief execute if
@@ -195,7 +195,7 @@ int exec_node_case(struct node_case *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_if(struct node_if *ast);
+bool exec_node_if(struct node_if *ast);
 
 /**
 ** \brief execute elif
@@ -204,7 +204,7 @@ int exec_node_if(struct node_if *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_elif(struct node_if *ast);
+bool exec_node_elif(struct node_if *ast);
 
 /**
 ** \brief execute for
@@ -213,7 +213,7 @@ int exec_node_elif(struct node_if *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_for(struct node_for *ast);
+bool exec_node_for(struct node_for *ast);
 
 /**
 ** \brief execute else clause
@@ -222,7 +222,7 @@ int exec_node_for(struct node_for *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_else_clause(struct node_else_clause *ast);
+bool exec_node_else_clause(struct node_else_clause *ast);
 
 /**
 ** \brief execute do group
@@ -231,7 +231,7 @@ int exec_node_else_clause(struct node_else_clause *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_do_group(struct node_do_group *ast);
+bool exec_node_do_group(struct node_do_group *ast);
 
 /**
 ** \brief execute case clause
@@ -240,7 +240,7 @@ int exec_node_do_group(struct node_do_group *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_case_clause(struct node_case_clause *ast);
+bool exec_node_case_clause(struct node_case_clause *ast);
 
 /**
 ** \brief execute case item
@@ -249,6 +249,6 @@ int exec_node_case_clause(struct node_case_clause *ast);
 ** \return true 
 ** \return false 
 */
-int exec_node_case_item(struct node_case_item *ast);
+bool exec_node_case_item(struct node_case_item *ast);
 
 #endif /* EXEC_H */
