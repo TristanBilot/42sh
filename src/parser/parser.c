@@ -77,9 +77,11 @@ void *parse(struct lexer *lexer)
     if (!lexer)
         error("Struct error");
     struct parser *parser = init_parser(lexer);
+
     if (parse_input(parser, &ast))
     {
-        error("Parser error");
+        // error("Parser error");
+
         //free_input(ast);
         //ast = NULL;
     }
@@ -312,60 +314,99 @@ bool parse_command(struct parser *p, struct node_command **ast)
     return false;
 }
 
+void parse_multiple_element(struct parser *parser, struct node_simple_command *ast)
+{
+    struct node_element *e = NULL;
+    struct token *current = parser->current_token;
+    while (!parse_element(parser, &e))
+    {
+        current = parser->current_token;
+        append_element(ast, e);
+        // printf("element : %s\n", e->element.word);
+        e = NULL;
+    }
+    parser->current_token = current;
+}
+
+void parse_multiple_prefix(struct parser *parser, struct node_simple_command *ast)
+{
+    struct node_prefix *p = NULL;
+    struct token *current = parser->current_token;
+    while (!parse_prefix(parser, &p))
+    {
+        current = parser->current_token;
+        append_prefix(ast, p);
+        p = NULL;
+    }
+    parser->current_token = current;
+}
+
 bool parse_simple_command(struct parser *parser, struct node_simple_command **ast)
 {
     DEBUG("parse_simple_command\n");
     struct token *current = parser->current_token;
-
-    // if (is_type(current, TOK_WORD) && strcmp(current->value, "export"))
-    // {
-        
-    // }
-
     struct node_prefix *p = NULL;
-    //*ast = build_simple_command();
-    struct node_simple_command *new = build_simple_command(); //
-    if (parse_prefix(parser, &p))
+    struct node_simple_command *new = build_simple_command();
+    if (is_type(current, TOK_WORD) && is(current->value, "export"))
+    {
+        new->to_export = true;
+        if (get_next_token(parser) && is_type(get_next_token(parser), TOK_WORD) && is(get_next_token(parser)->value, "-n"))
+        {
+            // printf("tiret n\n");
+            next_token(parser);
+            //next_token(parser);
+            current = parser->current_token;
+            parser->current_token = current;
+            struct node_element *e = NULL;
+            if (parse_element(parser, &e))
+                return true;
+            append_element(new, e);
+            parse_multiple_element(parser, new); // export -n toto tata ....
+        }
+        else if (get_next_token(parser) && is_type(get_next_token(parser), TOK_WORD) && is(get_next_token(parser)->value, "-p"))
+        {
+            // printf("tiret p\n");
+            next_token(parser);     //export -p
+            struct node_element *e = NULL;
+            if (parse_element(parser, &e))
+                return true;
+            append_element(new, e);
+            //next_token(parser);
+        }
+        else if (get_next_token(parser) && is_type(get_next_token(parser), TOK_WORD))
+        {
+            // printf("export juste avec nom variable\n");
+            next_token(parser);
+            struct node_element *e = NULL;
+            if (parse_element(parser, &e))
+                return true;
+            append_element(new, e);
+            parse_multiple_element(parser, new);
+
+
+        }
+        else
+        {
+            // printf("export assignment word\n");
+            next_token(parser);
+            parse_multiple_prefix(parser, new); //export  a=b c=d ...
+        }
+    }
+    else if (parse_prefix(parser, &p))
     {
         parser->current_token = current;
         struct node_element *e = NULL;
         if (parse_element(parser, &e))
             return true;
         append_element(new, e);
-        //append_element(*ast, e); //
-        e = NULL;
-        current = parser->current_token;
-        while (!parse_element(parser, &e))
-        {
-            
-            current = parser->current_token;
-            //append_element(*ast, e);
-            append_element(new, e);
-            e = NULL;
-        }
-        parser->current_token = current;
+        parse_multiple_element(parser, new);
     }
     else
     {
         current = parser->current_token;
         new->prefixes = append_prefix(new, p);
-        //(*ast)->prefixes = append_prefix(*ast, p);
-        p = NULL;
-        while (!parse_prefix(parser, &p))
-        {
-            current = parser->current_token;
-            new->prefixes = append_prefix(new, p); //(*ast)->prefixes = append_prefix(*ast, p);
-            p = NULL;
-        }
-        parser->current_token = current;
-        struct node_element *e = NULL;
-        while (!parse_element(parser, &e))
-        {
-            current = parser->current_token;
-            append_element(new, e);//append_element(*ast, e);
-            e = NULL;
-        }
-        parser->current_token = current;
+        parse_multiple_prefix(parser, new);
+        parse_multiple_element(parser, new);
     }
     *ast = new;
     return false;

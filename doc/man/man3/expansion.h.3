@@ -1,0 +1,208 @@
+.TH "src/expansion/expansion.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/expansion.h \- Var storage structures and functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprogram_data_storage\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBparam_type\fP { \fBPAR_NUMBER\fP, \fBPAR_STAR\fP, \fBPAR_AT\fP, \fBPAR_HASH\fP, \fBPAR_QUES\fP, \fBPAR_UNKNOWN\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBsubstitute\fP (char *word)"
+.br
+.ti -1c
+.RI "void \fBnew_program_data_storage\fP (int argc, char *argv[])"
+.br
+.ti -1c
+.RI "void \fBfree_program_data_storage\fP (void)"
+.br
+.ti -1c
+.RI "void \fBupdate_last_status\fP (int status)"
+.br
+.ti -1c
+.RI "char * \fBperform_var_expansion\fP (char *word)"
+.br
+.ti -1c
+.RI "enum \fBparam_type\fP \fBis_special_char\fP (char c)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_number\fP (char c)"
+.br
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBsubstitute_star\fP (void)"
+.br
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBsubstitute_at\fP (void)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_hash\fP (void)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_ques\fP (void)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_random\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_uid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_oldpwd\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_ifs\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "int \fBget_random_int\fP (void)"
+.br
+.ti -1c
+.RI "size_t \fBget_next_brack_index\fP (const char *c, size_t j)"
+.br
+.ti -1c
+.RI "size_t \fBget_next_dollar_index\fP (const char *c, size_t j)"
+.br
+.ti -1c
+.RI "char * \fBperform_tilde_expansion\fP (char *word)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_minus_tilde\fP (char *word, size_t *i)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_plus_tilde\fP (char *word, size_t *i)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_tilde\fP (char *word, size_t *i)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprogram_data_storage\fP * \fBprogram_data\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Var storage structures and functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBparam_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPAR_NUMBER \fP\fP
+.TP
+\fB\fIPAR_STAR \fP\fP
+.TP
+\fB\fIPAR_AT \fP\fP
+.TP
+\fB\fIPAR_HASH \fP\fP
+.TP
+\fB\fIPAR_QUES \fP\fP
+.TP
+\fB\fIPAR_UNKNOWN \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "void free_program_data_storage (void)"
+
+.SS "size_t get_next_brack_index (const char * c, size_t j)"
+
+.SS "size_t get_next_dollar_index (const char * c, size_t j)"
+
+.SS "int get_random_int (void)"
+
+.SS "enum \fBparam_type\fP is_special_char (char c)"
+
+.SS "void new_program_data_storage (int argc, char * argv[])"
+
+.SS "char* perform_tilde_expansion (char * word)"
+
+.SS "char* perform_var_expansion (char * word)"
+
+.SS "char* substitute (char * word)"
+
+.SS "struct \fBbuffer\fP* substitute_at (void)"
+
+.SS "char* substitute_hash (void)"
+
+.SS "char* substitute_ifs (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_minus_tilde (char * word, size_t * i)"
+
+.SS "char* substitute_number (char c)"
+
+.SS "char* substitute_oldpwd (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_plus_tilde (char * word, size_t * i)"
+
+.SS "char* substitute_ques (void)"
+
+.SS "char* substitute_random (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "struct \fBbuffer\fP* substitute_star (void)"
+
+.SS "char* substitute_tilde (char * word, size_t * i)"
+
+.SS "char* substitute_uid (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "void update_last_status (int status)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBprogram_data_storage\fP* program_data"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

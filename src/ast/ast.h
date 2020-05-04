@@ -1,3 +1,14 @@
+/**
+** \file ast.h
+** \author Team
+** \brief Define ast and parser structures
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef AST_H
 #define AST_H
 
@@ -89,9 +100,9 @@ struct node_command
 
 struct node_simple_command
 {
+    bool to_export;
     struct node_prefix *prefixes; /* LIST */
     struct node_element *elements; /* LIST */
-    // struct node_export *export;
 };
 
 struct node_shell_command
@@ -275,22 +286,6 @@ struct node_case_item
     } next;*/
 };
 
-// struct node_export
-// {
-//     struct node_export *next;
-//     enum type_export
-//     {
-//         N,
-//         P,
-//         NO_FLAG,
-//         E_NONE
-//     } type;
-//     union export
-//     {
-//         struct node_element *elements;
-//         struct node_prefix *prefix;
-//     } export;
-// };
 
 /**
 ** \brief build node input
@@ -443,6 +438,6 @@ struct node_case_item *build_case_item(void);
 ** \param flag 
 ** \return struct node_export* 
 */
-struct node_export *build_export(unsigned int flag);
+//struct node_export *build_export(unsigned int flag);
 
 #endif /* ! AST_H */

@@ -1,0 +1,357 @@
+.TH "src/ast/free.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/ast/free.h \- Free functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./ast/ast\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBfree_input\fP (struct \fBnode_input\fP *ast)"
+.br
+.ti -1c
+.RI "void \fBfree_list\fP (struct \fBnode_list\fP *ast)"
+.br
+.RI "free list node "
+.ti -1c
+.RI "void \fBfree_and_or\fP (struct \fBnode_and_or\fP *ast)"
+.br
+.RI "free and/or node "
+.ti -1c
+.RI "void \fBfree_pipeline\fP (struct \fBnode_pipeline\fP *ast)"
+.br
+.RI "free pipeline node "
+.ti -1c
+.RI "void \fBfree_command\fP (struct \fBnode_command\fP *ast)"
+.br
+.ti -1c
+.RI "void \fBfree_simple_command\fP (struct \fBnode_simple_command\fP *ast)"
+.br
+.RI "free simple command node "
+.ti -1c
+.RI "void \fBfree_shell_command\fP (struct \fBnode_shell_command\fP *ast)"
+.br
+.RI "free shell command node "
+.ti -1c
+.RI "void \fBfree_funcdec\fP (struct \fBnode_funcdec\fP *ast)"
+.br
+.RI "free funcdec node "
+.ti -1c
+.RI "void \fBfree_redirection\fP (struct \fBnode_redirection\fP *ast)"
+.br
+.RI "free redirection node "
+.ti -1c
+.RI "void \fBfree_prefix\fP (struct \fBnode_prefix\fP *ast)"
+.br
+.RI "free prefix node "
+.ti -1c
+.RI "void \fBfree_element\fP (struct \fBnode_element\fP *ast)"
+.br
+.RI "free element node "
+.ti -1c
+.RI "void \fBfree_compound_list\fP (struct \fBnode_compound_list\fP *ast)"
+.br
+.RI "free compound list node "
+.ti -1c
+.RI "void \fBfree_while\fP (struct \fBnode_while\fP *ast)"
+.br
+.RI "free while node "
+.ti -1c
+.RI "void \fBfree_until\fP (struct \fBnode_until\fP *ast)"
+.br
+.RI "free until node "
+.ti -1c
+.RI "void \fBfree_case\fP (struct \fBnode_case\fP *ast)"
+.br
+.RI "free case node "
+.ti -1c
+.RI "void \fBfree_if\fP (struct \fBnode_if\fP *ast)"
+.br
+.RI "free if node "
+.ti -1c
+.RI "void \fBfree_for\fP (struct \fBnode_for\fP *ast)"
+.br
+.RI "free for node "
+.ti -1c
+.RI "void \fBfree_else_clause\fP (struct \fBnode_else_clause\fP *ast)"
+.br
+.RI "free else clause node "
+.ti -1c
+.RI "void \fBfree_do_group\fP (struct \fBnode_do_group\fP *ast)"
+.br
+.RI "free do group node "
+.ti -1c
+.RI "void \fBfree_case_clause\fP (struct \fBnode_case_clause\fP *ast)"
+.br
+.RI "free case clause "
+.ti -1c
+.RI "void \fBfree_case_item\fP (struct \fBnode_case_item\fP *ast)"
+.br
+.RI "free case item node "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Free functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void free_and_or (struct \fBnode_and_or\fP * ast)"
+
+.PP
+free and/or node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_case (struct \fBnode_case\fP * ast)"
+
+.PP
+free case node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_case_clause (struct \fBnode_case_clause\fP * ast)"
+
+.PP
+free case clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_case_item (struct \fBnode_case_item\fP * ast)"
+
+.PP
+free case item node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_command (struct \fBnode_command\fP * ast)"
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_compound_list (struct \fBnode_compound_list\fP * ast)"
+
+.PP
+free compound list node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_do_group (struct \fBnode_do_group\fP * ast)"
+
+.PP
+free do group node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_element (struct \fBnode_element\fP * ast)"
+
+.PP
+free element node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_else_clause (struct \fBnode_else_clause\fP * ast)"
+
+.PP
+free else clause node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_for (struct \fBnode_for\fP * ast)"
+
+.PP
+free for node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_funcdec (struct \fBnode_funcdec\fP * ast)"
+
+.PP
+free funcdec node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_if (struct \fBnode_if\fP * ast)"
+
+.PP
+free if node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_input (struct \fBnode_input\fP * ast)"
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_list (struct \fBnode_list\fP * ast)"
+
+.PP
+free list node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_pipeline (struct \fBnode_pipeline\fP * ast)"
+
+.PP
+free pipeline node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_prefix (struct \fBnode_prefix\fP * ast)"
+
+.PP
+free prefix node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_redirection (struct \fBnode_redirection\fP * ast)"
+
+.PP
+free redirection node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_shell_command (struct \fBnode_shell_command\fP * ast)"
+
+.PP
+free shell command node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_simple_command (struct \fBnode_simple_command\fP * ast)"
+
+.PP
+free simple command node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_until (struct \fBnode_until\fP * ast)"
+
+.PP
+free until node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SS "void free_while (struct \fBnode_while\fP * ast)"
+
+.PP
+free while node 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

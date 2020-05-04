@@ -1,0 +1,95 @@
+.TH "src/print/ast_print_dot.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/print/ast_print_dot.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include '\&.\&./print/ast_print_dot\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "FILE * \fBnew_dot\fP (void)"
+.br
+.RI "create new dote file "
+.ti -1c
+.RI "bool \fBappend_to_dot\fP (FILE *dot_file, const char *\fBstr\fP, bool is_new_line)"
+.br
+.RI "append line to the dot file "
+.ti -1c
+.RI "bool \fBclose_dot\fP (FILE *dot_file)"
+.br
+.RI "close dot file "
+.ti -1c
+.RI "void \fBconvert_dot_to_png\fP (void)"
+.br
+.RI "convert file dot to png "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "bool append_to_dot (FILE * dot_file, const char * str, bool is_new_line)"
+
+.PP
+append line to the dot file 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdot_file\fP 
+.br
+\fIstr\fP 
+.br
+\fIis_new_line\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool close_dot (FILE * dot_file)"
+
+.PP
+close dot file 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdot_file\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "void convert_dot_to_png (void)"
+
+.PP
+convert file dot to png 
+.SS "FILE* new_dot (void)"
+
+.PP
+create new dote file 
+.PP
+\fBReturns:\fP
+.RS 4
+FILE* 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

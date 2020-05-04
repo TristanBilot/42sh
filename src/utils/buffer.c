@@ -21,6 +21,8 @@ void append_buffer(struct buffer *buffer, char c)
 
 void append_string_to_buffer(struct buffer *buffer, char *str)
 {
+    if (!str || !buffer)
+        return;
     for (size_t j = 0; j < strlen(str); j++)
         if (!(j == strlen(str) - 1 && str[j] == '\n'))
             append_buffer(buffer, str[j]);

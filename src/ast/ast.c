@@ -69,6 +69,7 @@ struct node_simple_command *build_simple_command(void)
     struct node_simple_command *new = xcalloc(1, sizeof(struct node_simple_command));
     new->prefixes = NULL; //xcalloc(1, sizeof(struct node_prefix));
     new->elements = NULL; //xcalloc(1, sizeof(struct node_element));
+    new->to_export = false;
     // printf("SIMPLE COMMAND\n");
     return new;
 }
@@ -125,6 +126,7 @@ struct node_prefix *build_prefix(struct parser *parser)
         new->prefix.assigment_word = xcalloc(1, sizeof(struct assigment_word));
         new->prefix.assigment_word->variable_name = "";
         new->prefix.assigment_word->value = "";
+        // new->to_export = export;
         new->type = ASSIGMENT_WORD;
     }
     else
@@ -147,6 +149,7 @@ struct node_element *build_element(struct parser *parser)
         break;
     case TOK_WORD:
         new->element.word = "";
+        // new->to_export = false;
         break;
     default:
         break;
@@ -274,21 +277,3 @@ struct node_case_item *build_case_item(void)
     // printf("PREFIX \n");
     return new;
 }*/
-
-// struct node_export *build_export(unsigned int flag)
-// {
-//     struct node_export *new = xcalloc(1, sizeof(struct node_export));
-//     if (flag == N)
-//         new->type = N;
-//     if (flag == P)
-//         new->type = P;
-//     if (flag == N)
-//         new->type = NO_FLAG;
-//     if (flag == N)
-//         new->type = E_NONE;
-
-//     new->export.elements = NULL;
-//     new->export.prefix = NULL;
-
-//     return new;
-// }

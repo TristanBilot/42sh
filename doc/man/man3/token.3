@@ -1,0 +1,52 @@
+.TH "token" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+token \- Token struct declaration\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <token\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "enum \fBtoken_type\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "char * \fBvalue\fP"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnext\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Token struct declaration\&. 
+
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP the enum associated to the string\&. 
+.br
+\fIvalue\fP of a token (string) if this token is a word\&. 
+.br
+\fInext\fP pointer to the next token in the list\&. 
+.RE
+.PP
+
+.SH "Field Documentation"
+.PP 
+.SS "struct \fBtoken\fP* next"
+
+.SS "enum \fBtoken_type\fP type"
+
+.SS "char* value"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

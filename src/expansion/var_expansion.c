@@ -1,5 +1,4 @@
 #include <time.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -8,6 +7,7 @@
 #include "../var_storage/var_storage.h"
 #include "../utils/buffer.h"
 #include "../utils/xalloc.h"
+#include "../utils/index_utils.h"
 
 void new_program_data_storage(int argc, char *argv[])
 {
@@ -53,10 +53,10 @@ char *perform_var_expansion(char *word)
                 append_buffer(buf, '$');
                 break;
             }
-            bool is_brack = false;
+            int is_brack = 0;
             if (word[i] == '{')
             {
-                is_brack = true;
+                is_brack = 1;
                 i++;
             }
             int type = is_special_char(word[i]);
@@ -99,16 +99,19 @@ char *perform_var_expansion(char *word)
                     append_string_to_buffer(buf, substitute_ques());
                     break;
                 }
+                if (is_brack)
+                    i++;
                 continue;
             }
-            size_t end = get_next_dollar_index(word, i);
+            size_t end = is_brack ? get_next_index(word, '}', i) : \
+                get_next_index(word, '$', i);
             char *param = substr(word, i, end - i);
             if (var_exists(param))
             {
                 char *var = get_value(param);
                 append_string_to_buffer(buf, var);
             }
-            i += strlen(param) - 1;
+            i += strlen(param) - 1 + is_brack;
         }
         else
             append_buffer(buf, word[i]);
@@ -166,10 +169,10 @@ bool next_param_is_printable(char *word, size_t i, size_t param_len, bool is_bra
 {
     if (is_brack && word[i +param_len] != '}')
         return false;
-    return strlen(word) - (i + param_len) == 0 || word[i + param_len] == '$';
+    return strlen(word) - (i + param_len + is_brack) == 0 || word[i + param_len + is_brack] == '$';
 }
 
-char *substitute_random(char *word, size_t *i, bool *should_continue, bool is_brack)
+char *substitute_random(char *word, size_t *i, bool *should_continue, int is_brack)
 {
     size_t len = strlen("RANDOM");
     if ((*i + len) > strlen(word))
@@ -183,13 +186,13 @@ char *substitute_random(char *word, size_t *i, bool *should_continue, bool is_br
             *should_continue = true;
         else
             *should_continue = false;
-        *i += (len - 1);
+        *i += len - 1 + is_brack;
         return sub;
     }
     return NULL;
 }
 
-char *substitute_uid(char *word, size_t *i, bool *should_continue, bool is_brack)
+char *substitute_uid(char *word, size_t *i, bool *should_continue, int is_brack)
 {
     size_t len = strlen("UID");
     if ((*i + len) > strlen(word))
@@ -204,13 +207,13 @@ char *substitute_uid(char *word, size_t *i, bool *should_continue, bool is_brack
             *should_continue = true;
         else
             *should_continue = false;
-        *i += len - 1;
+        *i += len - 1 + is_brack;
         return sub;
     }
     return NULL;
 }
 
-char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, bool is_brack)
+char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, int is_brack)
 {
     char *old_pwd = getenv("OLDPWD");
     if (!old_pwd)
@@ -228,13 +231,13 @@ char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, bool is_br
             *should_continue = true;
         else
             *should_continue = false;
-        *i += len - 1;
+        *i += len - 1 + is_brack;
         return sub;
     }
     return NULL;
 }
 
-char *substitute_ifs(char *word, size_t *i, bool *should_continue, bool is_brack)
+char *substitute_ifs(char *word, size_t *i, bool *should_continue, int is_brack)
 {
     char *ifs = getenv("IFS");
     if (!ifs)
@@ -252,7 +255,7 @@ char *substitute_ifs(char *word, size_t *i, bool *should_continue, bool is_brack
             *should_continue = true;
         else
             *should_continue = false;
-        *i += len - 1;
+        *i += len - 1 + is_brack;
         return sub;
     }
     return NULL;
@@ -280,24 +283,4 @@ enum param_type is_special_char(char c)
 int get_random_int(void)
 {
     return rand() % (32767 + 1);
-}
-
-size_t get_next_brack_index(const char *c, size_t j)
-{
-    if (!c)
-        return 0;
-    while (++j < strlen(c))
-        if (c[j] == '}')
-            return j;
-    return -1;
-}
-
-size_t get_next_dollar_index(const char *c, size_t j)
-{
-    if (!c)
-        return 0;
-    while (++j < strlen(c))
-        if (c[j] == '$')
-            return j;
-    return strlen(c);
 }

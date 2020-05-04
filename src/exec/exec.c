@@ -14,22 +14,21 @@
 #define WRITE_END 1
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
-#define DEBUG_FLAG false
+#define DEBUG_FLAG true
 #define DEBUG(msg) if (DEBUG_FLAG) \
                         printf("%s\n", msg);
 
 const struct commands cmd[4] = {
     {"cd", &cd}, 
-    //{"echo", &echo},
-    {"exit", &exit_shell},
+    {"echo", &echo}, //pk commenté ?
     {"export", &export}, 
     {NULL, NULL}};
 
-static bool extra_command(char **args)
+static bool extra_command(char **args, char *cmd_name)
 {
     for (int i = 0; cmd[i].name; i++)
     {
-        if (strcmp(args[0], cmd[i].name) == 0)
+        if (strcmp(cmd_name, cmd[i].name) == 0)
         {
             cmd[i].function(args);
             return false;
@@ -57,6 +56,8 @@ bool dup_file(char *file, char *flag, int io)
 
 bool manage_redirections(struct tab_redi tab)
 {
+    // if(!tab)
+    //     return true;
     if (!is(tab.great.out, ""))
         if (dup_file(tab.great.out, "w+", STDOUT_FILENO))
             return true;
@@ -89,6 +90,13 @@ bool manage_redirections(struct tab_redi tab)
 
 bool execute(char **args, struct tab_redi tab)
 {
+    DEBUG("EXECUTE")
+    int i = 0;
+    while(args[i])
+    {
+        printf("TOUT LES ARGUMENTS : %d : %s", i, args[i]);
+        i++;
+    }
     if (manage_redirections(tab))
         return true;
     if ((execvp(args[0], args)) == -1)
@@ -99,17 +107,25 @@ bool execute(char **args, struct tab_redi tab)
     return false;
 }
 
-bool execute_with_fork(char **args, struct tab_redi tab)
+static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
 {
+    DEBUG("EXECUTE WITH FORK")
     int status = 0;
     int child = 0;
+    if (args[0] && strcmp(args[0], "exit") == 0)
+        exit_shell(args);
     if ((child = fork()) == -1)
         return true;
     if (child == 0)
     {
+        if (args[0] == NULL)
+        {
+            if (!extra_command(args, cmd_name))
+                return false;
+        }
         if (manage_redirections(tab))
             return true;
-        if (!extra_command(args))
+        if (!extra_command(args, cmd_name))
             return false;
         if ((execvp(args[0], args)) == -1)
         {
@@ -123,8 +139,10 @@ bool execute_with_fork(char **args, struct tab_redi tab)
         wait(&status);
         if (WIFEXITED(status))
         {
+            //exit(status);
             // printf("exit status = %d\n", WEXITSTATUS(status));
             update_last_status(WEXITSTATUS(status));
+            
             return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
         }
     }
@@ -290,6 +308,7 @@ bool exec_node_command(struct node_command *ast, bool with_fork)
     int state = false;
     if (ast->type == SIMPLE_COMMAND)
         return exec_node_simple_command(ast->command.simple_command, with_fork);
+    
     else if (ast->type == SHELL_COMMAND)
     {
         state = exec_node_shell_command(ast->command.shell_command);
@@ -434,20 +453,20 @@ struct tab_redi append_tab_redi(struct tab_redi tab, struct node_redirection *e)
 bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
 {
     DEBUG("SIMPLE_COMMAND")
-    
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
+    struct tab_redi tab = init_tab_redi(tab);
+    char *args[256];
     while (p)
     {
+        printf("VALUE : %s\n", p->prefix.assigment_word->value);
         exec_node_prefix(p);
-
         p = p->next;
     }
-    
+
     if (e) /* link the root node to the first element (ex: echo) */
     {
-        char *args[256]; // love satan
-        struct tab_redi tab = init_tab_redi(tab);
+        printf("OK\n\n\n\n\n\n");
         int size = 0;
         if (e->type == TOKEN_REDIRECTION)
         {
@@ -464,15 +483,60 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
             else
             {
-                char *expanded_word = perform_var_expansion(e->element.word);
+                printf("var expansion\n");
+                char *expanded_word = substitute(e->element.word);
                 args[size++] = expanded_word;
+                printf("args 0 : %s\n", expanded_word);
                 // args[size++] = e->element.word;
             }
         }
         args[size++] = NULL;
-        bool ret = with_fork ? execute_with_fork(args, tab) : execute(args, tab);
+        bool ret = false;
+
+        if (ast->to_export)
+            ret = with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
+        else
+            ret = with_fork ? execute_with_fork(args, tab, args[0]) : execute(args, tab);
         return ret;
     }
+    if (ast->prefixes != NULL && ast->to_export == true)
+    {
+        printf("test1\n");
+        struct variable *tmp = NULL;
+        int i = 0;
+        char str[256];
+        struct node_prefix *prefix = ast->prefixes;
+        while(prefix)
+        {
+            if (var_exists(prefix->prefix.assigment_word->variable_name))
+            {
+                printf("test2\n");
+                tmp = get_var(prefix->prefix.assigment_word->variable_name);
+                //str = tmp->key;
+                strcpy(str, tmp->key);
+                strcat(str, "=");
+                strcat(str, tmp->value);
+                //strcpy(args[i], str);
+                args[i] = str;
+                //args[i] = str[0];
+                printf("yolo\n");
+                i += 1;
+                str[0] = '\0';
+                printf("yolo2\n");
+
+            }
+
+            prefix = prefix->next;
+        }
+        printf("yolo3\n");
+        return with_fork ? execute_with_fork(args, tab, args[0]) : execute(args, tab);
+    }
+    args[0] = NULL;
+    if (ast->to_export){
+        printf("ici here line 529\n");
+        return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
+    }
+    printf("ici here ligne 532\n");
     return false; // provisoire
 }
 
@@ -597,6 +661,7 @@ bool exec_node_prefix(struct node_prefix *ast)
     {
         char *key = ast->prefix.assigment_word->variable_name;
         char *val = ast->prefix.assigment_word->value;
+        printf("key : %s et val %s \n", key, val);
         put_var(key, val);
     }
     if (ast->type == REDIRECTION)

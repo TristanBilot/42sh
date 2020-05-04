@@ -1,3 +1,14 @@
+/**
+** \file lexer.h
+** \author Team 
+** \brief Main lexing functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef LEXER_H
 #define LEXER_H
 

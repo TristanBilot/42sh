@@ -20,11 +20,15 @@ set(SOURCE_FILES
 	src/utils/string_utils.c
 	src/utils/buffer.c
 	src/utils/parser_utils.c
+	src/utils/index_utils.c
 	src/eval/ast_print.c
 	src/print/ast_print_dot.c
 	src/exec/exec.c
 	src/var_storage/var_storage.c
+	src/history/history.c
 	src/expansion/var_expansion.c
+	src/expansion/tilde_expansion.c
+	src/expansion/expansion.c
 	src/exec/commands.c
 	src/garbage_collector/garbage_collector.c)
 
@@ -32,6 +36,7 @@ set(SOURCE_FILES
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
 add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
+add_executable(tests_history tests/tests_history.c ${SOURCE_FILES})
 add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
 add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
@@ -48,3 +53,14 @@ target_include_directories(tests_parser PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 target_link_libraries(tests_storage PRIVATE ${CRITERION_LIBRARIES})
 target_include_directories(tests_storage PRIVATE ${CRITERION_INCLUDE_DIRS})
+
+target_link_libraries(tests_history PRIVATE ${CRITERION_LIBRARIES})
+target_include_directories(tests_history PRIVATE ${CRITERION_INCLUDE_DIRS})
+
+add_custom_target(doc
+	${PROJECT_SOURCE_DIR}/documentation.sh
+	WORKING_DIRECTORY ../)
+
+add_custom_target(check
+	python3 ${PROJECT_SOURCE_DIR}/test_suite.py -t 2 build/42sh
+	WORKING_DIRECTORY ../)

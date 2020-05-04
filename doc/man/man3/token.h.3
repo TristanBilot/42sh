@@ -1,0 +1,222 @@
+.TH "src/lexer/token.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/lexer/token.h \- Token structures and functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBtoken\fP"
+.br
+.RI "Token struct declaration\&. "
+.ti -1c
+.RI "struct \fBtoken_list\fP"
+.br
+.RI "Basically a lined-list of tokens\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_TOKEN\fP   256"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBtoken_type\fP { \fBTOK_ERROR\fP, \fBTOK_NEWLINE\fP, \fBTOK_EOF\fP, \fBTOK_AND\fP, \fBTOK_SEPAND\fP, \fBTOK_OR\fP, \fBTOK_PIPE\fP, \fBTOK_SEMI\fP, \fBTOK_LPAREN\fP, \fBTOK_RPAREN\fP, \fBTOK_LCURL\fP, \fBTOK_RCURL\fP, \fBTOK_DLESSDASH\fP, \fBTOK_DLESS\fP, \fBTOK_LESSGREAT\fP, \fBTOK_LESSAND\fP, \fBTOK_LESS\fP, \fBTOK_DGREAT\fP, \fBTOK_GREATAND\fP, \fBTOK_CLOBBER\fP, \fBTOK_ASS_WORD\fP, \fBTOK_GREAT\fP, \fBTOK_IONUMBER\fP, \fBTOK_NOT\fP, \fBTOK_COMM\fP, \fBTOK_WORD\fP, \fBKW_IF\fP, \fBKW_THEN\fP, \fBKW_ELSE\fP, \fBKW_ELIF\fP, \fBKW_FI\fP, \fBKW_DO\fP, \fBKW_DONE\fP, \fBKW_FOR\fP, \fBKW_WHILE\fP, \fBKW_UNTIL\fP, \fBKW_CASE\fP, \fBKW_ESAC\fP, \fBKW_IN\fP, \fBKW_DSEMI\fP, \fBKW_UNKNOWN\fP }
+.RI "Type of a token (operators, value, \&.\&.\&.) ""
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token\fP (void)"
+.br
+.RI "Token allocator and initializer\&. "
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_type\fP (int type)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_io_number\fP (char number)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_word\fP (char *value)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_error\fP (char *err)"
+.br
+.ti -1c
+.RI "int \fBis_type\fP (struct \fBtoken\fP *\fBtoken\fP, unsigned int type)"
+.br
+.ti -1c
+.RI "void \fBfree_token\fP (struct \fBtoken\fP *\fBtoken\fP)"
+.br
+.RI "Wrapper to release memory of a token\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Token structures and functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_TOKEN   256"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBtoken_type\fP"
+
+.PP
+Type of a token (operators, value, \&.\&.\&.) 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fITOK_ERROR \fP\fP
+.TP
+\fB\fITOK_NEWLINE \fP\fP
+.TP
+\fB\fITOK_EOF \fP\fP
+.TP
+\fB\fITOK_AND \fP\fP
+.TP
+\fB\fITOK_SEPAND \fP\fP
+.TP
+\fB\fITOK_OR \fP\fP
+.TP
+\fB\fITOK_PIPE \fP\fP
+.TP
+\fB\fITOK_SEMI \fP\fP
+.TP
+\fB\fITOK_LPAREN \fP\fP
+.TP
+\fB\fITOK_RPAREN \fP\fP
+.TP
+\fB\fITOK_LCURL \fP\fP
+.TP
+\fB\fITOK_RCURL \fP\fP
+.TP
+\fB\fITOK_DLESSDASH \fP\fP
+.TP
+\fB\fITOK_DLESS \fP\fP
+.TP
+\fB\fITOK_LESSGREAT \fP\fP
+.TP
+\fB\fITOK_LESSAND \fP\fP
+.TP
+\fB\fITOK_LESS \fP\fP
+.TP
+\fB\fITOK_DGREAT \fP\fP
+.TP
+\fB\fITOK_GREATAND \fP\fP
+.TP
+\fB\fITOK_CLOBBER \fP\fP
+.TP
+\fB\fITOK_ASS_WORD \fP\fP
+.TP
+\fB\fITOK_GREAT \fP\fP
+.TP
+\fB\fITOK_IONUMBER \fP\fP
+.TP
+\fB\fITOK_NOT \fP\fP
+.TP
+\fB\fITOK_COMM \fP\fP
+.TP
+\fB\fITOK_WORD \fP\fP
+.TP
+\fB\fIKW_IF \fP\fP
+.TP
+\fB\fIKW_THEN \fP\fP
+.TP
+\fB\fIKW_ELSE \fP\fP
+.TP
+\fB\fIKW_ELIF \fP\fP
+.TP
+\fB\fIKW_FI \fP\fP
+.TP
+\fB\fIKW_DO \fP\fP
+.TP
+\fB\fIKW_DONE \fP\fP
+.TP
+\fB\fIKW_FOR \fP\fP
+.TP
+\fB\fIKW_WHILE \fP\fP
+.TP
+\fB\fIKW_UNTIL \fP\fP
+.TP
+\fB\fIKW_CASE \fP\fP
+.TP
+\fB\fIKW_ESAC \fP\fP
+.TP
+\fB\fIKW_IN \fP\fP
+.TP
+\fB\fIKW_DSEMI \fP\fP
+.TP
+\fB\fIKW_UNKNOWN \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "void free_token (struct \fBtoken\fP * token)"
+
+.PP
+Wrapper to release memory of a token\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItoken\fP the token to free 
+.RE
+.PP
+
+.SS "int is_type (struct \fBtoken\fP * token, unsigned int type)"
+
+.SS "struct \fBtoken\fP* new_token (void)"
+
+.PP
+Token allocator and initializer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated token\&. 
+.RE
+.PP
+
+.SS "struct \fBtoken\fP* new_token_error (char * err)"
+
+.SS "struct \fBtoken\fP* new_token_io_number (char number)"
+
+.SS "struct \fBtoken\fP* new_token_type (int type)"
+
+.SS "struct \fBtoken\fP* new_token_word (char * value)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

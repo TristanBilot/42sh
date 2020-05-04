@@ -1,0 +1,128 @@
+.TH "src/exec/commands.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/exec/commands.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <wordexp\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <err\&.h>\fP
+.br
+\fC#include 'commands\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_XOPEN_SOURCE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBprint_without_sp\fP (char *c)"
+.br
+.ti -1c
+.RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
+.br
+.ti -1c
+.RI "void \fBecho\fP (char **args)"
+.br
+.RI "implementation of command echo "
+.ti -1c
+.RI "void \fBcd\fP (char **args)"
+.br
+.RI "implementation of command cd "
+.ti -1c
+.RI "void \fBexport\fP (char **args)"
+.br
+.RI "implementation of command export "
+.ti -1c
+.RI "void \fBexit_shell\fP (char **args)"
+.br
+.RI "implementation of exit_shell "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char ** \fBenviron\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _XOPEN_SOURCE"
+
+.SH "Function Documentation"
+.PP 
+.SS "void cd (char ** args)"
+
+.PP
+implementation of command cd 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void echo (char ** args)"
+
+.PP
+implementation of command echo 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void exit_shell (char ** args)"
+
+.PP
+implementation of exit_shell 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void export (char ** args)"
+
+.PP
+implementation of command export 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void print_echo (char ** args, bool e, bool n)"
+
+.SS "int print_without_sp (char * c)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "char** environ"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

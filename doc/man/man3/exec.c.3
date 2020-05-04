@@ -1,0 +1,614 @@
+.TH "src/exec/exec.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/exec/exec.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include '\&.\&./exec/exec\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./var_storage/var_storage\&.h'\fP
+.br
+\fC#include '\&.\&./expansion/expansion\&.h'\fP
+.br
+\fC#include '\&.\&./exec/commands\&.h'\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_XOPEN_SOURCE\fP   700"
+.br
+.ti -1c
+.RI "#define \fBREAD_END\fP   0"
+.br
+.ti -1c
+.RI "#define \fBWRITE_END\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSTDOUT_FILENO\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSTDIN_FILENO\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDEBUG_FLAG\fP   true"
+.br
+.ti -1c
+.RI "#define \fBDEBUG\fP(msg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBdup_file\fP (char *file, char *flag, int io)"
+.br
+.ti -1c
+.RI "bool \fBmanage_redirections\fP (struct \fBtab_redi\fP tab)"
+.br
+.ti -1c
+.RI "bool \fBexecute\fP (char **args, struct \fBtab_redi\fP tab)"
+.br
+.ti -1c
+.RI "bool \fBexec_node_input\fP (struct \fBnode_input\fP *ast)"
+.br
+.RI "execute input "
+.ti -1c
+.RI "bool \fBexec_node_list\fP (struct \fBnode_list\fP *ast)"
+.br
+.RI "execute list "
+.ti -1c
+.RI "bool \fBexec_node_and_or\fP (struct \fBnode_and_or\fP *ast)"
+.br
+.RI "execute and/or "
+.ti -1c
+.RI "bool \fBexec_node_pipeline\fP (struct \fBnode_pipeline\fP *ast)"
+.br
+.RI "execute pipeline "
+.ti -1c
+.RI "bool \fBexec_node_command\fP (struct \fBnode_command\fP *ast, bool with_fork)"
+.br
+.RI "execute command "
+.ti -1c
+.RI "struct \fBtab_redi\fP \fBinit_tab_redi\fP (struct \fBtab_redi\fP tab)"
+.br
+.ti -1c
+.RI "struct \fBtab_redi\fP \fBappend_tab_redi\fP (struct \fBtab_redi\fP tab, struct \fBnode_redirection\fP *e)"
+.br
+.ti -1c
+.RI "bool \fBexec_node_simple_command\fP (struct \fBnode_simple_command\fP *ast, bool with_fork)"
+.br
+.RI "execute simple command "
+.ti -1c
+.RI "bool \fBexec_node_shell_command\fP (struct \fBnode_shell_command\fP *ast)"
+.br
+.RI "execute shell command "
+.ti -1c
+.RI "bool \fBexec_node_funcdec\fP (struct \fBnode_funcdec\fP *ast)"
+.br
+.RI "execute funcdec "
+.ti -1c
+.RI "bool \fBexec_node_redirection\fP (struct \fBnode_redirection\fP *ast)"
+.br
+.RI "execute redirection "
+.ti -1c
+.RI "bool \fBexec_node_prefix\fP (struct \fBnode_prefix\fP *ast)"
+.br
+.RI "execute prefix "
+.ti -1c
+.RI "bool \fBexec_node_element\fP (struct \fBnode_element\fP *ast)"
+.br
+.RI "execute element "
+.ti -1c
+.RI "bool \fBexec_node_compound_list\fP (struct \fBnode_compound_list\fP *ast)"
+.br
+.RI "execute compound list "
+.ti -1c
+.RI "bool \fBexec_node_while\fP (struct \fBnode_while\fP *ast)"
+.br
+.RI "execute while "
+.ti -1c
+.RI "bool \fBexec_node_until\fP (struct \fBnode_until\fP *ast)"
+.br
+.RI "execute until "
+.ti -1c
+.RI "bool \fBexec_node_case\fP (struct \fBnode_case\fP *ast)"
+.br
+.RI "execute case "
+.ti -1c
+.RI "bool \fBexec_node_if\fP (struct \fBnode_if\fP *ast)"
+.br
+.RI "execute if "
+.ti -1c
+.RI "bool \fBexec_node_elif\fP (struct \fBnode_if\fP *ast)"
+.br
+.RI "execute elif "
+.ti -1c
+.RI "bool \fBexec_node_for\fP (struct \fBnode_for\fP *ast)"
+.br
+.RI "execute for "
+.ti -1c
+.RI "bool \fBexec_node_else_clause\fP (struct \fBnode_else_clause\fP *ast)"
+.br
+.RI "execute else clause "
+.ti -1c
+.RI "bool \fBexec_node_do_group\fP (struct \fBnode_do_group\fP *ast)"
+.br
+.RI "execute do group "
+.ti -1c
+.RI "bool \fBexec_node_case_clause\fP (struct \fBnode_case_clause\fP *ast)"
+.br
+.RI "execute case clause "
+.ti -1c
+.RI "bool \fBexec_node_case_item\fP (struct \fBnode_case_item\fP *ast)"
+.br
+.RI "execute case item "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const struct \fBcommands\fP \fBcmd\fP [3]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _XOPEN_SOURCE   700"
+
+.SS "#define DEBUG(msg)"
+\fBValue:\fP
+.PP
+.nf
+if (DEBUG_FLAG) \
+                        printf("%s\n", msg);
+.fi
+.SS "#define DEBUG_FLAG   true"
+
+.SS "#define READ_END   0"
+
+.SS "#define STDIN_FILENO   0"
+
+.SS "#define STDOUT_FILENO   1"
+
+.SS "#define WRITE_END   1"
+
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBtab_redi\fP append_tab_redi (struct \fBtab_redi\fP tab, struct \fBnode_redirection\fP * e)"
+
+.SS "bool dup_file (char * file, char * flag, int io)"
+
+.SS "bool exec_node_and_or (struct \fBnode_and_or\fP * ast)"
+
+.PP
+execute and/or 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_case (struct \fBnode_case\fP * ast)"
+
+.PP
+execute case 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_case_clause (struct \fBnode_case_clause\fP * ast)"
+
+.PP
+execute case clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_case_item (struct \fBnode_case_item\fP * ast)"
+
+.PP
+execute case item 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_command (struct \fBnode_command\fP * ast, bool with_fork)"
+
+.PP
+execute command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIwith_fork\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_compound_list (struct \fBnode_compound_list\fP * ast)"
+
+.PP
+execute compound list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_do_group (struct \fBnode_do_group\fP * ast)"
+
+.PP
+execute do group 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_element (struct \fBnode_element\fP * ast)"
+
+.PP
+execute element 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_elif (struct \fBnode_if\fP * ast)"
+
+.PP
+execute elif 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_else_clause (struct \fBnode_else_clause\fP * ast)"
+
+.PP
+execute else clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_for (struct \fBnode_for\fP * ast)"
+
+.PP
+execute for 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_funcdec (struct \fBnode_funcdec\fP * ast)"
+
+.PP
+execute funcdec 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_if (struct \fBnode_if\fP * ast)"
+
+.PP
+execute if 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_input (struct \fBnode_input\fP * ast)"
+
+.PP
+execute input 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_list (struct \fBnode_list\fP * ast)"
+
+.PP
+execute list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_pipeline (struct \fBnode_pipeline\fP * ast)"
+
+.PP
+execute pipeline 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_prefix (struct \fBnode_prefix\fP * ast)"
+
+.PP
+execute prefix 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_redirection (struct \fBnode_redirection\fP * ast)"
+
+.PP
+execute redirection 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_shell_command (struct \fBnode_shell_command\fP * ast)"
+
+.PP
+execute shell command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_simple_command (struct \fBnode_simple_command\fP * ast, bool with_fork)"
+
+.PP
+execute simple command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIwith_fork\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_until (struct \fBnode_until\fP * ast)"
+
+.PP
+execute until 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool exec_node_while (struct \fBnode_while\fP * ast)"
+
+.PP
+execute while 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool execute (char ** args, struct \fBtab_redi\fP tab)"
+
+.SS "struct \fBtab_redi\fP init_tab_redi (struct \fBtab_redi\fP tab)"
+
+.SS "bool manage_redirections (struct \fBtab_redi\fP tab)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "const struct \fBcommands\fP cmd[3]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    {"cd", &cd}, 
+    
+    {"export", &export}, 
+    {NULL, NULL}}
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

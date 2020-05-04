@@ -1,0 +1,184 @@
+.TH "src/utils/buffer.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/buffer.h \- Buffer structure and functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./lexer/lexer\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbuffer\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBUFFER_SIZE\fP   256"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBnew_buffer\fP ()"
+.br
+.RI "Create buffer\&. "
+.ti -1c
+.RI "void \fBappend_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char c)"
+.br
+.RI "Append characters to the buffer\&. "
+.ti -1c
+.RI "void \fBappend_string_to_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *\fBstr\fP)"
+.br
+.RI "Append string to the buffer\&. "
+.ti -1c
+.RI "void \fBfree_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP)"
+.br
+.RI "Free the buffer\&. "
+.ti -1c
+.RI "size_t \fBbuffer_len\fP (struct \fBbuffer\fP *\fBbuffer\fP)"
+.br
+.RI "Give the len of the buffer\&. "
+.ti -1c
+.RI "void \fBappend_word_if_needed\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP)"
+.br
+.RI "Append word to buffer\&. "
+.ti -1c
+.RI "void \fBflush\fP (struct \fBbuffer\fP *\fBbuffer\fP)"
+.br
+.RI "Empty a string buffer\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Buffer structure and functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFFER_SIZE   256"
+
+.SH "Function Documentation"
+.PP 
+.SS "void append_buffer (struct \fBbuffer\fP * buffer, char c)"
+
+.PP
+Append characters to the buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP 
+.br
+\fIc\fP 
+.RE
+.PP
+
+.SS "void append_string_to_buffer (struct \fBbuffer\fP * buffer, char * str)"
+
+.PP
+Append string to the buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP 
+.br
+\fIstr\fP 
+.RE
+.PP
+
+.SS "void append_word_if_needed (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer)"
+
+.PP
+Append word to buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP 
+.br
+\fIbuffer\fP 
+.RE
+.PP
+
+.SS "size_t buffer_len (struct \fBbuffer\fP * buffer)"
+
+.PP
+Give the len of the buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+size_t 
+.RE
+.PP
+
+.SS "void flush (struct \fBbuffer\fP * buffer)"
+
+.PP
+Empty a string buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP the string to be clear\&. 
+.br
+\fIsize\fP the length of the buffer\&. 
+.RE
+.PP
+
+.SS "void free_buffer (struct \fBbuffer\fP * buffer)"
+
+.PP
+Free the buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP 
+.RE
+.PP
+
+.SS "struct \fBbuffer\fP* new_buffer ()"
+
+.PP
+Create buffer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+struct buffer* 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

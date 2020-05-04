@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../utils/xalloc.h"
 #include "../utils/string_utils.h"
 #include "../utils/buffer.h"
@@ -9,6 +10,10 @@
 #include "../lexer/lexer.h"
 #include "../lexer/lex_evaluation.h"
 #include "../utils/string_utils.h"
+#include "../utils/index_utils.h"
+
+bool is_word = false;
+bool is_kw_in = false;
 
 char **split(char *str)
 {
@@ -120,11 +125,6 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
     return 0;
 }
 
-int is_separator(char c)
-{
-    return c == '\n' || c == ';' || c == '&';
-}
-
 int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
 {
     if (is_separator(c[*j]))
@@ -136,11 +136,16 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
         int separator = evaluate_token(tmp);
         if ((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN)
         {
-            append(lexer, new_token_type(type));
+            if (is_word)
+                append(lexer, new_token_word(buffer->buf));
+            else
+                append(lexer, new_token_type(type));
             append(lexer, new_token_type(separator));
             flush(buffer);
+            is_word = false;
             return -1;
         }
+        is_word = false;
     }
     return 0;
 }
@@ -165,6 +170,7 @@ void init_lexer(struct lexer *lexer)
     char **splitted = split(lexer->input);
     int i = 0;
     int type;
+    int kw;
     while (splitted[i])
     {
         struct buffer *buffer = new_buffer();
@@ -174,12 +180,13 @@ void init_lexer(struct lexer *lexer)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
+                if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
+                    continue;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
                     break;
-                if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
-                    continue;
+                
                 if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
                     continue;
                 if (lex_part(lexer, buffer, c, &j))
@@ -188,15 +195,30 @@ void init_lexer(struct lexer *lexer)
                 append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)
                 {
-                    append(lexer, new_token_word(buffer->buf));
+                    if (((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN) && !is_word)
+                        append(lexer, new_token_type(type));
+                    else
+                        append(lexer, new_token_word(buffer->buf));
+                    is_word = true;
                     flush(buffer);
                 }
             }
         }
+        /* CASE AND IN ARE EXCEPTIONS: case a in b */
+        // && kw != KW_IN && kw != KW_CASE && kw != KW_ESAC && kw != KW_FOR && kw != KW_UNTIL
+        else if ((kw = evaluate_keyword(c)) != KW_UNKNOWN && is_word && (kw != KW_IN || !is_kw_in))
+            append(lexer, new_token_word(c));
         else
+        {
             append(lexer, new_token_type(type));
+            // if (type == TOK_NEWLINE || type == TOK_SEPAND || type == TOK_SEMI)
+                is_word = false;
+            if (type == KW_CASE || type == KW_FOR)
+                is_kw_in = true;
+            if (type == KW_IN)
+                is_kw_in = false;
+        }
         i++;
-        // free_buffer(buffer);
     }
     append(lexer, new_token_type(TOK_EOF));
 }

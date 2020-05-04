@@ -1,0 +1,97 @@
+.TH "src/garbage_collector/garbage_collector.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/garbage_collector/garbage_collector.h \- Execution functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBgarbage_element\fP"
+.br
+.ti -1c
+.RI "struct \fBgarbage_collector\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBnew_garbage_collector\fP (void)"
+.br
+.RI "create the garbage collector "
+.ti -1c
+.RI "void \fBappend_to_garbage\fP (void *addr)"
+.br
+.RI "append addr to list of elements "
+.ti -1c
+.RI "void \fBfree_garbage_collector\fP ()"
+.br
+.RI "free list of elements "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBgarbage_collector\fP * \fBgarbage_collector\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Execution functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void append_to_garbage (void * addr)"
+
+.PP
+append addr to list of elements 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaddr\fP 
+.RE
+.PP
+
+.SS "void free_garbage_collector ()"
+
+.PP
+free list of elements 
+.SS "void new_garbage_collector (void)"
+
+.PP
+create the garbage collector 
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBgarbage_collector\fP* \fBgarbage_collector\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

@@ -1,0 +1,52 @@
+.TH "src/utils/index_utils.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/index_utils.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'index_utils\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBis_separator\fP (char c)"
+.br
+.ti -1c
+.RI "size_t \fBget_next_index\fP (const char *\fBstr\fP, char c, size_t i)"
+.br
+.ti -1c
+.RI "size_t \fBget_previous_index\fP (const char *\fBstr\fP, char c, size_t i)"
+.br
+.ti -1c
+.RI "size_t \fBget_previous_separator_index\fP (const char *\fBstr\fP, size_t i)"
+.br
+.ti -1c
+.RI "size_t \fBget_next_separator_index\fP (const char *\fBstr\fP, size_t i)"
+.br
+.ti -1c
+.RI "size_t \fBget_next_close_curl_index\fP (const char *\fBstr\fP, size_t i)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "size_t get_next_close_curl_index (const char * str, size_t i)"
+
+.SS "size_t get_next_index (const char * str, char c, size_t i)"
+
+.SS "size_t get_next_separator_index (const char * str, size_t i)"
+
+.SS "size_t get_previous_index (const char * str, char c, size_t i)"
+
+.SS "size_t get_previous_separator_index (const char * str, size_t i)"
+
+.SS "int is_separator (char c)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

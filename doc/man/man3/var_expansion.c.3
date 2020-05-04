@@ -1,0 +1,116 @@
+.TH "src/expansion/var_expansion.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/var_expansion.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <time\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include 'expansion\&.h'\fP
+.br
+\fC#include '\&.\&./var_storage/var_storage\&.h'\fP
+.br
+\fC#include '\&.\&./utils/buffer\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./utils/index_utils\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBnew_program_data_storage\fP (int argc, char *argv[])"
+.br
+.ti -1c
+.RI "void \fBfree_program_data_storage\fP (void)"
+.br
+.ti -1c
+.RI "void \fBupdate_last_status\fP (int status)"
+.br
+.ti -1c
+.RI "char * \fBperform_var_expansion\fP (char *word)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_number\fP (char c)"
+.br
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBsubstitute_star\fP (void)"
+.br
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBsubstitute_at\fP (void)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_hash\fP (void)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_ques\fP (void)"
+.br
+.ti -1c
+.RI "bool \fBnext_param_is_printable\fP (char *word, size_t i, size_t param_len, bool is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_random\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_uid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_oldpwd\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_ifs\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
+.RI "enum \fBparam_type\fP \fBis_special_char\fP (char c)"
+.br
+.ti -1c
+.RI "int \fBget_random_int\fP (void)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void free_program_data_storage (void)"
+
+.SS "int get_random_int (void)"
+
+.SS "enum \fBparam_type\fP is_special_char (char c)"
+
+.SS "void new_program_data_storage (int argc, char * argv[])"
+
+.SS "bool next_param_is_printable (char * word, size_t i, size_t param_len, bool is_brack)"
+
+.SS "char* perform_var_expansion (char * word)"
+
+.SS "struct \fBbuffer\fP* substitute_at (void)"
+
+.SS "char* substitute_hash (void)"
+
+.SS "char* substitute_ifs (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_number (char c)"
+
+.SS "char* substitute_oldpwd (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_ques (void)"
+
+.SS "char* substitute_random (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "struct \fBbuffer\fP* substitute_star (void)"
+
+.SS "char* substitute_uid (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "void update_last_status (int status)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

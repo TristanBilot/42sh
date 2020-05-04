@@ -46,11 +46,15 @@ def test(binary, test_case, debug_description, time):
                     elif check == 'has_stderr':
                         assert our_shell.stderr != ''
                 except AssertionError:
-                    print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], "ref : ", ref.returncode, " et our_shell : ", our_shell.returncode)
+                    print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], \
+                        colored((' RET -> ref: ', ref.returncode, ' | our_shell: ', our_shell.returncode), 'yellow') if check == 'returncode' and ref.returncode != our_shell.returncode else '', \
+                        colored(' STDOUT ', 'yellow') if check == 'stdout' and ref.stdout != our_shell.stdout else '', \
+                        colored(' STDERR ', 'yellow') if check == 'stderr' and ref.stderr != our_shell.stderr else '', \
+                        colored(' STDIN ', 'yellow') if check == 'stdin' and ref.stdin != our_shell.stdin else '')
                 else:
-                    print(colored('[ OK ]', 'green'), debug_description, test_case[i]['stdin'], "ref : ", ref.returncode, " et our_shell : ", our_shell.returncode)
+                    print(colored('[ OK ]', 'green'), debug_description, test_case[i]['stdin'])
             else:
-                print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], " time out")
+                print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], colored(" time out", 'yellow'))
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Our Testsuite")

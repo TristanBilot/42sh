@@ -1,0 +1,653 @@
+.TH "src/parser/parser.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/parser/parser.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include '\&.\&./parser/parser\&.h'\fP
+.br
+\fC#include '\&.\&./ast/free\&.h'\fP
+.br
+\fC#include '\&.\&./ast/ast\&.h'\fP
+.br
+\fC#include '\&.\&./utils/parser_utils\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDEBUG_FLAG\fP   true"
+.br
+.ti -1c
+.RI "#define \fBDEBUG\fP(msg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBparser\fP * \fBinit_parser\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "initialize a parser "
+.ti -1c
+.RI "void \fBfree_parser\fP (struct \fBparser\fP *p)"
+.br
+.RI "free the parser "
+.ti -1c
+.RI "struct \fBtoken\fP * \fBget_next_token\fP (struct \fBparser\fP *p)"
+.br
+.ti -1c
+.RI "void \fBparser_comment\fP (struct \fBparser\fP *p)"
+.br
+.ti -1c
+.RI "void \fBparser_eat\fP (struct \fBparser\fP *p)"
+.br
+.ti -1c
+.RI "void \fBnext_token\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.ti -1c
+.RI "void * \fBparse\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "parse all of the token given by lexer "
+.ti -1c
+.RI "bool \fBparse_input\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_input\fP **ast)"
+.br
+.RI "parse rule input "
+.ti -1c
+.RI "bool \fBparse_list\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_list\fP **ast)"
+.br
+.RI "parse rule list "
+.ti -1c
+.RI "bool \fBparse_and_or\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_and_or\fP **ast)"
+.br
+.RI "parse rule and or "
+.ti -1c
+.RI "bool \fBparse_pipeline\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_pipeline\fP **ast)"
+.br
+.RI "parse rule pipeline "
+.ti -1c
+.RI "bool \fBparse_command\fP (struct \fBparser\fP *p, struct \fBnode_command\fP **ast)"
+.br
+.RI "parse rule command "
+.ti -1c
+.RI "void \fBparse_multiple_element\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_simple_command\fP *ast)"
+.br
+.ti -1c
+.RI "void \fBparse_multiple_prefix\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_simple_command\fP *ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_simple_command\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_simple_command\fP **ast)"
+.br
+.RI "parse rule simple command "
+.ti -1c
+.RI "bool \fBparse_shell_command\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_shell_command\fP **ast)"
+.br
+.RI "parse rule shell command "
+.ti -1c
+.RI "bool \fBparse_funcdec\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_funcdec\fP **ast)"
+.br
+.RI "parse rule funcdec "
+.ti -1c
+.RI "bool \fBparse_redirection\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_redirection\fP **ast)"
+.br
+.RI "parse rule redirection "
+.ti -1c
+.RI "bool \fBparse_prefix\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_prefix\fP **ast)"
+.br
+.RI "parse rule prefix "
+.ti -1c
+.RI "bool \fBparse_element\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_element\fP **ast)"
+.br
+.RI "parse rule element "
+.ti -1c
+.RI "bool \fBparse_compound_list\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_compound_list\fP **ast)"
+.br
+.RI "parse rule compound list "
+.ti -1c
+.RI "bool \fBparse_rule_for\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_for\fP **ast)"
+.br
+.RI "parse rule for "
+.ti -1c
+.RI "bool \fBparse_rule_while\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_while\fP **ast)"
+.br
+.RI "parse rule while "
+.ti -1c
+.RI "bool \fBparse_rule_until\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_until\fP **ast)"
+.br
+.RI "parse rule until "
+.ti -1c
+.RI "bool \fBparse_rule_case\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_case\fP **ast)"
+.br
+.RI "parse rule case "
+.ti -1c
+.RI "bool \fBparse_rule_if\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_if\fP **ast)"
+.br
+.RI "parse rule if "
+.ti -1c
+.RI "bool \fBparse_rule_elif\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_if\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_else_clause\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_else_clause\fP **ast)"
+.br
+.RI "parse else clause "
+.ti -1c
+.RI "bool \fBparse_do_group\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_do_group\fP **ast)"
+.br
+.RI "parse rule do group "
+.ti -1c
+.RI "bool \fBparse_case_clause\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_case_clause\fP **ast)"
+.br
+.RI "parse rule case clause "
+.ti -1c
+.RI "bool \fBparse_case_item\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_case_item\fP **ast)"
+.br
+.RI "parse rule case item "
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DEBUG(msg)"
+\fBValue:\fP
+.PP
+.nf
+if (DEBUG_FLAG) \
+                        printf("%s", msg);
+.fi
+.SS "#define DEBUG_FLAG   true"
+
+.SH "Function Documentation"
+.PP 
+.SS "void free_parser (struct \fBparser\fP * p)"
+
+.PP
+free the parser 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP 
+.RE
+.PP
+
+.SS "struct \fBtoken\fP* get_next_token (struct \fBparser\fP * p)"
+
+.SS "struct \fBparser\fP* init_parser (struct \fBlexer\fP * lexer)"
+
+.PP
+initialize a parser 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct parser* 
+.RE
+.PP
+
+.SS "void next_token (struct \fBparser\fP * parser)"
+
+.SS "void* parse (struct \fBlexer\fP * lexer)"
+
+.PP
+parse all of the token given by lexer 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void* 
+.RE
+.PP
+
+.SS "bool parse_and_or (struct \fBparser\fP * parser, struct \fBnode_and_or\fP ** ast)"
+
+.PP
+parse rule and or 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_case_clause (struct \fBparser\fP * parser, struct \fBnode_case_clause\fP ** ast)"
+
+.PP
+parse rule case clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_case_item (struct \fBparser\fP * parser, struct \fBnode_case_item\fP ** ast)"
+
+.PP
+parse rule case item 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_command (struct \fBparser\fP * parser, struct \fBnode_command\fP ** ast)"
+
+.PP
+parse rule command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_compound_list (struct \fBparser\fP * parser, struct \fBnode_compound_list\fP ** ast)"
+
+.PP
+parse rule compound list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_do_group (struct \fBparser\fP * parser, struct \fBnode_do_group\fP ** ast)"
+
+.PP
+parse rule do group 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_element (struct \fBparser\fP * parser, struct \fBnode_element\fP ** ast)"
+
+.PP
+parse rule element 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_else_clause (struct \fBparser\fP * parser, struct \fBnode_else_clause\fP ** ast)"
+
+.PP
+parse else clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_funcdec (struct \fBparser\fP * parser, struct \fBnode_funcdec\fP ** ast)"
+
+.PP
+parse rule funcdec 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_input (struct \fBparser\fP * parser, struct \fBnode_input\fP ** ast)"
+
+.PP
+parse rule input 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_list (struct \fBparser\fP * parser, struct \fBnode_list\fP ** ast)"
+
+.PP
+parse rule list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "void parse_multiple_element (struct \fBparser\fP * parser, struct \fBnode_simple_command\fP * ast)"
+
+.SS "void parse_multiple_prefix (struct \fBparser\fP * parser, struct \fBnode_simple_command\fP * ast)"
+
+.SS "bool parse_pipeline (struct \fBparser\fP * parser, struct \fBnode_pipeline\fP ** ast)"
+
+.PP
+parse rule pipeline 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_prefix (struct \fBparser\fP * parser, struct \fBnode_prefix\fP ** ast)"
+
+.PP
+parse rule prefix 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_redirection (struct \fBparser\fP * parser, struct \fBnode_redirection\fP ** ast)"
+
+.PP
+parse rule redirection 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_rule_case (struct \fBparser\fP * parser, struct \fBnode_case\fP ** ast)"
+
+.PP
+parse rule case 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_rule_elif (struct \fBparser\fP * parser, struct \fBnode_if\fP ** ast)"
+
+.SS "bool parse_rule_for (struct \fBparser\fP * parser, struct \fBnode_for\fP ** ast)"
+
+.PP
+parse rule for 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_rule_if (struct \fBparser\fP * parser, struct \fBnode_if\fP ** ast)"
+
+.PP
+parse rule if 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_rule_until (struct \fBparser\fP * parser, struct \fBnode_until\fP ** ast)"
+
+.PP
+parse rule until 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_rule_while (struct \fBparser\fP * parser, struct \fBnode_while\fP ** ast)"
+
+.PP
+parse rule while 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_shell_command (struct \fBparser\fP * parser, struct \fBnode_shell_command\fP ** ast)"
+
+.PP
+parse rule shell command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool parse_simple_command (struct \fBparser\fP * parser, struct \fBnode_simple_command\fP ** ast)"
+
+.PP
+parse rule simple command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "void parser_comment (struct \fBparser\fP * p)"
+
+.SS "void parser_eat (struct \fBparser\fP * p)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

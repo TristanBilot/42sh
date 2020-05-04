@@ -1,0 +1,47 @@
+.TH "src/expansion/tilde_expansion.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/tilde_expansion.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'expansion\&.h'\fP
+.br
+\fC#include '\&.\&./utils/buffer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBperform_tilde_expansion\fP (char *word)"
+.br
+.ti -1c
+.RI "bool \fBis_valid_tilde\fP (char *word, size_t i)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_minus_tilde\fP (char *word, size_t *i)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_plus_tilde\fP (char *word, size_t *i)"
+.br
+.ti -1c
+.RI "char * \fBsubstitute_tilde\fP (char *word, size_t *i)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "bool is_valid_tilde (char * word, size_t i)"
+
+.SS "char* perform_tilde_expansion (char * word)"
+
+.SS "char* substitute_minus_tilde (char * word, size_t * i)"
+
+.SS "char* substitute_plus_tilde (char * word, size_t * i)"
+
+.SS "char* substitute_tilde (char * word, size_t * i)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

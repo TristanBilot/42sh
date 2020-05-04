@@ -1,0 +1,592 @@
+.TH "src/eval/ast_print.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/eval/ast_print.h \- Print functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./parser/parser\&.h'\fP
+.br
+\fC#include '\&.\&./lexer/lexer\&.h'\fP
+.br
+\fC#include '\&.\&./lexer/token\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./ast/ast\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBprint_node_input\fP (struct \fBnode_input\fP *ast, FILE *f)"
+.br
+.RI "print \fBnode_input\fP "
+.ti -1c
+.RI "void \fBprint_node_list\fP (struct \fBnode_list\fP *ast, FILE *f)"
+.br
+.RI "print node list "
+.ti -1c
+.RI "void \fBprint_node_and_or\fP (struct \fBnode_and_or\fP *ast, FILE *f, void *node)"
+.br
+.RI "print \fBnode_and_or\fP "
+.ti -1c
+.RI "void \fBprint_node_pipeline\fP (struct \fBnode_pipeline\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node pipeline "
+.ti -1c
+.RI "void \fBprint_node_command\fP (struct \fBnode_command\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node command "
+.ti -1c
+.RI "void \fBprint_node_simple_command\fP (struct \fBnode_simple_command\fP *ast, FILE *f, void *node)"
+.br
+.RI "print note simple command "
+.ti -1c
+.RI "void \fBprint_node_shell_command\fP (struct \fBnode_shell_command\fP *ast, FILE *f, void *node)"
+.br
+.RI "print note shell command "
+.ti -1c
+.RI "void \fBprint_node_funcdec\fP (struct \fBnode_funcdec\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node funcdec "
+.ti -1c
+.RI "void \fBprint_node_redirection\fP (struct \fBnode_redirection\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node redirection "
+.ti -1c
+.RI "void \fBprint_node_prefix\fP (struct \fBnode_prefix\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node prefix "
+.ti -1c
+.RI "void \fBprint_node_element\fP (struct \fBnode_element\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node element "
+.ti -1c
+.RI "void \fBprint_node_compound_list\fP (struct \fBnode_compound_list\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node compound list "
+.ti -1c
+.RI "void \fBprint_node_while\fP (struct \fBnode_while\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node while "
+.ti -1c
+.RI "void \fBprint_node_until\fP (struct \fBnode_until\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node until "
+.ti -1c
+.RI "void \fBprint_node_case\fP (struct \fBnode_case\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node case "
+.ti -1c
+.RI "void \fBprint_node_if\fP (struct \fBnode_if\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node if "
+.ti -1c
+.RI "void \fBprint_node_elif\fP (struct \fBnode_if\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node elif "
+.ti -1c
+.RI "void \fBprint_node_for\fP (struct \fBnode_for\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node for "
+.ti -1c
+.RI "void \fBprint_node_else_clause\fP (struct \fBnode_else_clause\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node else clause "
+.ti -1c
+.RI "void \fBprint_node_do_group\fP (struct \fBnode_do_group\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node do group "
+.ti -1c
+.RI "void \fBprint_node_case_clause\fP (struct \fBnode_case_clause\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node do group "
+.ti -1c
+.RI "void \fBprint_node_case_item\fP (struct \fBnode_case_item\fP *ast, FILE *f, void *node)"
+.br
+.RI "print node case_item "
+.ti -1c
+.RI "void \fBprint_ast\fP (struct \fBnode_input\fP *ast)"
+.br
+.RI "print ast "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Print functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void print_ast (struct \fBnode_input\fP * ast)"
+
+.PP
+print ast 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_and_or (struct \fBnode_and_or\fP * ast, FILE * f, void * node)"
+
+.PP
+print \fBnode_and_or\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_case (struct \fBnode_case\fP * ast, FILE * f, void * node)"
+
+.PP
+print node case 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_case_clause (struct \fBnode_case_clause\fP * ast, FILE * f, void * node)"
+
+.PP
+print node do group 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_case_item (struct \fBnode_case_item\fP * ast, FILE * f, void * node)"
+
+.PP
+print node case_item 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_command (struct \fBnode_command\fP * ast, FILE * f, void * node)"
+
+.PP
+print node command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_compound_list (struct \fBnode_compound_list\fP * ast, FILE * f, void * node)"
+
+.PP
+print node compound list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_do_group (struct \fBnode_do_group\fP * ast, FILE * f, void * node)"
+
+.PP
+print node do group 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_element (struct \fBnode_element\fP * ast, FILE * f, void * node)"
+
+.PP
+print node element 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_elif (struct \fBnode_if\fP * ast, FILE * f, void * node)"
+
+.PP
+print node elif 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_else_clause (struct \fBnode_else_clause\fP * ast, FILE * f, void * node)"
+
+.PP
+print node else clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_for (struct \fBnode_for\fP * ast, FILE * f, void * node)"
+
+.PP
+print node for 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_funcdec (struct \fBnode_funcdec\fP * ast, FILE * f, void * node)"
+
+.PP
+print node funcdec 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_if (struct \fBnode_if\fP * ast, FILE * f, void * node)"
+
+.PP
+print node if 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_input (struct \fBnode_input\fP * ast, FILE * f)"
+
+.PP
+print \fBnode_input\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.RE
+.PP
+
+.SS "void print_node_list (struct \fBnode_list\fP * ast, FILE * f)"
+
+.PP
+print node list 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.RE
+.PP
+
+.SS "void print_node_pipeline (struct \fBnode_pipeline\fP * ast, FILE * f, void * node)"
+
+.PP
+print node pipeline 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_prefix (struct \fBnode_prefix\fP * ast, FILE * f, void * node)"
+
+.PP
+print node prefix 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_redirection (struct \fBnode_redirection\fP * ast, FILE * f, void * node)"
+
+.PP
+print node redirection 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_shell_command (struct \fBnode_shell_command\fP * ast, FILE * f, void * node)"
+
+.PP
+print note shell command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_simple_command (struct \fBnode_simple_command\fP * ast, FILE * f, void * node)"
+
+.PP
+print note simple command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_until (struct \fBnode_until\fP * ast, FILE * f, void * node)"
+
+.PP
+print node until 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SS "void print_node_while (struct \fBnode_while\fP * ast, FILE * f, void * node)"
+
+.PP
+print node while 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIf\fP 
+.br
+\fInode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+* void 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

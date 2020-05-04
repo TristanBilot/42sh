@@ -1,0 +1,65 @@
+.TH "node_and_or" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+node_and_or
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ast\&.h>\fP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBleft\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBtype_logical\fP { \fBAND\fP, \fBOR\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "bool \fBis_final\fP"
+.br
+.ti -1c
+.RI "union \fBnode_and_or::left\fP \fBleft\fP"
+.br
+.ti -1c
+.RI "struct \fBnode_pipeline\fP * \fBright\fP"
+.br
+.ti -1c
+.RI "enum \fBnode_and_or::type_logical\fP \fBtype\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBtype_logical\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIAND \fP\fP
+.TP
+\fB\fIOR \fP\fP
+.SH "Field Documentation"
+.PP 
+.SS "bool is_final"
+
+.SS "union \fBnode_and_or::left\fP  \fBleft\fP"
+
+.SS "struct \fBnode_pipeline\fP* right"
+
+.SS "enum \fBnode_and_or::type_logical\fP  type"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

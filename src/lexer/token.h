@@ -1,3 +1,14 @@
+/**
+** \file token.h
+** \author Team 
+** \brief Token structures and functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef TOKEN_H
 #define TOKEN_H
 

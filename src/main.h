@@ -17,4 +17,7 @@ struct option_sh
     char *cmd;
 };
 
+static struct option_sh *init_option_sh(void);
+void init_42sh_process(struct option_sh *option);
+
 #endif /* ! MAIN_H */

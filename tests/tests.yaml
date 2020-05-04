@@ -205,7 +205,7 @@
       - returncode
       - stdout
 
-  ####################################################### TEST CONDITION ########################################################
+  ####################################################### TEST VARIABLES ########################################################
 - description:
   - name : VARIABLES
   - stdin: a=42; echo $a
@@ -214,6 +214,69 @@
       - stdout
 
   - stdin: long=hello;long2=world;echo $long$long2
+    checks:
+      - returncode
+      - stdout
+
+  ####################################################### TEST TILDE ########################################################
+- description:
+  - name : TILDE
+  - stdin: echo ~
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~+
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~-
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~/more/again
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~+/more/again
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~-/more/again
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~stuck
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~+stuck
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo ~-stuck
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo start/~/more/again
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo start/~+/more/again
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: echo start/~-/more/again
     checks:
       - returncode
       - stdout

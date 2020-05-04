@@ -1,0 +1,60 @@
+.TH "node_prefix" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+node_prefix
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ast\&.h>\fP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBprefix\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBtype_prefix\fP { \fBREDIRECTION\fP, \fBASSIGMENT_WORD\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "struct \fBnode_prefix\fP * \fBnext\fP"
+.br
+.ti -1c
+.RI "enum \fBnode_prefix::type_prefix\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "union \fBnode_prefix::prefix\fP \fBprefix\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBtype_prefix\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIREDIRECTION \fP\fP
+.TP
+\fB\fIASSIGMENT_WORD \fP\fP
+.SH "Field Documentation"
+.PP 
+.SS "struct \fBnode_prefix\fP* next"
+
+.SS "union \fBnode_prefix::prefix\fP  \fBprefix\fP"
+
+.SS "enum \fBnode_prefix::type_prefix\fP  type"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

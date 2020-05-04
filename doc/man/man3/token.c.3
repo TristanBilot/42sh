@@ -1,0 +1,83 @@
+.TH "src/lexer/token.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/lexer/token.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./lexer/token\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token\fP (void)"
+.br
+.RI "Token allocator and initializer\&. "
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_type\fP (int type)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_io_number\fP (char number)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_word\fP (char *value)"
+.br
+.ti -1c
+.RI "struct \fBtoken\fP * \fBnew_token_error\fP (char *err)"
+.br
+.ti -1c
+.RI "void \fBfree_token\fP (struct \fBtoken\fP *\fBtoken\fP)"
+.br
+.RI "Wrapper to release memory of a token\&. "
+.ti -1c
+.RI "int \fBis_type\fP (struct \fBtoken\fP *\fBtoken\fP, unsigned int type)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void free_token (struct \fBtoken\fP * token)"
+
+.PP
+Wrapper to release memory of a token\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItoken\fP the token to free 
+.RE
+.PP
+
+.SS "int is_type (struct \fBtoken\fP * token, unsigned int type)"
+
+.SS "struct \fBtoken\fP* new_token (void)"
+
+.PP
+Token allocator and initializer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated token\&. 
+.RE
+.PP
+
+.SS "struct \fBtoken\fP* new_token_error (char * err)"
+
+.SS "struct \fBtoken\fP* new_token_io_number (char number)"
+
+.SS "struct \fBtoken\fP* new_token_type (int type)"
+
+.SS "struct \fBtoken\fP* new_token_word (char * value)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

@@ -1,0 +1,163 @@
+.TH "src/lexer/lexer.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/lexer/lexer.h \- Main lexing functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./lexer/token\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBlexer\fP"
+.br
+.RI "Lexer architecture and methods\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBlexer\fP * \fBnew_lexer\fP (char *\fBstr\fP)"
+.br
+.RI "Allocate and init a new lexer\&. "
+.ti -1c
+.RI "void \fBfree_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "Free all ressources allocated in the lexer\&. "
+.ti -1c
+.RI "struct \fBtoken\fP * \fBpeek\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "Return the next token without consume it\&. "
+.ti -1c
+.RI "struct \fBtoken\fP * \fBpop\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "Return and consume the next token from the input stream\&. "
+.ti -1c
+.RI "void \fBappend\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBtoken\fP *\fBtoken\fP)"
+.br
+.RI "Append a new token to the \fBtoken_list\fP of the lexer\&. "
+.ti -1c
+.RI "void \fBinit_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.br
+.RI "Fill the token list by creating all the tokens from the given string\&. "
+.ti -1c
+.RI "int \fBis_separator\fP (char c)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Main lexing functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void append (struct \fBlexer\fP * lexer, struct \fBtoken\fP * token)"
+
+.PP
+Append a new token to the \fBtoken_list\fP of the lexer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP the lexer\&. 
+.br
+\fItoken\fP the token to append\&. 
+.RE
+.PP
+
+.SS "void free_lexer (struct \fBlexer\fP * lexer)"
+
+.PP
+Free all ressources allocated in the lexer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP the lexer to free\&. 
+.RE
+.PP
+
+.SS "void init_lexer (struct \fBlexer\fP * lexer)"
+
+.PP
+Fill the token list by creating all the tokens from the given string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP the lexer\&. 
+.RE
+.PP
+
+.SS "int is_separator (char c)"
+
+.SS "struct \fBlexer\fP* new_lexer (char * str)"
+
+.PP
+Allocate and init a new lexer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP the string to use as input stream\&. 
+.RE
+.PP
+
+.SS "struct \fBtoken\fP* peek (struct \fBlexer\fP * lexer)"
+
+.PP
+Return the next token without consume it\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the next token from the input stream 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP the lexer to lex from 
+.RE
+.PP
+
+.SS "struct \fBtoken\fP* pop (struct \fBlexer\fP * lexer)"
+
+.PP
+Return and consume the next token from the input stream\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the next token from the input stream 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP the lexer to lex from 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

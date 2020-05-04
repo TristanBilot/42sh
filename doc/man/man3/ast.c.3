@@ -1,0 +1,411 @@
+.TH "src/ast/ast.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/ast/ast.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./parser/parser\&.h'\fP
+.br
+\fC#include '\&.\&./ast/ast\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBnode_input\fP * \fBbuild_input\fP (void)"
+.br
+.RI "build node input "
+.ti -1c
+.RI "struct \fBnode_list\fP * \fBbuild_list\fP (void)"
+.br
+.RI "build node list "
+.ti -1c
+.RI "struct \fBnode_and_or\fP * \fBbuild_and_or_final\fP (bool is_and, struct \fBnode_pipeline\fP *left, struct \fBnode_pipeline\fP *right)"
+.br
+.RI "build node and_or_final "
+.ti -1c
+.RI "struct \fBnode_and_or\fP * \fBbuild_and_or_merge\fP (bool is_and, struct \fBnode_and_or\fP *left, struct \fBnode_pipeline\fP *right)"
+.br
+.RI "build node_and_or_merge "
+.ti -1c
+.RI "struct \fBnode_pipeline\fP * \fBbuild_pipeline\fP (bool is_not)"
+.br
+.RI "build node pipeline "
+.ti -1c
+.RI "struct \fBnode_command\fP * \fBbuild_command\fP (void)"
+.br
+.RI "build command "
+.ti -1c
+.RI "struct \fBnode_simple_command\fP * \fBbuild_simple_command\fP (void)"
+.br
+.RI "build simple command "
+.ti -1c
+.RI "struct \fBnode_shell_command\fP * \fBbuild_shell_command\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build shell command "
+.ti -1c
+.RI "struct \fBnode_funcdec\fP * \fBbuild_funcdec\fP ()"
+.br
+.RI "build node funcdec "
+.ti -1c
+.RI "struct \fBnode_redirection\fP * \fBbuild_redirection\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build node redirection "
+.ti -1c
+.RI "struct \fBnode_prefix\fP * \fBbuild_prefix\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build node prefix "
+.ti -1c
+.RI "struct \fBnode_element\fP * \fBbuild_element\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build node element "
+.ti -1c
+.RI "struct \fBnode_compound_list\fP * \fBbuild_compound_list\fP (void)"
+.br
+.RI "build node compound list "
+.ti -1c
+.RI "struct \fBnode_while\fP * \fBbuild_while\fP (void)"
+.br
+.RI "build node while "
+.ti -1c
+.RI "struct \fBnode_until\fP * \fBbuild_until\fP (void)"
+.br
+.RI "build node until "
+.ti -1c
+.RI "struct \fBnode_case\fP * \fBbuild_case\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build node case "
+.ti -1c
+.RI "struct \fBnode_if\fP * \fBbuild_if\fP (void)"
+.br
+.RI "build node if "
+.ti -1c
+.RI "struct \fBnode_for\fP * \fBbuild_for\fP (void)"
+.br
+.RI "build node for "
+.ti -1c
+.RI "struct \fBnode_else_clause\fP * \fBbuild_else_clause\fP (struct \fBparser\fP *\fBparser\fP)"
+.br
+.RI "build node else clause "
+.ti -1c
+.RI "struct \fBnode_do_group\fP * \fBbuild_do_group\fP (void)"
+.br
+.RI "build do group "
+.ti -1c
+.RI "struct \fBnode_case_clause\fP * \fBbuild_case_clause\fP (void)"
+.br
+.RI "build node case clause "
+.ti -1c
+.RI "struct \fBnode_case_item\fP * \fBbuild_case_item\fP (void)"
+.br
+.RI "build node case item "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBnode_and_or\fP* build_and_or_final (bool is_and, struct \fBnode_pipeline\fP * left, struct \fBnode_pipeline\fP * right)"
+
+.PP
+build node and_or_final 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIis_and\fP 
+.br
+\fIleft\fP 
+.br
+\fIright\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_and_or* 
+.RE
+.PP
+
+.SS "struct \fBnode_and_or\fP* build_and_or_merge (bool is_and, struct \fBnode_and_or\fP * left, struct \fBnode_pipeline\fP * right)"
+
+.PP
+build node_and_or_merge 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIis_and\fP 
+.br
+\fIleft\fP 
+.br
+\fIright\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_and_or* 
+.RE
+.PP
+
+.SS "struct \fBnode_case\fP* build_case (struct \fBparser\fP * parser)"
+
+.PP
+build node case 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_case* 
+.RE
+.PP
+
+.SS "struct \fBnode_case_clause\fP* build_case_clause (void)"
+
+.PP
+build node case clause 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_case_clause* 
+.RE
+.PP
+
+.SS "struct \fBnode_case_item\fP* build_case_item (void)"
+
+.PP
+build node case item 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_case_item* 
+.RE
+.PP
+
+.SS "struct \fBnode_command\fP* build_command (void)"
+
+.PP
+build command 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_command* 
+.RE
+.PP
+
+.SS "struct \fBnode_compound_list\fP* build_compound_list (void)"
+
+.PP
+build node compound list 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_compound_list* 
+.RE
+.PP
+
+.SS "struct \fBnode_do_group\fP* build_do_group (void)"
+
+.PP
+build do group 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_do_group* 
+.RE
+.PP
+
+.SS "struct \fBnode_element\fP* build_element (struct \fBparser\fP * parser)"
+
+.PP
+build node element 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_element* 
+.RE
+.PP
+
+.SS "struct \fBnode_else_clause\fP* build_else_clause (struct \fBparser\fP * parser)"
+
+.PP
+build node else clause 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_else_clause* 
+.RE
+.PP
+
+.SS "struct \fBnode_for\fP* build_for (void)"
+
+.PP
+build node for 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_for* 
+.RE
+.PP
+
+.SS "struct \fBnode_funcdec\fP* build_funcdec ()"
+
+.PP
+build node funcdec 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_funcdec* 
+.RE
+.PP
+
+.SS "struct \fBnode_if\fP* build_if (void)"
+
+.PP
+build node if 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_if* 
+.RE
+.PP
+
+.SS "struct \fBnode_input\fP* build_input (void)"
+
+.PP
+build node input 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_input* 
+.RE
+.PP
+
+.SS "struct \fBnode_list\fP* build_list (void)"
+
+.PP
+build node list 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_list* 
+.RE
+.PP
+
+.SS "struct \fBnode_pipeline\fP* build_pipeline (bool is_not)"
+
+.PP
+build node pipeline 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIis_not\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_pipeline* 
+.RE
+.PP
+
+.SS "struct \fBnode_prefix\fP* build_prefix (struct \fBparser\fP * parser)"
+
+.PP
+build node prefix 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_prefix* 
+.RE
+.PP
+
+.SS "struct \fBnode_redirection\fP* build_redirection (struct \fBparser\fP * parser)"
+
+.PP
+build node redirection 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_redirection* 
+.RE
+.PP
+
+.SS "struct \fBnode_shell_command\fP* build_shell_command (struct \fBparser\fP * parser)"
+
+.PP
+build shell command 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIparser\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_shell_command* 
+.RE
+.PP
+
+.SS "struct \fBnode_simple_command\fP* build_simple_command (void)"
+
+.PP
+build simple command 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_simple_command* 
+.RE
+.PP
+
+.SS "struct \fBnode_until\fP* build_until (void)"
+
+.PP
+build node until 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_until* 
+.RE
+.PP
+
+.SS "struct \fBnode_while\fP* build_while (void)"
+
+.PP
+build node while 
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_while* 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

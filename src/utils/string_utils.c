@@ -68,7 +68,7 @@ char *substr(char *src, int pos, int len)
     char *dest = NULL;
     if (len > 0)
     {
-        dest = xcalloc(len + 10, 1);     //memory leaks ici
+        dest = xcalloc(len + 10, 1);
         if (dest != NULL)
             strncat(dest, src + pos, len);
     }

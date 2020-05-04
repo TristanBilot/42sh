@@ -1,0 +1,186 @@
+.TH "src/utils/parser_utils.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/parser_utils.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdbool\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBis_redirection\fP (struct \fBtoken\fP *\fBtoken\fP)"
+.br
+.RI "Return true if the token is a redirection\&. "
+.ti -1c
+.RI "struct \fBnode_prefix\fP * \fBappend_prefix\fP (struct \fBnode_simple_command\fP *ast, struct \fBnode_prefix\fP *prefix)"
+.br
+.RI "Add prefix node to the prefix list of simple command node\&. "
+.ti -1c
+.RI "struct \fBnode_element\fP * \fBappend_element\fP (struct \fBnode_simple_command\fP *ast, struct \fBnode_element\fP *element)"
+.br
+.RI "Add element node to the element list of the simple command node\&. "
+.ti -1c
+.RI "struct \fBnode_redirection\fP * \fBappend_redirection\fP (struct \fBnode_command\fP *ast, struct \fBnode_redirection\fP *redirection)"
+.br
+.RI "Add redirection node to the redirection list of the command node\&. "
+.ti -1c
+.RI "struct \fBrange\fP * \fBappend_value_to_for\fP (struct \fBnode_for\fP *ast, char *value)"
+.br
+.RI "Add new value to the range list of the for node\&. "
+.ti -1c
+.RI "struct \fBword_list\fP * \fBappend_word_list\fP (struct \fBnode_case_item\fP *ast, char *value)"
+.br
+.RI "Add new value to the pipeline list of the case item node\&. "
+.ti -1c
+.RI "enum shell_type \fBget_shell_command_type\fP (int type)"
+.br
+.RI "Get the shell command type object\&. "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBnode_element\fP* append_element (struct \fBnode_simple_command\fP * ast, struct \fBnode_element\fP * element)"
+
+.PP
+Add element node to the element list of the simple command node\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIelement\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_element* 
+.RE
+.PP
+
+.SS "struct \fBnode_prefix\fP* append_prefix (struct \fBnode_simple_command\fP * ast, struct \fBnode_prefix\fP * prefix)"
+
+.PP
+Add prefix node to the prefix list of simple command node\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIprefix\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_prefix* 
+.RE
+.PP
+
+.SS "struct \fBnode_redirection\fP* append_redirection (struct \fBnode_command\fP * ast, struct \fBnode_redirection\fP * redirection)"
+
+.PP
+Add redirection node to the redirection list of the command node\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIredirection\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct node_redirection* 
+.RE
+.PP
+
+.SS "struct \fBrange\fP* append_value_to_for (struct \fBnode_for\fP * ast, char * value)"
+
+.PP
+Add new value to the range list of the for node\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIvalue\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct range* 
+.RE
+.PP
+
+.SS "struct \fBword_list\fP* append_word_list (struct \fBnode_case_item\fP * ast, char * value)"
+
+.PP
+Add new value to the pipeline list of the case item node\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIvalue\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct word_list* 
+.RE
+.PP
+
+.SS "enum shell_type get_shell_command_type (int type)"
+
+.PP
+Get the shell command type object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+enum shell_type 
+.RE
+.PP
+
+.SS "bool is_redirection (struct \fBtoken\fP * token)"
+
+.PP
+Return true if the token is a redirection\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItoken\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false
+.RE
+.PP
+Return true if the token is a redirection\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fItoken\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

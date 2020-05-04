@@ -1,0 +1,147 @@
+.TH "src/utils/string_utils.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/string_utils.h \- String usage functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_STR_LEN\fP   256"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBtype_to_str\fP (int type)"
+.br
+.RI "Return the associated string of a token type\&. "
+.ti -1c
+.RI "int \fBis\fP (const char *a, const char *b)"
+.br
+.RI "Return true is a == b\&. "
+.ti -1c
+.RI "int \fBis_number\fP (char c)"
+.br
+.RI "Return true is c is a number\&. "
+.ti -1c
+.RI "char * \fBsubstr\fP (char *src, int pos, int len)"
+.br
+.RI "Return the substring between pos and len - 1\&. "
+.ti -1c
+.RI "void \fBerror\fP (char *msg)"
+.br
+.RI "Print an error in stderr when an invalid token appeared\&. "
+.ti -1c
+.RI "char * \fBmy_strdup\fP (const char *c)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+String usage functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_STR_LEN   256"
+
+.SH "Function Documentation"
+.PP 
+.SS "void error (char * msg)"
+
+.PP
+Print an error in stderr when an invalid token appeared\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImsg\fP the message to display\&. 
+.RE
+.PP
+
+.SS "int is (const char * a, const char * b)"
+
+.PP
+Return true is a == b\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP the first string to be compared\&. 
+.br
+\fIb\fP the decond string to be compared\&. 
+.RE
+.PP
+
+.SS "int is_number (char c)"
+
+.PP
+Return true is c is a number\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP the caracter\&. 
+.RE
+.PP
+
+.SS "char* my_strdup (const char * c)"
+
+.SS "char* substr (char * src, int pos, int len)"
+
+.PP
+Return the substring between pos and len - 1\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsrc\fP the string\&. 
+.br
+\fIpos\fP the starting index\&. 
+.br
+\fIlen\fP the ending index\&. 
+.RE
+.PP
+
+.SS "char* type_to_str (int type)"
+
+.PP
+Return the associated string of a token type\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP the enum value of the token\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

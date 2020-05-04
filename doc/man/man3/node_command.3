@@ -1,0 +1,62 @@
+.TH "node_command" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+node_command
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ast\&.h>\fP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBcommand\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBcommand_token\fP { \fBSIMPLE_COMMAND\fP, \fBSHELL_COMMAND\fP, \fBFUNCDEC\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "enum \fBnode_command::command_token\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "union \fBnode_command::command\fP \fBcommand\fP"
+.br
+.ti -1c
+.RI "struct \fBnode_redirection\fP * \fBredirections\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBcommand_token\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISIMPLE_COMMAND \fP\fP
+.TP
+\fB\fISHELL_COMMAND \fP\fP
+.TP
+\fB\fIFUNCDEC \fP\fP
+.SH "Field Documentation"
+.PP 
+.SS "union \fBnode_command::command\fP  \fBcommand\fP"
+
+.SS "struct \fBnode_redirection\fP* redirections"
+
+.SS "enum \fBnode_command::command_token\fP  type"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

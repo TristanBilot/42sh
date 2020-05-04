@@ -4,9 +4,8 @@
 
 Test(var_storage, basic_operation)
 {
-    new_var_storage();
     new_garbage_collector();
-
+    new_var_storage();
     put_var("key", "val");
     struct variable *var = get_var("key");
     cr_assert(var != NULL);
@@ -15,24 +14,27 @@ Test(var_storage, basic_operation)
     free_var_storage();
     free_garbage_collector();
     free(garbage_collector);
+    
 }
 
 Test(var_storage, unknown_key)
 {
-    new_var_storage();
     new_garbage_collector();
+    new_var_storage();
 
     struct variable *var = get_var("key");
     cr_assert(!var);
     free_var_storage();
     free_garbage_collector();
     free(garbage_collector);
+    
+    
 }
 
 Test(var_storage, hard_operations)
 {
-    new_var_storage();
     new_garbage_collector();
+    new_var_storage();
     struct variable *var = NULL;
 
     put_var("key", "val");
@@ -48,12 +50,14 @@ Test(var_storage, hard_operations)
     free_var_storage();
     free_garbage_collector();
     free(garbage_collector);
+    
+    
 }
 
 Test(var_storage, types)
 {
-    new_var_storage();
     new_garbage_collector();
+    new_var_storage();
     struct variable *var = NULL;
 
     put_var("keyX", "val");
@@ -94,4 +98,6 @@ Test(var_storage, types)
     free_var_storage();
     free_garbage_collector();
     free(garbage_collector);
+    
+    
 }

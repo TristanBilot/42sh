@@ -318,7 +318,7 @@ Test(lexer, semicolon)
     cr_assert(peek(lexer4)->type == TOK_WORD);
     cr_assert(is(pop(lexer4)->value, "er"));
     cr_assert(pop(lexer4)->type == KW_DSEMI);
-    cr_assert(pop(lexer4)->type == TOK_WORD);
+    cr_assert(pop(lexer4)->type == KW_IN);
     cr_assert(pop(lexer4)->type == TOK_WORD);
     cr_assert(pop(lexer4)->type == KW_DSEMI);
     free_garbage_collector();
@@ -473,6 +473,12 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer6)->type == TOK_WORD);
     free_garbage_collector();
 
+    free(garbage_collector);
+}
+
+Test(lexer, parenthesis2)
+{
+    new_garbage_collector();
     char input7[] = "(if case b then(echo toto))";
     struct lexer *lexer7 = new_lexer(input7);
     cr_assert(pop(lexer7)->type == TOK_LPAREN);
@@ -530,17 +536,6 @@ Test(lexer, if_test)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     free_garbage_collector();
 
-    char input2[] = "if\na\nthen\nb";
-    struct lexer *lexer2 = new_lexer(input2);
-    cr_assert(pop(lexer2)->type == KW_IF);
-    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
-    cr_assert(pop(lexer2)->type == TOK_WORD);
-    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
-    cr_assert(pop(lexer2)->type == KW_THEN);
-    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
-    cr_assert(pop(lexer2)->type == TOK_WORD);
-    free_garbage_collector();
-
     char input3[] = "\nif\na\n\n\nthen\nb";
     struct lexer *lexer3 = new_lexer(input3);
     cr_assert(pop(lexer3)->type == TOK_NEWLINE);
@@ -568,6 +563,22 @@ Test(lexer, if_test)
     cr_assert(pop(lexer5)->type == TOK_WORD);
     cr_assert(pop(lexer5)->type == TOK_NEWLINE);
     cr_assert(pop(lexer5)->type == TOK_EOF);
+    free_garbage_collector();
+    free(garbage_collector);
+}
+
+Test(lexer, if_test2)
+{
+    new_garbage_collector();
+    char input2[] = "if\na\nthen\nb";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == KW_IF);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == KW_THEN);
+    cr_assert(pop(lexer2)->type == TOK_NEWLINE);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
 }

@@ -1,0 +1,55 @@
+.TH "node_list" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+node_list
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ast\&.h>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBtype\fP { \fBSEMI\fP, \fBSEPAND\fP, \fBNONE\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "struct \fBnode_and_or\fP * \fBand_or\fP"
+.br
+.ti -1c
+.RI "struct \fBnode_list\fP * \fBnext_sibling\fP"
+.br
+.ti -1c
+.RI "enum \fBnode_list::type\fP \fBtype\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBtype\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISEMI \fP\fP
+.TP
+\fB\fISEPAND \fP\fP
+.TP
+\fB\fINONE \fP\fP
+.SH "Field Documentation"
+.PP 
+.SS "struct \fBnode_and_or\fP* and_or"
+
+.SS "struct \fBnode_list\fP* next_sibling"
+
+.SS "enum \fBnode_list::type\fP  \fBtype\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

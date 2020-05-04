@@ -1,3 +1,14 @@
+/**
+** \file parser.h
+** \author Team 
+** \brief Parsing functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef PARSER_H
 #define PARSER_H
 

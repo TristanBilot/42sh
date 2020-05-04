@@ -1,0 +1,61 @@
+.TH "node_else_clause" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+node_else_clause
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ast\&.h>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBelse_clause\fP { \fBELIF\fP, \fBELSE\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "enum \fBnode_else_clause::else_clause\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "union {"
+.br
+.ti -1c
+.RI "   struct \fBnode_if\fP * \fBelif\fP"
+.br
+.ti -1c
+.RI "   struct \fBnode_compound_list\fP * \fBelse_body\fP"
+.br
+.ti -1c
+.RI "} \fBclause\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBelse_clause\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIELIF \fP\fP
+.TP
+\fB\fIELSE \fP\fP
+.SH "Field Documentation"
+.PP 
+.SS "union { \&.\&.\&. }   clause"
+
+.SS "struct \fBnode_if\fP* elif"
+
+.SS "struct \fBnode_compound_list\fP* else_body"
+
+.SS "enum \fBnode_else_clause::else_clause\fP  type"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

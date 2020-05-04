@@ -5,18 +5,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
-#include<signal.h>
 #include <stdbool.h>
+#include <err.h>
 #include "commands.h"
 
 extern char **environ;
-
-/*void sig_usr(int signo)
-{
-    if(signo == SIGINT)
-    printf("Signal caught!");
-    return;
-}*/
 
 static void fill_echo_tab(struct echo_tab tab[10])
 {
@@ -42,6 +35,14 @@ static void fill_echo_tab(struct echo_tab tab[10])
     tab[8].corresp = '\v';
 }
 
+void print_args(char **args)
+{
+    int i = 0;
+    while (args[i])
+    {
+        printf("args %d : %s\n", i, args[i++]);
+    }
+}
 int	print_without_sp(char *c)
 {
     int i = 0;
@@ -148,30 +149,56 @@ void cd(char **args)
 
 void export(char **args)
 {
-    if (!args[1])
+    bool p = false;
+    bool n = false;
+    if (!args[0])
     {
         for (char **env = environ; *env != NULL; env++)
             printf("%s\n", *env);
+        return;
     }
-    else if (strcmp(args[1], "-p") == 0)
+    else if (args[0][0] ==  '-')
     {
-        if (args[2])
-            printf("%s\n", getenv(args[2]));
+        for (int i = 1; args[0][i] && (args[0][i] == 'p' || args[0][i] == 'n'); i++)
+        {
+            if (args[0][i] == 'p')
+                p = true;
+            if (args[0][i] == 'n')
+                n = true;
+        }
+    }
+    if (p && n)
+        err(1, "export: bad option\n");
+    else if (p)
+    {
+        if (args[1])
+        {
+            printf("%s\n", getenv(args[1]));
+        }
         else
         {
             for (char **env = environ; *env != NULL; env++)
                 printf("export %s\n", *env);
         }
     }
-    else
+    else if (n)
     {
-        putenv(args[1]);
+        if (!args[1])
+            err(1, "export: bad option\n");
+        unsetenv(args[1]);
     }
+    else
+        putenv(args[0]);
 }
 
 void exit_shell(char **args)
 {
-    (void)args;
-    //if (signal(SIGINT, sig_usr) == SIG_ERR)
-    //    printf("Signal processed ");
+    if (args[0])
+    {
+        if (args[1])
+            err(1, "exit: too many arguments\n");
+        exit(atoi(args[1]));
+    }
+    else
+        exit(0);
 }

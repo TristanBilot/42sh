@@ -1,3 +1,13 @@
+/**
+** \file buffer.h
+** \author Team 
+** \brief Buffer structure and functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
 #ifndef BUFFER_H
 #define BUFFER_H
 

@@ -21,21 +21,16 @@
 #include "./var_storage/var_storage.h"
 #include "./expansion/expansion.h"
 #include "./garbage_collector/garbage_collector.h"
+#include "../history/history.h"
 
-static struct option long_options[] =
-{
-    {"c", required_argument, 0, 'c'},
-    {"ast-printer", no_argument, 0, 'a'},
-    {"norc", no_argument, 0, 'n'},
-    {0, 0, 0, 0}
-};
+struct option_sh *option = NULL;
 
-void  INThandler(int sig)
+/*void  INThandler(int sig)
 {
     signal(sig, SIGINT);
     printf("\n");
     exit(0);
-}
+}*/
 
 void print_usage()
 {
@@ -56,35 +51,53 @@ void print_prompt()
     free(buff);
 }
 
+void sighandler(int signum)
+{
+    free_garbage_collector();
+    printf("\n");
+    init_42sh_process(option);
+}
+
 void init_42sh_process(struct option_sh *option)
 {
-    char * line = NULL;
-    size_t len = 0;
-    ssize_t read;
+    signal(SIGINT, sighandler);
+
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
+    // struct history *history = open_history();
     if (option->cmd)
     {
         lexer = new_lexer(option->cmd);
         ast = parse(lexer);
         exec_node_input(ast);
-    }
-    print_prompt();
-    while ((read = getline(&line, &len, stdin)) != -1)
-    {
-        lexer = new_lexer(line);
-        ast = parse(lexer);
-
-        exec_node_input(ast);
-            //printf("Error on exec ast.\n");
         if (option->print_ast_flag)
             print_ast(ast);
-
         free_garbage_collector();
-        print_prompt();
     }
-    if (line)
-        free(line);
+    else
+    {
+        char * line = NULL;
+        size_t len = 0;
+        ssize_t read;
+        print_prompt();
+        while ((read = getline(&line, &len, stdin)) != -1)
+        {
+            // append_history_command(history, line);
+            // write_next_history(history);
+            lexer = new_lexer(line);
+            ast = parse(lexer);
+            exec_node_input(ast);
+
+            if (option->print_ast_flag)
+                print_ast(ast);
+
+            // free_garbage_collector();
+            print_prompt();
+        }
+        if (line)
+            free(line);
+        printf("\n");
+    }
 }
 
 static struct option_sh *init_option_sh()
@@ -98,10 +111,17 @@ static struct option_sh *init_option_sh()
 
 int main(int ac, char **av)
 {
+    struct option long_options[] =
+    {
+        {"c", required_argument, 0, 'c'},
+        {"ast-printer", no_argument, 0, 'a'},
+        {"norc", no_argument, 0, 'n'},
+        {0, 0, 0, 0}
+    };
     int option_index = 0;
     int opt = -1;
     new_garbage_collector();
-    struct option_sh *option = init_option_sh();
+    option = init_option_sh();
     new_var_storage();
     new_program_data_storage(ac, av);
     srand(time(NULL));
@@ -129,6 +149,7 @@ int main(int ac, char **av)
     }
     init_42sh_process(option);
     int ret = atoi(program_data->last_cmd_status);
+    free_garbage_collector();
     free(option);
     free_var_storage();
     free_program_data_storage();

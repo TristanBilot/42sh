@@ -1,3 +1,14 @@
+/**
+** \file lex_evaluation.h
+** \author Team 
+** \brief Unit lexing functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef LEX_EVALUATION_H
 #define LEX_EVALUATION_H
 
@@ -65,23 +76,6 @@ struct token *lex_assignment_word(char *c, size_t *i);
 **\return struct token* 
 */
 struct token *lex_assignment_value(char *c, size_t *i);
-/**
-**\brief Get the previous separator index object
-**
-**\param c 
-**\param j 
-**\return size_t 
-*/
-size_t get_previous_separator_index(const char *c, size_t j);
-/**
-**\brief Get the next close curl index object
-**
-**\param c 
-**\param j 
-**\return size_t 
-*/
-size_t get_next_close_curl_index(const char *c, size_t j);
-
 /**
 ** \brief Return the associated keyword of a string token.
 **

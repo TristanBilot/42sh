@@ -1,3 +1,14 @@
+/**
+** \file ast_print_dot.h
+** \author Team 
+** \brief Dot file usage functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef AST_PRINT_DOT_H
 #define AST_PRINT_DOT_H
 

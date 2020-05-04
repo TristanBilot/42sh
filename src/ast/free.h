@@ -1,3 +1,14 @@
+/**
+** \file free.h
+** \author Team
+** \brief Free functions
+** \version 0.1
+** \date 2020-05-03
+** 
+** \copyright Copyright (c) 2020
+** 
+*/
+
 #ifndef FREE_H
 #define FREE_H
 

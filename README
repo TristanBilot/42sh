@@ -1,0 +1,49 @@
+###############################################################################
+Project :   42sh
+Authors :   Bilot Tristan
+            Delfau Nora
+            Salemi Enzar
+            Thambithurai Madushan
+Brief :     The 42sh is a simplified shell based on POSIX Bash.
+###############################################################################
+
+USAGE
+Here, we define the different ways to use our project from the 42sh directory.
+
+* Build the shell : 
+        1-   ./build.sh
+        2-   mkdir build && cd build && cmake . && make
+        3-   cmake . && make        (not recommended because of trash files)
+
+* Start the 42sh shell :
+        1-   ./build/42sh
+        2-   ./42sh                 (if shell built with the 3rd way)
+
+* Stop the 42sh shell :
+        1-   Ctrl + D
+
+* Generate Doxygen documentations :
+        1-   ./build.sh doc         (this will build/rebuild the 42sh before)
+        2-   cd build && make doc   (if the shell is already built)
+        3-   ./documentation.sh     (if the shell is already built)
+        4-   make doc               (if shell built with the 3rd way)
+
+* Read Doxygen documentaions :
+        --   evince doc/latex/refman.pdf
+        --   cd doc/man/man3 && man ./[SOURCE FILE NAME].3
+        --   firefox doc/html/index.html
+
+* Execute the python testsuite :
+        1-   ./build.sh check       (this will build/rebuild the 42sh before)
+        2-   cd build && make check (if the shell is already built)
+        3-   make check             (if shell built with the 3rd way)
+
+* Start tests :
+        --   ./(build/)tests_lexer
+        --   ./(build/)tests_parser
+        --   ./(build/)tests_storage
+
+* Clean the project
+        1-   ./clean.sh             (for any kind of build)
+        2-   cd build && make clean
+        3-   make clean             (if shell built with the 3rd way)
