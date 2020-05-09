@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -f /etc/42shrc ]; then
+    source /etc/42shrc
+fi
+if [ -f ~/.42shrc ]; then
+    source ~/.42shrc
+fi

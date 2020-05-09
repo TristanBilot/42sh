@@ -280,3 +280,53 @@
     checks:
       - returncode
       - stdout
+
+
+
+  ####################################################### TEST FOR ########################################################
+- description:
+  - name : FOR
+  - stdin: for i in 1 2 3; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in 1 2 3; do echo $i; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in range 1 2 3; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in range 1 2 3; do echo $i; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for animal in lion cat dog elephant rat; do echo $animal; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for animal in lion cat dog elephant rat; do echo $animal;echo number; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in {0..9}; do echo toto;done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in {0..9}; do echo $i;done
+    checks:
+      - returncode
+      - stdout
+  - stdin: for i in {0.9}; do echo $i;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: for i in {0..9}}; do echo $i;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  
+  

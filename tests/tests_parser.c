@@ -128,6 +128,7 @@ Test(parser, rule_for)
     cr_assert(success("for i; do echo test; done"));
     cr_assert(success("for i;\n\n\n do echo test\n done"));
     cr_assert(success("for i in range;\n\n\n do echo test\n done"));
+    cr_assert(success("for i in 1 2 3 4 5;\n\n\n do echo test\n done"));
     cr_assert(success("for i in range;\n\n\n do echo test; echo tata\necho toto; done"));
     cr_assert(fail("for i; do echo test done"));
     cr_assert(fail("for i;\n\n\n do echo test done"));

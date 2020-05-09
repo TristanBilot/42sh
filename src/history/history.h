@@ -12,8 +12,19 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
+// #define _XOPEN_SOURCE 700
+
+#ifndef _BSD_SOURCE
+#define _BSD_SOURCE
+#endif
+
+#ifndef _DEFAULT_SOURCE
+#define _DEFAULT_SOURCE
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h>
 
 #define DEFAULT_HISTORY_FILE_NAME "history"
 #define HISTORY_MAX 2000
@@ -27,8 +38,8 @@ struct history
 
 struct history *open_history(void);
 void append_history_command(struct history *history, char *cmd);
-void write_next_history(struct history *history);
-void write_prev_history(struct history *history);
+char *write_next_history(struct history *history);
+char *write_prev_history(struct history *history);
 
 void flush_stdin(void);
 void write_stdin(char *cmd);
@@ -36,5 +47,10 @@ char *get_next_history(struct history *history);
 char *get_prev_history(struct history *history);
 void load_history(struct history *history);
 void free_history(struct history *history);
+
+void reset_terminal_mode();
+void set_conio_terminal_mode();
+int kbhit();
+int getch();
 
 #endif /* HISTORY_H */

@@ -373,7 +373,7 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             append_element(new, e);
             //next_token(parser);
         }
-        else if (get_next_token(parser) && is_type(get_next_token(parser), TOK_WORD))
+        else if (get_next_token(parser) && (is_type(get_next_token(parser), TOK_WORD) || is_redirection(get_next_token(parser)) || is_type(get_next_token(parser), TOK_IONUMBER)))
         {
             // printf("export juste avec nom variable\n");
             next_token(parser);
@@ -548,7 +548,7 @@ bool parse_prefix(struct parser *parser, struct node_prefix **ast)
         *ast = new; //
         return false;
     }
-    if (is_type(parser->current_token, TOK_IONUMBER))
+    if (is_redirection(parser->current_token) ||is_type(parser->current_token, TOK_IONUMBER))
     {
         new->type = REDIRECTION;//(*ast)->type = REDIRECTION;
         if (parse_redirection(parser, &(new->prefix.redirection)))//&((*ast)->prefix.redirection)

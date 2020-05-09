@@ -1,5 +1,6 @@
 rm -rf build
 mkdir build
+cp load_ressource build/
 cd build
 cmake ..
 make

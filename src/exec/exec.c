@@ -2,26 +2,29 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 
 #include "../exec/exec.h"
 #include "../utils/string_utils.h"
 #include "../var_storage/var_storage.h"
 #include "../expansion/expansion.h"
 #include "../exec/commands.h"
-#include <errno.h>
 
 #define READ_END 0
 #define WRITE_END 1
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
-#define DEBUG_FLAG true
+
+#define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
-                        printf("%s\n", msg);
+    printf("%s\n", msg);
+
+
 
 const struct commands cmd[4] = {
     {"cd", &cd}, 
-    {"echo", &echo}, //pk commenté ?
-    {"export", &export}, 
+    {"echo", &echo}, //laissé en commenté
+    {"export", &export},
     {NULL, NULL}};
 
 static bool extra_command(char **args, char *cmd_name)
@@ -41,16 +44,28 @@ bool dup_file(char *file, char *flag, int io)
 {
     FILE *f = fopen(file, flag);
     int out = fileno(f);
+    // printf("good\n");
     if (out == -1)
     {
         return true;
     }
+    // printf("good2\n");
+    // printf("iO : %d\n", io);
+    // printf("OUt : %d\n", out);
     int fd = dup2(out, io);
-    if (fd == -1)
+    if (fd < 0)
     {
-        return true;
+        close(out);
     }
+    // if (fd == -1)
+    // {
+    //     printf("error");
+    //     perror("error");
+    //     return true;
+    // }
+    close(fd);
     close(out);
+    fclose(f);
     return false; // provisoire
 }
 
@@ -58,9 +73,15 @@ bool manage_redirections(struct tab_redi tab)
 {
     // if(!tab)
     //     return true;
-    if (!is(tab.great.out, ""))
+    if (!is(tab.great.out, "")){
         if (dup_file(tab.great.out, "w+", STDOUT_FILENO))
             return true;
+        else
+        {
+            printf("dup_file good ! \n");
+            fclose(stdout);
+        }
+    }
     if (!is(tab.great.in, ""))
         if (dup_file(tab.great.in, "w+", STDIN_FILENO))
             return true;
@@ -91,12 +112,6 @@ bool manage_redirections(struct tab_redi tab)
 bool execute(char **args, struct tab_redi tab)
 {
     DEBUG("EXECUTE")
-    int i = 0;
-    while(args[i])
-    {
-        printf("TOUT LES ARGUMENTS : %d : %s", i, args[i]);
-        i++;
-    }
     if (manage_redirections(tab))
         return true;
     if ((execvp(args[0], args)) == -1)
@@ -112,21 +127,29 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     DEBUG("EXECUTE WITH FORK")
     int status = 0;
     int child = 0;
+    // int i = 0;
+    // while (args[i])
+    // {
+    //     printf("args : %s\n", args[i]);
+    //     i++;
+    // }
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell(args);
     if ((child = fork()) == -1)
         return true;
     if (child == 0)
     {
+        if (manage_redirections(tab))
+            return true;
+        printf("pass manage redirection\n");
         if (args[0] == NULL)
         {
             if (!extra_command(args, cmd_name))
                 return false;
         }
-        if (manage_redirections(tab))
-            return true;
         if (!extra_command(args, cmd_name))
             return false;
+            
         if ((execvp(args[0], args)) == -1)
         {
             err(1, "command not found: %s\n", args[0]);
@@ -169,12 +192,7 @@ bool exec_node_list(struct node_list *ast)
     int state = 0;
     while (c->next_sibling)
     {
-        if (c->next_sibling->next_sibling)
-        {
-            state = exec_node_and_or(c->next_sibling->and_or);
-        }
-        else
-            state = exec_node_and_or(c->next_sibling->and_or);
+        state = exec_node_and_or(c->next_sibling->and_or);
         c = c->next_sibling;
     }
     return state; // provisoire
@@ -459,14 +477,13 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     char *args[256];
     while (p)
     {
-        printf("VALUE : %s\n", p->prefix.assigment_word->value);
+        printf("prefix\n");
         exec_node_prefix(p);
         p = p->next;
     }
 
     if (e) /* link the root node to the first element (ex: echo) */
     {
-        printf("OK\n\n\n\n\n\n");
         int size = 0;
         if (e->type == TOKEN_REDIRECTION)
         {
@@ -483,10 +500,8 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
             else
             {
-                printf("var expansion\n");
                 char *expanded_word = substitute(e->element.word);
                 args[size++] = expanded_word;
-                printf("args 0 : %s\n", expanded_word);
                 // args[size++] = e->element.word;
             }
         }
@@ -496,47 +511,40 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         if (ast->to_export)
             ret = with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
         else
+        {
             ret = with_fork ? execute_with_fork(args, tab, args[0]) : execute(args, tab);
+        }
         return ret;
     }
     if (ast->prefixes != NULL && ast->to_export == true)
     {
-        printf("test1\n");
         struct variable *tmp = NULL;
         int i = 0;
-        char str[256];
+        
+        //char str[256];
         struct node_prefix *prefix = ast->prefixes;
         while(prefix)
         {
             if (var_exists(prefix->prefix.assigment_word->variable_name))
             {
-                printf("test2\n");
                 tmp = get_var(prefix->prefix.assigment_word->variable_name);
-                //str = tmp->key;
-                strcpy(str, tmp->key);
+                char *str = xmalloc((strlen(tmp->key) + 1 + strlen(tmp->value) + 1) * sizeof(char));
+                strcat(str, tmp->key);
                 strcat(str, "=");
                 strcat(str, tmp->value);
-                //strcpy(args[i], str);
                 args[i] = str;
-                //args[i] = str[0];
-                printf("yolo\n");
                 i += 1;
-                str[0] = '\0';
-                printf("yolo2\n");
-
             }
 
             prefix = prefix->next;
         }
-        printf("yolo3\n");
-        return with_fork ? execute_with_fork(args, tab, args[0]) : execute(args, tab);
+        i = 0;
+        return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
     }
     args[0] = NULL;
     if (ast->to_export){
-        printf("ici here line 529\n");
         return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
     }
-    printf("ici here ligne 532\n");
     return false; // provisoire
 }
 
@@ -562,7 +570,7 @@ bool exec_node_shell_command(struct node_shell_command *ast)
             exec_node_while(ast->shell.rule_while);
         if (ast->shell_type == FOR)
         {
-            printf("enter for\n");
+            // printf("enter for\n");
             exec_node_for(ast->shell.rule_for);
         }
         if (ast->shell_type == UNTIL)
@@ -701,9 +709,17 @@ bool exec_node_while(struct node_while *ast)
     // fprintf(f, "\tnode_%p [label=WHILE];\n", (void *)ast);
     // if (node)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    exec_node_compound_list(ast->condition);
-    exec_node_do_group(ast->body);
-    return false; // provisoire
+    bool boolean = true;
+    while (boolean)
+    {
+        boolean = !(exec_node_compound_list(ast->condition));
+        if (boolean)
+            boolean = !(exec_node_do_group(ast->body));
+        else
+            boolean = false;
+
+    }
+    return boolean ? false : true;
 }
 bool exec_node_until(struct node_until *ast)
 {
@@ -711,9 +727,17 @@ bool exec_node_until(struct node_until *ast)
     // fprintf(f, "\tnode_%p [label=UNTIL];\n", (void *)ast);
     // if (node)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    exec_node_compound_list(ast->condition);
-    exec_node_do_group(ast->body);
-    return false; // provisoire
+    bool boolean = true;
+    while (boolean)
+    {
+        boolean = !(exec_node_compound_list(ast->condition));
+        if (boolean)
+            boolean = exec_node_do_group(ast->body);
+        else
+            boolean = false;
+
+    }
+    return boolean ? false : true;
 }
 bool exec_node_case(struct node_case *ast)
 {
@@ -753,7 +777,11 @@ bool exec_node_elif(struct node_if *ast)
         return exec_node_else_clause(ast->else_clause);
     return false;
 }
-
+/*
+* for i in 1 2 3 4 5
+* for i in $(command)
+* for i in {1..5}
+*/
 bool exec_node_for(struct node_for *ast)
 {
     DEBUG("FOR")
@@ -763,16 +791,28 @@ bool exec_node_for(struct node_for *ast)
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) ast->variable_name, ast->variable_name);
     // fprintf(f, "\tnode_%p -> node_%p;\n", (void *) ast, (void *) ast->variable_name);
     struct range *r = ast->range;
+    int len_range = 0;
     // struct range *tmp = (void *) ast;
+    int state = false;
     while (r)
     {
-        // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) r, r->value);
-        // fprintf(f, "\tnode_%p -> node_%p;\n", (void*) tmp, (void *) r);
-        // tmp = r;
+        // printf("in the loop perfom range\n");
+        if (len_range == 0)
+        {
+            state = perform_for_range(r, ast);
+            if (state == -1)     // error
+                return true; // sale enflure
+            if (state == 1) // success
+                return false;
+        }
+
+        len_range++;
         r = r->next;
     }
-    exec_node_do_group(ast->body);
-    return false; // provisoire
+    // printf("here\n");
+    return perform_for_enumeration(ast, len_range);
+    //exec_node_do_group(ast->body);
+    //return false; // provisoire
 }
 bool exec_node_else_clause(struct node_else_clause *ast)
 {

@@ -1,9 +1,11 @@
 #include <criterion/criterion.h>
 #include "history/history.h"
 #include "utils/string_utils.h"
+#include "garbage_collector/garbage_collector.h"
 
 Test(history, basic)
 {
+    new_garbage_collector();
     struct history *history = open_history();
     append_history_command(history, "ls");
     append_history_command(history, "pwd");
@@ -15,5 +17,6 @@ Test(history, basic)
 
     cr_assert(is(get_prev_history(history), "pwd"));
     cr_assert(is(get_prev_history(history), "echo -e wait"));
-    free_history(history);
+    free_garbage_collector();
+    free(garbage_collector);
 }

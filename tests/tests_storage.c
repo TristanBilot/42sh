@@ -41,7 +41,7 @@ Test(var_storage, hard_operations)
     put_var("key", "123");
     var = get_var("key");
     cr_assert(is(var->value, "123"));
-    cr_assert(var->type == VAR_INT);
+    cr_assert(var->type == VAR_INT); 
 
     put_var("key2", "");
     var = get_var("key2");
@@ -50,8 +50,6 @@ Test(var_storage, hard_operations)
     free_var_storage();
     free_garbage_collector();
     free(garbage_collector);
-    
-    
 }
 
 Test(var_storage, types)

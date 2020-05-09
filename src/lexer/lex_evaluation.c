@@ -88,10 +88,10 @@ struct token *lex_uni_character(char *c, size_t i)
         return new_token_type(TOK_SEMI);
     if (c[i] == '\n')
         return new_token_type(TOK_NEWLINE);
-    if (c[i] == '{')
-        return new_token_type(TOK_LCURL);
-    if (c[i] == '}')
-        return new_token_type(TOK_RCURL);
+    // if (c[i] == '{')
+    //     return new_token_type(TOK_LCURL);
+    // if (c[i] == '}')
+    //     return new_token_type(TOK_RCURL);
     if (c[i] == '(')
         return new_token_type(TOK_LPAREN);
     if (c[i] == ')')

@@ -1,19 +1,23 @@
 #include "var_storage.h"
+#include <stdio.h>
 
 struct var_storage *new_var_storage(void)
 {
-    var_storage = xmalloc(sizeof(struct var_storage));
-    var_storage->variables = xcalloc(STORAGE_SIZE, sizeof(struct variable));
+    var_storage = malloc(sizeof(struct var_storage));
+    var_storage->variables = calloc(STORAGE_SIZE, sizeof(struct variable));
     return var_storage;
 }
 
 void free_var_storage(void)
 {
-    // for (int i = 0; i < STORAGE_SIZE; i++)
-    //     if (var_storage->variables[i])
-    //         free(var_storage->variables[i]);
-    // free(var_storage->variables);
-    // free(var_storage);
+    for (int i = 0; i < STORAGE_SIZE; i++)
+        if (var_storage->variables[i])
+        {
+            free(var_storage->variables[i]->value);
+            free(var_storage->variables[i]);
+        }
+    free(var_storage->variables);
+    free(var_storage);
 }
 
 int hash(char *key)
@@ -46,18 +50,25 @@ bool put_var(char *key, char *val)
     if (var_exists(key))
     {
         var_storage->variables[h]->value = \
-            xrealloc(var_storage->variables[h]->value, strlen(val) + 1);
+            realloc(var_storage->variables[h]->value, strlen(val) + 1);
         strcpy(var_storage->variables[h]->value, val);
         var_storage->variables[h]->type = get_var_type(val);
         return var_storage->variables[h]->type != VAR_ERROR;
     }
-    struct variable *new = xmalloc(sizeof(struct variable));
-    new->value = xmalloc(strlen(val) + 1);
+    struct variable *new = malloc(sizeof(struct variable));
+    new->value = malloc(strlen(val) + 1);
     strcpy(new->value, val);
     new->key = key;
     new->type = get_var_type(val);
     var_storage->variables[h] = new;
     return new->type != VAR_ERROR;
+}
+
+void del_var(char *key)
+{
+    int h = hash(key);
+    if (var_storage->variables[h])
+        var_storage->variables[h] = NULL;
 }
 
 struct variable *get_var(char *key)

@@ -57,7 +57,9 @@ int	print_without_sp(char *c)
         {
             if (c[i] == '\\' && tab[index_tab].name == c[i + 1])
             {
-                printf("%c", tab[index_tab].corresp);
+                //printf("%c", tab[index_tab].corresp);
+                fprintf(stdout, tab[index_tab].corresp);
+                fflush(stdout);
                 index_tab = 0;
                 i++;
                 break;
@@ -65,9 +67,15 @@ int	print_without_sp(char *c)
             index_tab++;
         }
         if (index_tab == 10)
-        printf("%c", c[i]);
+        {
+        fprintf(stdout, c[i]);
+        fflush(stdout);
+
+        }
+        //printf("%c", c[i]);
         i++;
     }
+    //fclose(stdout);
     return (0);
 }
 
@@ -77,19 +85,35 @@ void print_echo(char **args, bool e, bool n)
     {
         for (int i = 0; args[i]; i++)
         {
-            printf("%s", args[i]);
+            //printf("%s", args[i]);
+            fprintf(stdout, args[i]);
+            fflush(stdout);
+
             if (args[i + 1])
-                printf("%c", ' ');
+            {
+                fprintf(stdout, " ");
+                fflush(stdout);
+
+            }
+                //printf("%c", ' ');
         }
-        printf("\n");
+        fprintf(stdout, "\n");
+        fflush(stdout);
+
+        //printf("\n");
     }
     else if (n == true && e == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            printf("%s", args[i]);
-            if (args[i + 1])
-                printf("%c", ' ');
+            //printf("%s", args[i]);
+            fprintf(stdout, args[i]);
+            fflush(stdout);
+
+            if (args[i + 1]){
+                fprintf(stdout, " ");fflush(stdout);
+}
+                //printf("%c", ' ');
         }
     }
     else if (e == true)
@@ -97,22 +121,29 @@ void print_echo(char **args, bool e, bool n)
         for (int i = 0; args[i]; i++)
         {
             print_without_sp(args[i]);
-            if (args[i + 1])
-                printf("%c", ' ');
+            if (args[i + 1]){
+                fprintf(stdout, " ");fflush(stdout)
+;}
+                //printf("%c", ' ');
         }
         if (n == false)
         {
-            printf("%c", '\n');
+            fprintf(stdout, "\n");
+            fflush(stdout);
+            //printf("%c", '\n');
         }
     }
+    //fclose(stdout);
 }
 
 void echo(char **args)
 {
     bool n = false;
     bool e = false;
-    if (!args[1])
-        printf("\n");
+    if (!args[1]){
+        fprintf(stdout, "\n");fflush(stdout)
+;}
+        //printf("\n");
     else if (args[1][0] == '-')
     {
         int i = 0;
@@ -132,6 +163,8 @@ void echo(char **args)
     }
     else
         print_echo(args + 1, e, n);
+
+    //fclose(stdout);
 }   
 
 void cd(char **args)
@@ -154,7 +187,7 @@ void export(char **args)
     if (!args[0])
     {
         for (char **env = environ; *env != NULL; env++)
-            printf("%s\n", *env);
+            printf("declare -x %s\n", *env);
         return;
     }
     else if (args[0][0] ==  '-')
@@ -173,22 +206,26 @@ void export(char **args)
     {
         if (args[1])
         {
-            printf("%s\n", getenv(args[1]));
+            printf("declare -x %s\n", getenv(args[1]));
         }
         else
         {
             for (char **env = environ; *env != NULL; env++)
-                printf("export %s\n", *env);
+                printf("declare -x %s\n", *env);
         }
     }
     else if (n)
     {
         if (!args[1])
             err(1, "export: bad option\n");
-        unsetenv(args[1]);
+        for (int i = 1; args[i]; i++)
+            unsetenv(args[i]);
     }
-    else
-        putenv(args[0]);
+    else 
+    {
+        for (int i = 0; args[i]; i++)
+            putenv(args[i]);
+    }
 }
 
 void exit_shell(char **args)

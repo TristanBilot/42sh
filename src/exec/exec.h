@@ -23,6 +23,11 @@
 
 #include "../parser/parser.h"
 #include "../exec/commands.h"
+#include "../utils/buffer.h"
+#include "../utils/string_utils.h"
+#include "../utils/my_itoa.h"
+#include "../utils/xalloc.h"
+#include "../var_storage/var_storage.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
@@ -261,5 +266,8 @@ bool exec_node_case_clause(struct node_case_clause *ast);
 ** \return false 
 */
 bool exec_node_case_item(struct node_case_item *ast);
+
+int perform_for_range(struct range *r, struct node_for *ast);
+bool perform_for_enumeration(struct node_for *ast, int len_range);
 
 #endif /* EXEC_H */
