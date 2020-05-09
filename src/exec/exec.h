@@ -37,7 +37,7 @@
 struct commands
 {
     const char *name;
-    void (*function)(char **args);
+    void (*function)(char **args, int *ptr_fd);
 };
 
 struct std 

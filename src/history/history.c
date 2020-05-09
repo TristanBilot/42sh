@@ -5,11 +5,22 @@
 
 struct history *open_history(void)
 {
-    struct history *history = xmalloc(sizeof(struct history));
+    struct history *history = xcalloc(1, sizeof(struct history));
     history->commands = NULL;
     history->index = 0;
+    history->nb_lines = 0;
     load_history(history);
     return history;
+}
+
+bool is_only_spaces(char *cmd)
+{
+    if (strlen(cmd) == 0 || cmd[0] == '\n')
+        return true;
+    for (size_t i = 0; i < strlen(cmd); i++)
+        if (cmd[i] != ' ' && cmd[i] != '\n')
+            return false;
+    return true;
 }
 
 void append_history_command(struct history *history, char *cmd)
@@ -32,33 +43,40 @@ void append_history_command(struct history *history, char *cmd)
     FILE *f = fopen(DEFAULT_HISTORY_FILE_NAME, "a");
     if (!f)
         perror("fopen error @ append history");
-    fprintf(f, "%s\n", cmd);
-    history->commands[history->index++] = cmd;
+    
+    if (!is_only_spaces(cmd))
+    {
+        fprintf(f, "%s", cmd);
+        history->commands[history->nb_lines++] = cmd;
+        history->index++;
+    }
+    history->index = history->nb_lines;
+    // printf("index : \n %d[", history->index);
+    // for (int i = 0; i < history->nb_lines; i++)
+    //     if (history->commands[i])
+    //         printf("(%d) %p: %s, ", i, history->commands[i], history->commands[i]);
+    // printf("]\n");
     fclose(f);
 }
 
 char *write_next_history(struct history *history)
 {
+    // printf("%d, %d\n", history->index, history->nb_lines);
     char *cmd = get_next_history(history);
     if (!cmd)
-        return;
-    // printf("==> %s$\n", cmd);
-    // char *cmd = "ZZZZZtest";
-    // for (size_t i = 0; i < strlen(cmd); i++)
-    //     putchar(*cmd++);
-    
-    // write(0, cmd, strlen(cmd));
-    
-    // write_stdin(cmd);
+    {
+        printf("cmd is null\n");
+        return NULL;
+    }
     return cmd;
 }
 
 char *write_prev_history(struct history *history)
 {
+    // printf("%d, %d\n", history->index, history->nb_lines);
     char *cmd = get_prev_history(history);
     if (!cmd)
-        return;
-    // write_stdin(cmd);
+        return NULL;
     return cmd;
 }
 
@@ -66,21 +84,21 @@ char *get_next_history(struct history *history)
 {
     if (history->index - 1 < 0)
         return NULL;
-    // for (int i = history->index; i >= 0; i--)
-    //     printf("==> %s$\n", history->commands[i]);
     return history->commands[--history->index];
 }
 
 char *get_prev_history(struct history *history)
 {
-    if (history->index + 1 > HISTORY_MAX)
+    if (history->index + 1 > history->nb_lines)
         return NULL;
     return history->commands[++history->index];
 }
 
+
+
 void load_history(struct history *history)
 {
-    history->commands = xmalloc(sizeof(char *) * HISTORY_MAX);
+    history->commands = xcalloc(1, sizeof(char *) * HISTORY_MAX);
     FILE *file = fopen(DEFAULT_HISTORY_FILE_NAME, "r");
 
     if (!file)
@@ -88,32 +106,43 @@ void load_history(struct history *history)
         perror("fopen error @ history");
         return;
     }
-    char *line = xmalloc(256);
+    
+    char *line = xcalloc(1, 256);
     while (fgets(line, /*sizeof(line)*/256, file))
     {
-        char *without_nl = xmalloc(256);
+        //char *line = xcalloc(1, 256);
+        char *without_nl = xcalloc(1, 256);
         for (int i = 0; line && (line[i] != '\n' && line[i] != '\0'); i++)
         {
             without_nl[i] = line[i];
         }
         history->commands[history->index++] = without_nl;
-        line = xmalloc(256);
+        history->nb_lines++;
+        line = xcalloc(1, 256);
     }
     fclose(file);
 }
 
-void flush_stdin(void)
-{
-    // printf("flush\n");
-    // fseek(stdin, 0, SEEK_END);
-    // fflush(stdin);
-    // int ch;
-    // while (((ch = getchar()) != EOF) && (ch != 'X')) putchar(ch);
-    // while (getchar() != EOF);
-    // printf("AFTER");
-    fflush(stdin);
-}
+// void flush_stdin(void)
+// {
+//     // printf("flush\n");
+//         line = xcalloc(1, 256);
+//     }
+//     fclose(file);
+// }
 
+// void flush_stdin(void)
+// {
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("fl
+   // printf("flush\n");
+   // fseek(stdin, 0, SEEK_END);
 void write_stdin(char *cmd)
 {
     // flush_stdin();

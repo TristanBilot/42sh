@@ -60,11 +60,14 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Affiche et ajoute caractère par caractère la nouvelle input (history)
                     */
                     char *command = write_next_history(history);
-                    for (size_t i = 0; i < strlen(command); i++)
+                    if (command)
                     {
-                        putchar(command[i]);
-                        char_after_start++;
-                        append_buffer(buffer, command[i]);
+                        for (size_t i = 0; i < strlen(command); i++)
+                        {
+                            putchar(command[i]);
+                            char_after_start++;
+                            append_buffer(buffer, command[i]);
+                        }
                     }
                     
                     continue;
@@ -89,11 +92,14 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Affiche et ajoute caractère par caractère la nouvelle input (history)
                     */
                     char *command = write_prev_history(history);
-                    for (size_t i = 0; i < strlen(command); i++)
+                    if (command)
                     {
-                        putchar(command[i]);
-                        char_after_start++;
-                        append_buffer(buffer, command[i]);
+                        for (size_t i = 0; i < strlen(command); i++)
+                        {
+                            putchar(command[i]);
+                            char_after_start++;
+                            append_buffer(buffer, command[i]);
+                        }
                     }
                     
                     continue;
@@ -125,9 +131,13 @@ void init_42sh_with_history(struct option_sh *option)
             }
             else if (c == '\n')
             {
-                // append_history_command(history, line);
                 putchar('\n');
                 append_buffer(buffer, '\n');
+                char *new = xcalloc(1, 256);
+                for (int i = 0; buffer->buf[i] != '\n'; i++)
+                    new[i] = buffer->buf[i];
+                // printf("in main_utils: %p \n", new);
+                append_history_command(history, new);
                 // if (buffer->index > 2)
                 //     append_history_command(history, buffer->buf);
                 lexer = new_lexer(buffer->buf);
@@ -143,6 +153,7 @@ void init_42sh_with_history(struct option_sh *option)
                 flush(buffer);
                 print_prompt();
                 char_after_start = 0;
+                new = NULL;
                 continue;
             }
             else if (c == 127) // delete

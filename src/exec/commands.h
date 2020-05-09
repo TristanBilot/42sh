@@ -12,25 +12,26 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
+
 /**
 ** \brief implementation of command echo
 **
 ** \param args 
 */
-void echo(char **args);
+void echo(char **args, int *ptr_fd);
 /**
 ** \brief implementation of command cd
 **
 ** \param args 
 */
-void cd(char **args);
+void cd(char **args, int *ptr_fd);
 
 /**
 ** \brief implementation of command export
 **
 ** \param args 
 */
-void export(char **args);
+void export(char **args, int *ptr_fd);
 /**
 **\brief implementation of exit_shell
 **
@@ -44,4 +45,7 @@ struct echo_tab
   char corresp;
 };
 
+void print_args(char **args);
+int	print_without_sp(char *c, int *ptr_fd);
+void print_echo(char **args, bool e, bool n, int *ptr_fd);
 #endif /* COMMANDS_H_ */

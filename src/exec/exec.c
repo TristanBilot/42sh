@@ -20,30 +20,30 @@
     printf("%s\n", msg);
 
 
-
 const struct commands cmd[4] = {
     {"cd", &cd}, 
     {"echo", &echo}, //laissé en commenté
     {"export", &export},
     {NULL, NULL}};
 
-static bool extra_command(char **args, char *cmd_name)
+bool extra_command(char **args, char *cmd_name, int *ptr_fd)
 {
     for (int i = 0; cmd[i].name; i++)
     {
         if (strcmp(cmd_name, cmd[i].name) == 0)
         {
-            cmd[i].function(args);
+            cmd[i].function(args, ptr_fd);
             return false;
         }
     }
     return true;
 }
 
-bool dup_file(char *file, char *flag, int io)
+bool dup_file(char *file, char *flag, int io, int *ptr_fd)
 {
     FILE *f = fopen(file, flag);
     int out = fileno(f);
+    printf("out : %d\n", out);
     // printf("good\n");
     if (out == -1)
     {
@@ -52,73 +52,96 @@ bool dup_file(char *file, char *flag, int io)
     // printf("good2\n");
     // printf("iO : %d\n", io);
     // printf("OUt : %d\n", out);
+    printf("valeur de fd 3: %d\n", *ptr_fd);
     int fd = dup2(out, io);
+    *ptr_fd = out;
     if (fd < 0)
     {
+        printf("erreur dup \n");
         close(out);
+        return true;
     }
+    printf("valeur de fd 4: %d\n", *ptr_fd);
+    //exit(1);
     // if (fd == -1)
     // {
     //     printf("error");
     //     perror("error");
     //     return true;
     // }
-    close(fd);
+    // close(fd);
     close(out);
     fclose(f);
+    printf("valeur de FD sur le DUp : %d\n", fd);
+    printf("valeur de ptr_fd juste apre le dup: %d\n", *ptr_fd);
     return false; // provisoire
 }
 
-bool manage_redirections(struct tab_redi tab)
+bool manage_redirections(struct tab_redi tab, int *ptr_fd)
 {
     // if(!tab)
     //     return true;
+    printf("valeur de fd 2 : %d\n", *ptr_fd);
+    printf("manage redirection \n");
     if (!is(tab.great.out, "")){
-        if (dup_file(tab.great.out, "w+", STDOUT_FILENO))
+        printf("> detecté \n");
+        if (dup_file(tab.great.out, "w+", STDOUT_FILENO, ptr_fd))
+        {
+            printf("erreur dup file \n");
             return true;
+        }
+        
         else
         {
             printf("dup_file good ! \n");
-            fclose(stdout);
         }
     }
     if (!is(tab.great.in, ""))
-        if (dup_file(tab.great.in, "w+", STDIN_FILENO))
+        if (dup_file(tab.great.in, "w+", STDIN_FILENO, ptr_fd))
             return true;
     if (!is(tab.great.err, ""))
-        if (dup_file(tab.great.err, "w+", STDERR_FILENO))
+        if (dup_file(tab.great.err, "w+", STDERR_FILENO, ptr_fd))
             return true;
     if (!is(tab.less.in, ""))
-        if (dup_file(tab.less.in, "r", STDIN_FILENO))
+        if (dup_file(tab.less.in, "r", STDIN_FILENO, ptr_fd))
             return true;
     if (!is(tab.less.out, ""))
-        if (dup_file(tab.less.out, "r", STDOUT_FILENO))
+        if (dup_file(tab.less.out, "r", STDOUT_FILENO, ptr_fd))
             return true;
     if (!is(tab.less.err, ""))
-        if (dup_file(tab.less.err, "r", STDERR_FILENO))
+        if (dup_file(tab.less.err, "r", STDERR_FILENO, ptr_fd))
             return true;
     if (!is(tab.dgreat.in, ""))
-        if (dup_file(tab.dgreat.in, "a+", STDIN_FILENO))
+        if (dup_file(tab.dgreat.in, "a+", STDIN_FILENO, ptr_fd))
             return true;
     if (!is(tab.dgreat.out, ""))
-        if (dup_file(tab.dgreat.out, "a+", STDOUT_FILENO))
+        if (dup_file(tab.dgreat.out, "a+", STDOUT_FILENO, ptr_fd))
             return true;
     if (!is(tab.dgreat.err, ""))
-        if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO))
+        if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO, ptr_fd))
             return true;
     return false;
 }
 
 bool execute(char **args, struct tab_redi tab)
 {
+    int *fd = xmalloc(sizeof(int));
+    *fd = 1;
+    int *ptr_fd;
+    ptr_fd = fd;
+    printf("valeur de fd : %d\n", *ptr_fd);
     DEBUG("EXECUTE")
-    if (manage_redirections(tab))
+    if (manage_redirections(tab, ptr_fd))
         return true;
+    else
+        printf("passe redirection 1 \n");
+    printf("apres redirection , fd : %d\n", *ptr_fd);
     if ((execvp(args[0], args)) == -1)
     {
         err(1, "command not found: %s\n", args[0]);
         return true;
     }
+    close(*fd);
     return false;
 }
 
@@ -127,35 +150,47 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     DEBUG("EXECUTE WITH FORK")
     int status = 0;
     int child = 0;
+    int *fd = xmalloc(sizeof(int));
+    *fd = 1;
+    int *ptr_fd;
+    ptr_fd = fd;
     // int i = 0;
     // while (args[i])
     // {
     //     printf("args : %s\n", args[i]);
     //     i++;
     // }
+    printf("valeur de fd 0 : %d\n", *ptr_fd);
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell(args);
     if ((child = fork()) == -1)
         return true;
     if (child == 0)
     {
-        if (manage_redirections(tab))
+        printf("before manage redirection\n");
+        if (manage_redirections(tab, ptr_fd))
             return true;
-        printf("pass manage redirection\n");
-        if (args[0] == NULL)
-        {
-            if (!extra_command(args, cmd_name))
-                return false;
-        }
-        if (!extra_command(args, cmd_name))
+        else
+            printf("pass redirection 2\n");
+        printf("valeur de fd apres redirection : %d\n", *ptr_fd);
+        // if (args[0] == NULL)
+        // {
+        //     if (!extra_command(args, cmd_name))
+        //         return false;
+        // }
+        if (!extra_command(args, cmd_name, ptr_fd))
             return false;
-            
-        if ((execvp(args[0], args)) == -1)
-        {
-            err(1, "command not found: %s\n", args[0]);
-            return true;
+        // if (strcmp(args[0], "echo"))
+        //     echo(args);
+        else 
+        {   
+            if ((execvp(args[0], args)) == -1)
+            {
+                err(1, "command not found: %s\n", args[0]);
+                return true;
+            }
+            return false;
         }
-        return false;
     }
     else
     {
@@ -529,6 +564,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             {
                 tmp = get_var(prefix->prefix.assigment_word->variable_name);
                 char *str = xmalloc((strlen(tmp->key) + 1 + strlen(tmp->value) + 1) * sizeof(char));
+                //str = tmp->key;
                 strcat(str, tmp->key);
                 strcat(str, "=");
                 strcat(str, tmp->value);

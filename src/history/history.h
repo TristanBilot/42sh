@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <termios.h>
+#include <stdbool.h>
 
 #define DEFAULT_HISTORY_FILE_NAME "history"
 #define HISTORY_MAX 2000
@@ -34,6 +35,7 @@ struct history
     char **commands;
     int nb_commands;
     int index;
+    int nb_lines;
 };
 
 struct history *open_history(void);
@@ -52,5 +54,6 @@ void reset_terminal_mode();
 void set_conio_terminal_mode();
 int kbhit();
 int getch();
+bool is_only_spaces(char *cmd);
 
 #endif /* HISTORY_H */

@@ -1,10 +1,10 @@
 #define _XOPEN_SOURCE
+#include <stdlib.h>
+#include <stdio.h>
 #include <wordexp.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <err.h>
 #include "commands.h"
@@ -40,10 +40,11 @@ void print_args(char **args)
     int i = 0;
     while (args[i])
     {
-        printf("args %d : %s\n", i, args[i++]);
+        printf("args %d : %s\n", i, args[i]);
+        i++;
     }
 }
-int	print_without_sp(char *c)
+int	print_without_sp(char *c, int *ptr_fd)
 {
     int i = 0;
     struct echo_tab tab[9];
@@ -57,9 +58,8 @@ int	print_without_sp(char *c)
         {
             if (c[i] == '\\' && tab[index_tab].name == c[i + 1])
             {
+                dprintf(*ptr_fd, tab[index_tab].corresp);
                 //printf("%c", tab[index_tab].corresp);
-                fprintf(stdout, tab[index_tab].corresp);
-                fflush(stdout);
                 index_tab = 0;
                 i++;
                 break;
@@ -67,52 +67,36 @@ int	print_without_sp(char *c)
             index_tab++;
         }
         if (index_tab == 10)
-        {
-        fprintf(stdout, c[i]);
-        fflush(stdout);
-
-        }
-        //printf("%c", c[i]);
+            dprintf(*ptr_fd, c[i]);
+            //printf("%c", c[i]);
         i++;
     }
-    //fclose(stdout);
     return (0);
 }
 
-void print_echo(char **args, bool e, bool n)
+void print_echo(char **args, bool e, bool n, int *ptr_fd)
 {
     if (e == false && n == false)
     {
         for (int i = 0; args[i]; i++)
         {
+            dprintf(*ptr_fd, args[i]);
             //printf("%s", args[i]);
-            fprintf(stdout, args[i]);
-            fflush(stdout);
-
             if (args[i + 1])
-            {
-                fprintf(stdout, " ");
-                fflush(stdout);
-
-            }
+                dprintf(*ptr_fd, " ");
                 //printf("%c", ' ');
         }
-        fprintf(stdout, "\n");
-        fflush(stdout);
-
+        dprintf(*ptr_fd, "\n");
         //printf("\n");
     }
     else if (n == true && e == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            //printf("%s", args[i]);
-            fprintf(stdout, args[i]);
-            fflush(stdout);
-
-            if (args[i + 1]){
-                fprintf(stdout, " ");fflush(stdout);
-}
+            dprintf(*ptr_fd, args[i]);
+            // printf("%s", args[i]);
+            if (args[i + 1])
+                dprintf(*ptr_fd, " ");
                 //printf("%c", ' ');
         }
     }
@@ -120,29 +104,25 @@ void print_echo(char **args, bool e, bool n)
     {
         for (int i = 0; args[i]; i++)
         {
-            print_without_sp(args[i]);
-            if (args[i + 1]){
-                fprintf(stdout, " ");fflush(stdout)
-;}
+            print_without_sp(args[i], ptr_fd);
+            if (args[i + 1])
+                dprintf(*ptr_fd, args[i]);
                 //printf("%c", ' ');
         }
         if (n == false)
         {
-            fprintf(stdout, "\n");
-            fflush(stdout);
+            dprintf(*ptr_fd, "\n");
             //printf("%c", '\n');
         }
     }
-    //fclose(stdout);
 }
 
-void echo(char **args)
+void echo(char **args, int *ptr_fd)
 {
     bool n = false;
     bool e = false;
-    if (!args[1]){
-        fprintf(stdout, "\n");fflush(stdout)
-;}
+    if (!args[1])
+        dprintf(*ptr_fd, "\n");
         //printf("\n");
     else if (args[1][0] == '-')
     {
@@ -155,19 +135,17 @@ void echo(char **args)
                 e = true;
         }
         if (args[1][i] != 0)
-            print_echo(args + 1, false, false);
+            print_echo(args + 1, false, false, ptr_fd);
         else if (!args[2])
             return;
         else 
-            print_echo(args + 2, e, n);
+            print_echo(args + 2, e, n, ptr_fd);
     }
     else
-        print_echo(args + 1, e, n);
-
-    //fclose(stdout);
+        print_echo(args + 1, e, n, ptr_fd);
 }   
 
-void cd(char **args)
+void cd(char **args, int *ptr_fd)
 {
     int ret = 0;
     if (!args[1])
@@ -180,7 +158,7 @@ void cd(char **args)
         printf("%s\n", strerror(errno));
 }
 
-void export(char **args)
+void export(char **args, int *ptr_fd)
 {
     bool p = false;
     bool n = false;
