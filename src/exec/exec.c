@@ -39,11 +39,24 @@ bool extra_command(char **args, char *cmd_name, int *ptr_fd)
     return true;
 }
 
+bool clean_extra_command(void)
+{
+    char *args[3] = {"echo", "", NULL};
+    if ((execvp("echo", args)) == -1)
+    {
+        err(1, "command not found: %s\n", args[0]);
+        return true;
+    }
+    return false;
+}
+
 bool dup_file(char *file, char *flag, int io, int *ptr_fd)
 {
     FILE *f = fopen(file, flag);
+    if (!f)
+        return true;
     int out = fileno(f);
-    printf("out : %d\n", out);
+    //printf("out : %d\n", out);
     // printf("good\n");
     if (out == -1)
     {
@@ -52,16 +65,16 @@ bool dup_file(char *file, char *flag, int io, int *ptr_fd)
     // printf("good2\n");
     // printf("iO : %d\n", io);
     // printf("OUt : %d\n", out);
-    printf("valeur de fd 3: %d\n", *ptr_fd);
+    //printf("valeur de fd 3: %d\n", *ptr_fd);
     int fd = dup2(out, io);
     *ptr_fd = out;
     if (fd < 0)
     {
-        printf("erreur dup \n");
+        //printf("erreur dup \n");
         close(out);
         return true;
     }
-    printf("valeur de fd 4: %d\n", *ptr_fd);
+    //printf("valeur de fd 4: %d\n", *ptr_fd);
     //exit(1);
     // if (fd == -1)
     // {
@@ -72,8 +85,8 @@ bool dup_file(char *file, char *flag, int io, int *ptr_fd)
     // close(fd);
     close(out);
     fclose(f);
-    printf("valeur de FD sur le DUp : %d\n", fd);
-    printf("valeur de ptr_fd juste apre le dup: %d\n", *ptr_fd);
+    //printf("valeur de FD sur le DUp : %d\n", fd);
+    //printf("valeur de ptr_fd juste apre le dup: %d\n", *ptr_fd);
     return false; // provisoire
 }
 
@@ -81,24 +94,18 @@ bool manage_redirections(struct tab_redi tab, int *ptr_fd)
 {
     // if(!tab)
     //     return true;
-    printf("valeur de fd 2 : %d\n", *ptr_fd);
-    printf("manage redirection \n");
+    //printf("valeur de fd 2 : %d\n", *ptr_fd);
+    //printf("manage redirection \n");
     if (!is(tab.great.out, "")){
-        printf("> detecté \n");
+        // printf("> detecté \n");
         if (dup_file(tab.great.out, "w+", STDOUT_FILENO, ptr_fd))
-        {
-            printf("erreur dup file \n");
             return true;
-        }
-        
-        else
-        {
-            printf("dup_file good ! \n");
-        }
     }
-    if (!is(tab.great.in, ""))
+    if (!is(tab.great.in, "")){
+        // printf("< detecté \n");
         if (dup_file(tab.great.in, "w+", STDIN_FILENO, ptr_fd))
             return true;
+    }
     if (!is(tab.great.err, ""))
         if (dup_file(tab.great.err, "w+", STDERR_FILENO, ptr_fd))
             return true;
@@ -129,13 +136,12 @@ bool execute(char **args, struct tab_redi tab)
     *fd = 1;
     int *ptr_fd;
     ptr_fd = fd;
-    printf("valeur de fd : %d\n", *ptr_fd);
+    //printf("valeur de fd : %d\n", *ptr_fd);
     DEBUG("EXECUTE")
     if (manage_redirections(tab, ptr_fd))
         return true;
-    else
-        printf("passe redirection 1 \n");
-    printf("apres redirection , fd : %d\n", *ptr_fd);
+        //printf("passe redirection 1 \n");
+    //printf("apres redirection , fd : %d\n", *ptr_fd);
     if ((execvp(args[0], args)) == -1)
     {
         err(1, "command not found: %s\n", args[0]);
@@ -160,37 +166,45 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     //     printf("args : %s\n", args[i]);
     //     i++;
     // }
-    printf("valeur de fd 0 : %d\n", *ptr_fd);
+    //printf("valeur de fd 0 : %d\n", *ptr_fd);
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell(args);
     if ((child = fork()) == -1)
         return true;
     if (child == 0)
     {
-        printf("before manage redirection\n");
+        //printf("before manage redirection\n");
         if (manage_redirections(tab, ptr_fd))
+        {
+            err(1, "redirection error\n");
             return true;
-        else
-            printf("pass redirection 2\n");
-        printf("valeur de fd apres redirection : %d\n", *ptr_fd);
+        }
+        // else
+        //     printf("pass redirection 2\n");
+        //printf("valeur de fd apres redirection : %d\n", *ptr_fd);
         // if (args[0] == NULL)
         // {
         //     if (!extra_command(args, cmd_name))
         //         return false;
         // }
-        if (!extra_command(args, cmd_name, ptr_fd))
-            return false;
+
+        // if (!extra_command(args, cmd_name, ptr_fd))
+        // {
+        //     return clean_extra_command();
+        // }
+
         // if (strcmp(args[0], "echo"))
         //     echo(args);
-        else 
-        {   
+
+        // else 
+        // {   
             if ((execvp(args[0], args)) == -1)
             {
                 err(1, "command not found: %s\n", args[0]);
                 return true;
             }
             return false;
-        }
+        // }
     }
     else
     {
@@ -512,7 +526,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     char *args[256];
     while (p)
     {
-        printf("prefix\n");
+        //printf("prefix\n");
         exec_node_prefix(p);
         p = p->next;
     }
@@ -654,10 +668,10 @@ bool exec_node_redirection(struct node_redirection *ast)
         if (ast->left && is(ast->left, ""))
         {
          // cas du echo test > toto.txt
-            printf("1\n");
+            // printf("1\n");
             if (ast->right && !is(ast->right, ""))
             {
-                printf("2\n");
+                // printf("2\n");
                 if(ast->type == TOK_GREAT)
                 {
                     // int out = open(ast->right, O_WRONLY | O_CREAT);
@@ -705,7 +719,7 @@ bool exec_node_prefix(struct node_prefix *ast)
     {
         char *key = ast->prefix.assigment_word->variable_name;
         char *val = ast->prefix.assigment_word->value;
-        printf("key : %s et val %s \n", key, val);
+        // printf("key : %s et val %s \n", key, val);
         put_var(key, val);
     }
     if (ast->type == REDIRECTION)
@@ -732,9 +746,7 @@ bool exec_node_compound_list(struct node_compound_list *ast)
     while (c)
     {
         if (exec_node_and_or(c->and_or))
-        {
             return true;
-        }
         c = c->next_sibling;
     }
     return false;
@@ -742,38 +754,16 @@ bool exec_node_compound_list(struct node_compound_list *ast)
 bool exec_node_while(struct node_while *ast)
 {
     DEBUG("WHILE")
-    // fprintf(f, "\tnode_%p [label=WHILE];\n", (void *)ast);
-    // if (node)
-        // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    bool boolean = true;
-    while (boolean)
-    {
-        boolean = !(exec_node_compound_list(ast->condition));
-        if (boolean)
-            boolean = !(exec_node_do_group(ast->body));
-        else
-            boolean = false;
-
-    }
-    return boolean ? false : true;
+    while (!exec_node_compound_list(ast->condition))
+        exec_node_do_group(ast->body);
+    return false;
 }
 bool exec_node_until(struct node_until *ast)
 {
     DEBUG("UNTIL")
-    // fprintf(f, "\tnode_%p [label=UNTIL];\n", (void *)ast);
-    // if (node)
-        // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
-    bool boolean = true;
-    while (boolean)
-    {
-        boolean = !(exec_node_compound_list(ast->condition));
-        if (boolean)
-            boolean = exec_node_do_group(ast->body);
-        else
-            boolean = false;
-
-    }
-    return boolean ? false : true;
+    while (exec_node_compound_list(ast->condition))
+        exec_node_do_group(ast->body);
+    return false;
 }
 bool exec_node_case(struct node_case *ast)
 {
@@ -783,7 +773,7 @@ bool exec_node_case(struct node_case *ast)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *)ast);
     if (ast->is_case_clause)
     {
-        exec_node_case_clause(ast->case_clause);
+        exec_node_case_clause(ast->case_clause, ast->word);
     }
     return false; // provisoire
 }
@@ -834,7 +824,7 @@ bool exec_node_for(struct node_for *ast)
     {
         // printf("in the loop perfom range\n");
         if (len_range == 0)
-        {
+        {///nora terminal 1 a détruire
             state = perform_for_range(r, ast);
             if (state == -1)     // error
                 return true; // sale enflure
@@ -871,34 +861,46 @@ bool exec_node_do_group(struct node_do_group *ast)
     DEBUG("DO_GROUP")
     return exec_node_compound_list(ast->body); // provisoire
 }
-bool exec_node_case_clause(struct node_case_clause *ast)
+bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found)
 {
     DEBUG("CASE_CLAUSE")
     struct node_case_clause *c = ast;
     if (!c || !c->case_item)
         return true;
-    exec_node_case_item(c->case_item);
+    if (!exec_node_case_item(c->case_item, word_to_found))
+            return false;
     while (c->next)
     {
         c = c->next;
-        exec_node_case_item(c->case_item);
+        if (!exec_node_case_item(c->case_item, word_to_found))
+            return false;
     }
     return false; // provisoire
 }
-bool exec_node_case_item(struct node_case_item *ast)
+bool exec_node_case_item(struct node_case_item *ast, char *word_to_found)
 {
     DEBUG("CASE_ITEM")
-    char *s = ast->words->word;
-    while (ast->words->next)
+    // char *s = ast->words->word;
+    while (ast->words)
     {
+        printf("first word : %s\n", ast->words->word);
+        if  (strcmp(word_to_found, ast->words->word) == 0)
+        {
+            printf("strcmp reussi : %s = %s\n", word_to_found, ast->words->word);
+            if (ast->compound_list)
+                exec_node_compound_list(ast->compound_list);
+            return false;
+        }
         ast->words = ast->words->next;
-        s = strcat(s, " | ");
-        s = strcat(s, ast->words->word);
+        // s = strcat(s, " | ");
+        // s = strcat(s, ast->words->word);
     }
+    return false;
+    //printf("string : %s\n", s);
     // fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) ast, s);
     // if (node)
         // fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
-    if (ast->compound_list)
-        exec_node_compound_list(ast->compound_list);
-    return false; // provisoire
+    // if (ast->compound_list)
+    //     exec_node_compound_list(ast->compound_list);
+    //return false; // provisoire
 }

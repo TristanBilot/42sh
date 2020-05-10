@@ -80,7 +80,7 @@ void *parse(struct lexer *lexer)
 
     if (parse_input(parser, &ast))
     {
-        // error("Parser error");
+        error("Parser error");
 
         //free_input(ast);
         //ast = NULL;

@@ -19,13 +19,14 @@ void init_42sh_with_history(struct option_sh *option)
     }
     else
     {
-        int c;   
+        int c;
         
         int char_after_start = 0;
         char * line = NULL;
         struct buffer *buffer = new_buffer();
         if (print_prompt() == 1)
             return;
+        
         
         while ((c = getch2()) != 'q')
         {
@@ -107,16 +108,21 @@ void init_42sh_with_history(struct option_sh *option)
                 else if (c == 67)
                 {
                     // right arrow
+                    // NE MARCHE PAS AVEC LES ESPACES
+                    putchar(buffer->buf[buffer->index]);
+                    putchar(buffer->buf[buffer->index]);
+                    buffer->index++;
                     continue;
                 }
                 else if (c == 68)
                 {
-                    if (char_after_start > 1)
+                    if (buffer->index > 0)
                     {
-                        buffer->index -= 2;
-                        
+                        buffer->index--;
                         putchar('\b');
                     }
+                    
+                    putchar('a');
                     continue;
                 }
                 append_buffer(buffer, 91);
@@ -135,7 +141,8 @@ void init_42sh_with_history(struct option_sh *option)
                 putchar('\n');
                 append_buffer(buffer, '\n');
 
-                lexer = new_lexer(buffer->buf);
+                lexer = new_lexer(new);
+
                 flush(buffer);
                 ast = parse(lexer);
                 
@@ -155,45 +162,73 @@ void init_42sh_with_history(struct option_sh *option)
                 // printf("DELETE ");
                 if (buffer->index > 0)
                 {
-                    delete_last_character();
-                    char_after_start--;
-                    buffer->buf[buffer->index--] = '\0';
+                    if (buffer->index < char_after_start) // j'arrive
+                    {// wouiiiiiiii viens sur le shell avant dernier
+                        putchar('\b');
+                        for (int i = buffer->index - 1; i <= char_after_start + 1; i++)
+                        {
+                            buffer->buf[i] = buffer->buf[i + 1];
+                            putchar(buffer->buf[i]);
+                        }
+                        putchar(' ');
+                        for (int i = buffer->index; i <= char_after_start; i++)
+                            putchar('\b');
+                        char_after_start--;
+                        buffer->index--;
+                    }
+                    else
+                    {
+                        delete_last_character();
+                        char_after_start--;
+                        buffer->buf[--buffer->index] = '\0';
+                    }
                 }
                 // (void) getc(stdin);
             }
             else if (c == 4) // EOF :  Ctrl+D
             {
-                // printf("CTRL+D ");
-                // printf("enter eof: Ctrl+D\n");
                 free_garbage_collector();
                 putchar('\n');
                 return;
             }
-            else if (c == 9) // Tabulation
+            else if (c == 9) // Tabulation 
             {
                 char *best_fit = get_auto_completion(history, buffer->buf);
                 if (best_fit)
                 {
-                    putchar('\n');
-                    printf("\n%s\n", best_fit);
+                    while (char_after_start--)
+                        delete_last_character();
                     flush(buffer);
-                    append_string_to_buffer(buffer, best_fit);
+
+                    for (size_t i = 0; i < strlen(best_fit); i++)
+                    {
+                        putchar(best_fit[i]);
+                        char_after_start++;
+                        append_buffer(buffer, best_fit[i]);
+                    }
+                    // append_string_to_buffer(buffer, best_fit);
                 }
             }
             else
             {
-                // printf("APPEND ");
-                append_buffer(buffer, c);
                 putchar(c);
-                char_after_start++;
+                if (c != 27)
+                {
+                    if (buffer->index < char_after_start)
+                    {
+                        for (int i = char_after_start; i > buffer->index; i--)
+                            buffer->buf[i] = buffer->buf[i - 1];
+                        buffer->buf[buffer->index++] = c;
+                        for (int i = buffer->index; i <= char_after_start; i++)
+                            putchar(buffer->buf[i]);
+                        for (int i = buffer->index; i <= char_after_start; i++)
+                            putchar('\b');
+                    }
+                    else
+                        append_buffer(buffer, c);
+                    char_after_start++;
+                }
             }
-            // printf("%d : in the buffer at exec : //%s//\n", c, buffer->buf);
-            // tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
-            // if (c != '\n' || c != 'a')
-            // {
-            //     append_buffer(buffer, c);
-            //     putchar(c);
-            // }
         }
         /*restore the old settings*/
         // tcsetattr( STDIN_FILENO, TCSANOW, &org_opts);
@@ -241,7 +276,7 @@ void init_42sh_without_history(struct option_sh *option)
         }
         if (line)
             free(line);
-            
+        
         // printf("\n");
     }
 }
@@ -299,6 +334,7 @@ int print_prompt()
     else
     {
         init_42sh_without_history(option);
+        free(buff);
         return 1;
     }
     

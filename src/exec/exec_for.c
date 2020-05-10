@@ -44,7 +44,7 @@ int perform_for_range(struct range *r, struct node_for *ast)
             /* Perform loop */
             int j = atoi(left_index);
             int end = atoi(right_index);
-            for (; j < end; j++)
+            for (; j <= end; j++)
             {
                 char *tmp = xmalloc(MAX_STR_LEN);
                 my_itoa(j, tmp);

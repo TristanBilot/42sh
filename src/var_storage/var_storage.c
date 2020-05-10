@@ -13,7 +13,8 @@ void free_var_storage(void)
     for (int i = 0; i < STORAGE_SIZE; i++)
         if (var_storage->variables[i])
         {
-            free(var_storage->variables[i]->value);
+            if (!var_storage->variables[i]->value)
+                free(var_storage->variables[i]->value);
             free(var_storage->variables[i]);
         }
     free(var_storage->variables);
@@ -68,7 +69,11 @@ void del_var(char *key)
 {
     int h = hash(key);
     if (var_storage->variables[h])
+    {
+        free(var_storage->variables[h]->value);
+        free(var_storage->variables[h]);
         var_storage->variables[h] = NULL;
+    }
 }
 
 struct variable *get_var(char *key)

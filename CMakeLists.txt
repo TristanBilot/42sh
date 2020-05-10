@@ -33,7 +33,9 @@ set(SOURCE_FILES
 	src/history/handler.c
 	src/expansion/var_expansion.c
 	src/expansion/tilde_expansion.c
+	src/expansion/command_substitution.c
 	src/expansion/expansion.c
+	src/expansion/my_popen.c
 	src/exec/commands.c
 	src/garbage_collector/garbage_collector.c)
 

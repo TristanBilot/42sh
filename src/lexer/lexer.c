@@ -152,11 +152,11 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
 
 int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
 {
-    if (c[*j] == '$' && (c[*j+1] && c[*j+1] == '{'))
+    if (c[*j] == '$' && c[*j+1] && c[*j+1] == '{')
     {
         append_word_if_needed(lexer, buffer);
-        size_t close_curl_index = get_next_close_curl_index(c, *j);
-        char *content = substr(c, *j, close_curl_index - *j);
+        size_t close_index = c[*j+1] == '{' ? get_next_close_curl_index(c, *j) : get_next_close_parent_index(c, *j);
+        char *content = substr(c, *j, close_index - *j);
         append(lexer, new_token_word(content));
         *j += strlen(content) - 1;
         flush(buffer);
@@ -224,6 +224,7 @@ void init_lexer(struct lexer *lexer)
 }
 
 struct lexer *new_lexer(char *str) {
+    // printf("in lexer str ==> %s$$$$$$$", str);
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
     lexer->token_list = xmalloc(sizeof(struct token_list));
     lexer->token_list->first = NULL;

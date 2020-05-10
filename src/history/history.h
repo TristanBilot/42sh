@@ -22,7 +22,7 @@
 #define _DEFAULT_SOURCE
 #endif
 
-#define MIN(x,y) return x < y ? x : y
+#define INF 99999
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -58,5 +58,7 @@ void set_conio_terminal_mode();
 int kbhit();
 int getch();
 bool is_only_spaces(char *cmd);
+
+char *get_auto_completion(struct history *history, char *cmd);
 
 #endif /* HISTORY_H */

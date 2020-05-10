@@ -53,6 +53,12 @@ char *perform_var_expansion(char *word)
                 append_buffer(buf, '$');
                 break;
             }
+            if (word[i] == '(')
+            {
+                append_buffer(buf, '$');
+                append_buffer(buf, '(');
+                continue;
+            }
             int is_brack = 0;
             if (word[i] == '{')
             {

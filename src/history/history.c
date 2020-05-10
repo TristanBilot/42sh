@@ -60,7 +60,7 @@ void append_history_command(struct history *history, char *cmd)
     
     if (!is_only_spaces(cmd))
     {
-        fprintf(f, "%s", cmd);
+        fprintf(f, "%s\n", cmd);
         history->commands[history->nb_lines++] = cmd;
         history->index++;
     }

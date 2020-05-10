@@ -329,4 +329,118 @@
       - has_stderr
       - stdout
   
-  
+####################################################### TEST UNTIL ########################################################
+- description:
+  - name : UNTIL
+  - stdin: until echo a; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until echo a; do echo toto;echo tati;echo titi; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until echo a && echo b && echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until a=b; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until echo a && echo b && echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until echo a | echo b | echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until echo a && echo b && echo c | echo d || echo e; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until cat< build/Makefile; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: until ! cat<fdjlkghfdg; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: until echo a && ! cat<gldghdfh; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: until echo a | echo b; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: until ls && ! cat<fdslhgsd; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+
+####################################################### TEST WHILE ########################################################
+- description:
+  - name : WHILE
+  - stdin: while ! echo a; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while ! echo a; do echo toto;echo tati;echo titi; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while ! echo a && echo b && echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while ! a=b; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while echo a && ! echo b && echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while ! echo a | echo b | echo c; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while ! echo a && echo b && echo c | echo d || ! echo e; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while cat<Makefile; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while cat<Makefile; do echo toto; done
+    checks:
+      - returncode
+      - stdout
+  - stdin: while cat<fdjlkghfdg; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: while echo a && cat<gldghdfh; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: while ! echo a | echo b; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout
+  - stdin: while ls && cat<fdslhgsd; do echo toto;done
+    checks:
+      - returncode
+      - has_stderr
+      - stdout

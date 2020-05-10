@@ -2,6 +2,10 @@
 #include "../utils/xalloc.h"
 #include "history.h"
 
+/*
+* Good for real auto-complete, could be use in a second time after
+* classic dist_algorithm.
+*/
 int levenshtein(const char *s, int len1, const char *t, int len2)
 {
     int a, b, c;
@@ -24,29 +28,42 @@ int levenshtein(const char *s, int len1, const char *t, int len2)
     return a + 1;
 }
 
+/*
+* Better for a bash-like auto-completing.
+*/
+bool dist_algorithm(const char *s, int len1, const char *t, int len2)
+{
+    int longest = len1 > len2 ? len1 : len2;
+    for (int i = 0; i < longest; i++)
+        if (s[i] != t[i])
+            return false;
+    return true;
+}
+
 char *get_auto_completion(struct history *history, char *cmd)
 {
     size_t len = strlen(cmd);
     size_t j = 0;
-    int curr_score = 0;
-    int best_score = 0;
-    int best_idx = 0;
+    int curr_score = INF;
+    int best_score = INF;
+    int best_idx = INF;
     char *curr = NULL;
-    for (int i = 0; i < history->nb_commands; i++)
+
+    for (int i = history->index - 1; i >= 0; i--)
     {
-        curr = xmalloc(len + 1);
+        curr = xcalloc(1, len + 1);
         j = 0;
-        for (; j < len; j++)
+        for (; history->commands[i] && j < strlen(history->commands[i]) && j < len; j++)
             curr[j] = history->commands[i][j];
         curr[j] = '\0';
-        curr_score = levenshtein(cmd, strlen(cmd), curr, strlen(curr));
-        if (curr_score > best_score)
+
+        // curr_score = levenshtein(cmd, strlen(cmd), curr, strlen(curr));
+        if (dist_algorithm(cmd, strlen(cmd), curr, strlen(curr)))
         {
             best_score = curr_score;
             best_idx = i;
+            break;
         }
     }
-    printf("best_score: %d\n", best_score);
-    printf("best_idx: %d\n", best_idx);
-    return NULL;
+    return best_idx == INF ? NULL : history->commands[best_idx];
 }

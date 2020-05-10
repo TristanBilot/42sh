@@ -12,10 +12,13 @@
 #ifndef EXPANSION_H
 #define EXPANSION_H
 
+#define _XOPEN_SOURCE 700
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <unistd.h>
 
 struct program_data_storage *program_data;
 
@@ -70,5 +73,10 @@ char *perform_tilde_expansion(char *word);
 char *substitute_minus_tilde(char *word, size_t *i);
 char *substitute_plus_tilde(char *word, size_t *i);
 char *substitute_tilde(char *word, size_t *i);
+
+
+/* ++++++++++++++ Command substitution ++++++++++++++ */
+
+char *perform_command_substitution(char *word);
 
 #endif /* EXPANSION_H */

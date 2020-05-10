@@ -256,7 +256,7 @@ bool exec_node_do_group(struct node_do_group *ast);
 ** \return true 
 ** \return false 
 */
-bool exec_node_case_clause(struct node_case_clause *ast);
+bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found);
 
 /**
 ** \brief execute case item
@@ -265,7 +265,7 @@ bool exec_node_case_clause(struct node_case_clause *ast);
 ** \return true 
 ** \return false 
 */
-bool exec_node_case_item(struct node_case_item *ast);
+bool exec_node_case_item(struct node_case_item *ast, char *word_to_found);
 
 int perform_for_range(struct range *r, struct node_for *ast);
 bool perform_for_enumeration(struct node_for *ast, int len_range);

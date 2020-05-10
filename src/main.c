@@ -50,7 +50,7 @@ int main(int ac, char **av)
     init_42sh_with_history(option);
     // printf("status : %s\n", program_data->last_cmd_status);
     // printf("status: %s\n", program_data->last_cmd_status);
-    int ret = atoi(program_data->last_cmd_status); // il a toujours bien marché, pq il ne amrcherait plus ? ah j'avoue t'as raison bah du coup je sais pas
+    int ret = atoi(program_data->last_cmd_status);
     // printf("status int: %d\n", ret);
     free_garbage_collector();
     free(option);

@@ -56,3 +56,13 @@ size_t get_next_close_curl_index(const char *str, size_t i)
             return i + 1;
     return strlen(str);
 }
+
+size_t get_next_close_parent_index(const char *str, size_t i)
+{
+    if (!str)
+        return 0;
+    while (++i < strlen(str))
+        if (str[i] == ')')
+            return i + 1;
+    return strlen(str);
+}

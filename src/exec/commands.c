@@ -76,6 +76,7 @@ int	print_without_sp(char *c, int *ptr_fd)
 
 void print_echo(char **args, bool e, bool n, int *ptr_fd)
 {
+    // printf("echo here\n");
     if (e == false && n == false)
     {
         for (int i = 0; args[i]; i++)
