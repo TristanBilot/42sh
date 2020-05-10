@@ -22,10 +22,13 @@
 #define _DEFAULT_SOURCE
 #endif
 
+#define MIN(x,y) return x < y ? x : y
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <termios.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #define DEFAULT_HISTORY_FILE_NAME "history"
 #define HISTORY_MAX 2000

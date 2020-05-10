@@ -29,6 +29,7 @@ set(SOURCE_FILES
 	src/exec/exec.c
 	src/var_storage/var_storage.c
 	src/history/history.c
+	src/history/auto_completion.c
 	src/history/handler.c
 	src/expansion/var_expansion.c
 	src/expansion/tilde_expansion.c

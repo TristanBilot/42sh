@@ -126,20 +126,15 @@ void init_42sh_with_history(struct option_sh *option)
                 putchar(c);
                 char_after_start++;
                 continue;
-                
-                
             }
             else if (c == '\n')
             {
+                char *new = xcalloc(1, MAX_STR_LEN);
+                strcpy(new, buffer->buf);
+                append_history_command(history, new);
                 putchar('\n');
                 append_buffer(buffer, '\n');
-                char *new = xcalloc(1, 256);
-                for (int i = 0; buffer->buf[i] != '\n'; i++)
-                    new[i] = buffer->buf[i];
-                // printf("in main_utils: %p \n", new);
-                append_history_command(history, new);
-                // if (buffer->index > 2)
-                //     append_history_command(history, buffer->buf);
+
                 lexer = new_lexer(buffer->buf);
                 flush(buffer);
                 ast = parse(lexer);
@@ -153,7 +148,6 @@ void init_42sh_with_history(struct option_sh *option)
                 flush(buffer);
                 print_prompt();
                 char_after_start = 0;
-                new = NULL;
                 continue;
             }
             else if (c == 127) // delete
@@ -174,6 +168,17 @@ void init_42sh_with_history(struct option_sh *option)
                 free_garbage_collector();
                 putchar('\n');
                 return;
+            }
+            else if (c == 9) // Tabulation
+            {
+                char *best_fit = get_auto_completion(history, buffer->buf);
+                if (best_fit)
+                {
+                    putchar('\n');
+                    printf("\n%s\n", best_fit);
+                    flush(buffer);
+                    append_string_to_buffer(buffer, best_fit);
+                }
             }
             else
             {
@@ -322,7 +327,7 @@ void delete_last_character(void)
 
 // void load_ressources()
 // {
-//     char cwd[256];
+//     char cwd[MAX_STR_LEN];
 //     char *args[] = { "load_ressource", NULL };
 //     if (getcwd(cwd, sizeof(cwd)) != NULL)
 //     {
@@ -373,7 +378,11 @@ int getch2(void)
       
     int res=0;
     res=tcgetattr(STDIN_FILENO, &org_opts);
-    assert(res==0);
+    if (res != 0)
+    {
+        printf("getch2(): first assertion failed\n");
+        return -1;
+    }
         //---- set new terminal parms --------
     memcpy(&new_opts, &org_opts, sizeof(new_opts));
     new_opts.c_lflag &= ~(ICANON | ECHO /*| ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL*/);
@@ -382,6 +391,10 @@ int getch2(void)
     c=getchar();
         //------  restore old settings ---------
     res=tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
-    assert(res==0);
+    if (res != 0)
+    {
+        printf("getch2(): first assertion failed\n");
+        return -1;
+    }
     return(c);
 }

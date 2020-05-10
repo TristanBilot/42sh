@@ -19,7 +19,6 @@
 #include <stdbool.h>
 #include <time.h>
 #include <signal.h>
-#include <assert.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 
