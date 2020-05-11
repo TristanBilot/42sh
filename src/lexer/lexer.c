@@ -43,43 +43,6 @@ int lex_full(struct lexer *lexer, char *c, size_t j)
     return (token || value) ? 1 : 0;
 }
 
-int lex_part(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
-{
-    struct token *token = NULL;
-    if ((token = lex_io_number(c, j))) { }
-    else if ((token = lex_great_less_and(c, *j)))
-    {
-        append_word_if_needed(lexer, buffer);
-        (*j)++;
-    }
-    else if ((token = lex_great_less(c, *j)))
-    {
-        append_word_if_needed(lexer, buffer);
-        if (token->type != TOK_LESS && token->type != TOK_GREAT) /* <, > */
-        {
-            if (token->type == TOK_DLESSDASH) /* <<- */
-                (*j) += 2;
-            else /* <<, >| ... */
-                (*j)++;
-        }
-    }
-    else if ((token = lex_comments(c, *j))) { }
-    else if ((token = lex_uni_character(c, *j)))
-    {
-        append_word_if_needed(lexer, buffer);
-        if (token->type == KW_DSEMI) /* ;; */
-            (*j)++;
-    }
-    else if ((token = lex_assignment_word(c, j))) {
-        append(lexer, token);
-        flush(buffer);
-        if ((token = lex_assignment_value(c, j)))
-            flush(buffer);
-    }
-    append(lexer, token);
-    return token ? 1 : 0;
-}
-
 /*
 * return 1: break
 * return -1: continue
@@ -169,54 +132,98 @@ int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
 * echo "a && b"
 * echo $(ls pwd  tree .)
 */
-int lex_multi_token(struct lexer *lexer, struct buffer *buffer, int *i, size_t *j, char **splitted)
+int lex_multi_token(struct lexer *lexer, struct buffer *buffer, char **splitted, int *i, size_t *j)
 {
-    // char *c = splitted[*i];
-    // if (!c)
-    //     return 1;
-    // // printf("%s %d %zu\n", c, *i, *j);
-    // if (c[*j] == '"' || c[*j] == '\'' || (c[*j] == '$' && c[*j+1] && c[*j+1] == '('))
-    // {
-    //     bool wait_doub_quote = c[*j] == '"';
-    //     bool wait_simp_quote = c[*j] == '\'';
-    //     bool wait_close_paren = c[*j] == '$' && c[*j+1] && c[*j+1] == '(';
+    char *c = splitted[*i];
+    if (!c)
+        return 1;
+    // printf("%s %d %zu\n", c, *i, *j);
+    if (c[*j] == '"' || c[*j] == '\'' || (c[*j] == '$' && c[*j+1] && c[*j+1] == '('))
+    {
+        bool wait_doub_quote = c[*j] == '"';
+        bool wait_simp_quote = c[*j] == '\'';
+        bool wait_close_paren = c[*j] == '$' && c[*j+1] && c[*j+1] == '(';
 
-    //     if (c[*j] == '"' || c[*j] == '\'')
-    //         (*j)++;
-    //     // printf("paren: %d, doub: %d, simple: %d\n", wait_close_paren, wait_doub_quote, wait_simp_quote);
-    //     append_word_if_needed(lexer, buffer);
-    //     while (splitted[*i])
-    //     {
-    //         c = splitted[*i];
-    //         for (; *j < strlen(splitted[*i]); (*j)++)
-    //         {
-    //             if ((wait_doub_quote && c[*j] == '"') ||
-    //                 (wait_simp_quote && c[*j] == '\'') ||
-    //                 (wait_close_paren && c[*j] == ')'))
-    //             {
-    //                 if (wait_close_paren)
-    //                     append_buffer(buffer, c[*j]); /* add ) */
+        if (c[*j] == '"' || c[*j] == '\'')
+            (*j)++;
+        // printf("paren: %d, doub: %d, simple: %d\n", wait_close_paren, wait_doub_quote, wait_simp_quote);
+        append_word_if_needed(lexer, buffer);
+        while (splitted[*i])
+        {
+            c = splitted[*i];
+            for (; *j < strlen(splitted[*i]); (*j)++)
+            {
+                if ((wait_doub_quote && c[*j] == '"') ||
+                    (wait_simp_quote && c[*j] == '\'') ||
+                    (wait_close_paren && c[*j] == ')'))
+                {
+                    if (wait_close_paren)
+                        append_buffer(buffer, c[*j]); /* add ) */
                     
-    //                 append_buffer(buffer, '\0');
-    //                 append(lexer, new_token_word(buffer->buf));
-    //                 // printf("splitted:  %s\n", splitted[*i]);
-    //                 // printf("sub: %s\n", substr(splitted[*i], *j, strlen(splitted[*i]) - *j));
-    //                 char *after_part = substr(splitted[*i], *j + 1, strlen(splitted[*i]) - (*j + 1));
-    //                 if (after_part)
-    //                     append(lexer, new_token_word(after_part));
-    //                 (*j)++;
-    //                 flush(buffer);
-    //                 return 1;
-    //             }
-    //             append_buffer(buffer, c[*j]);
-    //         }
-    //         if (splitted[*i+1])
-    //             append_buffer(buffer, ' ');
-    //         *j = 0;
-    //         (*i)++;
-    //     }
-    // }
+                    append_buffer(buffer, '\0');
+                    append(lexer, new_token_word(buffer->buf));
+                    // printf("splitted:  %s\n", splitted[*i]);
+                    // printf("sub: %s\n", substr(splitted[*i], *j, strlen(splitted[*i]) - *j));
+                    char *after_part = substr(splitted[*i], *j + 1, strlen(splitted[*i]) - (*j + 1));
+                    if (after_part)
+                        append(lexer, new_token_word(after_part));
+                    (*j)++;
+                    flush(buffer);
+                    return 1;
+                }
+                append_buffer(buffer, c[*j]);
+            }
+            if (splitted[*i+1])
+                append_buffer(buffer, ' ');
+            *j = 0;
+            (*i)++;
+        }
+    }
     return 0;
+}
+
+int lex_part(struct lexer *lexer, struct buffer *buffer, char **splitted, int *i, size_t *j)
+{
+    struct token *token = NULL;
+    char *c = splitted[*i];
+    if ((token = lex_io_number(c, j))) { }
+    else if ((token = lex_great_less_and(c, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        (*j)++;
+    }
+    else if ((token = lex_great_less(c, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        if (token->type != TOK_LESS && token->type != TOK_GREAT) /* <, > */
+        {
+            if (token->type == TOK_DLESSDASH) /* <<- */
+                (*j) += 2;
+            else /* <<, >| ... */
+                (*j)++;
+        }
+    }
+    else if ((token = lex_comments(c, *j))) { }
+    else if ((token = lex_uni_character(c, *j)))
+    {
+        append_word_if_needed(lexer, buffer);
+        if (token->type == KW_DSEMI) /* ;; */
+            (*j)++;
+    }
+    else if ((token = lex_assignment_word(c, j))) {
+        append(lexer, token);
+        flush(buffer);
+        /* current index is '=', so +1 is maybe $ for $( */
+        (*j)++;
+        if (lex_multi_token(lexer, buffer, splitted, i, j))
+            return 1;
+         /* if not a command sbtitution or quote, set j back to '=' */
+        (*j)--;
+        if ((token = lex_assignment_value(c, j)))
+            flush(buffer);
+    }
+    append(lexer, token);
+    return token ? -1 : 0;
 }
 
 void init_lexer(struct lexer *lexer)
@@ -234,7 +241,7 @@ void init_lexer(struct lexer *lexer)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
-                if (lex_multi_token(lexer, buffer, &i, &j, splitted))
+                if (lex_multi_token(lexer, buffer, splitted, &i, &j))
                     break;
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
@@ -245,9 +252,10 @@ void init_lexer(struct lexer *lexer)
                 
                 if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
                     continue;
-                if (lex_part(lexer, buffer, c, &j))
+                if ((type = lex_part(lexer, buffer, splitted, &i, &j)) == -1)
                     continue;
-                
+                else if (type == 1)
+                    break;
 
                 append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)

@@ -17,7 +17,6 @@ extern char **environ;
 
 void load_file(char *path)
 {
-    
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     FILE *fp;
@@ -38,6 +37,7 @@ void load_file(char *path)
         ast = parse(lexer);
         exec_node_input(ast);
     }
+    fclose(fp);
 }
 
 void source(char **args)

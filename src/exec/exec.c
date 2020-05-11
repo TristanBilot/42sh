@@ -140,7 +140,6 @@ bool manage_redirections(struct tab_redi tab, char **args, int *ptr_fd)
     if (!is(tab.dless.err, ""))
         if (dup_file(tab.dless.err, "a+", STDERR_FILENO, ptr_fd))
             return true;
-
     
     return false;
 }
@@ -191,7 +190,9 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
         //printf("before manage redirection\n");
         if (manage_redirections(tab, args, ptr_fd))
         {
-            err(1, "redirection error\n");
+            err(1, "redirection ");
+            exit(1);
+            // WEXITSTATUS(status) = 1;
             return true;
         }
         // else
@@ -770,8 +771,11 @@ bool exec_node_compound_list(struct node_compound_list *ast)
 bool exec_node_while(struct node_while *ast)
 {
     DEBUG("WHILE")
+    bool state = false;
     while (!exec_node_compound_list(ast->condition))
-        exec_node_do_group(ast->body);
+        state = exec_node_do_group(ast->body);
+    if (!state)
+        update_last_status(0);
     return false;
 }
 bool exec_node_until(struct node_until *ast)
