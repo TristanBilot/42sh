@@ -8,6 +8,16 @@ void init_42sh_with_history(struct option_sh *option)
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     struct history *history = open_history();
+     if (!option->norc_flag)
+    {
+        char *path = xmalloc(strlen(getenv("HOME")) + 9);
+        path = strcpy(path, getenv("HOME"));
+        path = strcat(path, "/.42shrc");
+        load_file(path);
+        load_file("/etc/42shrc");
+    }
+    else if (option->file_path)
+        load_file(option->file_path);
     if (option->cmd)
     {
         lexer = new_lexer(option->cmd);
@@ -23,12 +33,12 @@ void init_42sh_with_history(struct option_sh *option)
         
         int char_after_start = 0;
         char * line = NULL;
-        struct buffer *buffer = new_buffer();
+        // struct buffer *buffer = new_buffer();
         if (print_prompt() == 1)
             return;
         
         
-        while ((c = getch2()) != 'q')
+        while ((c = getch2()) != 4)
         {
             if (c == 91) // top arrow   old value: 27
             {
@@ -49,8 +59,18 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Problème : besoin de rajouter un printf avant sinon ça bug
                     */
                     printf("a");
-                    while (--char_after_start)
+                    int idx = buffer->index;
+                    int cas = char_after_start;
+                    while (idx < cas)
+                    {
+                        putchar('a');
+                        idx++;
+                    }
+                    while (char_after_start > 0)
+                    {
+                        char_after_start--;
                         delete_last_character();
+                    }
                     /*
                     ** Retire l'ancienne input du buffer
                     */
@@ -81,8 +101,18 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Problème : besoin de rajouter un printf avant sinon ça bug
                     */
                     printf("a");
-                    while (--char_after_start)
+                    int idx = buffer->index;
+                    int cas = char_after_start;
+                    while (idx < cas)
+                    {
+                        putchar('a');
+                        idx++;
+                    }
+                    while (char_after_start > 0)
+                    {
+                        char_after_start--;
                         delete_last_character();
+                    }
                     /*
                     ** Retire l'ancienne input du buffer
                     */
@@ -108,10 +138,27 @@ void init_42sh_with_history(struct option_sh *option)
                 else if (c == 67)
                 {
                     // right arrow
-                    // NE MARCHE PAS AVEC LES ESPACES
-                    putchar(buffer->buf[buffer->index]);
-                    putchar(buffer->buf[buffer->index]);
-                    buffer->index++;
+                    if (buffer->index < char_after_start)
+                    {
+                        putchar('a');
+                        putchar(buffer->buf[buffer->index]);
+                        // if (buffer->buf[buffer->index] < 48 && buffer->buf[buffer->index] > 31)
+                        // {
+                        //     putchar('a');
+                        //     putchar(buffer->buf[buffer->index]);
+                        // }
+                        // else
+                        // {
+                        //     putchar(buffer->buf[buffer->index]);
+                        //     putchar(buffer->buf[buffer->index]);
+                        // }
+                        buffer->index++;
+                    }
+                    else
+                    {
+                        putchar('a');
+                    }
+                    
                     continue;
                 }
                 else if (c == 68)
@@ -187,6 +234,7 @@ void init_42sh_with_history(struct option_sh *option)
             }
             else if (c == 4) // EOF :  Ctrl+D
             {
+                // NORMALEMENT INUTILE CAR GERE DANS LA CONDITION DE LA BOUCLE
                 free_garbage_collector();
                 putchar('\n');
                 return;
@@ -232,6 +280,7 @@ void init_42sh_with_history(struct option_sh *option)
         }
         /*restore the old settings*/
         // tcsetattr( STDIN_FILENO, TCSANOW, &org_opts);
+        free_garbage_collector();
         if (line)
             free(line);
         printf("\n");

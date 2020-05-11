@@ -1,4 +1,3 @@
-#define _XOPEN_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <wordexp.h>
@@ -8,8 +7,59 @@
 #include <stdbool.h>
 #include <err.h>
 #include "commands.h"
+#include "../parser/parser.h"
+#include "./utils/xalloc.h"
+#include "../exec/exec.h"
+#include "../expansion/expansion.h"
+#include "../var_storage/var_storage.h"
 
 extern char **environ;
+
+void load_file(char *path)
+{
+    
+    struct lexer *lexer = NULL;
+    struct node_input *ast = NULL;
+    FILE *fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen(path, "r");
+    if (fp == NULL)
+    {
+        dprintf(stderr, "%s", strerror(errno));
+        return;
+    }
+    while ((read = getline(&line, &len, fp)) != -1)
+    {
+        printf(line);
+        lexer = new_lexer(line);
+        ast = parse(lexer);
+        exec_node_input(ast);
+    }
+}
+
+void source(char **args)
+{
+    if (!args[1])
+        errx(1, "source: not enough arguments\n");
+    char *path = NULL;
+    if (!strstr(args[1], ".sh") && !strchr(args[1], '/'))
+    {
+        char *env = getenv("PATH");
+        path = xmalloc(strlen(env) + strlen(args[1]) + 10);
+        strcpy(path, getenv("PATH"));
+        strcat(path, "/");
+        strcat(path, args[1]);
+    }
+    for (int i = 2; args[i]; i++)
+        append_program_data(args[i]);
+    if (path == NULL)
+        load_file(args[1]);
+    else
+        load_file(path);
+}
 
 static void fill_echo_tab(struct echo_tab tab[10])
 {
@@ -44,7 +94,7 @@ void print_args(char **args)
         i++;
     }
 }
-int	print_without_sp(char *c, int *ptr_fd)
+int	print_without_sp(char *c)
 {
     int i = 0;
     struct echo_tab tab[9];
@@ -58,8 +108,7 @@ int	print_without_sp(char *c, int *ptr_fd)
         {
             if (c[i] == '\\' && tab[index_tab].name == c[i + 1])
             {
-                dprintf(*ptr_fd, tab[index_tab].corresp);
-                //printf("%c", tab[index_tab].corresp);
+                printf("%c", tab[index_tab].corresp);
                 index_tab = 0;
                 i++;
                 break;
@@ -67,64 +116,52 @@ int	print_without_sp(char *c, int *ptr_fd)
             index_tab++;
         }
         if (index_tab == 10)
-            dprintf(*ptr_fd, c[i]);
-            //printf("%c", c[i]);
+            printf("%c", c[i]);
         i++;
     }
     return (0);
 }
 
-void print_echo(char **args, bool e, bool n, int *ptr_fd)
+void print_echo(char **args, bool e, bool n)
 {
-    // printf("echo here\n");
     if (e == false && n == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            dprintf(*ptr_fd, args[i]);
-            //printf("%s", args[i]);
+            printf("%s", args[i]);
             if (args[i + 1])
-                dprintf(*ptr_fd, " ");
-                //printf("%c", ' ');
+                printf("%c", ' ');
         }
-        dprintf(*ptr_fd, "\n");
-        //printf("\n");
+        printf("\n");
     }
     else if (n == true && e == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            dprintf(*ptr_fd, args[i]);
-            // printf("%s", args[i]);
+            printf("%s", args[i]);
             if (args[i + 1])
-                dprintf(*ptr_fd, " ");
-                //printf("%c", ' ');
+                printf("%c", ' ');
         }
     }
     else if (e == true)
     {
         for (int i = 0; args[i]; i++)
         {
-            print_without_sp(args[i], ptr_fd);
+            print_without_sp(args[i]);
             if (args[i + 1])
-                dprintf(*ptr_fd, args[i]);
-                //printf("%c", ' ');
+                printf("%c", ' ');
         }
         if (n == false)
-        {
-            dprintf(*ptr_fd, "\n");
-            //printf("%c", '\n');
-        }
+            printf("%c", '\n');
     }
 }
 
-void echo(char **args, int *ptr_fd)
+void echo(char **args)
 {
     bool n = false;
     bool e = false;
     if (!args[1])
-        dprintf(*ptr_fd, "\n");
-        //printf("\n");
+        printf("\n");
     else if (args[1][0] == '-')
     {
         int i = 0;
@@ -136,17 +173,17 @@ void echo(char **args, int *ptr_fd)
                 e = true;
         }
         if (args[1][i] != 0)
-            print_echo(args + 1, false, false, ptr_fd);
+            print_echo(args + 1, false, false);
         else if (!args[2])
             return;
         else 
-            print_echo(args + 2, e, n, ptr_fd);
+            print_echo(args + 2, e, n);
     }
     else
-        print_echo(args + 1, e, n, ptr_fd);
+        print_echo(args + 1, e, n);
 }   
 
-void cd(char **args, int *ptr_fd)
+void cd(char **args)
 {
     int ret = 0;
     if (!args[1])
@@ -159,7 +196,7 @@ void cd(char **args, int *ptr_fd)
         printf("%s\n", strerror(errno));
 }
 
-void export(char **args, int *ptr_fd)
+void export(char **args)
 {
     bool p = false;
     bool n = false;

@@ -6,6 +6,7 @@ struct option_sh *init_option_sh()
     option->norc_flag = false;
     option->print_ast_flag = false;
     option->cmd = NULL;
+    option->file_path = NULL;
     return option;
 }
 
@@ -47,6 +48,8 @@ int main(int ac, char **av)
         else
             print_usage();
     }
+    if (av[optind])
+        option->file_path = av[optind];
     init_42sh_with_history(option);
     // printf("status : %s\n", program_data->last_cmd_status);
     // printf("status: %s\n", program_data->last_cmd_status);

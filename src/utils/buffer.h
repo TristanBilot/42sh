@@ -23,7 +23,9 @@ struct buffer {
 **
 **\return struct buffer* 
 */
-struct buffer *new_buffer();
+struct buffer *new_buffer(void);
+
+struct buffer *new_huge_buffer(void);
 /**
 **\brief Append characters to the buffer
 **
@@ -31,6 +33,8 @@ struct buffer *new_buffer();
 **\param c 
 */
 void append_buffer(struct buffer *buffer, char c);
+
+void append_huge_buffer(struct buffer *buffer, char c);
 /**
 **\brief Append string to the buffer
 **
@@ -38,6 +42,8 @@ void append_buffer(struct buffer *buffer, char c);
 **\param str 
 */
 void append_string_to_buffer(struct buffer *buffer, char *str);
+
+void append_string_to_huge_buffer(struct buffer *buffer, char *str);
 /**
 **\brief Free the buffer
 **

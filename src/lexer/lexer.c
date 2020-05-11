@@ -165,6 +165,60 @@ int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
     return 0;
 }
 
+/* 
+* echo "a && b"
+* echo $(ls pwd  tree .)
+*/
+int lex_multi_token(struct lexer *lexer, struct buffer *buffer, int *i, size_t *j, char **splitted)
+{
+    // char *c = splitted[*i];
+    // if (!c)
+    //     return 1;
+    // // printf("%s %d %zu\n", c, *i, *j);
+    // if (c[*j] == '"' || c[*j] == '\'' || (c[*j] == '$' && c[*j+1] && c[*j+1] == '('))
+    // {
+    //     bool wait_doub_quote = c[*j] == '"';
+    //     bool wait_simp_quote = c[*j] == '\'';
+    //     bool wait_close_paren = c[*j] == '$' && c[*j+1] && c[*j+1] == '(';
+
+    //     if (c[*j] == '"' || c[*j] == '\'')
+    //         (*j)++;
+    //     // printf("paren: %d, doub: %d, simple: %d\n", wait_close_paren, wait_doub_quote, wait_simp_quote);
+    //     append_word_if_needed(lexer, buffer);
+    //     while (splitted[*i])
+    //     {
+    //         c = splitted[*i];
+    //         for (; *j < strlen(splitted[*i]); (*j)++)
+    //         {
+    //             if ((wait_doub_quote && c[*j] == '"') ||
+    //                 (wait_simp_quote && c[*j] == '\'') ||
+    //                 (wait_close_paren && c[*j] == ')'))
+    //             {
+    //                 if (wait_close_paren)
+    //                     append_buffer(buffer, c[*j]); /* add ) */
+                    
+    //                 append_buffer(buffer, '\0');
+    //                 append(lexer, new_token_word(buffer->buf));
+    //                 // printf("splitted:  %s\n", splitted[*i]);
+    //                 // printf("sub: %s\n", substr(splitted[*i], *j, strlen(splitted[*i]) - *j));
+    //                 char *after_part = substr(splitted[*i], *j + 1, strlen(splitted[*i]) - (*j + 1));
+    //                 if (after_part)
+    //                     append(lexer, new_token_word(after_part));
+    //                 (*j)++;
+    //                 flush(buffer);
+    //                 return 1;
+    //             }
+    //             append_buffer(buffer, c[*j]);
+    //         }
+    //         if (splitted[*i+1])
+    //             append_buffer(buffer, ' ');
+    //         *j = 0;
+    //         (*i)++;
+    //     }
+    // }
+    return 0;
+}
+
 void init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
@@ -180,6 +234,8 @@ void init_lexer(struct lexer *lexer)
         {
             for (size_t j = 0; j < strlen(c); j++)
             {
+                if (lex_multi_token(lexer, buffer, &i, &j, splitted))
+                    break;
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
@@ -191,6 +247,7 @@ void init_lexer(struct lexer *lexer)
                     continue;
                 if (lex_part(lexer, buffer, c, &j))
                     continue;
+                
 
                 append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)

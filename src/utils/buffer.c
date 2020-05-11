@@ -4,10 +4,18 @@
 #include "../utils/buffer.h"
 #include "../utils/xalloc.h"
 
-struct buffer *new_buffer()
+struct buffer *new_buffer(void)
 {
     struct buffer *buffer = xcalloc(sizeof(struct buffer), 1);
     buffer->buf = xcalloc(BUFFER_SIZE, 1);
+    buffer->index = 0;
+    return buffer;
+}
+
+struct buffer *new_huge_buffer(void)
+{
+    struct buffer *buffer = xcalloc(sizeof(struct buffer), 1);
+    buffer->buf = xcalloc(1, 1000000);
     buffer->index = 0;
     return buffer;
 }
@@ -19,6 +27,13 @@ void append_buffer(struct buffer *buffer, char c)
     buffer->buf[buffer->index++] = c;
 }
 
+void append_huge_buffer(struct buffer *buffer, char c)
+{
+    if (buffer->index >= 1000000)
+        return;
+    buffer->buf[buffer->index++] = c;
+}
+
 void append_string_to_buffer(struct buffer *buffer, char *str)
 {
     if (!str || !buffer)
@@ -26,6 +41,15 @@ void append_string_to_buffer(struct buffer *buffer, char *str)
     for (size_t j = 0; j < strlen(str); j++)
         if (!(j == strlen(str) - 1 && str[j] == '\n'))
             append_buffer(buffer, str[j]);
+}
+
+void append_string_to_huge_buffer(struct buffer *buffer, char *str)
+{
+    if (!str || !buffer)
+        return;
+    for (size_t j = 0; j < strlen(str); j++)
+        if (!(j == strlen(str) - 1 && str[j] == '\n'))
+            append_huge_buffer(buffer, str[j]);
 }
 
 size_t buffer_len(struct buffer *buffer)

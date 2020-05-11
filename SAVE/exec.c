@@ -230,7 +230,7 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
             // printf("exit status = %d\n", WEXITSTATUS(status));
             update_last_status(WEXITSTATUS(status));
             
-            return WEXITSTATUS(status) >= 1; /* 1 = no output in stdout */
+            return WEXITSTATUS(status) == 1; /* 1 = no output in stdout */
         }
     }
     return false;
@@ -264,7 +264,6 @@ bool exec_node_list(struct node_list *ast)
 bool exec_node_and_or(struct node_and_or *ast)
 {
     DEBUG("AND_OR")
-    // int state;
     if (ast->right)
     {
         if (ast->type == OR)
@@ -288,13 +287,13 @@ bool exec_node_and_or(struct node_and_or *ast)
             {
                 if (!exec_node_pipeline(ast->left.pipeline))
                     return exec_node_pipeline(ast->right);
-                return true;
+                return false;
             }
             else
             {
                 if (!exec_node_and_or(ast->left.and_or))
                     return exec_node_pipeline(ast->right);
-                return true;
+                return false;
             }
         }
     }

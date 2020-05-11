@@ -36,7 +36,7 @@ struct token *new_token_word(char *value)
 {
     struct token *new = new_token();
     new->type = TOK_WORD;
-    new->value = xmalloc(MAX_TOKEN);  /* FREE */
+    new->value = xmalloc(strlen(value) + 1);
     strcpy(new->value, value);
     return new;
 }

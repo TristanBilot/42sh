@@ -14,24 +14,36 @@
 
 
 /**
+** \brief function to give a file to the 42sh
+**
+** \param args 
+*/
+void load_file(char *path);
+/**
+** \brief implementation of command sourcefnac
+**
+** \param args 
+*/
+void source(char **args);
+/**
 ** \brief implementation of command echo
 **
 ** \param args 
 */
-void echo(char **args, int *ptr_fd);
+void echo(char **args);
 /**
 ** \brief implementation of command cd
 **
 ** \param args 
 */
-void cd(char **args, int *ptr_fd);
+void cd(char **args);
 
 /**
 ** \brief implementation of command export
 **
 ** \param args 
 */
-void export(char **args, int *ptr_fd);
+void export(char **args);
 /**
 **\brief implementation of exit_shell
 **
@@ -46,6 +58,6 @@ struct echo_tab
 };
 
 void print_args(char **args);
-int	print_without_sp(char *c, int *ptr_fd);
-void print_echo(char **args, bool e, bool n, int *ptr_fd);
+int	print_without_sp(char *c);
+void print_echo(char **args, bool e, bool n);
 #endif /* COMMANDS_H_ */

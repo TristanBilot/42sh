@@ -21,6 +21,23 @@
     checks:
       - returncode
       - stdout
+  - stdin: echo
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -e abcd\flol\\n
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -en abcd\flol\\n lol
+    checks:
+      - stdout
+  - stdin: echo -nnnnn abcd\flol\\n lol
+    checks:
+      - stdout
+  - stdin: echo -u abcd
+    checks:
+      - stdout 
   - stdin: echo toto;
     checks:
       - returncode
@@ -444,3 +461,63 @@
       - returncode
       - has_stderr
       - stdout
+
+####################################################### TEST CASE_ITEM AND CASE_CLAUSE ########################################################
+- description:
+  - name : CASE_ITEM
+  - stdin: case lion in esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in lion ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in lion | elephant ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in lion | elephant | rat ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in lion ) echo success; echo tati; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in elephant ) echo failed; ;; lion ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in elephant | rat ) echo failed; ;; lion | dog | cat ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: case lion in elephant | rat ) echo failed; ;; dog | cat ) echo failed 2; ;; bugs | lion )  ;; esac
+    checks:
+      - returncode
+      - stdout
+  - stdin: $a=1; case $1 in elephant | rat ) echo failed; ;; lion | 1 ) echo success; ;; esac
+    checks:
+      - returncode
+      - stdout
+  # - stdin: while cat<fdjlkghfdg; do echo toto;done
+  #   checks:
+  #     - returncode
+  #     - has_stderr
+  #     - stdout
+  # - stdin: while echo a && cat<gldghdfh; do echo toto;done
+  #   checks:
+  #     - returncode
+  #     - has_stderr
+  #     - stdout
+  # - stdin: while ! echo a | echo b; do echo toto;done
+  #   checks:
+  #     - returncode
+  #     - has_stderr
+  #     - stdout
+  # - stdin: while ls && cat<fdslhgsd; do echo toto;done
+  #   checks:
+  #     - returncode
+  #     - has_stderr
+  #     - stdout

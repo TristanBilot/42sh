@@ -46,6 +46,7 @@ enum param_type
 };
 
 void new_program_data_storage(int argc, char *argv[]);
+void append_program_data(char *element);
 void free_program_data_storage(void);
 void update_last_status(int status);
 char *perform_var_expansion(char *word);

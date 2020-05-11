@@ -27,6 +27,17 @@ void new_program_data_storage(int argc, char *argv[])
     program_data->argc = argc - 1;
 }
 
+void append_program_data(char *element)
+{
+    if (program_data->argv = NULL)
+        program_data->argv = calloc(1, sizeof(char *));
+    else
+        realloc(program_data->argv, sizeof(char *) + 1);
+    int i = program_data->argc;
+    program_data->argv[i] = element;
+    program_data->argc += 1;
+}
+
 void free_program_data_storage(void)
 {
     if (program_data->argv)
