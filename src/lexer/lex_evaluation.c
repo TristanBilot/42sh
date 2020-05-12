@@ -101,22 +101,6 @@ struct token *lex_uni_character(char *c, size_t i)
     return NULL;
 }
 
-struct token *lex_assignment_word(char *c, size_t *i)
-{
-    if (!c || !c[*i])
-        return NULL;
-    if (!(c[*i] == '='))
-        return NULL;
-    if (*i == 0)
-        return NULL;
-    
-    size_t prev_sep = get_previous_separator_index(c, *i);
-    char *var_name = substr(c, prev_sep, *i - prev_sep);
-    struct token *token = new_token_type(TOK_ASS_WORD);
-    token->value = var_name;
-    return token;
-}
-
 struct token *lex_assignment_value(char *c, size_t *i)
 {
     size_t next_i = *i + 1;

@@ -14,6 +14,7 @@
 
 bool is_word = false;
 bool is_kw_in = false;
+bool is_ass_w = false;
 
 char **split(char *str)
 {
@@ -88,6 +89,23 @@ int lex_parenthesis(struct lexer *lexer, struct buffer *buffer, char *c, size_t 
     return 0;
 }
 
+struct token *lex_assignment_word(char *c, size_t *i)
+{
+    if (!c || !c[*i])
+        return NULL;
+    if (!(c[*i] == '='))
+        return NULL;
+    if (*i == 0)
+        return NULL;
+    
+    is_ass_w = true;
+    size_t prev_sep = get_previous_separator_index(c, *i);
+    char *var_name = substr(c, prev_sep, *i - prev_sep);
+    struct token *token = new_token_type(TOK_ASS_WORD);
+    token->value = var_name;
+    return token;
+}
+
 int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
 {
     if (is_separator(c[*j]))
@@ -109,6 +127,7 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
             return -1;
         }
         is_word = false;
+        is_ass_w = false;
     }
     return 0;
 }
@@ -162,12 +181,6 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer, char **splitted,
                     
                     append_buffer(buffer, '\0');
                     append(lexer, new_token_word(buffer->buf));
-                    // printf("splitted:  %s\n", splitted[*i]);
-                    // printf("sub: %s\n", substr(splitted[*i], *j, strlen(splitted[*i]) - *j));
-                    char *after_part = substr(splitted[*i], *j + 1, strlen(splitted[*i]) - (*j + 1));
-                    if (after_part)
-                        append(lexer, new_token_word(after_part));
-                    (*j)++;
                     flush(buffer);
                     return 1;
                 }
@@ -182,10 +195,9 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer, char **splitted,
     return 0;
 }
 
-int lex_part(struct lexer *lexer, struct buffer *buffer, char **splitted, int *i, size_t *j)
+int lex_part(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
 {
     struct token *token = NULL;
-    char *c = splitted[*i];
     if ((token = lex_io_number(c, j))) { }
     else if ((token = lex_great_less_and(c, *j)))
     {
@@ -210,17 +222,9 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, char **splitted, int *i
         if (token->type == KW_DSEMI) /* ;; */
             (*j)++;
     }
-    else if ((token = lex_assignment_word(c, j))) {
+    else if (!is_ass_w && (token = lex_assignment_word(c, j))) {
         append(lexer, token);
         flush(buffer);
-        /* current index is '=', so +1 is maybe $ for $( */
-        (*j)++;
-        if (lex_multi_token(lexer, buffer, splitted, i, j))
-            return 1;
-         /* if not a command sbtitution or quote, set j back to '=' */
-        (*j)--;
-        if ((token = lex_assignment_value(c, j)))
-            flush(buffer);
     }
     append(lexer, token);
     return token ? -1 : 0;
@@ -236,13 +240,18 @@ void init_lexer(struct lexer *lexer)
     {
         struct buffer *buffer = new_buffer();
         char *c = splitted[i];
+        is_ass_w = false;
 
         if ((type = evaluate_token(c)) == TOK_WORD)
         {
+            // printf("c: %s\n", c);
             for (size_t j = 0; j < strlen(c); j++)
             {
                 if (lex_multi_token(lexer, buffer, splitted, &i, &j))
-                    break;
+                {
+                    c = splitted[i];
+                    continue;
+                }
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
                 if ((type = lex_parenthesis(lexer, buffer, c, &j)) == -1)
@@ -252,7 +261,7 @@ void init_lexer(struct lexer *lexer)
                 
                 if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
                     continue;
-                if ((type = lex_part(lexer, buffer, splitted, &i, &j)) == -1)
+                if ((type = lex_part(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)
                     break;
@@ -260,7 +269,7 @@ void init_lexer(struct lexer *lexer)
                 append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)
                 {
-                    if (((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN) && !is_word)
+                    if (((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN) && !is_word && !is_ass_w)
                         append(lexer, new_token_type(type));
                     else
                         append(lexer, new_token_word(buffer->buf));
@@ -271,7 +280,7 @@ void init_lexer(struct lexer *lexer)
         }
         /* CASE AND IN ARE EXCEPTIONS: case a in b */
         // && kw != KW_IN && kw != KW_CASE && kw != KW_ESAC && kw != KW_FOR && kw != KW_UNTIL
-        else if ((kw = evaluate_keyword(c)) != KW_UNKNOWN && is_word && (kw != KW_IN || !is_kw_in))
+        else if (((kw = evaluate_keyword(c)) != KW_UNKNOWN && is_word && (kw != KW_IN || !is_kw_in)))
             append(lexer, new_token_word(c));
         else
         {
@@ -289,7 +298,6 @@ void init_lexer(struct lexer *lexer)
 }
 
 struct lexer *new_lexer(char *str) {
-    // printf("in lexer str ==> %s$$$$$$$", str);
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
     lexer->token_list = xmalloc(sizeof(struct token_list));
     lexer->token_list->first = NULL;

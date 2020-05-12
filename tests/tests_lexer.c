@@ -393,6 +393,67 @@ Test(lexer, assignment_word)
     cr_assert(peek(lexer4)->type == TOK_WORD);
     cr_assert(is(pop(lexer4)->value, "$1"));
     free_garbage_collector();
+
+    char input5[] = "var=\"echo hey whats up\"";
+    struct lexer *lexer5 = new_lexer(input5);
+    cr_assert(peek(lexer5)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer5)->value, "var"));
+    cr_assert(peek(lexer5)->type == TOK_WORD);
+    cr_assert(is(pop(lexer5)->value, "echo hey whats up"));
+    free_garbage_collector();
+
+    char input6[] = "var='echo hey whats up'";
+    struct lexer *lexer6 = new_lexer(input6);
+    cr_assert(peek(lexer6)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer6)->value, "var"));
+    cr_assert(peek(lexer6)->type == TOK_WORD);
+    cr_assert(is(pop(lexer6)->value, "echo hey whats up"));
+    free_garbage_collector();
+
+    char input7[] = "var=$(echo hey whats up)";
+    struct lexer *lexer7 = new_lexer(input7);
+    cr_assert(peek(lexer7)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer7)->value, "var"));
+    cr_assert(peek(lexer7)->type == TOK_WORD);
+    cr_assert(is(pop(lexer7)->value, "$(echo hey whats up)"));
+    free_garbage_collector();
+
+    char input8[] = "var=hi$(echo hey whats up)hi";
+    struct lexer *lexer8 = new_lexer(input8);
+    cr_assert(peek(lexer8)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer8)->value, "var"));
+    cr_assert(peek(lexer8)->type == TOK_WORD);
+    cr_assert(is(pop(lexer8)->value, "hi"));
+    cr_assert(peek(lexer8)->type == TOK_WORD);
+    cr_assert(is(pop(lexer8)->value, "$(echo hey whats up)"));
+    cr_assert(peek(lexer8)->type == TOK_WORD);
+    cr_assert(is(pop(lexer8)->value, "hi"));
+    free_garbage_collector();
+
+    char input9[] = "var=hi\"echo hey whats up\"hi";
+    struct lexer *lexer9 = new_lexer(input9);
+    cr_assert(peek(lexer9)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer9)->value, "var"));
+    cr_assert(peek(lexer9)->type == TOK_WORD);
+    cr_assert(is(pop(lexer9)->value, "hi"));
+    cr_assert(peek(lexer9)->type == TOK_WORD);
+    cr_assert(is(pop(lexer9)->value, "echo hey whats up"));
+    cr_assert(peek(lexer9)->type == TOK_WORD);
+    cr_assert(is(pop(lexer9)->value, "hi"));
+    free_garbage_collector();
+
+    char input10[] = "var=hi\'echo hey whats up\'hi";
+    struct lexer *lexer10 = new_lexer(input10);
+    cr_assert(peek(lexer10)->type == TOK_ASS_WORD);
+    cr_assert(is(pop(lexer10)->value, "var"));
+    cr_assert(peek(lexer10)->type == TOK_WORD);
+    cr_assert(is(pop(lexer10)->value, "hi"));
+    cr_assert(peek(lexer10)->type == TOK_WORD);
+    cr_assert(is(pop(lexer10)->value, "echo hey whats up"));
+    cr_assert(peek(lexer10)->type == TOK_WORD);
+    cr_assert(is(pop(lexer10)->value, "hi"));
+    free_garbage_collector();
+
     free(garbage_collector);
 }
 
@@ -621,6 +682,41 @@ Test(lexer, hard_stuck)
     cr_assert(pop(lexer2)->type == KW_FI);
     cr_assert(pop(lexer2)->type == TOK_NEWLINE);
     cr_assert(pop(lexer2)->type == TOK_SEPAND);
+    free_garbage_collector();
+
+    free(garbage_collector);
+}
+
+Test(lexer, cmd_substitution)
+{
+    new_garbage_collector();
+    char input1[] = "echo $(ls)";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(pop(lexer1)->type == TOK_WORD);
+    cr_assert(peek(lexer1)->type == TOK_WORD);
+    cr_assert(is(pop(lexer1)->value, "$(ls)"));
+    free_garbage_collector();
+
+    char input2[] = "echo hi$(ls)hi";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(peek(lexer2)->type == TOK_WORD);
+    cr_assert(is(pop(lexer2)->value, "hi"));
+    cr_assert(peek(lexer2)->type == TOK_WORD);
+    cr_assert(is(pop(lexer2)->value, "$(ls)"));
+    cr_assert(peek(lexer2)->type == TOK_WORD);
+    cr_assert(is(pop(lexer2)->value, "hi"));
+    free_garbage_collector();
+
+    char input3[] = "echo hi$(ls -l a lot of stuff)hi";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(pop(lexer3)->type == TOK_WORD);
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "hi"));
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "$(ls -l a lot of stuff)"));
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "hi"));
     free_garbage_collector();
 
     free(garbage_collector);

@@ -12,6 +12,7 @@
 #ifndef EXEC_H
 #define EXEC_H
 
+
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -37,7 +38,7 @@
 struct commands
 {
     const char *name;
-    void (*function)(char **args, int *ptr_fd);
+    void (*function)(char **args);
 };
 
 struct std 

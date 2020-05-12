@@ -9,6 +9,7 @@
 #include "../var_storage/var_storage.h"
 #include "../expansion/expansion.h"
 #include "../exec/commands.h"
+#include "../expansion/my_popen.h"
 
 #define READ_END 0
 #define WRITE_END 1
@@ -26,13 +27,13 @@ const struct commands cmd[4] = {
     {"export", &export},
     {NULL, NULL}};
 
-bool extra_command(char **args, char *cmd_name, int *ptr_fd)
+bool extra_command(char **args, char *cmd_name)
 {
     for (int i = 0; cmd[i].name; i++)
     {
         if (strcmp(cmd_name, cmd[i].name) == 0)
         {
-            cmd[i].function(args, ptr_fd);
+            cmd[i].function(args);
             return false;
         }
     }
@@ -66,6 +67,7 @@ bool dup_file(char *file, char *flag, int io, int *ptr_fd)
     // printf("iO : %d\n", io);
     // printf("OUt : %d\n", out);
     //printf("valeur de fd 3: %d\n", *ptr_fd);
+    close(io);
     int fd = dup2(out, io);
     *ptr_fd = out;
     if (fd < 0)
@@ -90,7 +92,7 @@ bool dup_file(char *file, char *flag, int io, int *ptr_fd)
     return false; // provisoire
 }
 
-bool manage_redirections(struct tab_redi tab, char **args, int *ptr_fd)
+bool manage_redirections(struct tab_redi tab, int *ptr_fd)
 {
     // if(!tab)
     //     return true;
@@ -152,7 +154,7 @@ bool execute(char **args, struct tab_redi tab)
     ptr_fd = fd;
     //printf("valeur de fd : %d\n", *ptr_fd);
     DEBUG("EXECUTE")
-    if (manage_redirections(tab, args, ptr_fd))
+    if (manage_redirections(tab, ptr_fd))
         return true;
         //printf("passe redirection 1 \n");
     //printf("apres redirection , fd : %d\n", *ptr_fd);
@@ -174,6 +176,9 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     *fd = 1;
     int *ptr_fd;
     ptr_fd = fd;
+    int save_out = dup(1);
+    int save_in = dup(0);
+    int save_err = dup(2);
     // int i = 0;
     // while (args[i])
     // {
@@ -181,60 +186,95 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     //     i++;
     // }
     //printf("valeur de fd 0 : %d\n", *ptr_fd);
+    
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell(args);
-    if ((child = fork()) == -1)
-        return true;
-    if (child == 0)
+    if (manage_redirections(tab, ptr_fd))
     {
-        //printf("before manage redirection\n");
-        if (manage_redirections(tab, args, ptr_fd))
-        {
-            err(1, "redirection ");
-            exit(1);
-            // WEXITSTATUS(status) = 1;
-            return true;
-        }
-        // else
-        //     printf("pass redirection 2\n");
-        //printf("valeur de fd apres redirection : %d\n", *ptr_fd);
-        // if (args[0] == NULL)
-        // {
-        //     if (!extra_command(args, cmd_name))
-        //         return false;
-        // }
+        err(1, "redirection ");
+        update_last_status(1);
+        // WEXITSTATUS(status) = 1;
+        return true;
+    }
 
-        // if (!extra_command(args, cmd_name, ptr_fd))
-        // {
-        //     return clean_extra_command();
-        // }
+    // if (args[0] == NULL)
+    // {
+    //     if (!extra_command(args, cmd_name))
+    //     {
+    //         dup2(save_in, 0);
+    //         dup2(save_out, 1);
+    //         dup2(save_err, 2);
+    //         return false;
+    //     }
+    // }
+    if (!extra_command(args, cmd_name))
+    {
+        dup2(save_in, 0);
+        dup2(save_out, 1);
+        dup2(save_err, 2);
+        //return false;
+        // printf("ok\n");
+        return false;
 
-        // if (strcmp(args[0], "echo"))
-        //     echo(args);
-
-        // else 
-        // {   
-            if ((execvp(args[0], args)) == -1)
-            {
-                err(1, "command not found: %s\n", args[0]);
-                return true;
-            }
-            return false;
-        // }
     }
     else
     {
-        wait(&status);
-        if (WIFEXITED(status))
+    
+        if ((child = fork()) == -1)
+            return true;
+        if (child == 0)
         {
-            //exit(status);
-            // printf("exit status = %d\n", WEXITSTATUS(status));
-            update_last_status(WEXITSTATUS(status));
-            
-            return WEXITSTATUS(status) >= 1; /* 1 = no output in stdout */
+            //printf("before manage redirection\n");
+            // if (manage_redirections(tab, ptr_fd))
+            // {
+            //     err(1, "redirection ");
+            //     exit(1);
+            //     // WEXITSTATUS(status) = 1;
+            //     return true;
+            // }
+            // else
+            //     printf("pass redirection 2\n");
+            //printf("valeur de fd apres redirection : %d\n", *ptr_fd);
+            // if (args[0] == NULL)
+            // {
+            //     if (!extra_command(args, cmd_name))
+            //         return false;
+            // }
+
+            // if (!extra_command(args, cmd_name))
+            // {//printf("extra command \n");
+            //     return false;
+            // }
+                //return clean_extra_command();
+
+            // if (strcmp(args[0], "echo"))
+            //     echo(args);
+
+            // else 
+            // {   
+                if ((execvp(args[0], args)) == -1)
+                {
+                    err(1, "command not found: %s\n", args[0]);
+                    return true;
+                }
+                return false;
+            // }
+        }
+        else
+        {
+            wait(&status);
+            if (WIFEXITED(status))
+            {
+                //exit(status);
+                // printf("exit status = %d\n", WEXITSTATUS(status));
+                update_last_status(WEXITSTATUS(status));
+                
+                return WEXITSTATUS(status) >= 1; /* 1 = no output in stdout */
+            }
         }
     }
     return false;
+    
 }
 
 bool exec_node_input(struct node_input *ast)
@@ -541,6 +581,12 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     struct node_element *e = ast->elements;
     struct tab_redi tab = init_tab_redi(tab);
     char *args[256];
+    // int i = 0;
+    // while (args[i])
+    // {
+    //     args[i] = "";
+    //     i++;
+    // }
     while (p)
     {
         //printf("prefix\n");
@@ -556,7 +602,9 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             tab = append_tab_redi(tab, e->element.redirection);
         }
         else
+        {
             args[size++] = e->element.word;
+        }
         while (e->next) /* link each child between them */
         {
             e = e->next;
@@ -567,6 +615,8 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             else
             {
                 char *expanded_word = substitute(e->element.word);
+                if (!expanded_word)
+                    return true;
                 args[size++] = expanded_word;
                 // args[size++] = e->element.word;
             }
@@ -595,8 +645,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             {
                 tmp = get_var(prefix->prefix.assigment_word->variable_name);
                 char *str = xmalloc((strlen(tmp->key) + 1 + strlen(tmp->value) + 1) * sizeof(char));
-                //str = tmp->key;
-                strcat(str, tmp->key);
+                str = tmp->key;
                 strcat(str, "=");
                 strcat(str, tmp->value);
                 args[i] = str;
@@ -605,6 +654,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
 
             prefix = prefix->next;
         }
+        args[i] = NULL;
         i = 0;
         return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
     }

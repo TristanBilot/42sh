@@ -3,7 +3,6 @@
 void init_42sh_with_history(struct option_sh *option)
 {
     signal(SIGINT, sighandler);
-    struct buffer *buffer = new_buffer();
 
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
@@ -29,14 +28,12 @@ void init_42sh_with_history(struct option_sh *option)
     }
     else
     {
-        int c;
-        
         int char_after_start = 0;
         char * line = NULL;
         struct buffer *buffer = new_buffer();
         if (print_prompt() == 1)
             return;
-        
+        int c;
         
         while ((c = getch2()) != 4)
         {
@@ -444,16 +441,16 @@ void sighandler(int signum)
     init_42sh_with_history(option);
 }
 
-bool sould_use_history(void)
-{
-    struct termios org_opts;
-    struct termios new_opts;
-    int c=0;
+// bool sould_use_history(void)
+// {
+//     struct termios org_opts;
+//     struct termios new_opts;
+//     int c=0;
       
-    int res=0;
-    res=tcgetattr(STDIN_FILENO, &org_opts);
-    return res != 0;
-}
+//     int res=0;
+//     res=tcgetattr(STDIN_FILENO, &org_opts);
+//     return res != 0;
+// }
 
 int getch2(void) 
 {

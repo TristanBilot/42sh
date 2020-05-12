@@ -23,6 +23,7 @@ set(SOURCE_FILES
 	src/utils/index_utils.c
 	src/utils/my_itoa.c
 	src/utils/main_utils.c
+	src/utils/bracket_counter.c
 	src/eval/ast_print.c
 	src/print/ast_print_dot.c
 	src/exec/exec_for.c

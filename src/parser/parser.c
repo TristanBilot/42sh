@@ -371,6 +371,7 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
             if (parse_element(parser, &e))
                 return true;
             append_element(new, e);
+            parse_multiple_element(parser, new);
             //next_token(parser);
         }
         else if (get_next_token(parser) && (is_type(get_next_token(parser), TOK_WORD) || is_redirection(get_next_token(parser)) || is_type(get_next_token(parser), TOK_IONUMBER)))

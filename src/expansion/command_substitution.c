@@ -3,6 +3,7 @@
 #include "../utils/xalloc.h"
 #include "../utils/buffer.h"
 #include "../utils/index_utils.h"
+#include "../utils/bracket_counter.h"
 #include "my_popen.h"
 
 char *perform_command_substitution(char *word)

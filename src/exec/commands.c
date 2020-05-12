@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <wordexp.h>
@@ -32,7 +33,7 @@ void load_file(char *path)
     }
     while ((read = getline(&line, &len, fp)) != -1)
     {
-        printf(line);
+        printf("%s", line);
         lexer = new_lexer(line);
         ast = parse(lexer);
         exec_node_input(ast);
@@ -115,7 +116,7 @@ int	print_without_sp(char *c)
             }
             index_tab++;
         }
-        if (index_tab == 10)
+        if (index_tab == 9)
             printf("%c", c[i]);
         i++;
     }
@@ -175,12 +176,16 @@ void echo(char **args)
         if (args[1][i] != 0)
             print_echo(args + 1, false, false);
         else if (!args[2])
+        {
+            update_last_status(0);
             return;
+        }
         else 
             print_echo(args + 2, e, n);
     }
     else
         print_echo(args + 1, e, n);
+    update_last_status(0);
 }   
 
 void cd(char **args)
@@ -193,7 +198,11 @@ void cd(char **args)
     else
         ret = chdir(args[1]);
     if (ret == -1)
-        printf("%s\n", strerror(errno));
+    {
+        warn("%s", args[1]);
+        update_last_status(1);
+    }
+    update_last_status(0);
 }
 
 void export(char **args)
@@ -204,6 +213,7 @@ void export(char **args)
     {
         for (char **env = environ; *env != NULL; env++)
             printf("declare -x %s\n", *env);
+        update_last_status(0);
         return;
     }
     else if (args[0][0] ==  '-')
@@ -217,7 +227,10 @@ void export(char **args)
         }
     }
     if (p && n)
-        err(1, "export: bad option\n");
+    {
+        fprintf(stderr, "export: bad option\n");
+        update_last_status(1);
+    }
     else if (p)
     {
         if (args[1])
@@ -233,15 +246,21 @@ void export(char **args)
     else if (n)
     {
         if (!args[1])
-            err(1, "export: bad option\n");
+        {
+            fprintf(stderr, "export: bad option\n");
+            update_last_status(1);
+        }
         for (int i = 1; args[i]; i++)
             unsetenv(args[i]);
     }
     else 
     {
         for (int i = 0; args[i]; i++)
+        {
             putenv(args[i]);
+        }
     }
+    update_last_status(0);
 }
 
 void exit_shell(char **args)
