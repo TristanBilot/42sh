@@ -2,6 +2,7 @@
 #include "lexer/lexer.h"
 #include "utils/string_utils.h"
 #include "../garbage_collector/garbage_collector.h"
+#include "../storage/program_data_storage.h"
 
 Test(lexer, basic_tokens)
 {
@@ -718,6 +719,41 @@ Test(lexer, cmd_substitution)
     cr_assert(peek(lexer3)->type == TOK_WORD);
     cr_assert(is(pop(lexer3)->value, "hi"));
     free_garbage_collector();
+
+    free(garbage_collector);
+}
+
+Test(lexer, hard_cmd_substitution)
+{
+    new_garbage_collector();
+    char input1[] = "$((some stuff))";
+    struct lexer *lexer1 = new_lexer(input1);
+    cr_assert(peek(lexer1)->type == TOK_WORD);
+    cr_assert(is(pop(lexer1)->value, "$((some stuff))"));
+    free_garbage_collector();
+
+    char input2[] = "$((((some stuff))))";
+    struct lexer *lexer2 = new_lexer(input2);
+    cr_assert(peek(lexer2)->type == TOK_WORD);
+    cr_assert(is(pop(lexer2)->value, "$((some stuff))"));
+    free_garbage_collector();
+
+    char input3[] = "hi$((((some stuff))))hi";
+    struct lexer *lexer3 = new_lexer(input3);
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "hi"));
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "$((some stuff))"));
+    cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "hi"));
+    free_garbage_collector();
+
+    new_program_data_storage(0, NULL);
+    char input4[] = "$(((some stuff))))";
+    struct lexer *lexer4 = new_lexer(input4);
+    cr_assert(lexer4 == NULL);
+    free_garbage_collector();
+    free_program_data_storage();
 
     free(garbage_collector);
 }

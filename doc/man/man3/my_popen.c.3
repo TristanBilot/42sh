@@ -1,0 +1,40 @@
+.TH "src/expansion/my_popen.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/my_popen.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'my_popen\&.h'\fP
+.br
+\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "FILE * \fBmy_popen\fP (const char *\fBcmd\fP, const char *mode)"
+.br
+.ti -1c
+.RI "int \fBmy_pclose\fP (FILE *stream)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int my_pclose (FILE * stream)"
+
+.SS "FILE* my_popen (const char * cmd, const char * mode)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

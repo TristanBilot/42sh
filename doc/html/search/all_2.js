@@ -1,8 +1,11 @@
 var searchData=
 [
+  ['binary',['binary',['../namespacetest__suite.html#ae3589d2893bbb25770cc75b020746508',1,'test_suite']]],
   ['binary_5fname',['binary_name',['../structprogram__data__storage.html#ae5654c609778685adf020b4575d52540',1,'program_data_storage']]],
   ['blink',['BLINK',['../main_8h.html#a38eec52a7dccb94ff563e30eda32c891',1,'main.h']]],
   ['body',['body',['../structnode__while.html#a4304a78404c2b7a86d96ccb5cf8d8e78',1,'node_while::body()'],['../structnode__until.html#a4304a78404c2b7a86d96ccb5cf8d8e78',1,'node_until::body()'],['../structnode__for.html#a4304a78404c2b7a86d96ccb5cf8d8e78',1,'node_for::body()'],['../structnode__do__group.html#a2ee28d885d8d61887a6361da7e7689a3',1,'node_do_group::body()']]],
+  ['bracket_5fcounter_2ec',['bracket_counter.c',['../bracket__counter_8c.html',1,'']]],
+  ['bracket_5fcounter_2eh',['bracket_counter.h',['../bracket__counter_8h.html',1,'']]],
   ['buf',['buf',['../structbuffer.html#a1fe855c208bc17a51a4d34fefdb2d5b1',1,'buffer']]],
   ['buffer',['buffer',['../structbuffer.html',1,'']]],
   ['buffer_2ec',['buffer.c',['../buffer_8c.html',1,'']]],
@@ -30,7 +33,5 @@ var searchData=
   ['build_5fshell_5fcommand',['build_shell_command',['../ast_8c.html#ae73d9fb75d9936a5b0d291685951ffab',1,'build_shell_command(struct parser *parser):&#160;ast.c'],['../ast_8h.html#ae73d9fb75d9936a5b0d291685951ffab',1,'build_shell_command(struct parser *parser):&#160;ast.c']]],
   ['build_5fsimple_5fcommand',['build_simple_command',['../ast_8c.html#a20265cbc3f314783ac427cdb1a47d476',1,'build_simple_command(void):&#160;ast.c'],['../ast_8h.html#a20265cbc3f314783ac427cdb1a47d476',1,'build_simple_command(void):&#160;ast.c']]],
   ['build_5funtil',['build_until',['../ast_8c.html#a0a974894e0bbdaf3cbf1adcadf9bdb2c',1,'build_until(void):&#160;ast.c'],['../ast_8h.html#a0a974894e0bbdaf3cbf1adcadf9bdb2c',1,'build_until(void):&#160;ast.c']]],
-  ['build_5fwhile',['build_while',['../ast_8c.html#aa7b97bb27dd1c925d07a2b153491883b',1,'build_while(void):&#160;ast.c'],['../ast_8h.html#aa7b97bb27dd1c925d07a2b153491883b',1,'build_while(void):&#160;ast.c']]],
-  ['builtins_2ec',['builtins.c',['../builtins_2builtins_8c.html',1,'(Global Namespace)'],['../module_2builtins_8c.html',1,'(Global Namespace)']]],
-  ['builtins_2eh',['builtins.h',['../builtins_8h.html',1,'']]]
+  ['build_5fwhile',['build_while',['../ast_8c.html#aa7b97bb27dd1c925d07a2b153491883b',1,'build_while(void):&#160;ast.c'],['../ast_8h.html#aa7b97bb27dd1c925d07a2b153491883b',1,'build_while(void):&#160;ast.c']]]
 ];

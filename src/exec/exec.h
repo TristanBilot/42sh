@@ -28,7 +28,7 @@
 #include "../utils/string_utils.h"
 #include "../utils/my_itoa.h"
 #include "../utils/xalloc.h"
-#include "../var_storage/var_storage.h"
+#include "../storage/var_storage.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
@@ -267,8 +267,22 @@ bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found);
 ** \return false 
 */
 bool exec_node_case_item(struct node_case_item *ast, char *word_to_found);
-
+/**
+**\brief for function to execute different range
+**
+**\param r 
+**\param ast 
+**\return int 
+*/
 int perform_for_range(struct range *r, struct node_for *ast);
+/**
+**\brief for function to perform enumeration
+**
+**\param ast 
+**\param len_range 
+**\return true 
+**\return false 
+*/
 bool perform_for_enumeration(struct node_for *ast, int len_range);
 
 #endif /* EXEC_H */

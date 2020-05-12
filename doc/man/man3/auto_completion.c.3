@@ -1,0 +1,39 @@
+.TH "src/history/auto_completion.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/history/auto_completion.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include 'history\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBlevenshtein\fP (const char *s, int len1, const char *t, int len2)"
+.br
+.ti -1c
+.RI "bool \fBdist_algorithm\fP (const char *s, int len1, const char *t, int len2)"
+.br
+.ti -1c
+.RI "char * \fBget_auto_completion\fP (struct \fBhistory\fP *\fBhistory\fP, char *\fBcmd\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "bool dist_algorithm (const char * s, int len1, const char * t, int len2)"
+
+.SS "char* get_auto_completion (struct \fBhistory\fP * history, char * cmd)"
+
+.SS "int levenshtein (const char * s, int len1, const char * t, int len2)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

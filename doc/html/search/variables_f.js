@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['to_5fexport',['to_export',['../structnode__simple__command.html#a746ae8aea94d8e8fe9f0e5c02f6b038d',1,'node_simple_command']]],
-  ['token_5flist',['token_list',['../structlexer.html#ac1182f9392857f09f80d0fc9e1ba624d',1,'lexer']]],
-  ['type',['type',['../structnode__list.html#a90c9dad4da019b286adf38ae46d96c6a',1,'node_list::type()'],['../structnode__and__or.html#a115e2fd43c84b9b8534038ffe5625026',1,'node_and_or::type()'],['../structnode__command.html#a5745a85ccf575fe8cc242d8ea1379221',1,'node_command::type()'],['../structnode__shell__command.html#aa4aba6593af067c7f4c81bb7a0d30d4c',1,'node_shell_command::type()'],['../structnode__redirection.html#a4bfea42429249a1f65204f0c0f34704a',1,'node_redirection::type()'],['../structnode__prefix.html#a072ea0931252ba5c892b195c57ab21e2',1,'node_prefix::type()'],['../structnode__element.html#a378d2ed57256db7d309b6415f94a07d2',1,'node_element::type()'],['../structnode__else__clause.html#a221675b8fdd0e0db2db369906be6801a',1,'node_else_clause::type()'],['../structtoken.html#a239b01722e92fe2ca47a025485e55c7f',1,'token::type()'],['../structvariable.html#a09bffe3feac48b85f459a0142aa473fb',1,'variable::type()']]]
+  ['shell',['shell',['../structnode__shell__command.html#add8534b2134100e5b88ed85afb100fe4',1,'node_shell_command']]],
+  ['shell_5fcommand',['shell_command',['../unionnode__command_1_1command.html#a290feca672ebbd79e604bc8a29b26347',1,'node_command::command::shell_command()'],['../structnode__funcdec.html#a290feca672ebbd79e604bc8a29b26347',1,'node_funcdec::shell_command()']]],
+  ['shell_5ftype',['shell_type',['../structnode__shell__command.html#a61e4aaa5e9e193538e19df21e2ef5228',1,'node_shell_command']]],
+  ['should_5fprint',['should_print',['../namespacetest__suite.html#a20e4334d27ea02fb10ab1fe66367fc11',1,'test_suite']]],
+  ['simple_5fcommand',['simple_command',['../unionnode__command_1_1command.html#a9b3d76b22d361248f29c46429666d277',1,'node_command::command']]],
+  ['str',['str',['../namespacetest__suite.html#a4b99ff73a8a869319570237b5c57ab03',1,'test_suite']]]
 ];

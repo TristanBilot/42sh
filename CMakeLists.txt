@@ -7,7 +7,7 @@ project(42sh)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic -fsanitize=address") #-Werror  
 
-include_directories(src src/var_storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
+include_directories(src src/storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
 
 set(SOURCE_FILES
 	src/parser/parser.c
@@ -24,14 +24,14 @@ set(SOURCE_FILES
 	src/utils/my_itoa.c
 	src/utils/main_utils.c
 	src/utils/bracket_counter.c
-	src/eval/ast_print.c
+	src/print/ast_print.c
 	src/print/ast_print_dot.c
 	src/exec/exec_for.c
 	src/exec/exec.c
-	src/var_storage/var_storage.c
+	src/storage/var_storage.c
+	src/storage/program_data_storage.c
 	src/history/history.c
 	src/history/auto_completion.c
-	src/history/handler.c
 	src/expansion/var_expansion.c
 	src/expansion/tilde_expansion.c
 	src/expansion/command_substitution.c
@@ -46,7 +46,7 @@ add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
 add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
 add_executable(tests_history tests/tests_history.c ${SOURCE_FILES})
 add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
-add_executable(token_printer src/eval/token_printer.c ${SOURCE_FILES})
+add_executable(token_printer src/print/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
 
 

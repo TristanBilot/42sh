@@ -26,5 +26,6 @@ enum countable
 
 int count_closed_occurences(char *s, size_t i, enum countable countable);
 bool check_closing_symbols(char *s);
+bool check_closing_symbols_from_splitted(char **splitted, int i);
 
 #endif /* BRACKET_COUNTER_H */

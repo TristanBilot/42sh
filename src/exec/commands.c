@@ -1,4 +1,4 @@
-
+#define _DEFAULT_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <wordexp.h>
@@ -12,7 +12,8 @@
 #include "./utils/xalloc.h"
 #include "../exec/exec.h"
 #include "../expansion/expansion.h"
-#include "../var_storage/var_storage.h"
+#include "../storage/var_storage.h"
+#include "../storage/program_data_storage.h"
 
 extern char **environ;
 
@@ -28,7 +29,7 @@ void load_file(char *path)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        dprintf(stderr, "%s", strerror(errno));
+        warn("%s", strerror(errno));
         return;
     }
     while ((read = getline(&line, &len, fp)) != -1)
@@ -122,6 +123,58 @@ int	print_without_sp(char *c)
     }
     return (0);
 }
+
+int	print_without_sp_madu(char *c)
+{
+    int i = 0;
+    struct echo_tab tab[9];
+    int index_tab = 0;
+
+    fill_echo_tab(tab);
+    while (c[i] != '\0')
+    {
+        index_tab = 0;
+        while (index_tab < 9)
+        {
+            if (c[i] == '\\')
+            {
+                i++;
+                if (c[i] == '\\')
+                {
+                    i++;
+                    if (tab[index_tab].name == c[i])
+                    {
+                        printf("\\\\%c", tab[index_tab].corresp);
+                        index_tab = 0;
+                        i++;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (tab[index_tab].name == c[i])
+                    {
+                        printf("%c", tab[index_tab].corresp);
+                        index_tab = 0;
+                        i++;
+                        break;
+                    }
+                }
+                // else if (c[i] != '\\')
+                // {
+                //     printf("%c", c[i]);
+                //     i++;
+                // }
+            }
+            index_tab++;
+        }
+        if (index_tab == 9)
+            printf("%c", c[i]);
+        i++;
+    }
+    return (0);
+}
+
 
 void print_echo(char **args, bool e, bool n)
 {

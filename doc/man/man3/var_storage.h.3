@@ -1,8 +1,8 @@
-.TH "src/var_storage/var_storage.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/storage/var_storage.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-src/var_storage/var_storage.h \- Var storage structures and functions\&.  
+src/storage/var_storage.h \- Var storage structures and functions\&.  
 
 .SH SYNOPSIS
 .br
@@ -55,6 +55,9 @@ src/var_storage/var_storage.h \- Var storage structures and functions\&.
 .br
 .ti -1c
 .RI "bool \fBput_var\fP (char *key, char *val)"
+.br
+.ti -1c
+.RI "void \fBdel_var\fP (char *key)"
 .br
 .ti -1c
 .RI "struct \fBvariable\fP * \fBget_var\fP (char *key)"
@@ -118,6 +121,8 @@ Copyright (c) 2020
 \fB\fIVAR_ERROR \fP\fP
 .SH "Function Documentation"
 .PP 
+.SS "void del_var (char * key)"
+
 .SS "void free_var_storage (void)"
 
 .SS "char* get_value (char * key)"

@@ -85,16 +85,27 @@ $(function() {
 <code>#include &lt;sys/wait.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="parser_8h_source.html">../parser/parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="commands_8h_source.html">../exec/commands.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="buffer_8h_source.html">../utils/buffer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="string__utils_8h_source.html">../utils/string_utils.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="my__itoa_8h_source.html">../utils/my_itoa.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="xalloc_8h_source.html">../utils/xalloc.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="var__storage_8h_source.html">../storage/var_storage.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for exec.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="exec_8h__incl.png" border="0" usemap="#src_2exec_2exec_8h" alt=""/></div>
 <map name="src_2exec_2exec_8h" id="src_2exec_2exec_8h">
-<area shape="rect" id="node10" href="parser_8h.html" title="Parsing functions. " alt="" coords="743,80,864,107"/>
-<area shape="rect" id="node15" href="commands_8h.html" title="Extra commands functions. " alt="" coords="889,80,1030,107"/>
-<area shape="rect" id="node11" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="631,155,736,181"/>
-<area shape="rect" id="node13" href="ast_8h.html" title="Define ast and parser structures. " alt="" coords="761,155,846,181"/>
-<area shape="rect" id="node12" href="token_8h.html" title="Token structures and functions. " alt="" coords="629,229,738,256"/>
+<area shape="rect" id="node10" href="parser_8h.html" title="Parsing functions. " alt="" coords="576,80,697,107"/>
+<area shape="rect" id="node15" href="commands_8h.html" title="Extra commands functions. " alt="" coords="1282,80,1423,107"/>
+<area shape="rect" id="node16" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="722,80,829,107"/>
+<area shape="rect" id="node17" href="string__utils_8h.html" title="String usage functions. " alt="" coords="235,155,371,181"/>
+<area shape="rect" id="node18" href="my__itoa_8h.html" title="../utils/my_itoa.h" alt="" coords="1448,80,1567,107"/>
+<area shape="rect" id="node19" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="810,155,917,181"/>
+<area shape="rect" id="node22" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="391,80,551,107"/>
+<area shape="rect" id="node11" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="675,155,780,181"/>
+<area shape="rect" id="node14" href="ast_8h.html" title="Define ast and parser structures. " alt="" coords="514,155,599,181"/>
+<area shape="rect" id="node12" href="token_8h.html" title="Token structures and functions. " alt="" coords="673,229,782,256"/>
+<area shape="rect" id="node20" href="attr_8h.html" title="../utils/attr.h" alt="" coords="813,229,905,256"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -103,8 +114,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="exec_8h__dep__incl.png" border="0" usemap="#src_2exec_2exec_8hdep" alt=""/></div>
 <map name="src_2exec_2exec_8hdep" id="src_2exec_2exec_8hdep">
 <area shape="rect" id="node2" href="ast__exec_8c.html" title="src/exec/ast_exec.c" alt="" coords="5,80,145,107"/>
-<area shape="rect" id="node3" href="exec_8c.html" title="src/exec/exec.c" alt="" coords="170,80,285,107"/>
-<area shape="rect" id="node4" href="main_8c.html" title="src/main.c" alt="" coords="309,80,391,107"/>
+<area shape="rect" id="node3" href="commands_8c.html" title="src/exec/commands.c" alt="" coords="169,80,320,107"/>
+<area shape="rect" id="node4" href="exec_8c.html" title="src/exec/exec.c" alt="" coords="345,80,459,107"/>
+<area shape="rect" id="node5" href="exec__for_8c.html" title="src/exec/exec_for.c" alt="" coords="484,80,621,107"/>
+<area shape="rect" id="node6" href="main_8h.html" title="src/main.h" alt="" coords="646,80,729,107"/>
+<area shape="rect" id="node7" href="main_8c.html" title="src/main.c" alt="" coords="577,155,659,181"/>
+<area shape="rect" id="node8" href="main__utils_8c.html" title="src/utils/main_utils.c" alt="" coords="684,155,827,181"/>
 </map>
 </div>
 </div>
@@ -191,12 +206,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a45990fc605f00c6fb6a584031cbdba9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#a45990fc605f00c6fb6a584031cbdba9b">exec_node_do_group</a> (struct <a class="el" href="structnode__do__group.html">node_do_group</a> *ast)</td></tr>
 <tr class="memdesc:a45990fc605f00c6fb6a584031cbdba9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute do group  <a href="#a45990fc605f00c6fb6a584031cbdba9b">More...</a><br /></td></tr>
 <tr class="separator:a45990fc605f00c6fb6a584031cbdba9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa93bb3ca9f915362af3426726634bdb1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#aa93bb3ca9f915362af3426726634bdb1">exec_node_case_clause</a> (struct <a class="el" href="structnode__case__clause.html">node_case_clause</a> *ast)</td></tr>
-<tr class="memdesc:aa93bb3ca9f915362af3426726634bdb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute case clause  <a href="#aa93bb3ca9f915362af3426726634bdb1">More...</a><br /></td></tr>
-<tr class="separator:aa93bb3ca9f915362af3426726634bdb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b75341668d92456a3c51786d45151c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#a3b75341668d92456a3c51786d45151c5">exec_node_case_item</a> (struct <a class="el" href="structnode__case__item.html">node_case_item</a> *ast)</td></tr>
-<tr class="memdesc:a3b75341668d92456a3c51786d45151c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute case item  <a href="#a3b75341668d92456a3c51786d45151c5">More...</a><br /></td></tr>
-<tr class="separator:a3b75341668d92456a3c51786d45151c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24c8e3e0c92800fb8534662824597378"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#a24c8e3e0c92800fb8534662824597378">exec_node_case_clause</a> (struct <a class="el" href="structnode__case__clause.html">node_case_clause</a> *ast, char *word_to_found)</td></tr>
+<tr class="memdesc:a24c8e3e0c92800fb8534662824597378"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute case clause  <a href="#a24c8e3e0c92800fb8534662824597378">More...</a><br /></td></tr>
+<tr class="separator:a24c8e3e0c92800fb8534662824597378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa748df61c908d640c5ddafdd3050fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#a1fa748df61c908d640c5ddafdd3050fc">exec_node_case_item</a> (struct <a class="el" href="structnode__case__item.html">node_case_item</a> *ast, char *word_to_found)</td></tr>
+<tr class="memdesc:a1fa748df61c908d640c5ddafdd3050fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute case item  <a href="#a1fa748df61c908d640c5ddafdd3050fc">More...</a><br /></td></tr>
+<tr class="separator:a1fa748df61c908d640c5ddafdd3050fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc1b4c6bf9a313bf2d1fc5ec8a3ee812"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#afc1b4c6bf9a313bf2d1fc5ec8a3ee812">perform_for_range</a> (struct <a class="el" href="structrange.html">range</a> *r, struct <a class="el" href="structnode__for.html">node_for</a> *ast)</td></tr>
+<tr class="memdesc:afc1b4c6bf9a313bf2d1fc5ec8a3ee812"><td class="mdescLeft">&#160;</td><td class="mdescRight">for function to execute different range  <a href="#afc1b4c6bf9a313bf2d1fc5ec8a3ee812">More...</a><br /></td></tr>
+<tr class="separator:afc1b4c6bf9a313bf2d1fc5ec8a3ee812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3d7a2ee7f9a7c6d9d5eae27f46e378"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exec_8h.html#aee3d7a2ee7f9a7c6d9d5eae27f46e378">perform_for_enumeration</a> (struct <a class="el" href="structnode__for.html">node_for</a> *ast, int len_range)</td></tr>
+<tr class="memdesc:aee3d7a2ee7f9a7c6d9d5eae27f46e378"><td class="mdescLeft">&#160;</td><td class="mdescRight">for function to perform enumeration  <a href="#aee3d7a2ee7f9a7c6d9d5eae27f46e378">More...</a><br /></td></tr>
+<tr class="separator:aee3d7a2ee7f9a7c6d9d5eae27f46e378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Execution functions. </p>
@@ -296,8 +317,8 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="aa93bb3ca9f915362af3426726634bdb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa93bb3ca9f915362af3426726634bdb1">&#9670;&nbsp;</a></span>exec_node_case_clause()</h2>
+<a id="a24c8e3e0c92800fb8534662824597378"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c8e3e0c92800fb8534662824597378">&#9670;&nbsp;</a></span>exec_node_case_clause()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,8 +327,18 @@ false </dd></dl>
           <td class="memname">bool exec_node_case_clause </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structnode__case__clause.html">node_case_clause</a> *&#160;</td>
-          <td class="paramname"><em>ast</em></td><td>)</td>
+          <td class="paramname"><em>ast</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>word_to_found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -325,8 +356,8 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="a3b75341668d92456a3c51786d45151c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b75341668d92456a3c51786d45151c5">&#9670;&nbsp;</a></span>exec_node_case_item()</h2>
+<a id="a1fa748df61c908d640c5ddafdd3050fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa748df61c908d640c5ddafdd3050fc">&#9670;&nbsp;</a></span>exec_node_case_item()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,8 +366,18 @@ false </dd></dl>
           <td class="memname">bool exec_node_case_item </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structnode__case__item.html">node_case_item</a> *&#160;</td>
-          <td class="paramname"><em>ast</em></td><td>)</td>
+          <td class="paramname"><em>ast</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>word_to_found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -916,6 +957,84 @@ false </dd></dl>
 
 <p>create and init the table of redirection </p>
 <dl class="section return"><dt>Returns</dt><dd>struct tab_redirection* </dd></dl>
+
+</div>
+</div>
+<a id="aee3d7a2ee7f9a7c6d9d5eae27f46e378"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee3d7a2ee7f9a7c6d9d5eae27f46e378">&#9670;&nbsp;</a></span>perform_for_enumeration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool perform_for_enumeration </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structnode__for.html">node_for</a> *&#160;</td>
+          <td class="paramname"><em>ast</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len_range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>for function to perform enumeration </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ast</td><td></td></tr>
+    <tr><td class="paramname">len_range</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="afc1b4c6bf9a313bf2d1fc5ec8a3ee812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc1b4c6bf9a313bf2d1fc5ec8a3ee812">&#9670;&nbsp;</a></span>perform_for_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int perform_for_range </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structrange.html">range</a> *&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="structnode__for.html">node_for</a> *&#160;</td>
+          <td class="paramname"><em>ast</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>for function to execute different range </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td></td></tr>
+    <tr><td class="paramname">ast</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
 
 </div>
 </div>

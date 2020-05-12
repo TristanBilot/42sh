@@ -1,5 +1,7 @@
 #include "../main.h"
 
+bool after_sig = false;
+
 void init_42sh_with_history(struct option_sh *option)
 {
     signal(SIGINT, sighandler);
@@ -19,11 +21,13 @@ void init_42sh_with_history(struct option_sh *option)
         load_file(option->file_path);
     if (option->cmd)
     {
-        lexer = new_lexer(option->cmd);
-        ast = parse(lexer);
-        exec_node_input(ast);
-        if (option->print_ast_flag)
-            print_ast(ast);
+        if ((lexer = new_lexer(option->cmd)))
+        {
+            ast = parse(lexer);
+            exec_node_input(ast);
+            if (option->print_ast_flag)
+                print_ast(ast);
+        }
         free_garbage_collector();
     }
     else
@@ -34,10 +38,13 @@ void init_42sh_with_history(struct option_sh *option)
         if (print_prompt() == 1)
             return;
         int c;
-        
+        if (after_sig)
+            return;
         while ((c = getch2()) != 4)
         {
-            if (c == 91) // top arrow   old value: 27
+            if (after_sig)
+                return;
+            if (c == 91) // top arrow
             {
                 /*
                 ** Top arrow : "[A"
@@ -139,22 +146,10 @@ void init_42sh_with_history(struct option_sh *option)
                     {
                         putchar('a');
                         putchar(buffer->buf[buffer->index]);
-                        // if (buffer->buf[buffer->index] < 48 && buffer->buf[buffer->index] > 31)
-                        // {
-                        //     putchar('a');
-                        //     putchar(buffer->buf[buffer->index]);
-                        // }
-                        // else
-                        // {
-                        //     putchar(buffer->buf[buffer->index]);
-                        //     putchar(buffer->buf[buffer->index]);
-                        // }
                         buffer->index++;
                     }
                     else
-                    {
                         putchar('a');
-                    }
                     
                     continue;
                 }
@@ -185,17 +180,18 @@ void init_42sh_with_history(struct option_sh *option)
                 putchar('\n');
                 append_buffer(buffer, '\n');
 
-                lexer = new_lexer(new);
-
-                flush(buffer);
-                ast = parse(lexer);
-                
-                exec_node_input(ast);
-                
-                //if(!option->norc_flag)
-                    //  load_ressources();
-                if (option->print_ast_flag)
-                    print_ast(ast);
+                if ((lexer = new_lexer(new)))
+                {
+                    flush(buffer);
+                    ast = parse(lexer);
+                    
+                    exec_node_input(ast);
+                    
+                    //if(!option->norc_flag)
+                        //  load_ressources();
+                    if (option->print_ast_flag)
+                        print_ast(ast);
+                }
                 flush(buffer);
                 print_prompt();
                 char_after_start = 0;
@@ -203,11 +199,10 @@ void init_42sh_with_history(struct option_sh *option)
             }
             else if (c == 127) // delete
             {
-                // printf("DELETE ");
                 if (buffer->index > 0)
                 {
-                    if (buffer->index < char_after_start) // j'arrive
-                    {// wouiiiiiiii viens sur le shell avant dernier
+                    if (buffer->index < char_after_start)
+                    {
                         putchar('\b');
                         for (int i = buffer->index - 1; i <= char_after_start + 1; i++)
                         {
@@ -227,11 +222,9 @@ void init_42sh_with_history(struct option_sh *option)
                         buffer->buf[--buffer->index] = '\0';
                     }
                 }
-                // (void) getc(stdin);
             }
-            else if (c == 4) // EOF :  Ctrl+D
+            else if (c == 4) // Ctrl+D
             {
-                // NORMALEMENT INUTILE CAR GERE DANS LA CONDITION DE LA BOUCLE
                 free_garbage_collector();
                 putchar('\n');
                 return;
@@ -275,8 +268,6 @@ void init_42sh_with_history(struct option_sh *option)
                 }
             }
         }
-        /*restore the old settings*/
-        // tcsetattr( STDIN_FILENO, TCSANOW, &org_opts);
         free_garbage_collector();
         if (line)
             free(line);
@@ -287,17 +278,17 @@ void init_42sh_with_history(struct option_sh *option)
 void init_42sh_without_history(struct option_sh *option)
 {
     signal(SIGINT, sighandler);
-
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
-    // struct history *history = open_history();
     if (option->cmd)
     {
-        lexer = new_lexer(option->cmd);
-        ast = parse(lexer);
-        exec_node_input(ast);
-        if (option->print_ast_flag)
-            print_ast(ast);
+        if ((lexer = new_lexer(option->cmd)))
+        {
+            ast = parse(lexer);
+            exec_node_input(ast);
+            if (option->print_ast_flag)
+                print_ast(ast);
+        }
         free_garbage_collector();
     }
     else
@@ -305,34 +296,21 @@ void init_42sh_without_history(struct option_sh *option)
         char *line = NULL;
         size_t len = 0;
         ssize_t read;
-        // print_prompt();
-        // struct buffer *buffer = new_buffer();
         while ((read = getline(&line, &len, stdin)) != -1)
         {
-                // append_history_command(history, line);
-                lexer = new_lexer(line);
+            if ((lexer = new_lexer(line)))
+            {
                 ast = parse(lexer);
                 exec_node_input(ast);
 
                 if (option->print_ast_flag)
                     print_ast(ast);
-
-                // print_prompt();
-                // write_next_history(history);
+            }
         }
         if (line)
             free(line);
-        
-        // printf("\n");
     }
 }
-
-/*void  INThandler(int sig)
-{
-    signal(sig, SIGINT);
-    printf("\n");
-    exit(0);
-}*/
 
 
 
@@ -439,18 +417,9 @@ void sighandler(int signum)
     free_garbage_collector();
     printf("\n");
     init_42sh_with_history(option);
+    after_sig = true;
+    // exit(ret);
 }
-
-// bool sould_use_history(void)
-// {
-//     struct termios org_opts;
-//     struct termios new_opts;
-//     int c=0;
-      
-//     int res=0;
-//     res=tcgetattr(STDIN_FILENO, &org_opts);
-//     return res != 0;
-// }
 
 int getch2(void) 
 {

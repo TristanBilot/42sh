@@ -72,40 +72,71 @@ $(function() {
 <div class="title">commands.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;wordexp.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;wordexp.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;errno.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;err.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="commands_8h_source.html">commands.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="parser_8h_source.html">../parser/parser.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="xalloc_8h_source.html">./utils/xalloc.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="exec_8h_source.html">../exec/exec.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="expansion_8h_source.html">../expansion/expansion.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="var__storage_8h_source.html">../storage/var_storage.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="program__data__storage_8h_source.html">../storage/program_data_storage.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for commands.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="commands_8c__incl.png" border="0" usemap="#src_2exec_2commands_8c" alt=""/></div>
 <map name="src_2exec_2commands_8c" id="src_2exec_2commands_8c">
-<area shape="rect" id="node10" href="commands_8h.html" title="Extra commands functions. " alt="" coords="727,80,825,107"/>
+<area shape="rect" id="node10" href="commands_8h.html" title="Extra commands functions. " alt="" coords="378,169,476,196"/>
+<area shape="rect" id="node11" href="parser_8h.html" title="Parsing functions. " alt="" coords="21,169,142,196"/>
+<area shape="rect" id="node15" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="1676,244,1778,271"/>
+<area shape="rect" id="node18" href="exec_8h.html" title="Execution functions. " alt="" coords="842,87,948,114"/>
+<area shape="rect" id="node24" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="1148,169,1308,196"/>
+<area shape="rect" id="node25" href="expansion_8h.html" title="Var storage structures and functions. " alt="" coords="1492,87,1658,114"/>
+<area shape="rect" id="node26" href="program__data__storage_8h.html" title="../storage/program\l_data_storage.h" alt="" coords="1854,80,1982,121"/>
+<area shape="rect" id="node12" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="165,244,270,271"/>
+<area shape="rect" id="node14" href="ast_8h.html" title="Define ast and parser structures. " alt="" coords="55,244,140,271"/>
+<area shape="rect" id="node13" href="token_8h.html" title="Token structures and functions. " alt="" coords="163,319,272,345"/>
+<area shape="rect" id="node16" href="attr_8h.html" title="../utils/attr.h" alt="" coords="1681,319,1773,345"/>
+<area shape="rect" id="node21" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="607,169,714,196"/>
+<area shape="rect" id="node22" href="string__utils_8h.html" title="String usage functions. " alt="" coords="1076,244,1212,271"/>
+<area shape="rect" id="node23" href="my__itoa_8h.html" title="../utils/my_itoa.h" alt="" coords="738,169,857,196"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a78c99ffd76a7bb3c8c74db76207e9ab4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a78c99ffd76a7bb3c8c74db76207e9ab4">_XOPEN_SOURCE</a></td></tr>
-<tr class="separator:a78c99ffd76a7bb3c8c74db76207e9ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fb447618db946a9e2a596d9ea18763f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a8fb447618db946a9e2a596d9ea18763f">_DEFAULT_SOURCE</a></td></tr>
+<tr class="separator:a8fb447618db946a9e2a596d9ea18763f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a9be1fc4a59ad8d6de33cb8bb7d39b169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a9be1fc4a59ad8d6de33cb8bb7d39b169">load_file</a> (char *path)</td></tr>
+<tr class="memdesc:a9be1fc4a59ad8d6de33cb8bb7d39b169"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to give a file to the 42sh  <a href="#a9be1fc4a59ad8d6de33cb8bb7d39b169">More...</a><br /></td></tr>
+<tr class="separator:a9be1fc4a59ad8d6de33cb8bb7d39b169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db86e64faf38a724ed4b440e8b57651"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a2db86e64faf38a724ed4b440e8b57651">source</a> (char **args)</td></tr>
+<tr class="memdesc:a2db86e64faf38a724ed4b440e8b57651"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of command sourcefnac  <a href="#a2db86e64faf38a724ed4b440e8b57651">More...</a><br /></td></tr>
+<tr class="separator:a2db86e64faf38a724ed4b440e8b57651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc078a079f34e69d5ee4ee1856d6735c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#acc078a079f34e69d5ee4ee1856d6735c">print_args</a> (char **args)</td></tr>
+<tr class="memdesc:acc078a079f34e69d5ee4ee1856d6735c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print all args on stdout.  <a href="#acc078a079f34e69d5ee4ee1856d6735c">More...</a><br /></td></tr>
+<tr class="separator:acc078a079f34e69d5ee4ee1856d6735c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06ef6e9af3caf698bff7fd7d89986e31"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a06ef6e9af3caf698bff7fd7d89986e31">print_without_sp</a> (char *c)</td></tr>
+<tr class="memdesc:a06ef6e9af3caf698bff7fd7d89986e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Particular print with option -e from echo.  <a href="#a06ef6e9af3caf698bff7fd7d89986e31">More...</a><br /></td></tr>
 <tr class="separator:a06ef6e9af3caf698bff7fd7d89986e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f13d9e9f9009f1247ae85b0642f11f0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a1f13d9e9f9009f1247ae85b0642f11f0">print_without_sp_madu</a> (char *c)</td></tr>
+<tr class="separator:a1f13d9e9f9009f1247ae85b0642f11f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0484e0219eb37d852db17b02999e9eef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a0484e0219eb37d852db17b02999e9eef">print_echo</a> (char **args, bool e, bool n)</td></tr>
+<tr class="memdesc:a0484e0219eb37d852db17b02999e9eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Echo function.  <a href="#a0484e0219eb37d852db17b02999e9eef">More...</a><br /></td></tr>
 <tr class="separator:a0484e0219eb37d852db17b02999e9eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60e9e2b70255b701ab448f050c1f3c4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a60e9e2b70255b701ab448f050c1f3c4c">echo</a> (char **args)</td></tr>
 <tr class="memdesc:a60e9e2b70255b701ab448f050c1f3c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of command echo  <a href="#a60e9e2b70255b701ab448f050c1f3c4c">More...</a><br /></td></tr>
 <tr class="separator:a60e9e2b70255b701ab448f050c1f3c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a069a9f8478080c6939dcce246a4066"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#a5a069a9f8478080c6939dcce246a4066">cd</a> (char **args)</td></tr>
-<tr class="memdesc:a5a069a9f8478080c6939dcce246a4066"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of command cd  <a href="#a5a069a9f8478080c6939dcce246a4066">More...</a><br /></td></tr>
 <tr class="separator:a5a069a9f8478080c6939dcce246a4066"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5e8538f0ac7d2c7accb537180a8b63c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="commands_8c.html#ac5e8538f0ac7d2c7accb537180a8b63c">export</a> (char **args)</td></tr>
 <tr class="memdesc:ac5e8538f0ac7d2c7accb537180a8b63c"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of command export  <a href="#ac5e8538f0ac7d2c7accb537180a8b63c">More...</a><br /></td></tr>
@@ -120,14 +151,14 @@ Variables</h2></td></tr>
 <tr class="separator:aa006daaf11f1e2e45a6ababaf463212b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a78c99ffd76a7bb3c8c74db76207e9ab4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78c99ffd76a7bb3c8c74db76207e9ab4">&#9670;&nbsp;</a></span>_XOPEN_SOURCE</h2>
+<a id="a8fb447618db946a9e2a596d9ea18763f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fb447618db946a9e2a596d9ea18763f">&#9670;&nbsp;</a></span>_DEFAULT_SOURCE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _XOPEN_SOURCE</td>
+          <td class="memname">#define _DEFAULT_SOURCE</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -150,8 +181,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>implementation of command cd </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">args</td><td></td></tr>
@@ -239,6 +268,58 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a9be1fc4a59ad8d6de33cb8bb7d39b169"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be1fc4a59ad8d6de33cb8bb7d39b169">&#9670;&nbsp;</a></span>load_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void load_file </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>function to give a file to the 42sh </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acc078a079f34e69d5ee4ee1856d6735c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc078a079f34e69d5ee4ee1856d6735c">&#9670;&nbsp;</a></span>print_args()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_args </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print all args on stdout. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a0484e0219eb37d852db17b02999e9eef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0484e0219eb37d852db17b02999e9eef">&#9670;&nbsp;</a></span>print_echo()</h2>
 
@@ -271,6 +352,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Echo function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+    <tr><td class="paramname">e</td><td></td></tr>
+    <tr><td class="paramname">n</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a06ef6e9af3caf698bff7fd7d89986e31"></a>
@@ -288,6 +379,59 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Particular print with option -e from echo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="a1f13d9e9f9009f1247ae85b0642f11f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f13d9e9f9009f1247ae85b0642f11f0">&#9670;&nbsp;</a></span>print_without_sp_madu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int print_without_sp_madu </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2db86e64faf38a724ed4b440e8b57651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2db86e64faf38a724ed4b440e8b57651">&#9670;&nbsp;</a></span>source()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void source </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>implementation of command sourcefnac </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

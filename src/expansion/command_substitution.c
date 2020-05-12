@@ -11,7 +11,7 @@ char *perform_command_substitution(char *word)
     struct buffer *buf = new_huge_buffer();
     for (size_t i = 0; i < strlen(word); i++)
     {
-        if (!(word[i] == '`' || (word[i] == '$' && ((word[i+1] && word[i+1] == '(') || !word[i+1]))))
+        if (!(word[i] == '`' || (word[i] == '$' && ((word[i+1] && word[i+1] == '(')))))
         {
             append_huge_buffer(buf, word[i]);
             continue;
@@ -20,6 +20,9 @@ char *perform_command_substitution(char *word)
         if (word[i] == '$')
         { 
             i += 2;
+            /* $(( should not be managed in this function */
+            if (word[i] == '(')
+                continue;
             sub = substr(word, i, get_next_index(word, ')', i) - i);
         }
         else if (word[i] == '`')
@@ -28,15 +31,19 @@ char *perform_command_substitution(char *word)
             sub = substr(word, i, get_next_index(word, '`', i) - i);
         }
         FILE *out = my_popen(sub, "r");
-
+        // if (!out)
+        //     continue;
         struct buffer *stdout_buf = new_huge_buffer();
         char ch;
+        char next;
         bool is_nl_printed = false;
         while ((ch = fgetc(out)) != EOF)
         {
+            // printf("%c", ch);
+            next = fgetc(out);
             if (ch == '\n' || ch == ' ')
             {
-                if (!is_nl_printed)
+                if (!is_nl_printed && !(next == EOF))
                     append_huge_buffer(stdout_buf, ' ');
                 is_nl_printed = true;
             }
@@ -45,12 +52,13 @@ char *perform_command_substitution(char *word)
                 is_nl_printed = false;
                 append_huge_buffer(stdout_buf, ch);
             }
+            ungetc(next, out);
         }
         my_pclose(out);
-        // printf("strlen: %zu\n", strlen(stdout_buf->buf));
         append_string_to_huge_buffer(buf, stdout_buf->buf);
         i += strlen(sub);
     }
     append_huge_buffer(buf, '\0');
+    // printf("%s\n", buf->buf);
     return buf->buf;
 }

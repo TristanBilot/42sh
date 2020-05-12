@@ -1,4 +1,4 @@
-.TH "src/parser/parser.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/parser/parser.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -31,7 +31,7 @@ src/parser/parser.c
 
 .in +1c
 .ti -1c
-.RI "#define \fBDEBUG_FLAG\fP   true"
+.RI "#define \fBDEBUG_FLAG\fP   false"
 .br
 .ti -1c
 .RI "#define \fBDEBUG\fP(msg)"
@@ -167,7 +167,7 @@ src/parser/parser.c
 if (DEBUG_FLAG) \
                         printf("%s", msg);
 .fi
-.SS "#define DEBUG_FLAG   true"
+.SS "#define DEBUG_FLAG   false"
 
 .SH "Function Documentation"
 .PP 

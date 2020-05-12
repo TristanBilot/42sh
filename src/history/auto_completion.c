@@ -44,8 +44,6 @@ char *get_auto_completion(struct history *history, char *cmd)
 {
     size_t len = strlen(cmd);
     size_t j = 0;
-    int curr_score = INF;
-    int best_score = INF;
     int best_idx = INF;
     char *curr = NULL;
 
@@ -57,10 +55,8 @@ char *get_auto_completion(struct history *history, char *cmd)
             curr[j] = history->commands[i][j];
         curr[j] = '\0';
 
-        // curr_score = levenshtein(cmd, strlen(cmd), curr, strlen(curr));
         if (dist_algorithm(cmd, strlen(cmd), curr, strlen(curr)))
         {
-            best_score = curr_score;
             best_idx = i;
             break;
         }

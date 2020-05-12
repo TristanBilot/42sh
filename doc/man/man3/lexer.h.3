@@ -1,4 +1,4 @@
-.TH "src/lexer/lexer.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/lexer.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -8,6 +8,8 @@ src/lexer/lexer.h \- Main lexing functions\&.
 .br
 .PP
 \fC#include '\&.\&./lexer/token\&.h'\fP
+.br
+\fC#include <stdbool\&.h>\fP
 .br
 
 .SS "Data Structures"
@@ -42,7 +44,7 @@ src/lexer/lexer.h \- Main lexing functions\&.
 .br
 .RI "Append a new token to the \fBtoken_list\fP of the lexer\&. "
 .ti -1c
-.RI "void \fBinit_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
+.RI "bool \fBinit_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
 .RI "Fill the token list by creating all the tokens from the given string\&. "
 .ti -1c
@@ -53,7 +55,7 @@ src/lexer/lexer.h \- Main lexing functions\&.
 .PP 
 Main lexing functions\&. 
 
-
+Bracket counter functions\&.
 .PP
 \fBAuthor:\fP
 .RS 4
@@ -68,6 +70,26 @@ Team
 \fBDate:\fP
 .RS 4
 2020-05-03
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-12
 .RE
 .PP
 \fBCopyright:\fP
@@ -102,7 +124,7 @@ Free all ressources allocated in the lexer\&.
 .RE
 .PP
 
-.SS "void init_lexer (struct \fBlexer\fP * lexer)"
+.SS "bool init_lexer (struct \fBlexer\fP * lexer)"
 
 .PP
 Fill the token list by creating all the tokens from the given string\&. 

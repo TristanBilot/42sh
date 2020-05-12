@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['xcalloc',['xcalloc',['../xalloc_8c.html#a37b399013c9ca4620b4ddf936be12505',1,'xcalloc(size_t nmb, size_t size):&#160;xalloc.c'],['../xalloc_8h.html#a37b399013c9ca4620b4ddf936be12505',1,'xcalloc(size_t nmb, size_t size):&#160;xalloc.c']]],
-  ['xmalloc',['xmalloc',['../xalloc_8c.html#a42ccfa6fc49cc4ce90cc44cd05052490',1,'xmalloc(size_t size):&#160;xalloc.c'],['../xalloc_8h.html#a2ebcd01a0ecb9f5132e485a0f8ce4d13',1,'xmalloc(size_t size) __malloc:&#160;xalloc.c']]],
-  ['xrealloc',['xrealloc',['../xalloc_8c.html#a93a8ec6e8a6eef0f62b7e5b50d0bf9e4',1,'xrealloc(void *ptr, size_t size):&#160;xalloc.c'],['../xalloc_8h.html#a93a8ec6e8a6eef0f62b7e5b50d0bf9e4',1,'xrealloc(void *ptr, size_t size):&#160;xalloc.c']]]
+  ['update_5flast_5fstatus',['update_last_status',['../program__data__storage_8c.html#a62f2cf1bbb9b00d1766bf5a66d776144',1,'update_last_status(int status):&#160;program_data_storage.c'],['../program__data__storage_8h.html#a62f2cf1bbb9b00d1766bf5a66d776144',1,'update_last_status(int status):&#160;program_data_storage.c']]]
 ];

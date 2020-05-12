@@ -48,7 +48,7 @@ def test(binary, test_case, debug_description, time):
                 except AssertionError:
                     print(colored('[ KO ]', 'red'), debug_description, test_case[i]['stdin'], \
                         colored((' RET -> ref: ', ref.returncode, ' | our_shell: ', our_shell.returncode), 'yellow') if check == 'returncode' and ref.returncode != our_shell.returncode else '', \
-                        colored(' STDOUT ', 'yellow') if check == 'stdout' and ref.stdout != our_shell.stdout else '', \
+                        colored((' STDOUT ', our_shell.stdout, ' =>', ref.stdout), 'yellow') if check == 'stdout' and ref.stdout != our_shell.stdout else '', \
                         colored(' STDERR ', 'yellow') if check == 'stderr' and ref.stderr != our_shell.stderr else '', \
                         colored(' STDIN ', 'yellow') if check == 'stdin' and ref.stdin != our_shell.stdin else '')
                 else:

@@ -81,24 +81,30 @@ Include dependency graph for buffer.c:</div>
 <div class="center"><img src="buffer_8c__incl.png" border="0" usemap="#src_2utils_2buffer_8c" alt=""/></div>
 <map name="src_2utils_2buffer_8c" id="src_2utils_2buffer_8c">
 <area shape="rect" id="node4" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="190,155,295,181"/>
-<area shape="rect" id="node6" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="235,80,341,107"/>
-<area shape="rect" id="node7" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="365,80,472,107"/>
-<area shape="rect" id="node5" href="token_8h.html" title="Token structures and functions. " alt="" coords="188,229,297,256"/>
-<area shape="rect" id="node8" href="attr_8h.html" title="../utils/attr.h" alt="" coords="346,155,438,181"/>
+<area shape="rect" id="node7" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="235,80,341,107"/>
+<area shape="rect" id="node8" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="365,80,472,107"/>
+<area shape="rect" id="node5" href="token_8h.html" title="Token structures and functions. " alt="" coords="131,229,240,256"/>
+<area shape="rect" id="node9" href="attr_8h.html" title="../utils/attr.h" alt="" coords="346,155,438,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a88f9bef51ff4231d24c40bcb98c0ef76"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#a88f9bef51ff4231d24c40bcb98c0ef76">new_buffer</a> ()</td></tr>
-<tr class="memdesc:a88f9bef51ff4231d24c40bcb98c0ef76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create buffer.  <a href="#a88f9bef51ff4231d24c40bcb98c0ef76">More...</a><br /></td></tr>
-<tr class="separator:a88f9bef51ff4231d24c40bcb98c0ef76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40f6acc3b53c384491b6b67106469cd7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#a40f6acc3b53c384491b6b67106469cd7">new_buffer</a> (void)</td></tr>
+<tr class="memdesc:a40f6acc3b53c384491b6b67106469cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create buffer.  <a href="#a40f6acc3b53c384491b6b67106469cd7">More...</a><br /></td></tr>
+<tr class="separator:a40f6acc3b53c384491b6b67106469cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d1a6b1685a3c84563236266f80627f"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#a97d1a6b1685a3c84563236266f80627f">new_huge_buffer</a> (void)</td></tr>
+<tr class="separator:a97d1a6b1685a3c84563236266f80627f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4d1a0cb40b12e7c0393a5302727c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#a0a4d1a0cb40b12e7c0393a5302727c2e">append_buffer</a> (struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char c)</td></tr>
 <tr class="memdesc:a0a4d1a0cb40b12e7c0393a5302727c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append characters to the buffer.  <a href="#a0a4d1a0cb40b12e7c0393a5302727c2e">More...</a><br /></td></tr>
 <tr class="separator:a0a4d1a0cb40b12e7c0393a5302727c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadedf72e9e5092829e56b1e295cd0aff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#aadedf72e9e5092829e56b1e295cd0aff">append_huge_buffer</a> (struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char c)</td></tr>
+<tr class="separator:aadedf72e9e5092829e56b1e295cd0aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4676fad230e61d8eac41cc819e65df3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#ab4676fad230e61d8eac41cc819e65df3">append_string_to_buffer</a> (struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *<a class="el" href="ast__print__dot_8h.html#a86305cd9546c17c4e19ca559dde7499e">str</a>)</td></tr>
 <tr class="memdesc:ab4676fad230e61d8eac41cc819e65df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append string to the buffer.  <a href="#ab4676fad230e61d8eac41cc819e65df3">More...</a><br /></td></tr>
 <tr class="separator:ab4676fad230e61d8eac41cc819e65df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75c28684b25081fc100d46474d80934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#ad75c28684b25081fc100d46474d80934">append_string_to_huge_buffer</a> (struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *<a class="el" href="ast__print__dot_8h.html#a86305cd9546c17c4e19ca559dde7499e">str</a>)</td></tr>
+<tr class="separator:ad75c28684b25081fc100d46474d80934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d6b84c11ee1e1d1101a8ec20de8d6e4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buffer_8c.html#a8d6b84c11ee1e1d1101a8ec20de8d6e4">buffer_len</a> (struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>)</td></tr>
 <tr class="memdesc:a8d6b84c11ee1e1d1101a8ec20de8d6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give the len of the buffer.  <a href="#a8d6b84c11ee1e1d1101a8ec20de8d6e4">More...</a><br /></td></tr>
 <tr class="separator:a8d6b84c11ee1e1d1101a8ec20de8d6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +156,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aadedf72e9e5092829e56b1e295cd0aff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadedf72e9e5092829e56b1e295cd0aff">&#9670;&nbsp;</a></span>append_huge_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void append_huge_buffer </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ab4676fad230e61d8eac41cc819e65df3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab4676fad230e61d8eac41cc819e65df3">&#9670;&nbsp;</a></span>append_string_to_buffer()</h2>
 
@@ -184,6 +218,34 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad75c28684b25081fc100d46474d80934"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad75c28684b25081fc100d46474d80934">&#9670;&nbsp;</a></span>append_string_to_huge_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void append_string_to_huge_buffer </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -271,7 +333,6 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>the string to be clear. </td></tr>
-    <tr><td class="paramname">size</td><td>the length of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -304,8 +365,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a88f9bef51ff4231d24c40bcb98c0ef76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88f9bef51ff4231d24c40bcb98c0ef76">&#9670;&nbsp;</a></span>new_buffer()</h2>
+<a id="a40f6acc3b53c384491b6b67106469cd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40f6acc3b53c384491b6b67106469cd7">&#9670;&nbsp;</a></span>new_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,6 +374,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">struct <a class="el" href="structbuffer.html">buffer</a>* new_buffer </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -321,6 +383,24 @@ Functions</h2></td></tr>
 
 <p>Create buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>struct buffer* </dd></dl>
+
+</div>
+</div>
+<a id="a97d1a6b1685a3c84563236266f80627f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97d1a6b1685a3c84563236266f80627f">&#9670;&nbsp;</a></span>new_huge_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structbuffer.html">buffer</a>* new_huge_buffer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -12,7 +12,6 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
-
 /**
 ** \brief function to give a file to the 42sh
 **
@@ -31,9 +30,10 @@ void source(char **args);
 ** \param args 
 */
 void echo(char **args);
+
 /**
-** \brief implementation of command cd
-**
+** \brief 
+** 
 ** \param args 
 */
 void cd(char **args);
@@ -56,8 +56,26 @@ struct echo_tab
   char name;
   char corresp;
 };
-
+/**
+**\brief Print all args on stdout
+**
+**\param args 
+*/
 void print_args(char **args);
+/**
+**\brief Particular print with option -e from echo
+**
+**\param c 
+**\return int 
+*/
 int	print_without_sp(char *c);
+/**
+**\brief Echo function 
+**
+**\param args 
+**\param e 
+**\param n 
+*/
 void print_echo(char **args, bool e, bool n);
+
 #endif /* COMMANDS_H_ */

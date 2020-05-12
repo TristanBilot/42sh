@@ -1,4 +1,5 @@
 #include "my_popen.h"
+#include "../storage/program_data_storage.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -48,8 +49,8 @@ FILE *my_popen(const char *cmd, const char *mode)
 
     if (pipe(fds) == -1)
         return NULL;
-
-    switch (pid = fork())
+    char binary_42sh[256];
+    switch ((pid = fork()))
     {
     case -1:
         close(fds[father]);
@@ -65,7 +66,8 @@ FILE *my_popen(const char *cmd, const char *mode)
             }
             close(fds[child]);
         }
-        execl(program_data->binary_name, program_data->binary_name, "-c", cmd, NULL);
+        readlink("/proc/self/exe", binary_42sh, 256);
+        execl(binary_42sh, binary_42sh, "-c", cmd, NULL);
         _exit(127);
     default:
         close(fds[child]);
@@ -74,6 +76,7 @@ FILE *my_popen(const char *cmd, const char *mode)
             close(fds[father]);
             return NULL;
         }
+        break;
     }
     return global_stream;
 }
@@ -107,9 +110,7 @@ int my_pclose(FILE *stream)
         if (wait_pid == -1)
         {
             if (errno == EINTR)
-            {
                 continue;
-            }
             pid = -1;
             global_stream = NULL;
             return -1;

@@ -1,12 +1,14 @@
-.TH "src/var_storage/var_storage.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/storage/var_storage.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-src/var_storage/var_storage.c
+src/storage/var_storage.c
 .SH SYNOPSIS
 .br
 .PP
 \fC#include 'var_storage\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
 .br
 
 .SS "Functions"
@@ -28,6 +30,9 @@ src/var_storage/var_storage.c
 .RI "bool \fBput_var\fP (char *key, char *val)"
 .br
 .ti -1c
+.RI "void \fBdel_var\fP (char *key)"
+.br
+.ti -1c
 .RI "struct \fBvariable\fP * \fBget_var\fP (char *key)"
 .br
 .ti -1c
@@ -39,6 +44,8 @@ src/var_storage/var_storage.c
 .in -1c
 .SH "Function Documentation"
 .PP 
+.SS "void del_var (char * key)"
+
 .SS "void free_var_storage (void)"
 
 .SS "char* get_value (char * key)"

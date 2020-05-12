@@ -85,5 +85,5 @@ char *my_strdup(const char *c)
 
 void error(char *msg)
 {
-    printf("%s\n", msg);
+    fprintf(stderr, "%s\n", msg);
 }

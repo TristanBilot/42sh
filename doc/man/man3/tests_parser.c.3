@@ -1,0 +1,145 @@
+.TH "tests/tests_parser.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tests/tests_parser.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <criterion/criterion\&.h>\fP
+.br
+\fC#include 'lexer/lexer\&.h'\fP
+.br
+\fC#include 'parser/parser\&.h'\fP
+.br
+\fC#include 'utils/string_utils\&.h'\fP
+.br
+\fC#include 'ast/free\&.h'\fP
+.br
+\fC#include '\&.\&./garbage_collector/garbage_collector\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBtest\fP (char *expr)"
+.br
+.ti -1c
+.RI "bool \fBsuccess\fP (char *expr)"
+.br
+.ti -1c
+.RI "bool \fBfail\fP (char *expr)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parse_export)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, \fBparse_redirection\fP)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, more_redirection)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, \fBparse_simple_command\fP)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parser_assigment_word)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parser_simple_command2)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parse_simple_if)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parser_and_or_simple)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parser_multi_logical)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parser_hard_test_simple_command)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, rule_for)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, rule_while)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, funcdec)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parenthesis)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, rule_until)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, rule_case)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, hardcore_test)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, hardcore_test2)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, parenthesis_near)"
+.br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, comments)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "bool fail (char * expr)"
+
+.SS "bool success (char * expr)"
+
+.SS "bool test (char * expr)"
+
+.SS "Test (\fBparser\fP, parse_export)"
+
+.SS "Test (\fBparser\fP, \fBparse_redirection\fP)"
+
+.SS "Test (\fBparser\fP, more_redirection)"
+
+.SS "Test (\fBparser\fP, \fBparse_simple_command\fP)"
+
+.SS "Test (\fBparser\fP, parser_assigment_word)"
+
+.SS "Test (\fBparser\fP, parser_simple_command2)"
+
+.SS "Test (\fBparser\fP, parse_simple_if)"
+
+.SS "Test (\fBparser\fP, parser_and_or_simple)"
+
+.SS "Test (\fBparser\fP, parser_multi_logical)"
+
+.SS "Test (\fBparser\fP, parser_hard_test_simple_command)"
+
+.SS "Test (\fBparser\fP, rule_for)"
+
+.SS "Test (\fBparser\fP, rule_while)"
+
+.SS "Test (\fBparser\fP, funcdec)"
+
+.SS "Test (\fBparser\fP, parenthesis)"
+
+.SS "Test (\fBparser\fP, rule_until)"
+
+.SS "Test (\fBparser\fP, rule_case)"
+
+.SS "Test (\fBparser\fP, hardcore_test)"
+
+.SS "Test (\fBparser\fP, hardcore_test2)"
+
+.SS "Test (\fBparser\fP, parenthesis_near)"
+
+.SS "Test (\fBparser\fP, comments)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

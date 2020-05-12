@@ -1,0 +1,99 @@
+.TH "test_suite.py" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+test_suite.py
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "class \fBTimeoutError\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI " \fBtest_suite\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBrun_shell\fP (args, \fBcmd\fP, time)"
+.br
+.ti -1c
+.RI "def \fBget_nb_tabs\fP (\fBstr\fP)"
+.br
+.ti -1c
+.RI "def \fBcheck_flag_c_conditions\fP (flag_c, flag_c_descriptions, description)"
+.br
+.ti -1c
+.RI "def \fBtest\fP (binary, test_case, debug_description, time)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "string \fBtests_file\fP = 'tests/tests\&.yaml'"
+.br
+.ti -1c
+.RI "\fBparser\fP = ArgumentParser(description='Our Testsuite')"
+.br
+.ti -1c
+.RI "\fBdest\fP"
+.br
+.ti -1c
+.RI "\fBaction\fP"
+.br
+.ti -1c
+.RI "\fBtype\fP"
+.br
+.ti -1c
+.RI "\fBint\fP"
+.br
+.ti -1c
+.RI "\fBnargs\fP"
+.br
+.ti -1c
+.RI "\fBmetavar\fP"
+.br
+.ti -1c
+.RI "\fBstr\fP"
+.br
+.ti -1c
+.RI "\fBargs\fP = parser\&.parse_args()"
+.br
+.ti -1c
+.RI "\fBflag_c\fP = args\&.flag_c"
+.br
+.ti -1c
+.RI "\fBflag_l\fP = args\&.flag_l"
+.br
+.ti -1c
+.RI "\fBflag_t\fP = args\&.flag_t"
+.br
+.ti -1c
+.RI "\fBbinary\fP = Path(args\&.bin)\&.absolute()"
+.br
+.ti -1c
+.RI "\fBcontent\fP = yaml\&.safe_load(tests_file)"
+.br
+.ti -1c
+.RI "\fBdesc\fP = test_case['description'][0]['name']"
+.br
+.ti -1c
+.RI "tuple \fBdebug_description\fP = (desc + get_nb_tabs(desc)) if flag_l else ''"
+.br
+.ti -1c
+.RI "def \fBshould_print\fP = check_flag_c_conditions(flag_c, args\&.flag_c, desc)"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

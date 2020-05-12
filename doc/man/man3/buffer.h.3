@@ -1,4 +1,4 @@
-.TH "src/utils/buffer.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/buffer.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,24 +21,33 @@ src/utils/buffer.h \- Buffer structure and functions\&.
 
 .in +1c
 .ti -1c
-.RI "#define \fBBUFFER_SIZE\fP   256"
+.RI "#define \fBBUFFER_SIZE\fP   512"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "struct \fBbuffer\fP * \fBnew_buffer\fP ()"
+.RI "struct \fBbuffer\fP * \fBnew_buffer\fP (void)"
 .br
 .RI "Create buffer\&. "
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBnew_huge_buffer\fP (void)"
+.br
 .ti -1c
 .RI "void \fBappend_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char c)"
 .br
 .RI "Append characters to the buffer\&. "
 .ti -1c
+.RI "void \fBappend_huge_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char c)"
+.br
+.ti -1c
 .RI "void \fBappend_string_to_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *\fBstr\fP)"
 .br
 .RI "Append string to the buffer\&. "
+.ti -1c
+.RI "void \fBappend_string_to_huge_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *\fBstr\fP)"
+.br
 .ti -1c
 .RI "void \fBfree_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP)"
 .br
@@ -85,7 +94,7 @@ Copyright (c) 2020
 
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define BUFFER_SIZE   256"
+.SS "#define BUFFER_SIZE   512"
 
 .SH "Function Documentation"
 .PP 
@@ -102,6 +111,8 @@ Append characters to the buffer\&.
 .RE
 .PP
 
+.SS "void append_huge_buffer (struct \fBbuffer\fP * buffer, char c)"
+
 .SS "void append_string_to_buffer (struct \fBbuffer\fP * buffer, char * str)"
 
 .PP
@@ -114,6 +125,8 @@ Append string to the buffer\&.
 \fIstr\fP 
 .RE
 .PP
+
+.SS "void append_string_to_huge_buffer (struct \fBbuffer\fP * buffer, char * str)"
 
 .SS "void append_word_if_needed (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer)"
 
@@ -152,8 +165,6 @@ Empty a string buffer\&.
 \fBParameters:\fP
 .RS 4
 \fIbuffer\fP the string to be clear\&. 
-.br
-\fIsize\fP the length of the buffer\&. 
 .RE
 .PP
 
@@ -168,7 +179,7 @@ Free the buffer\&.
 .RE
 .PP
 
-.SS "struct \fBbuffer\fP* new_buffer ()"
+.SS "struct \fBbuffer\fP* new_buffer (void)"
 
 .PP
 Create buffer\&. 
@@ -178,6 +189,8 @@ Create buffer\&.
 struct buffer* 
 .RE
 .PP
+
+.SS "struct \fBbuffer\fP* new_huge_buffer (void)"
 
 .SH "Author"
 .PP 

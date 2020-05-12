@@ -1,4 +1,4 @@
-.TH "src/exec/exec.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/exec.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -26,6 +26,16 @@ src/exec/exec.h \- Execution functions\&.
 \fC#include '\&.\&./parser/parser\&.h'\fP
 .br
 \fC#include '\&.\&./exec/commands\&.h'\fP
+.br
+\fC#include '\&.\&./utils/buffer\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./utils/my_itoa\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./storage/var_storage\&.h'\fP
 .br
 
 .SS "Data Structures"
@@ -139,13 +149,21 @@ src/exec/exec.h \- Execution functions\&.
 .br
 .RI "execute do group "
 .ti -1c
-.RI "bool \fBexec_node_case_clause\fP (struct \fBnode_case_clause\fP *ast)"
+.RI "bool \fBexec_node_case_clause\fP (struct \fBnode_case_clause\fP *ast, char *word_to_found)"
 .br
 .RI "execute case clause "
 .ti -1c
-.RI "bool \fBexec_node_case_item\fP (struct \fBnode_case_item\fP *ast)"
+.RI "bool \fBexec_node_case_item\fP (struct \fBnode_case_item\fP *ast, char *word_to_found)"
 .br
 .RI "execute case item "
+.ti -1c
+.RI "int \fBperform_for_range\fP (struct \fBrange\fP *r, struct \fBnode_for\fP *ast)"
+.br
+.RI "for function to execute different range "
+.ti -1c
+.RI "bool \fBperform_for_enumeration\fP (struct \fBnode_for\fP *ast, int len_range)"
+.br
+.RI "for function to perform enumeration "
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -223,7 +241,7 @@ false
 .RE
 .PP
 
-.SS "bool exec_node_case_clause (struct \fBnode_case_clause\fP * ast)"
+.SS "bool exec_node_case_clause (struct \fBnode_case_clause\fP * ast, char * word_to_found)"
 
 .PP
 execute case clause 
@@ -241,7 +259,7 @@ false
 .RE
 .PP
 
-.SS "bool exec_node_case_item (struct \fBnode_case_item\fP * ast)"
+.SS "bool exec_node_case_item (struct \fBnode_case_item\fP * ast, char * word_to_found)"
 
 .PP
 execute case item 
@@ -595,6 +613,44 @@ create and init the table of redirection
 \fBReturns:\fP
 .RS 4
 struct tab_redirection* 
+.RE
+.PP
+
+.SS "bool perform_for_enumeration (struct \fBnode_for\fP * ast, int len_range)"
+
+.PP
+for function to perform enumeration 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP 
+.br
+\fIlen_range\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "int perform_for_range (struct \fBrange\fP * r, struct \fBnode_for\fP * ast)"
+
+.PP
+for function to execute different range 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP 
+.br
+\fIast\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+int 
 .RE
 .PP
 

@@ -13,6 +13,7 @@
 #define LEXER_H
 
 #include "../lexer/token.h"
+#include <stdbool.h>
 
 /**
 ** \brief Lexer architecture and methods.
@@ -68,7 +69,7 @@ void append(struct lexer *lexer, struct token *token);
 **
 ** \param lexer the lexer.
 */
-void init_lexer(struct lexer *lexer);
+bool init_lexer(struct lexer *lexer);
 
 int is_separator(char c);
 

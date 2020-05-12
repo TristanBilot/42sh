@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>42h: src/var_storage/var_storage.c File Reference</title>
+<title>42h: src/storage/var_storage.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,7 +60,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3711fe2a40c9ceebdd79382bddc59f86.html">var_storage</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_452baf35e1d7639c9f2a5ece4ec85855.html">storage</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,15 +71,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="var__storage_8h_source.html">var_storage.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for var_storage.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="var__storage_8c__incl.png" border="0" usemap="#src_2var__storage_2var__storage_8c" alt=""/></div>
-<map name="src_2var__storage_2var__storage_8c" id="src_2var__storage_2var__storage_8c">
-<area shape="rect" id="node2" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="107,95,208,121"/>
-<area shape="rect" id="node4" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="104,169,211,196"/>
-<area shape="rect" id="node7" href="string__utils_8h.html" title="String usage functions. " alt="" coords="235,169,371,196"/>
-<area shape="rect" id="node5" href="attr_8h.html" title="../utils/attr.h" alt="" coords="19,244,111,271"/>
+<div class="center"><img src="var__storage_8c__incl.png" border="0" usemap="#src_2storage_2var__storage_8c" alt=""/></div>
+<map name="src_2storage_2var__storage_8c" id="src_2storage_2var__storage_8c">
+<area shape="rect" id="node2" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="107,80,208,107"/>
+<area shape="rect" id="node4" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="104,155,211,181"/>
+<area shape="rect" id="node7" href="string__utils_8h.html" title="String usage functions. " alt="" coords="235,155,371,181"/>
+<area shape="rect" id="node5" href="attr_8h.html" title="../utils/attr.h" alt="" coords="19,229,111,256"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -95,6 +96,8 @@ Functions</h2></td></tr>
 <tr class="separator:ab37e65010e9205d1956ce0805abb825c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3edb0647d53bbc788776422303ba573"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#af3edb0647d53bbc788776422303ba573">put_var</a> (char *key, char *val)</td></tr>
 <tr class="separator:af3edb0647d53bbc788776422303ba573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e850693bde3613a5c8c7c9c9f3534b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a3e850693bde3613a5c8c7c9c9f3534b4">del_var</a> (char *key)</td></tr>
+<tr class="separator:a3e850693bde3613a5c8c7c9c9f3534b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af887f56362110bdea1f33465042941ee"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structvariable.html">variable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#af887f56362110bdea1f33465042941ee">get_var</a> (char *key)</td></tr>
 <tr class="separator:af887f56362110bdea1f33465042941ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a339a79298fffccb8980de077667a8350"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a339a79298fffccb8980de077667a8350">get_value</a> (char *key)</td></tr>
@@ -103,6 +106,24 @@ Functions</h2></td></tr>
 <tr class="separator:a2fdb5ce67a539b64cfcde4a1e2cc3f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a3e850693bde3613a5c8c7c9c9f3534b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e850693bde3613a5c8c7c9c9f3534b4">&#9670;&nbsp;</a></span>del_var()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void del_var </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a171b2f7e750a1e2799e105419fd2162b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a171b2f7e750a1e2799e105419fd2162b">&#9670;&nbsp;</a></span>free_var_storage()</h2>
 

@@ -95,6 +95,17 @@ Functions</h2></td></tr>
 <tr class="separator:a8684eb39bbba192a047ac7e8ae739e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bdc20af66be95ecf8855b92d41c1263"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="garbage__collector_8c.html#a5bdc20af66be95ecf8855b92d41c1263">print_garbage_collector</a> (void)</td></tr>
 <tr class="separator:a5bdc20af66be95ecf8855b92d41c1263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad151b76ca3e3fea42a9063d3283d03e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="garbage__collector_8c.html#ad151b76ca3e3fea42a9063d3283d03e7">new_garbage_collector_variable</a> (void)</td></tr>
+<tr class="memdesc:ad151b76ca3e3fea42a9063d3283d03e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">create the garbage collector  <a href="#ad151b76ca3e3fea42a9063d3283d03e7">More...</a><br /></td></tr>
+<tr class="separator:ad151b76ca3e3fea42a9063d3283d03e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca2e5bfba4ad6de804a9dce8a5db518"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="garbage__collector_8c.html#abca2e5bfba4ad6de804a9dce8a5db518">append_to_garbage_variable</a> (void *addr)</td></tr>
+<tr class="memdesc:abca2e5bfba4ad6de804a9dce8a5db518"><td class="mdescLeft">&#160;</td><td class="mdescRight">append addr to list of elements  <a href="#abca2e5bfba4ad6de804a9dce8a5db518">More...</a><br /></td></tr>
+<tr class="separator:abca2e5bfba4ad6de804a9dce8a5db518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad841a156d6b9be22da2306a36e6b4715"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="garbage__collector_8c.html#ad841a156d6b9be22da2306a36e6b4715">free_garbage_collector_variable</a> (void)</td></tr>
+<tr class="memdesc:ad841a156d6b9be22da2306a36e6b4715"><td class="mdescLeft">&#160;</td><td class="mdescRight">free list of elements  <a href="#ad841a156d6b9be22da2306a36e6b4715">More...</a><br /></td></tr>
+<tr class="separator:ad841a156d6b9be22da2306a36e6b4715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8655cde2844af01ba880f609422c8de0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="garbage__collector_8c.html#a8655cde2844af01ba880f609422c8de0">print_garbage_collector_variable</a> (void)</td></tr>
+<tr class="separator:a8655cde2844af01ba880f609422c8de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ac510c345942a9dbd1921956fa4a4c6ee"></a>
@@ -105,6 +116,32 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void append_to_garbage </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>append addr to list of elements </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abca2e5bfba4ad6de804a9dce8a5db518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abca2e5bfba4ad6de804a9dce8a5db518">&#9670;&nbsp;</a></span>append_to_garbage_variable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void append_to_garbage_variable </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>addr</em></td><td>)</td>
@@ -143,6 +180,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ad841a156d6b9be22da2306a36e6b4715"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad841a156d6b9be22da2306a36e6b4715">&#9670;&nbsp;</a></span>free_garbage_collector_variable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void free_garbage_collector_variable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>free list of elements </p>
+
+</div>
+</div>
 <a id="a0727701a7e797d5b96ceb465cce05235"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0727701a7e797d5b96ceb465cce05235">&#9670;&nbsp;</a></span>new_garbage_collector()</h2>
 
@@ -163,6 +220,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ad151b76ca3e3fea42a9063d3283d03e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad151b76ca3e3fea42a9063d3283d03e7">&#9670;&nbsp;</a></span>new_garbage_collector_variable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void new_garbage_collector_variable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>create the garbage collector </p>
+
+</div>
+</div>
 <a id="a5bdc20af66be95ecf8855b92d41c1263"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bdc20af66be95ecf8855b92d41c1263">&#9670;&nbsp;</a></span>print_garbage_collector()</h2>
 
@@ -171,6 +248,24 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void print_garbage_collector </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8655cde2844af01ba880f609422c8de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8655cde2844af01ba880f609422c8de0">&#9670;&nbsp;</a></span>print_garbage_collector_variable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_garbage_collector_variable </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>

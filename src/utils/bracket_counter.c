@@ -1,4 +1,5 @@
 #include "bracket_counter.h"
+#include "../utils/buffer.h"
 
 /*
 * < 0 => error
@@ -55,4 +56,13 @@ bool check_closing_symbols(char *s)
     int sin_q = count_closed_occurences(s, 0, COUNT_SING_QUOTE);
     int dou_q = count_closed_occurences(s, 0, COUNT_DOUB_QUOTE);
     return (!(brack < 0 || paren < 0 || sin_q < 0 || dou_q < 0));
+}
+
+bool check_closing_symbols_from_splitted(char **splitted, int i)
+{
+    struct buffer *buffer = new_buffer();
+    while (splitted[i])
+        append_string_to_buffer(buffer, splitted[i++]);
+    append_buffer(buffer, '\0');
+    return check_closing_symbols(buffer->buf);
 }

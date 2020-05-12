@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['print_5fflag',['PRINT_FLAG',['../ast__print_8c.html#a58ad938c6dfea1c702a6d4da0c88dbde',1,'ast_print.c']]],
-  ['print_5fnode',['PRINT_NODE',['../ast__print_8c.html#a9f3c735d41fd286a4f23eee13236e531',1,'ast_print.c']]]
+  ['max_5fstr_5flen',['MAX_STR_LEN',['../string__utils_8h.html#a58ce36916c399104e18d32ff090f21c6',1,'string_utils.h']]],
+  ['max_5ftoken',['MAX_TOKEN',['../token_8h.html#a86a3fbb1ed03ca0d08b0fcc963bb05a5',1,'token.h']]]
 ];

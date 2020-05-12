@@ -1,0 +1,82 @@
+.TH "src/expansion/my_popen.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/my_popen.h \- Function for command substitution\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'expansion\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSET_ERRNO_AND_RETURN\fP(err)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "FILE * \fBmy_popen\fP (const char *\fBcmd\fP, const char *mode)"
+.br
+.ti -1c
+.RI "int \fBmy_pclose\fP (FILE *stream)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Function for command substitution\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-13
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SET_ERRNO_AND_RETURN(err)"
+\fBValue:\fP
+.PP
+.nf
+errno = err; \
+    return NULL;
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "int my_pclose (FILE * stream)"
+
+.SS "FILE* my_popen (const char * cmd, const char * mode)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

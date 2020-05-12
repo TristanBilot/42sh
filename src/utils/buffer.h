@@ -12,7 +12,7 @@
 #define BUFFER_H
 
 #include "../lexer/lexer.h"
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 512
 
 struct buffer {
     char *buf;
@@ -69,7 +69,6 @@ void append_word_if_needed(struct lexer *lexer, struct buffer *buffer);
 ** \brief Empty a string buffer.
 **
 ** \param buffer the string to be clear.
-** \param size the length of the buffer.
 */
 void flush(struct buffer *buffer);
 

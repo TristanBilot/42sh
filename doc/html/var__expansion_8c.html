@@ -75,35 +75,31 @@ $(function() {
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="expansion_8h_source.html">expansion.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="var__storage_8h_source.html">../var_storage/var_storage.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="var__storage_8h_source.html">../storage/var_storage.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="buffer_8h_source.html">../utils/buffer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="xalloc_8h_source.html">../utils/xalloc.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="index__utils_8h_source.html">../utils/index_utils.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="program__data__storage_8h_source.html">../storage/program_data_storage.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for var_expansion.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="var__expansion_8c__incl.png" border="0" usemap="#src_2expansion_2var__expansion_8c" alt=""/></div>
 <map name="src_2expansion_2var__expansion_8c" id="src_2expansion_2var__expansion_8c">
-<area shape="rect" id="node6" href="expansion_8h.html" title="Var storage structures and functions. " alt="" coords="589,169,681,196"/>
-<area shape="rect" id="node11" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="483,80,607,121"/>
-<area shape="rect" id="node12" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="247,169,353,196"/>
-<area shape="rect" id="node15" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="773,87,880,114"/>
-<area shape="rect" id="node18" href="index__utils_8h.html" title="Index functions. " alt="" coords="378,169,513,196"/>
-<area shape="rect" id="node14" href="string__utils_8h.html" title="String usage functions. " alt="" coords="705,169,841,196"/>
-<area shape="rect" id="node13" href="attr_8h.html" title="../utils/attr.h" alt="" coords="254,244,346,271"/>
-<area shape="rect" id="node16" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="866,169,971,196"/>
-<area shape="rect" id="node17" href="token_8h.html" title="Token structures and functions. " alt="" coords="864,244,973,271"/>
+<area shape="rect" id="node6" href="expansion_8h.html" title="Var storage structures and functions. " alt="" coords="190,169,282,196"/>
+<area shape="rect" id="node11" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="469,87,629,114"/>
+<area shape="rect" id="node12" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="677,169,784,196"/>
+<area shape="rect" id="node15" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="704,87,811,114"/>
+<area shape="rect" id="node18" href="index__utils_8h.html" title="Index functions. " alt="" coords="467,169,602,196"/>
+<area shape="rect" id="node19" href="program__data__storage_8h.html" title="../storage/program\l_data_storage.h" alt="" coords="835,80,963,121"/>
+<area shape="rect" id="node14" href="string__utils_8h.html" title="String usage functions. " alt="" coords="307,169,443,196"/>
+<area shape="rect" id="node13" href="attr_8h.html" title="../utils/attr.h" alt="" coords="691,244,783,271"/>
+<area shape="rect" id="node16" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="809,169,914,196"/>
+<area shape="rect" id="node17" href="token_8h.html" title="Token structures and functions. " alt="" coords="808,244,917,271"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a04a51cedc2b798665e79837b17a81484"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__expansion_8c.html#a04a51cedc2b798665e79837b17a81484">new_program_data_storage</a> (int argc, char *argv[])</td></tr>
-<tr class="separator:a04a51cedc2b798665e79837b17a81484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7b26227292e9e3525a51c9581ec8f23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__expansion_8c.html#aa7b26227292e9e3525a51c9581ec8f23">free_program_data_storage</a> (void)</td></tr>
-<tr class="separator:aa7b26227292e9e3525a51c9581ec8f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62f2cf1bbb9b00d1766bf5a66d776144"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__expansion_8c.html#a62f2cf1bbb9b00d1766bf5a66d776144">update_last_status</a> (int status)</td></tr>
-<tr class="separator:a62f2cf1bbb9b00d1766bf5a66d776144"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0c6442f45873ebd28e684d9d9d014ec"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__expansion_8c.html#aa0c6442f45873ebd28e684d9d9d014ec">perform_var_expansion</a> (char *word)</td></tr>
 <tr class="separator:aa0c6442f45873ebd28e684d9d9d014ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a952d4bb2aff29f3d69b0963cb654c07a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__expansion_8c.html#a952d4bb2aff29f3d69b0963cb654c07a">substitute_number</a> (char c)</td></tr>
@@ -132,24 +128,6 @@ Functions</h2></td></tr>
 <tr class="separator:ab7ff18d2f67402012bcdd6f762175b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aa7b26227292e9e3525a51c9581ec8f23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7b26227292e9e3525a51c9581ec8f23">&#9670;&nbsp;</a></span>free_program_data_storage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void free_program_data_storage </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ab7ff18d2f67402012bcdd6f762175b0a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab7ff18d2f67402012bcdd6f762175b0a">&#9670;&nbsp;</a></span>get_random_int()</h2>
 
@@ -180,34 +158,6 @@ Functions</h2></td></tr>
           <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
           <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a04a51cedc2b798665e79837b17a81484"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04a51cedc2b798665e79837b17a81484">&#9670;&nbsp;</a></span>new_program_data_storage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void new_program_data_storage </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>argc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>argv</em>[]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -516,24 +466,6 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a62f2cf1bbb9b00d1766bf5a66d776144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62f2cf1bbb9b00d1766bf5a66d776144">&#9670;&nbsp;</a></span>update_last_status()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void update_last_status </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">

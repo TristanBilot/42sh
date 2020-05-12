@@ -1,4 +1,4 @@
-.TH "src/lexer/lex_evaluation.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/lex_evaluation.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,11 @@ src/lexer/lex_evaluation.c
 .br
 \fC#include '\&.\&./utils/string_utils\&.h'\fP
 .br
+\fC#include '\&.\&./utils/index_utils\&.h'\fP
+.br
 \fC#include '\&.\&./lexer/lexer\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
 .br
 
 .SS "Functions"
@@ -43,10 +47,6 @@ src/lexer/lex_evaluation.c
 .RI "struct \fBtoken\fP * \fBlex_uni_character\fP (char *c, size_t i)"
 .br
 .RI "process uni character into token "
-.ti -1c
-.RI "struct \fBtoken\fP * \fBlex_assignment_word\fP (char *c, size_t *i)"
-.br
-.RI "process assignment word into token "
 .ti -1c
 .RI "struct \fBtoken\fP * \fBlex_assignment_value\fP (char *c, size_t *i)"
 .br
@@ -85,24 +85,6 @@ Return the associated type of a string token\&.
 .PP
 
 .SS "struct \fBtoken\fP* lex_assignment_value (char * c, size_t * i)"
-
-.PP
-process assignment word into token 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIc\fP 
-.br
-\fIi\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-struct token* 
-.RE
-.PP
-
-.SS "struct \fBtoken\fP* lex_assignment_word (char * c, size_t * i)"
 
 .PP
 process assignment word into token 

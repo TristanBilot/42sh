@@ -20,20 +20,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-struct program_data_storage *program_data;
-
 char *substitute(char *word);
 
 /* ++++++++++++++ Parameters ++++++++++++++ */
-
-struct program_data_storage
-{
-    /* argc & argv aren't with the [0] = binary_name */
-    char *binary_name;     // $0
-    char **argv;           // $* $@
-    int argc;              // $#
-    char *last_cmd_status; // $?
-};
 
 enum param_type
 {
@@ -45,10 +34,6 @@ enum param_type
     PAR_UNKNOWN
 };
 
-void new_program_data_storage(int argc, char *argv[]);
-void append_program_data(char *element);
-void free_program_data_storage(void);
-void update_last_status(int status);
 char *perform_var_expansion(char *word);
 enum param_type is_special_char(char c);
 

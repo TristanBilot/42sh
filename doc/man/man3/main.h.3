@@ -1,4 +1,4 @@
-.TH "src/main.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/main.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,6 +6,55 @@ src/main.h
 .SH SYNOPSIS
 .br
 .PP
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <signal\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include '\&./parser/parser\&.h'\fP
+.br
+\fC#include '\&./lexer/lexer\&.h'\fP
+.br
+\fC#include '\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&./exec/exec\&.h'\fP
+.br
+\fC#include '\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&./print/ast_print\&.h'\fP
+.br
+\fC#include '\&./storage/var_storage\&.h'\fP
+.br
+\fC#include '\&./storage/program_data_storage\&.h'\fP
+.br
+\fC#include '\&./expansion/expansion\&.h'\fP
+.br
+\fC#include '\&./garbage_collector/garbage_collector\&.h'\fP
+.br
+\fC#include '\&./history/history\&.h'\fP
+.br
+\fC#include '\&./utils/buffer\&.h'\fP
+.br
+
 .SS "Data Structures"
 
 .in +1c
@@ -31,9 +80,55 @@ src/main.h
 .ti -1c
 .RI "#define \fBEND_COLOR\fP   '\\033[0m'"
 .br
+.ti -1c
+.RI "#define \fB_POSIX_C_SOURCE\fP   200809L"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit_42sh_with_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.br
+.ti -1c
+.RI "void \fBinit_42sh_without_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.br
+.ti -1c
+.RI "void \fBprint_usage\fP (void)"
+.br
+.ti -1c
+.RI "int \fBprint_prompt\fP (void)"
+.br
+.ti -1c
+.RI "void \fBdelete_last_character\fP (void)"
+.br
+.ti -1c
+.RI "int \fBfile_exists\fP (const char *filename)"
+.br
+.ti -1c
+.RI "void \fBsighandler\fP (int signum)"
+.br
+.ti -1c
+.RI "bool \fBsould_use_history\fP (void)"
+.br
+.ti -1c
+.RI "int \fBgetch2\fP (void)"
+.br
+.ti -1c
+.RI "struct \fBoption_sh\fP * \fBinit_option_sh\fP (void)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBoption_sh\fP * \fBoption\fP"
+.br
 .in -1c
 .SH "Macro Definition Documentation"
 .PP 
+.SS "#define _POSIX_C_SOURCE   200809L"
+
 .SS "#define BLINK   '\\033[5m'"
 
 .SS "#define CYAN   '36m'"
@@ -43,6 +138,32 @@ src/main.h
 .SS "#define START_COLOR   '\\033'"
 
 .SS "#define USAGE   'Usage : \&./42sh [GNU long option] [option] [file]\\n'"
+
+.SH "Function Documentation"
+.PP 
+.SS "void delete_last_character (void)"
+
+.SS "int file_exists (const char * filename)"
+
+.SS "int getch2 (void)"
+
+.SS "void init_42sh_with_history (struct \fBoption_sh\fP * option)"
+
+.SS "void init_42sh_without_history (struct \fBoption_sh\fP * option)"
+
+.SS "struct \fBoption_sh\fP* init_option_sh (void)"
+
+.SS "int print_prompt (void)"
+
+.SS "void print_usage (void)"
+
+.SS "void sighandler (int signum)"
+
+.SS "bool sould_use_history (void)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBoption_sh\fP* option"
 
 .SH "Author"
 .PP 

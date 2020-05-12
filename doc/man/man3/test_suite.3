@@ -1,0 +1,140 @@
+.TH "test_suite" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+test_suite
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "class \fBTimeoutError\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBrun_shell\fP (\fBargs\fP, \fBcmd\fP, time)"
+.br
+.ti -1c
+.RI "def \fBget_nb_tabs\fP (\fBstr\fP)"
+.br
+.ti -1c
+.RI "def \fBcheck_flag_c_conditions\fP (\fBflag_c\fP, flag_c_descriptions, description)"
+.br
+.ti -1c
+.RI "def \fBtest\fP (\fBbinary\fP, test_case, \fBdebug_description\fP, time)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "string \fBtests_file\fP = 'tests/tests\&.yaml'"
+.br
+.ti -1c
+.RI "\fBparser\fP = ArgumentParser(description='Our Testsuite')"
+.br
+.ti -1c
+.RI "\fBdest\fP"
+.br
+.ti -1c
+.RI "\fBaction\fP"
+.br
+.ti -1c
+.RI "\fBtype\fP"
+.br
+.ti -1c
+.RI "\fBint\fP"
+.br
+.ti -1c
+.RI "\fBnargs\fP"
+.br
+.ti -1c
+.RI "\fBmetavar\fP"
+.br
+.ti -1c
+.RI "\fBstr\fP"
+.br
+.ti -1c
+.RI "\fBargs\fP = parser\&.parse_args()"
+.br
+.ti -1c
+.RI "\fBflag_c\fP = args\&.flag_c"
+.br
+.ti -1c
+.RI "\fBflag_l\fP = args\&.flag_l"
+.br
+.ti -1c
+.RI "\fBflag_t\fP = args\&.flag_t"
+.br
+.ti -1c
+.RI "\fBbinary\fP = Path(args\&.bin)\&.absolute()"
+.br
+.ti -1c
+.RI "\fBcontent\fP = yaml\&.safe_load(\fBtests_file\fP)"
+.br
+.ti -1c
+.RI "\fBdesc\fP = test_case['description'][0]['name']"
+.br
+.ti -1c
+.RI "tuple \fBdebug_description\fP = (\fBdesc\fP + \fBget_nb_tabs\fP(\fBdesc\fP)) if \fBflag_l\fP else ''"
+.br
+.ti -1c
+.RI "def \fBshould_print\fP = \fBcheck_flag_c_conditions\fP(\fBflag_c\fP, args\&.flag_c, \fBdesc\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "def test_suite\&.check_flag_c_conditions ( flag_c,  flag_c_descriptions,  description)"
+
+.SS "def test_suite\&.get_nb_tabs ( str)"
+
+.SS "def test_suite\&.run_shell ( args,  cmd,  time)"
+
+.SS "def test_suite\&.test ( binary,  test_case,  debug_description,  time)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "action"
+
+.SS "args = parser\&.parse_args()"
+
+.SS "binary = Path(args\&.bin)\&.absolute()"
+
+.SS "content = yaml\&.safe_load(\fBtests_file\fP)"
+
+.SS "tuple debug_description = (\fBdesc\fP + \fBget_nb_tabs\fP(\fBdesc\fP)) if \fBflag_l\fP else ''"
+
+.SS "desc = test_case['description'][0]['name']"
+
+.SS "dest"
+
+.SS "flag_c = args\&.flag_c"
+
+.SS "flag_l = args\&.flag_l"
+
+.SS "flag_t = args\&.flag_t"
+
+.SS "int"
+
+.SS "metavar"
+
+.SS "nargs"
+
+.SS "\fBparser\fP = ArgumentParser(description='Our Testsuite')"
+
+.SS "def should_print = \fBcheck_flag_c_conditions\fP(\fBflag_c\fP, args\&.flag_c, \fBdesc\fP)"
+
+.SS "str"
+
+.SS "string tests_file = 'tests/tests\&.yaml'"
+
+.SS "type"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

@@ -75,10 +75,10 @@
       - returncode
       - stdout
 
-  - stdin: ls -l *.sh
-    checks:
-      - returncode
-      - has_stderr
+  # - stdin: ls -l *.sh
+  #   checks:
+  #     - returncode
+  #     - has_stderr
 
   - stdin: ls;ls -l ;ls -a;ls -la
     checks:
@@ -174,20 +174,20 @@
       - returncode
       - stdout
     
-  - stdin: echo toto && ls && tree
-    checks:
-      - returncode
-      - stdout
+  # - stdin: echo toto && ls && tree
+  #   checks:
+  #     - returncode
+  #     - stdout
     
-  - stdin: echo toto && ls && tree && echo tati
-    checks:
-      - returncode
-      - stdout
+  # - stdin: echo toto && ls && tree && echo tati
+  #   checks:
+  #     - returncode
+  #     - stdout
     
-  - stdin: echo toto && ls || tree && echo tati || ls -la
-    checks:
-      - returncode
-      - stdout
+  # - stdin: echo toto && ls || tree && echo tati || ls -la
+  #   checks:
+  #     - returncode
+  #     - stdout
   - stdin: echo toto || gfdkgjfl
     checks:
       - returncode
@@ -493,7 +493,7 @@
     checks:
       - returncode
       - stdout
-  - stdin: case lion in elephant | rat ) echo failed; ;; dog | cat ) echo failed 2; ;; bugs | lion )  ;; esac
+  - stdin: case lion in elephant | rat ) echo failed; ;; dog | cat ) echo failed 2; ;; bugs | lion ) ;; esac
     checks:
       - returncode
       - stdout
@@ -521,3 +521,36 @@
   #     - returncode
   #     - has_stderr
   #     - stdout
+
+  ####################################################### TEST COMMAND SUBSTITUTION ########################################################
+- description:
+  - name : CMD_SUB
+  - stdin: cd ~; echo $(ls)
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $(echo toto)
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo $(ls -l)
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo word$(pwd)word
+    checks:
+      - returncode
+      - stdout
+  # - stdin: cd ~;echo $((ls -l)) # TODO
+  #   checks:
+  #     - returncode
+  #     - stdout
+  - stdin: cd ~;echo $((((ls))))
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo $(ls))
+    checks:
+      - returncode
+      - stdout
+      - has_stderr

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['start_5fcolor',['START_COLOR',['../main_8h.html#a671ce394cf2072293a99e6765dd6bf72',1,'main.h']]],
-  ['stdin_5ffileno',['STDIN_FILENO',['../exec_8c.html#afcf80a6d91178952d107ad00b165752b',1,'exec.c']]],
-  ['stdout_5ffileno',['STDOUT_FILENO',['../exec_8c.html#abd165ee6474b5b75bf075842fff13a04',1,'exec.c']]],
-  ['storage_5fsize',['STORAGE_SIZE',['../var__storage_8h.html#a8d6f782ffe53d87f0fd0327d4b09352c',1,'var_storage.h']]]
+  ['platform_5fid',['PLATFORM_ID',['../_c_make_c_compiler_id_8c.html#adbc5372f40838899018fadbc89bd588b',1,'PLATFORM_ID():&#160;CMakeCCompilerId.c'],['../_c_make_c_x_x_compiler_id_8cpp.html#adbc5372f40838899018fadbc89bd588b',1,'PLATFORM_ID():&#160;CMakeCXXCompilerId.cpp']]],
+  ['print_5fflag',['PRINT_FLAG',['../ast__print_8c.html#a58ad938c6dfea1c702a6d4da0c88dbde',1,'ast_print.c']]],
+  ['print_5fnode',['PRINT_NODE',['../ast__print_8c.html#a9f3c735d41fd286a4f23eee13236e531',1,'ast_print.c']]]
 ];

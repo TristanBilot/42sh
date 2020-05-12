@@ -1,0 +1,71 @@
+.TH "src/utils/main_utils.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/main_utils.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./main\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit_42sh_with_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.br
+.ti -1c
+.RI "void \fBinit_42sh_without_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.br
+.ti -1c
+.RI "void \fBprint_usage\fP ()"
+.br
+.ti -1c
+.RI "int \fBprint_prompt\fP ()"
+.br
+.ti -1c
+.RI "int \fBfile_exists\fP (const char *filename)"
+.br
+.ti -1c
+.RI "void \fBdelete_last_character\fP (void)"
+.br
+.ti -1c
+.RI "void \fBsighandler\fP (int signum)"
+.br
+.ti -1c
+.RI "int \fBgetch2\fP (void)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "bool \fBafter_sig\fP = false"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void delete_last_character (void)"
+
+.SS "int file_exists (const char * filename)"
+
+.SS "int getch2 (void)"
+
+.SS "void init_42sh_with_history (struct \fBoption_sh\fP * option)"
+
+.SS "void init_42sh_without_history (struct \fBoption_sh\fP * option)"
+
+.SS "int print_prompt (void)"
+
+.SS "void print_usage (void)"
+
+.SS "void sighandler (int signum)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "bool after_sig = false"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

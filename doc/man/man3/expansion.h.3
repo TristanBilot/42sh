@@ -1,4 +1,4 @@
-.TH "src/expansion/expansion.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/expansion.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,12 +15,16 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .br
 \fC#include <string\&.h>\fP
 .br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
 
-.SS "Data Structures"
+.SS "Macros"
 
 .in +1c
 .ti -1c
-.RI "struct \fBprogram_data_storage\fP"
+.RI "#define \fB_XOPEN_SOURCE\fP   700"
 .br
 .in -1c
 .SS "Enumerations"
@@ -35,15 +39,6 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .in +1c
 .ti -1c
 .RI "char * \fBsubstitute\fP (char *word)"
-.br
-.ti -1c
-.RI "void \fBnew_program_data_storage\fP (int argc, char *argv[])"
-.br
-.ti -1c
-.RI "void \fBfree_program_data_storage\fP (void)"
-.br
-.ti -1c
-.RI "void \fBupdate_last_status\fP (int status)"
 .br
 .ti -1c
 .RI "char * \fBperform_var_expansion\fP (char *word)"
@@ -99,12 +94,8 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .ti -1c
 .RI "char * \fBsubstitute_tilde\fP (char *word, size_t *i)"
 .br
-.in -1c
-.SS "Variables"
-
-.in +1c
 .ti -1c
-.RI "struct \fBprogram_data_storage\fP * \fBprogram_data\fP"
+.RI "char * \fBperform_command_substitution\fP (char *word)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -134,6 +125,10 @@ Copyright (c) 2020
 .RE
 .PP
 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _XOPEN_SOURCE   700"
+
 .SH "Enumeration Type Documentation"
 .PP 
 .SS "enum \fBparam_type\fP"
@@ -155,8 +150,6 @@ Copyright (c) 2020
 \fB\fIPAR_UNKNOWN \fP\fP
 .SH "Function Documentation"
 .PP 
-.SS "void free_program_data_storage (void)"
-
 .SS "size_t get_next_brack_index (const char * c, size_t j)"
 
 .SS "size_t get_next_dollar_index (const char * c, size_t j)"
@@ -165,7 +158,7 @@ Copyright (c) 2020
 
 .SS "enum \fBparam_type\fP is_special_char (char c)"
 
-.SS "void new_program_data_storage (int argc, char * argv[])"
+.SS "char* perform_command_substitution (char * word)"
 
 .SS "char* perform_tilde_expansion (char * word)"
 
@@ -196,12 +189,6 @@ Copyright (c) 2020
 .SS "char* substitute_tilde (char * word, size_t * i)"
 
 .SS "char* substitute_uid (char * word, size_t * i, bool * should_continue, int is_brack)"
-
-.SS "void update_last_status (int status)"
-
-.SH "Variable Documentation"
-.PP 
-.SS "struct \fBprogram_data_storage\fP* program_data"
 
 .SH "Author"
 .PP 

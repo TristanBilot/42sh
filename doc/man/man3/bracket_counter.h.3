@@ -1,0 +1,61 @@
+.TH "src/utils/bracket_counter.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/utils/bracket_counter.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBcountable\fP { \fBCOUNT_BRACK\fP, \fBCOUNT_PAREN\fP, \fBCOUNT_SING_QUOTE\fP, \fBCOUNT_DOUB_QUOTE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcount_closed_occurences\fP (char *s, size_t i, enum \fBcountable\fP \fBcountable\fP)"
+.br
+.ti -1c
+.RI "bool \fBcheck_closing_symbols\fP (char *s)"
+.br
+.ti -1c
+.RI "bool \fBcheck_closing_symbols_from_splitted\fP (char **splitted, int i)"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBcountable\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fICOUNT_BRACK \fP\fP
+.TP
+\fB\fICOUNT_PAREN \fP\fP
+.TP
+\fB\fICOUNT_SING_QUOTE \fP\fP
+.TP
+\fB\fICOUNT_DOUB_QUOTE \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "bool check_closing_symbols (char * s)"
+
+.SS "bool check_closing_symbols_from_splitted (char ** splitted, int i)"
+
+.SS "int count_closed_occurences (char * s, size_t i, enum \fBcountable\fP countable)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

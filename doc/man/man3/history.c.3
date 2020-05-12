@@ -1,0 +1,64 @@
+.TH "src/history/history.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/history/history.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'history\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhistory\fP * \fBopen_history\fP (void)"
+.br
+.ti -1c
+.RI "void \fBload_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "void \fBappend_history_command\fP (struct \fBhistory\fP *\fBhistory\fP, char *\fBcmd\fP)"
+.br
+.ti -1c
+.RI "char * \fBwrite_next_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "char * \fBwrite_prev_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "char * \fBget_next_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "char * \fBget_prev_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "bool \fBis_only_spaces\fP (char *\fBcmd\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void append_history_command (struct \fBhistory\fP * history, char * cmd)"
+
+.SS "char* get_next_history (struct \fBhistory\fP * history)"
+
+.SS "char* get_prev_history (struct \fBhistory\fP * history)"
+
+.SS "bool is_only_spaces (char * cmd)"
+
+.SS "void load_history (struct \fBhistory\fP * history)"
+
+.SS "struct \fBhistory\fP* open_history (void)"
+
+.SS "char* write_next_history (struct \fBhistory\fP * history)"
+
+.SS "char* write_prev_history (struct \fBhistory\fP * history)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

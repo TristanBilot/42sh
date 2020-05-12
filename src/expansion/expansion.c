@@ -6,8 +6,10 @@ char *substitute(char *word)
     char *substituted = NULL;
     substituted = perform_tilde_expansion(word);
     substituted = perform_var_expansion(substituted);
+    // printf("exp: %s\n", substituted);
     substituted = perform_command_substitution(substituted);
-    if (!check_closing_symbols(substituted))
-        return NULL;
+    // printf("exp: %s$\n", substituted);
+    // if (!check_closing_symbols(substituted))
+    //     return NULL;
     return substituted;
 }

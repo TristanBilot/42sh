@@ -11,6 +11,8 @@
 #include "../lexer/lex_evaluation.h"
 #include "../utils/string_utils.h"
 #include "../utils/index_utils.h"
+#include "../utils/bracket_counter.h"
+#include "../storage/program_data_storage.h"
 
 bool is_word = false;
 bool is_kw_in = false;
@@ -26,7 +28,6 @@ char **split(char *str)
     int i = 0;
     while (splitted != NULL)
     {
-        // res[i] = xmalloc(sizeof(char *) * MAX_TOKEN);
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
@@ -156,17 +157,31 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer, char **splitted,
     char *c = splitted[*i];
     if (!c)
         return 1;
-    // printf("%s %d %zu\n", c, *i, *j);
     if (c[*j] == '"' || c[*j] == '\'' || (c[*j] == '$' && c[*j+1] && c[*j+1] == '('))
     {
+        append_word_if_needed(lexer, buffer);
         bool wait_doub_quote = c[*j] == '"';
         bool wait_simp_quote = c[*j] == '\'';
         bool wait_close_paren = c[*j] == '$' && c[*j+1] && c[*j+1] == '(';
-
+        int stuck_left_paren_count = 0;
+        int stuck_right_paren_count = 0;
+         /* only for $(): add max 2 (( at the start of word */
+        if (wait_close_paren)
+        {
+            append_buffer(buffer, '$');
+            (*j)++;
+        }
+        while (wait_close_paren && c[*j] && c[*j] == '(')
+        {
+            if (stuck_left_paren_count < 2)
+                append_buffer(buffer, '(');
+            stuck_left_paren_count++;
+            (*j)++;
+        }
+        /* only for " and ' => ignore theses caracters */
         if (c[*j] == '"' || c[*j] == '\'')
             (*j)++;
-        // printf("paren: %d, doub: %d, simple: %d\n", wait_close_paren, wait_doub_quote, wait_simp_quote);
-        append_word_if_needed(lexer, buffer);
+        /* start at ' " $ */
         while (splitted[*i])
         {
             c = splitted[*i];
@@ -176,13 +191,25 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer, char **splitted,
                     (wait_simp_quote && c[*j] == '\'') ||
                     (wait_close_paren && c[*j] == ')'))
                 {
-                    if (wait_close_paren)
-                        append_buffer(buffer, c[*j]); /* add ) */
-                    
+                    /* only for $(): add max 2 )) at the end of word */
+                    while (wait_close_paren && c[*j] && c[*j] == ')')
+                    {
+                        if (stuck_right_paren_count < 2)
+                            append_buffer(buffer, ')');
+                        stuck_right_paren_count++;
+                        (*j)++;
+                    }
+                    /* if nb of right parenthesis is > than left ones, error */
+                    if (stuck_left_paren_count < stuck_right_paren_count)
+                        return 1;
+                    /* TODO: when left parenthesis > right ones, should wait input */ 
+                    /* need to decrement j because of while loop */
+                    if (wait_close_paren) 
+                        (*j)--;
                     append_buffer(buffer, '\0');
                     append(lexer, new_token_word(buffer->buf));
                     flush(buffer);
-                    return 1;
+                    return -1;
                 }
                 append_buffer(buffer, c[*j]);
             }
@@ -230,7 +257,7 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
     return token ? -1 : 0;
 }
 
-void init_lexer(struct lexer *lexer)
+bool init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
     int i = 0;
@@ -244,13 +271,18 @@ void init_lexer(struct lexer *lexer)
 
         if ((type = evaluate_token(c)) == TOK_WORD)
         {
-            // printf("c: %s\n", c);
             for (size_t j = 0; j < strlen(c); j++)
             {
-                if (lex_multi_token(lexer, buffer, splitted, &i, &j))
+                if ((type = lex_multi_token(lexer, buffer, splitted, &i, &j)) == -1)
                 {
                     c = splitted[i];
                     continue;
+                }
+                else if (type == 1)
+                { // lex_multi_token retourne jamais 1
+                    error("Lexer error: invalid parenthesis"); // mais ça s'arrête quand même avec le error non ? aah ok
+                    update_last_status(2);
+                    return false;
                 }
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
                     continue;
@@ -295,6 +327,7 @@ void init_lexer(struct lexer *lexer)
         i++;
     }
     append(lexer, new_token_type(TOK_EOF));
+    return true;
 }
 
 struct lexer *new_lexer(char *str) {
@@ -304,8 +337,8 @@ struct lexer *new_lexer(char *str) {
     lexer->token_list->next = NULL;
     lexer->token_list->last = NULL;
     lexer->input = str;
-    init_lexer(lexer);
-    return lexer;
+    bool state = init_lexer(lexer);
+    return state ? lexer : NULL;
 }
 
 void free_lexer(struct lexer *lexer)

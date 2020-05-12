@@ -99,10 +99,6 @@ $(function() {
 : <a class="el" href="parser_8c.html#ad47c3551bd9b028731e1b4f00fedb85d">parser.c</a>
 , <a class="el" href="parser_8h.html#ad47c3551bd9b028731e1b4f00fedb85d">parser.h</a>
 </li>
-<li>parse_export()
-: <a class="el" href="builtins_8h.html#a561db6c5cd77c048f001931e821ae05d">builtins.h</a>
-, <a class="el" href="module_2builtins_8c.html#a561db6c5cd77c048f001931e821ae05d">builtins.c</a>
-</li>
 <li>parse_funcdec()
 : <a class="el" href="parser_8c.html#a1593c903903bb12ae50e2227dbd4372f">parser.c</a>
 , <a class="el" href="parser_8h.html#a1593c903903bb12ae50e2227dbd4372f">parser.h</a>
@@ -177,6 +173,18 @@ $(function() {
 : <a class="el" href="lexer_8c.html#a2eab1f98577cdf5ca50263bf8f6ebde1">lexer.c</a>
 , <a class="el" href="lexer_8h.html#a2eab1f98577cdf5ca50263bf8f6ebde1">lexer.h</a>
 </li>
+<li>perform_command_substitution()
+: <a class="el" href="command__substitution_8c.html#ab3fe8d4c7feedd21b422db6369a232ee">command_substitution.c</a>
+, <a class="el" href="expansion_8h.html#ab3fe8d4c7feedd21b422db6369a232ee">expansion.h</a>
+</li>
+<li>perform_for_enumeration()
+: <a class="el" href="exec_8h.html#aee3d7a2ee7f9a7c6d9d5eae27f46e378">exec.h</a>
+, <a class="el" href="exec__for_8c.html#aee3d7a2ee7f9a7c6d9d5eae27f46e378">exec_for.c</a>
+</li>
+<li>perform_for_range()
+: <a class="el" href="exec_8h.html#afc1b4c6bf9a313bf2d1fc5ec8a3ee812">exec.h</a>
+, <a class="el" href="exec__for_8c.html#afc1b4c6bf9a313bf2d1fc5ec8a3ee812">exec_for.c</a>
+</li>
 <li>perform_tilde_expansion()
 : <a class="el" href="expansion_8h.html#ac47f03d901702c9eb691aba656b10cc8">expansion.h</a>
 , <a class="el" href="tilde__expansion_8c.html#ac47f03d901702c9eb691aba656b10cc8">tilde_expansion.c</a>
@@ -186,8 +194,15 @@ $(function() {
 , <a class="el" href="var__expansion_8c.html#aa0c6442f45873ebd28e684d9d9d014ec">var_expansion.c</a>
 </li>
 <li>pop()
-: <a class="el" href="lexer_8c.html#a9f58969c4f0f3866d903756a0f1ee9b3">lexer.c</a>
-, <a class="el" href="lexer_8h.html#a9f58969c4f0f3866d903756a0f1ee9b3">lexer.h</a>
+: <a class="el" href="lexer_8h.html#a9f58969c4f0f3866d903756a0f1ee9b3">lexer.h</a>
+, <a class="el" href="lexer_8c.html#a9f58969c4f0f3866d903756a0f1ee9b3">lexer.c</a>
+</li>
+<li>power()
+: <a class="el" href="my__itoa_8c.html#a7eb8efc9b61b1520b44671601125b124">my_itoa.c</a>
+</li>
+<li>print_args()
+: <a class="el" href="commands_8c.html#acc078a079f34e69d5ee4ee1856d6735c">commands.c</a>
+, <a class="el" href="commands_8h.html#acc078a079f34e69d5ee4ee1856d6735c">commands.h</a>
 </li>
 <li>print_ast()
 : <a class="el" href="ast__print_8c.html#a61547c492d01f6bdb2a6a80dc587b84d">ast_print.c</a>
@@ -195,9 +210,13 @@ $(function() {
 </li>
 <li>print_echo()
 : <a class="el" href="commands_8c.html#a0484e0219eb37d852db17b02999e9eef">commands.c</a>
+, <a class="el" href="commands_8h.html#a0484e0219eb37d852db17b02999e9eef">commands.h</a>
 </li>
 <li>print_garbage_collector()
 : <a class="el" href="garbage__collector_8c.html#a5bdc20af66be95ecf8855b92d41c1263">garbage_collector.c</a>
+</li>
+<li>print_garbage_collector_variable()
+: <a class="el" href="garbage__collector_8c.html#a8655cde2844af01ba880f609422c8de0">garbage_collector.c</a>
 </li>
 <li>print_node_and_or()
 : <a class="el" href="ast__print_8c.html#a767a44f8f8aebc54938753efcce83f79">ast_print.c</a>
@@ -212,48 +231,48 @@ $(function() {
 , <a class="el" href="ast__print_8h.html#a8e3139dff8946d417513fe8c4e405159">ast_print.h</a>
 </li>
 <li>print_node_case_item()
-: <a class="el" href="ast__print_8h.html#a1ddbdbc409c1812a9c39471cd0e248a9">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a1ddbdbc409c1812a9c39471cd0e248a9">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a1ddbdbc409c1812a9c39471cd0e248a9">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a1ddbdbc409c1812a9c39471cd0e248a9">ast_print.h</a>
 </li>
 <li>print_node_command()
 : <a class="el" href="ast__print_8c.html#a9dd2f6ed8d28b3bab78820044a13eaaa">ast_print.c</a>
 , <a class="el" href="ast__print_8h.html#a9dd2f6ed8d28b3bab78820044a13eaaa">ast_print.h</a>
 </li>
 <li>print_node_compound_list()
-: <a class="el" href="ast__print_8h.html#a8449f7f12106cb98b12e0281d6741efa">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a8449f7f12106cb98b12e0281d6741efa">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a8449f7f12106cb98b12e0281d6741efa">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a8449f7f12106cb98b12e0281d6741efa">ast_print.h</a>
 </li>
 <li>print_node_do_group()
-: <a class="el" href="ast__print_8c.html#aa5bdfca9f0a4eba169e2f2e46016635d">ast_print.c</a>
-, <a class="el" href="ast__print_8h.html#aa5bdfca9f0a4eba169e2f2e46016635d">ast_print.h</a>
+: <a class="el" href="ast__print_8h.html#aa5bdfca9f0a4eba169e2f2e46016635d">ast_print.h</a>
+, <a class="el" href="ast__print_8c.html#aa5bdfca9f0a4eba169e2f2e46016635d">ast_print.c</a>
 </li>
 <li>print_node_element()
-: <a class="el" href="ast__print_8c.html#a0cae7a0d7b1b4e6d5c524e3e4a6b2ab7">ast_print.c</a>
-, <a class="el" href="ast__print_8h.html#a0cae7a0d7b1b4e6d5c524e3e4a6b2ab7">ast_print.h</a>
+: <a class="el" href="ast__print_8h.html#a0cae7a0d7b1b4e6d5c524e3e4a6b2ab7">ast_print.h</a>
+, <a class="el" href="ast__print_8c.html#a0cae7a0d7b1b4e6d5c524e3e4a6b2ab7">ast_print.c</a>
 </li>
 <li>print_node_elif()
 : <a class="el" href="ast__print_8h.html#a95d29c1f5a93454ed149287d63f8b0fc">ast_print.h</a>
 , <a class="el" href="ast__print_8c.html#a95d29c1f5a93454ed149287d63f8b0fc">ast_print.c</a>
 </li>
 <li>print_node_else_clause()
-: <a class="el" href="ast__print_8h.html#a97ca5a908ae00192fc631b030c048d01">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a97ca5a908ae00192fc631b030c048d01">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a97ca5a908ae00192fc631b030c048d01">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a97ca5a908ae00192fc631b030c048d01">ast_print.h</a>
 </li>
 <li>print_node_for()
 : <a class="el" href="ast__print_8h.html#abe0271a0ca9ac3787f93bb904f62f095">ast_print.h</a>
 , <a class="el" href="ast__print_8c.html#abe0271a0ca9ac3787f93bb904f62f095">ast_print.c</a>
 </li>
 <li>print_node_funcdec()
-: <a class="el" href="ast__print_8h.html#a122bcb3b12489922fedd2a485db8a527">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a122bcb3b12489922fedd2a485db8a527">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a122bcb3b12489922fedd2a485db8a527">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a122bcb3b12489922fedd2a485db8a527">ast_print.h</a>
 </li>
 <li>print_node_if()
-: <a class="el" href="ast__print_8h.html#a58fd4348ad8a09dcff6024496b2d932e">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a58fd4348ad8a09dcff6024496b2d932e">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a58fd4348ad8a09dcff6024496b2d932e">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a58fd4348ad8a09dcff6024496b2d932e">ast_print.h</a>
 </li>
 <li>print_node_input()
-: <a class="el" href="ast__print_8h.html#a5aeb4c04a3a11c580599b7296dff3a25">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a5aeb4c04a3a11c580599b7296dff3a25">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a5aeb4c04a3a11c580599b7296dff3a25">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a5aeb4c04a3a11c580599b7296dff3a25">ast_print.h</a>
 </li>
 <li>print_node_list()
 : <a class="el" href="ast__print_8c.html#ad6da578f022a5667790cbdd0d0019275">ast_print.c</a>
@@ -268,33 +287,39 @@ $(function() {
 , <a class="el" href="ast__print_8h.html#a2d58bfc424c15230c95629699a5632e9">ast_print.h</a>
 </li>
 <li>print_node_redirection()
-: <a class="el" href="ast__print_8c.html#afafe055a06f97c1abacf48e532399ab3">ast_print.c</a>
-, <a class="el" href="ast__print_8h.html#afafe055a06f97c1abacf48e532399ab3">ast_print.h</a>
+: <a class="el" href="ast__print_8h.html#afafe055a06f97c1abacf48e532399ab3">ast_print.h</a>
+, <a class="el" href="ast__print_8c.html#afafe055a06f97c1abacf48e532399ab3">ast_print.c</a>
 </li>
 <li>print_node_shell_command()
-: <a class="el" href="ast__print_8h.html#a5c908997ac1836ee01e55a715826289f">ast_print.h</a>
-, <a class="el" href="ast__print_8c.html#a5c908997ac1836ee01e55a715826289f">ast_print.c</a>
+: <a class="el" href="ast__print_8c.html#a5c908997ac1836ee01e55a715826289f">ast_print.c</a>
+, <a class="el" href="ast__print_8h.html#a5c908997ac1836ee01e55a715826289f">ast_print.h</a>
 </li>
 <li>print_node_simple_command()
-: <a class="el" href="ast__print_8c.html#ad9b9553b818dcdd42d30d795ea76a0d1">ast_print.c</a>
-, <a class="el" href="ast__print_8h.html#ad9b9553b818dcdd42d30d795ea76a0d1">ast_print.h</a>
+: <a class="el" href="ast__print_8h.html#ad9b9553b818dcdd42d30d795ea76a0d1">ast_print.h</a>
+, <a class="el" href="ast__print_8c.html#ad9b9553b818dcdd42d30d795ea76a0d1">ast_print.c</a>
 </li>
 <li>print_node_until()
 : <a class="el" href="ast__print_8c.html#a93a26dcd78dfd952dbfafb9585d84c38">ast_print.c</a>
 , <a class="el" href="ast__print_8h.html#a93a26dcd78dfd952dbfafb9585d84c38">ast_print.h</a>
 </li>
 <li>print_node_while()
-: <a class="el" href="ast__print_8c.html#a878286cfa22fc4a9768b791b1046e10e">ast_print.c</a>
-, <a class="el" href="ast__print_8h.html#a878286cfa22fc4a9768b791b1046e10e">ast_print.h</a>
+: <a class="el" href="ast__print_8h.html#a878286cfa22fc4a9768b791b1046e10e">ast_print.h</a>
+, <a class="el" href="ast__print_8c.html#a878286cfa22fc4a9768b791b1046e10e">ast_print.c</a>
 </li>
 <li>print_prompt()
-: <a class="el" href="main_8c.html#a21579a20737c3b2b24e18bb5e51d8140">main.c</a>
+: <a class="el" href="main__utils_8c.html#a599d4f40a5e145d7a701ec49b73426a6">main_utils.c</a>
+, <a class="el" href="main_8h.html#a70dff09c7efdc3bcecc0ff21b345f97c">main.h</a>
 </li>
 <li>print_usage()
-: <a class="el" href="main_8c.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">main.c</a>
+: <a class="el" href="main__utils_8c.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">main_utils.c</a>
+, <a class="el" href="main_8h.html#aa1187b70998f73cdb598833d6afaa30a">main.h</a>
 </li>
 <li>print_without_sp()
 : <a class="el" href="commands_8c.html#a06ef6e9af3caf698bff7fd7d89986e31">commands.c</a>
+, <a class="el" href="commands_8h.html#a06ef6e9af3caf698bff7fd7d89986e31">commands.h</a>
+</li>
+<li>print_without_sp_madu()
+: <a class="el" href="commands_8c.html#a1f13d9e9f9009f1247ae85b0642f11f0">commands.c</a>
 </li>
 <li>put_var()
 : <a class="el" href="var__storage_8c.html#af3edb0647d53bbc788776422303ba573">var_storage.c</a>

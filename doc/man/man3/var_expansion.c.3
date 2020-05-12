@@ -1,4 +1,4 @@
-.TH "src/expansion/var_expansion.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/var_expansion.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -16,7 +16,7 @@ src/expansion/var_expansion.c
 .br
 \fC#include 'expansion\&.h'\fP
 .br
-\fC#include '\&.\&./var_storage/var_storage\&.h'\fP
+\fC#include '\&.\&./storage/var_storage\&.h'\fP
 .br
 \fC#include '\&.\&./utils/buffer\&.h'\fP
 .br
@@ -24,19 +24,12 @@ src/expansion/var_expansion.c
 .br
 \fC#include '\&.\&./utils/index_utils\&.h'\fP
 .br
+\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
+.br
 
 .SS "Functions"
 
 .in +1c
-.ti -1c
-.RI "void \fBnew_program_data_storage\fP (int argc, char *argv[])"
-.br
-.ti -1c
-.RI "void \fBfree_program_data_storage\fP (void)"
-.br
-.ti -1c
-.RI "void \fBupdate_last_status\fP (int status)"
-.br
 .ti -1c
 .RI "char * \fBperform_var_expansion\fP (char *word)"
 .br
@@ -79,13 +72,9 @@ src/expansion/var_expansion.c
 .in -1c
 .SH "Function Documentation"
 .PP 
-.SS "void free_program_data_storage (void)"
-
 .SS "int get_random_int (void)"
 
 .SS "enum \fBparam_type\fP is_special_char (char c)"
-
-.SS "void new_program_data_storage (int argc, char * argv[])"
 
 .SS "bool next_param_is_printable (char * word, size_t i, size_t param_len, bool is_brack)"
 
@@ -108,8 +97,6 @@ src/expansion/var_expansion.c
 .SS "struct \fBbuffer\fP* substitute_star (void)"
 
 .SS "char* substitute_uid (char * word, size_t * i, bool * should_continue, int is_brack)"
-
-.SS "void update_last_status (int status)"
 
 .SH "Author"
 .PP 

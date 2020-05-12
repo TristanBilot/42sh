@@ -1,4 +1,4 @@
-.TH "src/exec/commands.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/commands.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,17 +6,17 @@ src/exec/commands.c
 .SH SYNOPSIS
 .br
 .PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
 \fC#include <wordexp\&.h>\fP
 .br
 \fC#include <string\&.h>\fP
 .br
 \fC#include <unistd\&.h>\fP
 .br
-\fC#include <stdio\&.h>\fP
-.br
 \fC#include <errno\&.h>\fP
-.br
-\fC#include <stdlib\&.h>\fP
 .br
 \fC#include <stdbool\&.h>\fP
 .br
@@ -24,23 +24,52 @@ src/exec/commands.c
 .br
 \fC#include 'commands\&.h'\fP
 .br
+\fC#include '\&.\&./parser/parser\&.h'\fP
+.br
+\fC#include '\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./exec/exec\&.h'\fP
+.br
+\fC#include '\&.\&./expansion/expansion\&.h'\fP
+.br
+\fC#include '\&.\&./storage/var_storage\&.h'\fP
+.br
+\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
+.br
 
 .SS "Macros"
 
 .in +1c
 .ti -1c
-.RI "#define \fB_XOPEN_SOURCE\fP"
+.RI "#define \fB_DEFAULT_SOURCE\fP"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
+.RI "void \fBload_file\fP (char *path)"
+.br
+.RI "function to give a file to the 42sh "
+.ti -1c
+.RI "void \fBsource\fP (char **args)"
+.br
+.RI "implementation of command sourcefnac "
+.ti -1c
+.RI "void \fBprint_args\fP (char **args)"
+.br
+.RI "Print all args on stdout\&. "
+.ti -1c
 .RI "int \fBprint_without_sp\fP (char *c)"
+.br
+.RI "Particular print with option -e from echo\&. "
+.ti -1c
+.RI "int \fBprint_without_sp_madu\fP (char *c)"
 .br
 .ti -1c
 .RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
 .br
+.RI "Echo function\&. "
 .ti -1c
 .RI "void \fBecho\fP (char **args)"
 .br
@@ -48,7 +77,6 @@ src/exec/commands.c
 .ti -1c
 .RI "void \fBcd\fP (char **args)"
 .br
-.RI "implementation of command cd "
 .ti -1c
 .RI "void \fBexport\fP (char **args)"
 .br
@@ -67,14 +95,12 @@ src/exec/commands.c
 .in -1c
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define _XOPEN_SOURCE"
+.SS "#define _DEFAULT_SOURCE"
 
 .SH "Function Documentation"
 .PP 
 .SS "void cd (char ** args)"
 
-.PP
-implementation of command cd 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -115,9 +141,71 @@ implementation of command export
 .RE
 .PP
 
+.SS "void load_file (char * path)"
+
+.PP
+function to give a file to the 42sh 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void print_args (char ** args)"
+
+.PP
+Print all args on stdout\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
 .SS "void print_echo (char ** args, bool e, bool n)"
 
+.PP
+Echo function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.br
+\fIe\fP 
+.br
+\fIn\fP 
+.RE
+.PP
+
 .SS "int print_without_sp (char * c)"
+
+.PP
+Particular print with option -e from echo\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int print_without_sp_madu (char * c)"
+
+.SS "void source (char ** args)"
+
+.PP
+implementation of command sourcefnac 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
 
 .SH "Variable Documentation"
 .PP 

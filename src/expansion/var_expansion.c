@@ -4,52 +4,11 @@
 #include <sys/types.h>
 
 #include "expansion.h"
-#include "../var_storage/var_storage.h"
+#include "../storage/var_storage.h"
 #include "../utils/buffer.h"
 #include "../utils/xalloc.h"
 #include "../utils/index_utils.h"
-
-void new_program_data_storage(int argc, char *argv[])
-{
-    program_data = malloc(sizeof(struct program_data_storage));
-    program_data->last_cmd_status = calloc(MAX_STR_LEN, 1);
-    program_data->binary_name = argv[0];
-    if (argc <= 1)
-    {
-        program_data->argv = NULL;
-        program_data->argc = 0;
-        return;
-    }
-    char **args = calloc(argc - 1, sizeof(char *));
-    for (int i = 1; i < argc; i++)
-        args[i - 1] = argv[i];
-    program_data->argv = args;
-    program_data->argc = argc - 1;
-}
-
-void append_program_data(char *element)
-{
-    if (program_data->argv = NULL)
-        program_data->argv = calloc(1, sizeof(char *));
-    else
-        realloc(program_data->argv, sizeof(char *) + 1);
-    int i = program_data->argc;
-    program_data->argv[i] = element;
-    program_data->argc += 1;
-}
-
-void free_program_data_storage(void)
-{
-    if (program_data->argv)
-        free(program_data->argv);
-    free(program_data->last_cmd_status);
-    free(program_data);
-}
-
-void update_last_status(int status)
-{
-    sprintf(program_data->last_cmd_status, "%d", status);
-}
+#include "../storage/program_data_storage.h"
 
 char *perform_var_expansion(char *word)
 {
@@ -120,9 +79,19 @@ char *perform_var_expansion(char *word)
                     i++;
                 continue;
             }
-            size_t end = is_brack ? get_next_index(word, '}', i) : \
-                get_next_index(word, '$', i);
+            size_t next_close_paren = get_next_index(word, ')', i);
+            size_t next_close_dollar = get_next_index(word, '$', i);
+            size_t next_separator = get_next_separator_index(word, i);
+            size_t end = 0;
+            if (is_brack)
+                end = is_brack;
+            else
+            {
+                end = next_close_paren < next_close_dollar ? next_close_paren : next_close_dollar;
+                end = end < next_separator ? end : next_separator;
+            }
             char *param = substr(word, i, end - i);
+            // printf("sub: %s\n", sub);
             if (var_exists(param))
             {
                 char *var = get_value(param);

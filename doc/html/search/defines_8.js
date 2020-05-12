@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nb_5fmax_5fpipe',['NB_MAX_PIPE',['../exec_8h.html#a8aced7229099cf018e89f28c4cb40891',1,'exec.h']]]
+  ['inf',['INF',['../history_8h.html#a12c2040f25d8e3a7b9e1c2024c618cb6',1,'history.h']]]
 ];

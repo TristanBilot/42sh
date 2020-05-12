@@ -83,19 +83,23 @@ $(function() {
 <code>#include &quot;<a class="el" href="lexer_8h_source.html">../lexer/lexer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="lex__evaluation_8h_source.html">../lexer/lex_evaluation.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="index__utils_8h_source.html">../utils/index_utils.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="bracket__counter_8h_source.html">../utils/bracket_counter.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="program__data__storage_8h_source.html">../storage/program_data_storage.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lexer.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="lexer_8c__incl.png" border="0" usemap="#src_2lexer_2lexer_8c" alt=""/></div>
 <map name="src_2lexer_2lexer_8c" id="src_2lexer_2lexer_8c">
-<area shape="rect" id="node6" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="419,80,526,107"/>
-<area shape="rect" id="node9" href="string__utils_8h.html" title="String usage functions. " alt="" coords="110,80,246,107"/>
-<area shape="rect" id="node10" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="760,80,867,107"/>
-<area shape="rect" id="node11" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="761,155,866,181"/>
-<area shape="rect" id="node12" href="token_8h.html" title="Token structures and functions. " alt="" coords="896,229,1006,256"/>
-<area shape="rect" id="node13" href="lex__evaluation_8h.html" title="Unit lexing functions. " alt="" coords="891,80,1051,107"/>
-<area shape="rect" id="node14" href="index__utils_8h.html" title="Index functions. " alt="" coords="550,80,685,107"/>
-<area shape="rect" id="node7" href="attr_8h.html" title="../utils/attr.h" alt="" coords="426,155,518,181"/>
+<area shape="rect" id="node6" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="712,87,819,114"/>
+<area shape="rect" id="node9" href="string__utils_8h.html" title="String usage functions. " alt="" coords="27,87,163,114"/>
+<area shape="rect" id="node10" href="buffer_8h.html" title="Buffer structure and functions. " alt="" coords="582,87,688,114"/>
+<area shape="rect" id="node11" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="550,169,656,196"/>
+<area shape="rect" id="node12" href="token_8h.html" title="Token structures and functions. " alt="" coords="567,244,676,271"/>
+<area shape="rect" id="node13" href="lex__evaluation_8h.html" title="Unit lexing functions. " alt="" coords="843,87,1003,114"/>
+<area shape="rect" id="node14" href="index__utils_8h.html" title="Index functions. " alt="" coords="1028,87,1162,114"/>
+<area shape="rect" id="node15" href="bracket__counter_8h.html" title="../utils/bracket_counter.h" alt="" coords="238,87,405,114"/>
+<area shape="rect" id="node16" href="program__data__storage_8h.html" title="../storage/program\l_data_storage.h" alt="" coords="1238,80,1366,121"/>
+<area shape="rect" id="node7" href="attr_8h.html" title="../utils/attr.h" alt="" coords="720,169,812,196"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -110,17 +114,22 @@ Functions</h2></td></tr>
 <tr class="separator:a93a227efa063bf91500a99b28b4dc39e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452fa5b9a9f7445f5c9973f8d400343e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a452fa5b9a9f7445f5c9973f8d400343e">lex_full</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, char *c, size_t j)</td></tr>
 <tr class="separator:a452fa5b9a9f7445f5c9973f8d400343e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63af3c9b6b6e3600bb3197efec7ebe71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a63af3c9b6b6e3600bb3197efec7ebe71">lex_part</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *c, size_t *j)</td></tr>
-<tr class="separator:a63af3c9b6b6e3600bb3197efec7ebe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abad3aa3fc9ead45542a089e6dccbb294"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#abad3aa3fc9ead45542a089e6dccbb294">lex_parenthesis</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *c, size_t *j)</td></tr>
 <tr class="separator:abad3aa3fc9ead45542a089e6dccbb294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7be92aee2a2ee543ecb0aa9592f44d55"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtoken.html">token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a7be92aee2a2ee543ecb0aa9592f44d55">lex_assignment_word</a> (char *c, size_t *i)</td></tr>
+<tr class="memdesc:a7be92aee2a2ee543ecb0aa9592f44d55"><td class="mdescLeft">&#160;</td><td class="mdescRight">process assignment word into token  <a href="#a7be92aee2a2ee543ecb0aa9592f44d55">More...</a><br /></td></tr>
+<tr class="separator:a7be92aee2a2ee543ecb0aa9592f44d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fcc2b44dbfe9213c2e750d277f9dd4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a8fcc2b44dbfe9213c2e750d277f9dd4f">lex_separator</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *c, size_t *j)</td></tr>
 <tr class="separator:a8fcc2b44dbfe9213c2e750d277f9dd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4615fb914d1e6ee9bfcdb0bde880de0e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a4615fb914d1e6ee9bfcdb0bde880de0e">lex_parameter</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *c, size_t *j)</td></tr>
 <tr class="separator:a4615fb914d1e6ee9bfcdb0bde880de0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac87c721cd6508415c7f0bbd6485343d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#aac87c721cd6508415c7f0bbd6485343d">init_lexer</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>)</td></tr>
-<tr class="memdesc:aac87c721cd6508415c7f0bbd6485343d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the token list by creating all the tokens from the given string.  <a href="#aac87c721cd6508415c7f0bbd6485343d">More...</a><br /></td></tr>
-<tr class="separator:aac87c721cd6508415c7f0bbd6485343d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af53474142beba543c193ca8b104b031f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#af53474142beba543c193ca8b104b031f">lex_multi_token</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char **splitted, int *i, size_t *j)</td></tr>
+<tr class="separator:af53474142beba543c193ca8b104b031f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63af3c9b6b6e3600bb3197efec7ebe71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a63af3c9b6b6e3600bb3197efec7ebe71">lex_part</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>, struct <a class="el" href="structbuffer.html">buffer</a> *<a class="el" href="structbuffer.html">buffer</a>, char *c, size_t *j)</td></tr>
+<tr class="separator:a63af3c9b6b6e3600bb3197efec7ebe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e28484a79e99ea9ce83b1d9befac249"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a4e28484a79e99ea9ce83b1d9befac249">init_lexer</a> (struct <a class="el" href="structlexer.html">lexer</a> *<a class="el" href="structlexer.html">lexer</a>)</td></tr>
+<tr class="memdesc:a4e28484a79e99ea9ce83b1d9befac249"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the token list by creating all the tokens from the given string.  <a href="#a4e28484a79e99ea9ce83b1d9befac249">More...</a><br /></td></tr>
+<tr class="separator:a4e28484a79e99ea9ce83b1d9befac249"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c004a7214bd5a503e107231d4343d16"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structlexer.html">lexer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a2c004a7214bd5a503e107231d4343d16">new_lexer</a> (char *<a class="el" href="ast__print__dot_8h.html#a86305cd9546c17c4e19ca559dde7499e">str</a>)</td></tr>
 <tr class="memdesc:a2c004a7214bd5a503e107231d4343d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate and init a new lexer.  <a href="#a2c004a7214bd5a503e107231d4343d16">More...</a><br /></td></tr>
 <tr class="separator:a2c004a7214bd5a503e107231d4343d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +150,10 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a9b095ad21344d796b261e4147b520c58"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a9b095ad21344d796b261e4147b520c58">is_word</a> = false</td></tr>
 <tr class="separator:a9b095ad21344d796b261e4147b520c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20f5668d98a5d671ac6e8da9da9b1463"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a20f5668d98a5d671ac6e8da9da9b1463">is_kw_in</a> = false</td></tr>
+<tr class="separator:a20f5668d98a5d671ac6e8da9da9b1463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2feed03fb4ba59d7bddbbd26c93fcdd9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8c.html#a2feed03fb4ba59d7bddbbd26c93fcdd9">is_ass_w</a> = false</td></tr>
+<tr class="separator:a2feed03fb4ba59d7bddbbd26c93fcdd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a3024ccd4a9af5109d24e6c57565d74a1"></a>
@@ -221,14 +234,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aac87c721cd6508415c7f0bbd6485343d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac87c721cd6508415c7f0bbd6485343d">&#9670;&nbsp;</a></span>init_lexer()</h2>
+<a id="a4e28484a79e99ea9ce83b1d9befac249"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e28484a79e99ea9ce83b1d9befac249">&#9670;&nbsp;</a></span>init_lexer()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void init_lexer </td>
+          <td class="memname">bool init_lexer </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structlexer.html">lexer</a> *&#160;</td>
           <td class="paramname"><em>lexer</em></td><td>)</td>
@@ -244,6 +257,44 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a7be92aee2a2ee543ecb0aa9592f44d55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7be92aee2a2ee543ecb0aa9592f44d55">&#9670;&nbsp;</a></span>lex_assignment_word()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structtoken.html">token</a>* lex_assignment_word </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>process assignment word into token </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>struct token* </dd></dl>
 
 </div>
 </div>
@@ -269,6 +320,52 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af53474142beba543c193ca8b104b031f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af53474142beba543c193ca8b104b031f">&#9670;&nbsp;</a></span>lex_multi_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lex_multi_token </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structlexer.html">lexer</a> *&#160;</td>
+          <td class="paramname"><em>lexer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="structbuffer.html">buffer</a> *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>splitted</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
           <td class="paramname"><em>j</em>&#160;</td>
         </tr>
         <tr>
@@ -540,6 +637,34 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a2feed03fb4ba59d7bddbbd26c93fcdd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2feed03fb4ba59d7bddbbd26c93fcdd9">&#9670;&nbsp;</a></span>is_ass_w</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool is_ass_w = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a20f5668d98a5d671ac6e8da9da9b1463"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20f5668d98a5d671ac6e8da9da9b1463">&#9670;&nbsp;</a></span>is_kw_in</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool is_kw_in = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a9b095ad21344d796b261e4147b520c58"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b095ad21344d796b261e4147b520c58">&#9670;&nbsp;</a></span>is_word</h2>
 

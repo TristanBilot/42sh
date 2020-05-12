@@ -1,4 +1,4 @@
-.TH "src/main.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/main.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,83 +6,24 @@ src/main.c
 .SH SYNOPSIS
 .br
 .PP
-\fC#include <ctype\&.h>\fP
-.br
-\fC#include <stdio\&.h>\fP
-.br
-\fC#include <stdlib\&.h>\fP
-.br
-\fC#include <unistd\&.h>\fP
-.br
-\fC#include <getopt\&.h>\fP
-.br
-\fC#include <errno\&.h>\fP
-.br
-\fC#include <string\&.h>\fP
-.br
-\fC#include <stdbool\&.h>\fP
-.br
-\fC#include <time\&.h>\fP
-.br
-\fC#include <signal\&.h>\fP
-.br
 \fC#include '\&./main\&.h'\fP
 .br
-\fC#include '\&./parser/parser\&.h'\fP
-.br
-\fC#include '\&./lexer/lexer\&.h'\fP
-.br
-\fC#include '\&./utils/xalloc\&.h'\fP
-.br
-\fC#include '\&./exec/exec\&.h'\fP
-.br
-\fC#include '\&./utils/string_utils\&.h'\fP
-.br
-\fC#include '\&./eval/ast_print\&.h'\fP
-.br
-\fC#include '\&./var_storage/var_storage\&.h'\fP
-.br
-\fC#include '\&./expansion/expansion\&.h'\fP
-.br
-\fC#include '\&./garbage_collector/garbage_collector\&.h'\fP
-.br
 
-.SS "Macros"
-
-.in +1c
-.ti -1c
-.RI "#define \fB_POSIX_C_SOURCE\fP   200809L"
-.br
-.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBprint_usage\fP ()"
-.br
-.ti -1c
-.RI "void \fBprint_prompt\fP ()"
-.br
-.ti -1c
-.RI "void \fBinit_42sh_process\fP (struct \fBoption_sh\fP *option)"
+.RI "struct \fBoption_sh\fP * \fBinit_option_sh\fP ()"
 .br
 .ti -1c
 .RI "int \fBmain\fP (int ac, char **av)"
 .br
 .in -1c
-.SH "Macro Definition Documentation"
-.PP 
-.SS "#define _POSIX_C_SOURCE   200809L"
-
 .SH "Function Documentation"
 .PP 
-.SS "void init_42sh_process (struct \fBoption_sh\fP * option)"
+.SS "struct \fBoption_sh\fP* init_option_sh (void)"
 
 .SS "int main (int ac, char ** av)"
-
-.SS "void print_prompt ()"
-
-.SS "void print_usage ()"
 
 .SH "Author"
 .PP 

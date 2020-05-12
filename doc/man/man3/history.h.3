@@ -1,0 +1,154 @@
+.TH "src/history/history.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/history/history.h \- History functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <termios\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhistory\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_BSD_SOURCE\fP"
+.br
+.ti -1c
+.RI "#define \fB_DEFAULT_SOURCE\fP"
+.br
+.ti -1c
+.RI "#define \fBINF\fP   99999"
+.br
+.ti -1c
+.RI "#define \fBDEFAULT_HISTORY_FILE_NAME\fP   'history'"
+.br
+.ti -1c
+.RI "#define \fBHISTORY_MAX\fP   2000"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhistory\fP * \fBopen_history\fP (void)"
+.br
+.ti -1c
+.RI "void \fBappend_history_command\fP (struct \fBhistory\fP *\fBhistory\fP, char *\fBcmd\fP)"
+.br
+.ti -1c
+.RI "char * \fBwrite_next_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "char * \fBwrite_prev_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "void \fBflush_stdin\fP (void)"
+.br
+.ti -1c
+.RI "void \fBwrite_stdin\fP (char *\fBcmd\fP)"
+.br
+.ti -1c
+.RI "char * \fBget_next_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "char * \fBget_prev_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "void \fBload_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "void \fBfree_history\fP (struct \fBhistory\fP *\fBhistory\fP)"
+.br
+.ti -1c
+.RI "bool \fBis_only_spaces\fP (char *\fBcmd\fP)"
+.br
+.ti -1c
+.RI "char * \fBget_auto_completion\fP (struct \fBhistory\fP *\fBhistory\fP, char *\fBcmd\fP)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+History functions\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-04
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _BSD_SOURCE"
+
+.SS "#define _DEFAULT_SOURCE"
+
+.SS "#define DEFAULT_HISTORY_FILE_NAME   'history'"
+
+.SS "#define HISTORY_MAX   2000"
+
+.SS "#define INF   99999"
+
+.SH "Function Documentation"
+.PP 
+.SS "void append_history_command (struct \fBhistory\fP * history, char * cmd)"
+
+.SS "void flush_stdin (void)"
+
+.SS "void free_history (struct \fBhistory\fP * history)"
+
+.SS "char* get_auto_completion (struct \fBhistory\fP * history, char * cmd)"
+
+.SS "char* get_next_history (struct \fBhistory\fP * history)"
+
+.SS "char* get_prev_history (struct \fBhistory\fP * history)"
+
+.SS "bool is_only_spaces (char * cmd)"
+
+.SS "void load_history (struct \fBhistory\fP * history)"
+
+.SS "struct \fBhistory\fP* open_history (void)"
+
+.SS "char* write_next_history (struct \fBhistory\fP * history)"
+
+.SS "char* write_prev_history (struct \fBhistory\fP * history)"
+
+.SS "void write_stdin (char * cmd)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

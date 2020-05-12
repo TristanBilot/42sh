@@ -53,10 +53,6 @@ char *get_prev_history(struct history *history);
 void load_history(struct history *history);
 void free_history(struct history *history);
 
-void reset_terminal_mode();
-void set_conio_terminal_mode();
-int kbhit();
-int getch();
 bool is_only_spaces(char *cmd);
 
 char *get_auto_completion(struct history *history, char *cmd);

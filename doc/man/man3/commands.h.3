@@ -1,4 +1,4 @@
-.TH "src/exec/commands.h" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/commands.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -18,13 +18,20 @@ src/exec/commands.h \- Extra commands functions\&.
 
 .in +1c
 .ti -1c
+.RI "void \fBload_file\fP (char *path)"
+.br
+.RI "function to give a file to the 42sh "
+.ti -1c
+.RI "void \fBsource\fP (char **args)"
+.br
+.RI "implementation of command sourcefnac "
+.ti -1c
 .RI "void \fBecho\fP (char **args)"
 .br
 .RI "implementation of command echo "
 .ti -1c
 .RI "void \fBcd\fP (char **args)"
 .br
-.RI "implementation of command cd "
 .ti -1c
 .RI "void \fBexport\fP (char **args)"
 .br
@@ -33,6 +40,18 @@ src/exec/commands.h \- Extra commands functions\&.
 .RI "void \fBexit_shell\fP (char **args)"
 .br
 .RI "implementation of exit_shell "
+.ti -1c
+.RI "void \fBprint_args\fP (char **args)"
+.br
+.RI "Print all args on stdout\&. "
+.ti -1c
+.RI "int \fBprint_without_sp\fP (char *c)"
+.br
+.RI "Particular print with option -e from echo\&. "
+.ti -1c
+.RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
+.br
+.RI "Echo function\&. "
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -66,8 +85,6 @@ Copyright (c) 2020
 .SS "void cd (char ** args)"
 
 .PP
-implementation of command cd 
-.PP
 \fBParameters:\fP
 .RS 4
 \fIargs\fP 
@@ -100,6 +117,70 @@ implementation of exit_shell
 
 .PP
 implementation of command export 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void load_file (char * path)"
+
+.PP
+function to give a file to the 42sh 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void print_args (char ** args)"
+
+.PP
+Print all args on stdout\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void print_echo (char ** args, bool e, bool n)"
+
+.PP
+Echo function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.br
+\fIe\fP 
+.br
+\fIn\fP 
+.RE
+.PP
+
+.SS "int print_without_sp (char * c)"
+
+.PP
+Particular print with option -e from echo\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "void source (char ** args)"
+
+.PP
+implementation of command sourcefnac 
 .PP
 \fBParameters:\fP
 .RS 4

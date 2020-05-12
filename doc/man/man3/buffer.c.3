@@ -1,4 +1,4 @@
-.TH "src/utils/buffer.c" 3 "Mon May 4 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/buffer.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,17 +21,26 @@ src/utils/buffer.c
 
 .in +1c
 .ti -1c
-.RI "struct \fBbuffer\fP * \fBnew_buffer\fP ()"
+.RI "struct \fBbuffer\fP * \fBnew_buffer\fP (void)"
 .br
 .RI "Create buffer\&. "
+.ti -1c
+.RI "struct \fBbuffer\fP * \fBnew_huge_buffer\fP (void)"
+.br
 .ti -1c
 .RI "void \fBappend_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char c)"
 .br
 .RI "Append characters to the buffer\&. "
 .ti -1c
+.RI "void \fBappend_huge_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char c)"
+.br
+.ti -1c
 .RI "void \fBappend_string_to_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *\fBstr\fP)"
 .br
 .RI "Append string to the buffer\&. "
+.ti -1c
+.RI "void \fBappend_string_to_huge_buffer\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *\fBstr\fP)"
+.br
 .ti -1c
 .RI "size_t \fBbuffer_len\fP (struct \fBbuffer\fP *\fBbuffer\fP)"
 .br
@@ -64,6 +73,8 @@ Append characters to the buffer\&.
 .RE
 .PP
 
+.SS "void append_huge_buffer (struct \fBbuffer\fP * buffer, char c)"
+
 .SS "void append_string_to_buffer (struct \fBbuffer\fP * buffer, char * str)"
 
 .PP
@@ -76,6 +87,8 @@ Append string to the buffer\&.
 \fIstr\fP 
 .RE
 .PP
+
+.SS "void append_string_to_huge_buffer (struct \fBbuffer\fP * buffer, char * str)"
 
 .SS "void append_word_if_needed (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer)"
 
@@ -114,8 +127,6 @@ Empty a string buffer\&.
 \fBParameters:\fP
 .RS 4
 \fIbuffer\fP the string to be clear\&. 
-.br
-\fIsize\fP the length of the buffer\&. 
 .RE
 .PP
 
@@ -130,7 +141,7 @@ Free the buffer\&.
 .RE
 .PP
 
-.SS "struct \fBbuffer\fP* new_buffer ()"
+.SS "struct \fBbuffer\fP* new_buffer (void)"
 
 .PP
 Create buffer\&. 
@@ -140,6 +151,8 @@ Create buffer\&.
 struct buffer* 
 .RE
 .PP
+
+.SS "struct \fBbuffer\fP* new_huge_buffer (void)"
 
 .SH "Author"
 .PP 

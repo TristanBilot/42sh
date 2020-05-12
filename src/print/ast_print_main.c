@@ -2,24 +2,33 @@
 #include <stdlib.h>
 #include "../parser/parser.h"
 #include "../garbage_collector/garbage_collector.h"
-#include "../eval/ast_print.h"
+#include "../storage/program_data_storage.h"
+#include "./ast_print.h"
 
 int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        puts("Usage: ./test \"expression\"");
+        puts("Usage: ./ast_print \"expression\"");
         return 1;
     }
     new_garbage_collector();
-    struct lexer *lexer = new_lexer(argv[1]);
+    new_program_data_storage(argc, argv);
+    struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
 
-    if ((ast = parse(lexer)))
+    if ((lexer = new_lexer(argv[1])))
     {
-        // exec_node_input(ast);
-        print_ast(ast);
+        if ((ast = parse(lexer)))
+        {
+            // exec_node_input(ast);
+            print_ast(ast);
+        }
     }
+
+    int ret = atoi(program_data->last_cmd_status);
+    free_program_data_storage();
     free_garbage_collector();
     free(garbage_collector);
+    return ret;
 }
