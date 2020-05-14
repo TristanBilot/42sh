@@ -3,6 +3,7 @@
 #include "../parser/parser.h"
 #include "../garbage_collector/garbage_collector.h"
 #include "../storage/program_data_storage.h"
+#include "../storage/var_storage.h"
 #include "./ast_print.h"
 
 int main(int argc, char *argv[])
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     }
     new_garbage_collector();
     new_program_data_storage(argc, argv);
+    alias_storage = new_var_storage();
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
 
@@ -27,6 +29,7 @@ int main(int argc, char *argv[])
     }
 
     int ret = atoi(program_data->last_cmd_status);
+    free_var_storage(alias_storage);
     free_program_data_storage();
     free_garbage_collector();
     free(garbage_collector);

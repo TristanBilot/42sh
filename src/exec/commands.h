@@ -12,6 +12,19 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
+
+/**
+** \brief function to delete an alias
+**
+** \param args 
+*/
+void delete_alias(char **args);
+/**
+** \brief function to create an alias
+**
+** \param args 
+*/
+void create_alias(char **args);
 /**
 ** \brief function to give a file to the 42sh
 **

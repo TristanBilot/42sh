@@ -13,6 +13,7 @@
 #include "../utils/index_utils.h"
 #include "../utils/bracket_counter.h"
 #include "../storage/program_data_storage.h"
+#include "../storage/var_storage.h"
 
 bool is_word = false;
 bool is_kw_in = false;
@@ -126,6 +127,11 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j
             flush(buffer);
             is_word = false;
             return -1;
+        }
+        else if ((type = evaluate_token(buffer->buf) == TOK_WORD))
+        {
+            if (var_exists(alias_storage, buffer->buf))
+                append(lexer, new_token_word(get_value(alias_storage, buffer->buf)));
         }
         is_word = false;
         is_ass_w = false;
@@ -330,7 +336,8 @@ bool init_lexer(struct lexer *lexer)
     return true;
 }
 
-struct lexer *new_lexer(char *str) {
+struct lexer *new_lexer(char *str)
+{
     struct lexer *lexer = xmalloc(sizeof(struct lexer));
     lexer->token_list = xmalloc(sizeof(struct token_list));
     lexer->token_list->first = NULL;

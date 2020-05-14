@@ -61,6 +61,17 @@ struct tab_redi
     struct std dlessdash;
 };
 
+
+/** Global for continue command **/
+struct command_continue{
+    bool is_continue; //= 0;
+    int time_to_loop; //= 1;
+    bool from_loop;//= false;
+    int break_loop;
+};
+/** Global for continue command **/
+
+
 /**
 ** \brief create and init the table of redirection
 ** 

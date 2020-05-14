@@ -16,27 +16,35 @@
 #include "../storage/program_data_storage.h"
 
 extern char **environ;
-// static struct var_storage *alias;
 
-
-/*void create_alias(char **args)
+void delete_alias(char **args)
 {
-    if (!args[1])
+    if (!args[0])
+        warn("unalias bad argument");
+    del_var(alias_storage, args[0]);
+}
+
+void create_alias(char **args)
+{
+    if (!args[0])
     {
-        for (int i = 0; alias->variables[i]; i++)
+        for (int i = 0; i < STORAGE_SIZE; i++)
         {
-            printf(alias->variables[i]->key);
+            if (!alias_storage->variables[i])
+                continue;
+            printf("%s", alias_storage->variables[i]->key);
             printf("=");
-            printf("%s\n", alias->variables[i]->value);
+            printf("%s\n", alias_storage->variables[i]->value);
         }
+        return;
     }
-    if (!alias)
-        alias = new_var_storage();
-    char *key = strsep(args[1], ",");
-    char *value = strsep(args[1], ",");
-    put_var(key, value);
-}*/
-//thx
+    if (!alias_storage)
+        alias_storage = new_var_storage();
+    char *key = strsep(&args[0], "=");
+    char *value = strsep(&args[0], "=");
+    put_var(alias_storage, key, value);
+}
+
 void load_file(char *path)
 {
     struct lexer *lexer = NULL;
@@ -65,7 +73,7 @@ void load_file(char *path)
 void source(char **args)
 {
     if (!args[1])
-        errx(1, "source: not enough arguments\n");
+        warn("source: not enough arguments\n");
     char *path = NULL;
     if (!strstr(args[1], ".sh") && !strchr(args[1], '/'))
     {

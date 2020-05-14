@@ -48,11 +48,11 @@ int perform_for_range(struct range *r, struct node_for *ast)
             {
                 char *tmp = xmalloc(MAX_STR_LEN);
                 my_itoa(j, tmp);
-                put_var(ast->variable_name, tmp);
+                put_var(var_storage, ast->variable_name, tmp);
                 if (exec_node_do_group(ast->body))
                     return -1;
             }
-            del_var(ast->variable_name);
+            del_var(var_storage, ast->variable_name);
             return 1;
         }
     }
@@ -64,11 +64,11 @@ bool perform_for_enumeration(struct node_for *ast, int len_range)
     struct node_for *tmp = ast;
     for (int i = 0; i < len_range; i++)
     {
-        put_var(tmp->variable_name, tmp->range->value);
+        put_var(var_storage, tmp->variable_name, tmp->range->value);
         if (exec_node_do_group(ast->body))
             return true;
         tmp->range = tmp->range->next;
     }
-    del_var(tmp->variable_name);
+    del_var(var_storage, tmp->variable_name);
     return false;
 }

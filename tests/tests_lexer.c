@@ -3,10 +3,12 @@
 #include "utils/string_utils.h"
 #include "../garbage_collector/garbage_collector.h"
 #include "../storage/program_data_storage.h"
+#include "../storage/var_storage.h"
 
 Test(lexer, basic_tokens)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input[] = "&& || ;;";
     struct lexer *lex = new_lexer(input);
     cr_assert(peek(lex)->type == TOK_AND);
@@ -17,6 +19,7 @@ Test(lexer, basic_tokens)
     cr_assert(pop(lex)->type == KW_DSEMI);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, basic_word_tokens)
@@ -24,6 +27,7 @@ Test(lexer, basic_word_tokens)
     /* La flemme de le faire, il faut gérer le ;|| comme un word */
 
     // new_garbage_collector();
+    alias_storage = new_var_storage();
     // char input[] = "find -name 'keta' && ls ;||";
     // struct lexer *lexer = new_lexer(input);
     // cr_assert(pop(lexer)->type == TOK_WORD);
@@ -34,11 +38,13 @@ Test(lexer, basic_word_tokens)
     // cr_assert(pop(lexer)->type == TOK_WORD);
     // free_garbage_collector();
     // free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, newline)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input[] = "word \n another";
     struct lexer *lexer = new_lexer(input);
     cr_assert(pop(lexer)->type == TOK_WORD);
@@ -46,11 +52,13 @@ Test(lexer, newline)
     cr_assert(pop(lexer)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, eof)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input[] = "word";
     struct lexer *lexer = new_lexer(input);
     cr_assert(pop(lexer)->type == TOK_WORD);
@@ -58,11 +66,13 @@ Test(lexer, eof)
     cr_assert(pop(lexer) == NULL);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, backslash)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     // char input[] = "echo \n '\n' \\n";
     // struct lexer *lexer = new_lexer(input);
     // cr_assert(pop(lexer)->type == TOK_WORD);
@@ -92,11 +102,13 @@ Test(lexer, backslash)
     // cr_assert(t5->value == "foaaz");
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, io_number)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input[] = "echo 'hello' 2>&1";
     struct lexer *lexer = new_lexer(input);
     cr_assert(pop(lexer)->type == TOK_WORD);
@@ -137,11 +149,13 @@ Test(lexer, io_number)
     cr_assert(peek(lexer4)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, spaced_redirections)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "echo 'hello' > file";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_WORD);
@@ -225,11 +239,13 @@ Test(lexer, spaced_redirections)
     cr_assert(pop(lexer10)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, no_spaced_redirections)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "echo 'hello'>file";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_WORD);
@@ -286,11 +302,13 @@ Test(lexer, no_spaced_redirections)
     cr_assert(pop(lexer7)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, semicolon)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = ";;";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == KW_DSEMI);
@@ -324,11 +342,13 @@ Test(lexer, semicolon)
     cr_assert(pop(lexer4)->type == KW_DSEMI);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, not)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "if ! true";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == KW_IF);
@@ -336,11 +356,13 @@ Test(lexer, not)
     cr_assert(pop(lexer1)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, curly_braces)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "if { a -eq b }";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == KW_IF);
@@ -351,11 +373,13 @@ Test(lexer, curly_braces)
     cr_assert(pop(lexer1)->type == TOK_RCURL);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, assignment_word)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "var=123";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(peek(lexer1)->type == TOK_ASS_WORD);
@@ -456,11 +480,13 @@ Test(lexer, assignment_word)
     free_garbage_collector();
 
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, variables)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "before${var}";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(peek(lexer1)->type == TOK_WORD);
@@ -481,11 +507,13 @@ Test(lexer, variables)
     cr_assert(pop(lexer2)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, parenthesis)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "(some content)";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_LPAREN);
@@ -536,11 +564,13 @@ Test(lexer, parenthesis)
     free_garbage_collector();
 
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, parenthesis2)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input7[] = "(if case b then(echo toto))";
     struct lexer *lexer7 = new_lexer(input7);
     cr_assert(pop(lexer7)->type == TOK_LPAREN);
@@ -555,11 +585,13 @@ Test(lexer, parenthesis2)
     cr_assert(pop(lexer7)->type == TOK_RPAREN);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, comments)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "#some comments";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_COMM);
@@ -586,11 +618,13 @@ Test(lexer, comments)
     cr_assert(pop(lexer4)->type == TOK_COMM);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, if_test)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "if\na";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == KW_IF);
@@ -627,11 +661,13 @@ Test(lexer, if_test)
     cr_assert(pop(lexer5)->type == TOK_EOF);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, if_test2)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input2[] = "if\na\nthen\nb";
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(pop(lexer2)->type == KW_IF);
@@ -643,11 +679,13 @@ Test(lexer, if_test2)
     cr_assert(pop(lexer2)->type == TOK_WORD);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, dollar)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "echo $1";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_WORD);
@@ -655,11 +693,13 @@ Test(lexer, dollar)
     cr_assert(pop(lexer1)->type == TOK_EOF);
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, hard_stuck)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "if;done;fi;";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == KW_IF);
@@ -686,11 +726,13 @@ Test(lexer, hard_stuck)
     free_garbage_collector();
 
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, cmd_substitution)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "echo $(ls)";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(pop(lexer1)->type == TOK_WORD);
@@ -721,11 +763,13 @@ Test(lexer, cmd_substitution)
     free_garbage_collector();
 
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }
 
 Test(lexer, hard_cmd_substitution)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     char input1[] = "$((some stuff))";
     struct lexer *lexer1 = new_lexer(input1);
     cr_assert(peek(lexer1)->type == TOK_WORD);
@@ -756,4 +800,5 @@ Test(lexer, hard_cmd_substitution)
     free_program_data_storage();
 
     free(garbage_collector);
+    free_var_storage(alias_storage);
 }

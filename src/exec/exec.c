@@ -17,17 +17,19 @@
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
 
-#define DEBUG_FLAG false
+#define DEBUG_FLAG true
 #define DEBUG(msg) if (DEBUG_FLAG) \
     printf("%s\n", msg);
 
-bool is_continue = 0;
-int time_to_loop = 1;
-const struct commands cmd[5] = {
+struct command_continue cont = { 0, 1, false, 0};
+const struct commands cmd[8] = {
     {"cd", &cd}, 
     {"echo", &echo},
     {"export", &export},
     {"source", &source},
+    {"alias", &create_alias},
+    {"unalias", &delete_alias},
+    {"continue", &func_continue},
     {NULL, NULL}};
 
 bool extra_command(char **args, char *cmd_name)
@@ -37,11 +39,6 @@ bool extra_command(char **args, char *cmd_name)
         if (strcmp(cmd_name, cmd[i].name) == 0)
         {
             cmd[i].function(args);
-            return false;
-        }
-        else if (strcmp(args[0], "continue") == 0)
-        {
-            func_continue(args);
             return false;
         }
     }
@@ -117,6 +114,33 @@ bool manage_redirections(struct tab_redi tab, int *ptr_fd)
     if (!is(tab.dgreat.err, ""))
         if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO, ptr_fd))
             return true;
+    
+    // >&
+    if (!is(tab.greatand.in, ""))
+    {
+        if (is(tab.greatand.in, "1"))
+            return dup2(1, 0) >= 0;
+        else if (is(tab.greatand.in, "2"))
+            return dup2(2, 0) >= 0;
+        else if (is(tab.greatand.in, "0"))
+            return false;
+        else if (dup_file(tab.greatand.in, "w+", STDIN_FILENO, ptr_fd))
+            return true;
+    }
+    if (!is(tab.greatand.out, ""))
+    {
+        if (is(tab.greatand.out, "0"))
+            return dup2(0, 1) >= 0;
+        else if (is(tab.greatand.out, "2"))
+            return dup2(2, 1) >= 0;
+        else if (is(tab.greatand.out, "1"))
+            return false;
+        if (dup_file(tab.greatand.out, "w+", STDOUT_FILENO, ptr_fd))
+            return true;
+    }
+    if (!is(tab.greatand.err, ""))
+        if (dup_file(tab.greatand.err, "w+", STDERR_FILENO, ptr_fd))
+            return true;
 
     // // <<
     // if (!is(tab.dless.in, ""))
@@ -162,13 +186,15 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     int save_out = dup(1);
     int save_in = dup(0);
     int save_err = dup(2);
-    
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell();
     if (manage_redirections(tab, ptr_fd))
     {
         warn("redirection ");
         update_last_status(1);
+        dup2(save_in, 0);
+        dup2(save_out, 1);
+        dup2(save_err, 2);
         // WEXITSTATUS(status) = 1;
         return true;
     }
@@ -528,7 +554,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     struct tab_redi tab = init_tab_redi(tab);
     char *args[256];
 
-    while (p && ast->to_export == false)
+    while (p && (ast->to_export == false && ast->to_alias == false))
     {
         if (p->type == ASSIGMENT_WORD) //export a=b
         {
@@ -541,24 +567,28 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
                 putenv(env);
             }
             else
-                put_var(key, val);
+                put_var(var_storage, key, val);
         }
         else
             tab = append_tab_redi(tab, p->prefix.redirection);
         p = p->next;
     }
-
     if (e) /* link the root node to the first element (ex: echo) */
     {
         int size = 0;
-        if (e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next == NULL)
+        if (e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next == NULL && cont.from_loop)
         {
-            is_continue = true;
+            printf("yoloo\n");
+            cont.is_continue = true;
             return false;
         }
         else if(e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next != NULL)
         {
-            time_to_loop = atoi(e->next->element.word);
+            // tmp = time_to_loop;
+            // if (tmp > 1)
+            printf("yoloo2\n");
+            cont.time_to_loop = atoi(e->next->element.word);
+            printf("number of time loop after taking it from continue : %d\n", cont.time_to_loop);
             return false;
         }
         if (e->type == TOKEN_REDIRECTION)
@@ -582,21 +612,22 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         }
         args[size++] = NULL;
         bool ret = false;
-
         if (ast->to_export)
             ret = with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
+        if (ast->to_alias)
+            ret = with_fork ? execute_with_fork(args, tab, "alias") : execute(args, tab);
         else
         {
             ret = with_fork ? execute_with_fork(args, tab, args[0]) : execute(args, tab);
         }
         return ret;
     }
-    if (ast->prefixes != NULL && ast->to_export == true)
+    if (ast->prefixes != NULL && (ast->to_export == true || ast->to_alias == true))
     {
         int i = 0;
         
         struct node_prefix *prefix = ast->prefixes;
-        while(prefix)
+        while (prefix)
         {
             char *key = p->prefix.assigment_word->variable_name;
             char *val = p->prefix.assigment_word->value;
@@ -610,12 +641,16 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         }
         args[i] = NULL;
         i = 0;
-        return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
+        if (ast->to_export)
+            return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
+        if (ast->to_alias)
+            return with_fork ? execute_with_fork(args, tab, "alias") : execute(args, tab);
     }
     args[0] = NULL;
-    if (ast->to_export){
+    if (ast->to_export)
         return with_fork ? execute_with_fork(args, tab, "export") : execute(args, tab);
-    }
+    if (ast->to_alias)
+        return with_fork ? execute_with_fork(args, tab, "alias") : execute(args, tab);
     return false;
 }
 
@@ -660,18 +695,20 @@ bool exec_node_funcdec(struct node_funcdec *ast)
 bool exec_node_compound_list(struct node_compound_list *ast)
 {
     DEBUG("COMPOUND_LIST")
+    cont.from_loop = true;
     struct node_compound_list *c = ast;
     while (c)
     {
+        printf("number of time loop : %d\n", cont.time_to_loop);
         if (exec_node_and_or(c->and_or))
             return true;
-        if (is_continue && time_to_loop == 1)
+        if (cont.is_continue && cont.time_to_loop == 1)
             return false;
-        else if (!is_continue && time_to_loop > 1)
+        else if (!cont.is_continue && cont.time_to_loop > 1)
         {
-            time_to_loop--;
-            if (time_to_loop == 1)
-                is_continue = false;
+            cont.time_to_loop--;
+            if (cont.time_to_loop == 1)
+                return false;
         }
         c = c->next_sibling;
     }
@@ -681,13 +718,14 @@ bool exec_node_while(struct node_while *ast)
 {
     DEBUG("WHILE")
     bool state = false;
+    cont.from_loop = true;
     while (!exec_node_compound_list(ast->condition))
     {
         if (atoi(program_data->last_cmd_status) > 0)
             break;
-        if (is_continue)
+        if (cont.is_continue)
         {
-            is_continue = false;
+            cont.is_continue = false;
             continue;
         }
         else
@@ -700,11 +738,12 @@ bool exec_node_while(struct node_while *ast)
 bool exec_node_until(struct node_until *ast)
 {
     DEBUG("UNTIL")
+    cont.from_loop = true;
     while (exec_node_compound_list(ast->condition))
     {
-        if (is_continue)
+        if (cont.is_continue)
         {
-            is_continue = false;
+            cont.is_continue = false;
             continue;
         }
         else

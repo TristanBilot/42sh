@@ -70,6 +70,7 @@ struct node_simple_command *build_simple_command(void)
     new->prefixes = NULL; //xcalloc(1, sizeof(struct node_prefix));
     new->elements = NULL; //xcalloc(1, sizeof(struct node_element));
     new->to_export = false;
+    new->to_alias = false;
     // printf("SIMPLE COMMAND\n");
     return new;
 }

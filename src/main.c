@@ -25,7 +25,8 @@ int main(int ac, char **av)
     int opt = -1;
     new_garbage_collector();
     option = init_option_sh();
-    new_var_storage();
+    var_storage = new_var_storage();
+    alias_storage = new_var_storage();
     new_program_data_storage(ac, av);
     srand(time(NULL));
     
@@ -61,7 +62,8 @@ int main(int ac, char **av)
     // printf("status int: %d\n", ret);
     free_garbage_collector();
     free(option);
-    free_var_storage();
+    free_var_storage(var_storage);
+    free_var_storage(alias_storage);
     free_program_data_storage();
     free(garbage_collector);
     return ret;

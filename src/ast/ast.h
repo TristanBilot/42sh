@@ -101,6 +101,7 @@ struct node_command
 struct node_simple_command
 {
     bool to_export;
+    bool to_alias;
     struct node_prefix *prefixes; /* LIST */
     struct node_element *elements; /* LIST */
 };

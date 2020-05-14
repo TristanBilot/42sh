@@ -100,9 +100,9 @@ char *perform_var_expansion(char *word)
             char *env = xcalloc(1, 256);
             if ((env = getenv(param)))
                 append_string_to_buffer(buf, env);
-            else if (var_exists(param))
+            else if (var_exists(var_storage, param))
             {
-                char *var = get_value(param);
+                char *var = get_value(var_storage, param);
                 append_string_to_buffer(buf, var);
             }
             i += strlen(param) - 1 + is_brack;

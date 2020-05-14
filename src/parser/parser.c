@@ -294,9 +294,12 @@ bool parse_simple_command(struct parser *parser, struct node_simple_command **as
     struct token *current = parser->current_token;
     struct node_prefix *p = NULL;
     struct node_simple_command *new = build_simple_command();
-    if (is_type(current, TOK_WORD) && is(current->value, "export"))
+    if (is_type(current, TOK_WORD) && (is(current->value, "export") || is(current->value, "alias")))
     {
-        new->to_export = true;
+        if (is(current->value, "export"))
+            new->to_export = true;
+        if (is(current->value, "alias"))
+            new->to_alias = true;
         if (get_next_token(parser) &&
             is_type(get_next_token(parser), TOK_WORD) &&
             is(get_next_token(parser)->value, "-n"))

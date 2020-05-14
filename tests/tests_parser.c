@@ -4,15 +4,18 @@
 #include "utils/string_utils.h"
 #include "ast/free.h"
 #include "../garbage_collector/garbage_collector.h"
+#include "../storage/var_storage.h"
 
 bool test(char *expr)
 {
     new_garbage_collector();
+    alias_storage = new_var_storage();
     struct lexer *lexer = new_lexer(expr);
     struct node_input *ast = parse(lexer);
     bool res = ast == NULL;
     free_garbage_collector();
     free(garbage_collector);
+    free_var_storage(alias_storage);
     return res;
 }
 
