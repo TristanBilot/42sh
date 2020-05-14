@@ -47,9 +47,9 @@ void export(char **args);
 /**
 **\brief implementation of exit_shell
 **
-**\param args 
+**
 */
-void exit_shell(char **args);
+void exit_shell(void);
 
 struct echo_tab
 {
@@ -77,5 +77,8 @@ int	print_without_sp(char *c);
 **\param n 
 */
 void print_echo(char **args, bool e, bool n);
+
+
+void func_continue(char **args);
 
 #endif /* COMMANDS_H_ */

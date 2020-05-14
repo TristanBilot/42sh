@@ -45,6 +45,7 @@ char *substitute_ques(void);
 
 char *substitute_random(char *word, size_t *i, bool *should_continue, int is_brack);
 char *substitute_uid(char *word, size_t *i, bool *should_continue, int is_brack);
+char *substitute_pid(char *word, size_t *i, bool *should_continue, int is_brack);
 char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, int is_brack);
 char *substitute_ifs(char *word, size_t *i, bool *should_continue, int is_brack);
 

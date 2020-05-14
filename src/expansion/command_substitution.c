@@ -18,7 +18,7 @@ char *perform_command_substitution(char *word)
         }
         char *sub = NULL;
         if (word[i] == '$')
-        { 
+        {
             i += 2;
             /* $(( should not be managed in this function */
             if (word[i] == '(')
@@ -27,19 +27,22 @@ char *perform_command_substitution(char *word)
         }
         else if (word[i] == '`')
         {
+            
             i++;
+            printf("word: %s\n", word);
             sub = substr(word, i, get_next_index(word, '`', i) - i);
         }
+        printf("sub: %s\n", sub);
+        printf("sidxub: %zu\n", get_next_index(word, '`', i));
         FILE *out = my_popen(sub, "r");
-        // if (!out)
-        //     continue;
+        if (!out)
+            printf("my popen null\n");
         struct buffer *stdout_buf = new_huge_buffer();
         char ch;
         char next;
         bool is_nl_printed = false;
         while ((ch = fgetc(out)) != EOF)
         {
-            // printf("%c", ch);
             next = fgetc(out);
             if (ch == '\n' || ch == ' ')
             {
@@ -59,6 +62,5 @@ char *perform_command_substitution(char *word)
         i += strlen(sub);
     }
     append_huge_buffer(buf, '\0');
-    // printf("%s\n", buf->buf);
     return buf->buf;
 }

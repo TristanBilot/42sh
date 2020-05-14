@@ -19,6 +19,7 @@
 
 struct var_storage *var_storage;
 
+
 /* Variables */
 enum var_type
 {

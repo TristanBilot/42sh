@@ -13,6 +13,7 @@
 #define PROGRAM_DATA_STORAGE_H
 
 struct program_data_storage *program_data;
+struct env_storage *env_storage;
 
 struct program_data_storage
 {
@@ -21,6 +22,12 @@ struct program_data_storage
     char **argv;           // $* $@
     int argc;              // $#
     char *last_cmd_status; // $?
+};
+
+struct env_storage
+{
+    char *old_pwd;
+    // struct variable **env_variables;
 };
 
 void new_program_data_storage(int argc, char *argv[]);

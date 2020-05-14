@@ -7,6 +7,7 @@ struct option_sh *init_option_sh()
     option->print_ast_flag = false;
     option->cmd = NULL;
     option->file_path = NULL;
+    option->shotp = false;
     return option;
 }
 
@@ -17,6 +18,7 @@ int main(int ac, char **av)
         {"c", required_argument, 0, 'c'},
         {"ast-printer", no_argument, 0, 'a'},
         {"norc", no_argument, 0, 'n'},
+        {"O", no_argument, 0, 'o'},
         {0, 0, 0, 0}
     };
     int option_index = 0;
@@ -27,12 +29,14 @@ int main(int ac, char **av)
     new_program_data_storage(ac, av);
     srand(time(NULL));
     
-    while ((opt = getopt_long(ac, av, "nac:", long_options, &option_index)) != -1)
+    while ((opt = getopt_long(ac, av, "naoc:", long_options, &option_index)) != -1)
     {
         if (opt == 'n')
             option->norc_flag = true;
         else if (opt == 'a')
             option->print_ast_flag = true;
+        else if (opt == 'o')
+            option->shotp = true;
         else if (opt == 'c')
             option->cmd = optarg;
         else if (opt == '?')

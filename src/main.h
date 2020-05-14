@@ -39,6 +39,7 @@ struct option_sh
 {
     bool norc_flag;
     bool print_ast_flag;
+    bool shotp;
     char *cmd;
     char *file_path;
 };

@@ -9,7 +9,7 @@ void init_42sh_with_history(struct option_sh *option)
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     struct history *history = open_history();
-    if (option->norc_flag)
+    if (!option->norc_flag)
     {
         char *path = xmalloc(strlen(getenv("HOME")) + 9);
         path = strcpy(path, getenv("HOME"));
@@ -186,7 +186,8 @@ void init_42sh_with_history(struct option_sh *option)
                     ast = parse(lexer);
                     
                     exec_node_input(ast);
-                    
+                    if (after_sig)
+                        return;
                     //if(!option->norc_flag)
                         //  load_ressources();
                     if (option->print_ast_flag)

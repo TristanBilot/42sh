@@ -485,19 +485,22 @@ void print_node_case_item(struct node_case_item *ast, FILE *f, void *node)
 {
     PRINT_NODE("PRINT CASE ITEM");
     PRINT_NODE(ast->words->word);
-    char *s = ast->words->word;
-    while (ast->words->next)
+    if (ast && ast->words)
     {
-        ast->words = ast->words->next;
-        s = strcat(s, " | ");
-        s = strcat(s, ast->words->word);
-        PRINT_NODE(ast->words->word);
+        char *s = ast->words->word;
+        while (ast->words->next)
+        {
+            ast->words = ast->words->next;
+            s = strcat(s, " | ");
+            s = strcat(s, ast->words->word);
+            PRINT_NODE(ast->words->word);
+        }
+        fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) ast, s);
+        if (node)
+            fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
+        if (ast->compound_list)
+            print_node_compound_list(ast->compound_list, f, (void *) ast);
     }
-    fprintf(f, "\tnode_%p [label=\"%s\"];\n", (void *) ast, s);
-    if (node)
-        fprintf(f, "\tnode_%p -> node_%p;\n", node, (void *) ast);
-    if (ast->compound_list)
-        print_node_compound_list(ast->compound_list, f, (void *) ast);
 
 }
 

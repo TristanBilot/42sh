@@ -41,7 +41,7 @@ struct commands
     void (*function)(char **args);
 };
 
-struct std 
+struct std
 {
     char *in;
     char *out;

@@ -21,11 +21,13 @@
 #define DEBUG(msg) if (DEBUG_FLAG) \
     printf("%s\n", msg);
 
-
-const struct commands cmd[4] = {
+bool is_continue = 0;
+int time_to_loop = 1;
+const struct commands cmd[5] = {
     {"cd", &cd}, 
     {"echo", &echo},
     {"export", &export},
+    {"source", &source},
     {NULL, NULL}};
 
 bool extra_command(char **args, char *cmd_name)
@@ -35,6 +37,11 @@ bool extra_command(char **args, char *cmd_name)
         if (strcmp(cmd_name, cmd[i].name) == 0)
         {
             cmd[i].function(args);
+            return false;
+        }
+        else if (strcmp(args[0], "continue") == 0)
+        {
+            func_continue(args);
             return false;
         }
     }
@@ -111,16 +118,16 @@ bool manage_redirections(struct tab_redi tab, int *ptr_fd)
         if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO, ptr_fd))
             return true;
 
-    // <<
-    if (!is(tab.dless.in, ""))
-        if (dup_file(tab.dless.in, "a+", STDIN_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.dless.out, ""))
-        if (dup_file(tab.dless.out, "a+", STDOUT_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.dless.err, ""))
-        if (dup_file(tab.dless.err, "a+", STDERR_FILENO, ptr_fd))
-            return true;
+    // // <<
+    // if (!is(tab.dless.in, ""))
+    //     if (dup_file(tab.dless.in, "a+", STDIN_FILENO, ptr_fd))
+    //         return true;
+    // if (!is(tab.dless.out, ""))
+    //     if (dup_file(tab.dless.out, "a+", STDOUT_FILENO, ptr_fd))
+    //         return true;
+    // if (!is(tab.dless.err, ""))
+    //     if (dup_file(tab.dless.err, "a+", STDERR_FILENO, ptr_fd))
+    //         return true;
     
     return false;
 }
@@ -157,15 +164,14 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     int save_err = dup(2);
     
     if (args[0] && strcmp(args[0], "exit") == 0)
-        exit_shell(args);
+        exit_shell();
     if (manage_redirections(tab, ptr_fd))
     {
-        err(1, "redirection ");
+        warn("redirection ");
         update_last_status(1);
         // WEXITSTATUS(status) = 1;
         return true;
     }
-
     // if (args[0] == NULL)
     // {
     //     if (!extra_command(args, cmd_name))
@@ -206,11 +212,16 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
             {
                 //exit(status);
                 update_last_status(WEXITSTATUS(status));
-                
+                dup2(save_in, 0);
+                dup2(save_out, 1);
+                dup2(save_err, 2);
                 return WEXITSTATUS(status) >= 1;
             }
         }
     }
+    dup2(save_in, 0);
+    dup2(save_out, 1);
+    dup2(save_err, 2);
     return false;
     
 }
@@ -517,13 +528,20 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     struct tab_redi tab = init_tab_redi(tab);
     char *args[256];
 
-    while (p)
+    while (p && ast->to_export == false)
     {
-        if (p->type == ASSIGMENT_WORD)
+        if (p->type == ASSIGMENT_WORD) //export a=b
         {
             char *key = p->prefix.assigment_word->variable_name;
             char *val = p->prefix.assigment_word->value;
-            put_var(key, val);
+            char *env = xcalloc(1, 256);
+            if (getenv(key))
+            {
+                sprintf(env, "%s=%s", key, val);
+                putenv(env);
+            }
+            else
+                put_var(key, val);
         }
         else
             tab = append_tab_redi(tab, p->prefix.redirection);
@@ -533,6 +551,16 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     if (e) /* link the root node to the first element (ex: echo) */
     {
         int size = 0;
+        if (e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next == NULL)
+        {
+            is_continue = true;
+            return false;
+        }
+        else if(e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next != NULL)
+        {
+            time_to_loop = atoi(e->next->element.word);
+            return false;
+        }
         if (e->type == TOKEN_REDIRECTION)
             tab = append_tab_redi(tab, e->element.redirection);
         else
@@ -565,24 +593,20 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     }
     if (ast->prefixes != NULL && ast->to_export == true)
     {
-        struct variable *tmp = NULL;
         int i = 0;
         
         struct node_prefix *prefix = ast->prefixes;
         while(prefix)
         {
-            if (var_exists(prefix->prefix.assigment_word->variable_name))
-            {
-                tmp = get_var(prefix->prefix.assigment_word->variable_name);
-                char *str = xmalloc((strlen(tmp->key) + 1 + strlen(tmp->value) + 1) * sizeof(char));
-                str = tmp->key;
-                strcat(str, "=");
-                strcat(str, tmp->value);
-                args[i] = str;
-                i += 1;
-            }
-
+            char *key = p->prefix.assigment_word->variable_name;
+            char *val = p->prefix.assigment_word->value;
+            char *str = xmalloc((strlen(key) + 1 + strlen(val) + 1) * sizeof(char));
+            str = p->prefix.assigment_word->variable_name;
+            strcat(str,"=");
+            strcat(str, p->prefix.assigment_word->value);
             prefix = prefix->next;
+            args[i] = str;
+            i += 1;
         }
         args[i] = NULL;
         i = 0;
@@ -641,6 +665,14 @@ bool exec_node_compound_list(struct node_compound_list *ast)
     {
         if (exec_node_and_or(c->and_or))
             return true;
+        if (is_continue && time_to_loop == 1)
+            return false;
+        else if (!is_continue && time_to_loop > 1)
+        {
+            time_to_loop--;
+            if (time_to_loop == 1)
+                is_continue = false;
+        }
         c = c->next_sibling;
     }
     return false;
@@ -650,7 +682,17 @@ bool exec_node_while(struct node_while *ast)
     DEBUG("WHILE")
     bool state = false;
     while (!exec_node_compound_list(ast->condition))
-        state = exec_node_do_group(ast->body);
+    {
+        if (atoi(program_data->last_cmd_status) > 0)
+            break;
+        if (is_continue)
+        {
+            is_continue = false;
+            continue;
+        }
+        else
+            state = exec_node_do_group(ast->body);
+    }
     if (!state)
         update_last_status(0);
     return false;
@@ -659,7 +701,15 @@ bool exec_node_until(struct node_until *ast)
 {
     DEBUG("UNTIL")
     while (exec_node_compound_list(ast->condition))
-        exec_node_do_group(ast->body);
+    {
+        if (is_continue)
+        {
+            is_continue = false;
+            continue;
+        }
+        else
+            exec_node_do_group(ast->body);
+    }
     return false;
 }
 bool exec_node_case(struct node_case *ast)
@@ -740,15 +790,6 @@ bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found)
     struct node_case_clause *c = ast;
     if (!c || !c->case_item)
         return true;
-    // if (!exec_node_case_item(c->case_item, word_to_found))
-    //         return false;
-    // while (c->next)
-    // {
-    //     c = c->next;
-    //     if (!exec_node_case_item(c->case_item, word_to_found))
-    //         return false;
-    // }
-
     while (c)
     {
         if (!exec_node_case_item(c->case_item, word_to_found))

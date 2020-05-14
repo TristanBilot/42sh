@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <stdlib.h>
 
 #include "expansion.h"
 #include "../storage/var_storage.h"
@@ -40,6 +41,7 @@ char *perform_var_expansion(char *word)
             bool should_continue = false;
             if ((sub = substitute_random(word, &i, &should_continue, is_brack)) ||
                 (sub = substitute_uid(word, &i, &should_continue, is_brack)) ||
+                (sub = substitute_pid(word, &i, &should_continue, is_brack)) ||
                 (sub = substitute_oldpwd(word, &i, &should_continue, is_brack)) ||
                 (sub = substitute_ifs(word, &i, &should_continue, is_brack)))
             {
@@ -80,19 +82,25 @@ char *perform_var_expansion(char *word)
                 continue;
             }
             size_t next_close_paren = get_next_index(word, ')', i);
+            size_t next_back_quote = get_next_index(word, '`', i);
             size_t next_close_dollar = get_next_index(word, '$', i);
             size_t next_separator = get_next_separator_index(word, i);
+            size_t next_close_curl = get_next_index(word, '}', i);
             size_t end = 0;
             if (is_brack)
-                end = is_brack;
+                end = next_close_curl;
             else
             {
+                /* find the nearest possible delimitor stuck to the variable */
                 end = next_close_paren < next_close_dollar ? next_close_paren : next_close_dollar;
                 end = end < next_separator ? end : next_separator;
+                end = end < next_back_quote ? end : next_back_quote;
             }
             char *param = substr(word, i, end - i);
-            // printf("sub: %s\n", sub);
-            if (var_exists(param))
+            char *env = xcalloc(1, 256);
+            if ((env = getenv(param)))
+                append_string_to_buffer(buf, env);
+            else if (var_exists(param))
             {
                 char *var = get_value(param);
                 append_string_to_buffer(buf, var);
@@ -112,7 +120,10 @@ char *substitute_number(char c)
         return program_data->binary_name;
     if (!program_data->argv)
         return "";
-    char *sub = program_data->argv[(c - '0') - 1];
+    int index = (c - '0') - 1;
+    char *sub = NULL;
+    if (index < program_data->argc)
+        sub = program_data->argv[index];
     return sub ? sub : "";
 }
 
@@ -187,6 +198,27 @@ char *substitute_uid(char *word, size_t *i, bool *should_continue, int is_brack)
     if (is(substr(word, *i, len), "UID"))
     {
         unsigned long int uid = (unsigned long int) getuid();
+        char *sub = xmalloc(MAX_STR_LEN);
+        sprintf(sub, "%ld", uid);
+        if (next_param_is_printable(word, *i, len, is_brack))
+            *should_continue = true;
+        else
+            *should_continue = false;
+        *i += len - 1 + is_brack;
+        return sub;
+    }
+    return NULL;
+}
+
+char *substitute_pid(char *word, size_t *i, bool *should_continue, int is_brack)
+{
+    size_t len = strlen("$");
+    if ((*i + len) > strlen(word))
+        return NULL;
+    
+    if (is(substr(word, *i, len), "$"))
+    {
+        unsigned long int uid = (unsigned long int) getpid();
         char *sub = xmalloc(MAX_STR_LEN);
         sprintf(sub, "%ld", uid);
         if (next_param_is_printable(word, *i, len, is_brack))

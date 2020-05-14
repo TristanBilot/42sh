@@ -1,5 +1,6 @@
 #include "my_popen.h"
 #include "../storage/program_data_storage.h"
+#include "utils/xalloc.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -49,7 +50,7 @@ FILE *my_popen(const char *cmd, const char *mode)
 
     if (pipe(fds) == -1)
         return NULL;
-    char binary_42sh[256];
+    char *binary_42sh = xcalloc(1, 256);
     switch ((pid = fork()))
     {
     case -1:

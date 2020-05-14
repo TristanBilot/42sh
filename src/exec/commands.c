@@ -16,7 +16,27 @@
 #include "../storage/program_data_storage.h"
 
 extern char **environ;
+// static struct var_storage *alias;
 
+
+/*void create_alias(char **args)
+{
+    if (!args[1])
+    {
+        for (int i = 0; alias->variables[i]; i++)
+        {
+            printf(alias->variables[i]->key);
+            printf("=");
+            printf("%s\n", alias->variables[i]->value);
+        }
+    }
+    if (!alias)
+        alias = new_var_storage();
+    char *key = strsep(args[1], ",");
+    char *value = strsep(args[1], ",");
+    put_var(key, value);
+}*/
+//thx
 void load_file(char *path)
 {
     struct lexer *lexer = NULL;
@@ -29,7 +49,7 @@ void load_file(char *path)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        warn("%s", strerror(errno));
+        warn("%s: %s", path, strerror(errno));
         return;
     }
     while ((read = getline(&line, &len, fp)) != -1)
@@ -208,6 +228,10 @@ void print_echo(char **args, bool e, bool n)
         if (n == false)
             printf("%c", '\n');
     }
+    // else if (e == false && n == false)
+    // {
+    //     printf("%s", args[i]);
+    // }
 }
 
 void echo(char **args)
@@ -216,7 +240,7 @@ void echo(char **args)
     bool e = false;
     if (!args[1])
         printf("\n");
-    else if (args[1][0] == '-')
+    else if (args[1][0] == '-' && args[1][1] != '\0')
     {
         int i = 0;
         for (i = 1; (args[1][i] == 'n' || args[1][i] == 'e') && args[1][i]; i++)
@@ -244,17 +268,26 @@ void echo(char **args)
 void cd(char **args)
 {
     int ret = 0;
+    char *pwd = getenv("PWD");
     if (!args[1])
         ret = chdir(getenv("HOME"));
     else if (strcmp(args[1], "-") == 0)
         ret = chdir(getenv("OLDPWD"));
     else
         ret = chdir(args[1]);
+    char *new_pwd = xcalloc(1, 256);
+    char *cwd = getcwd(NULL, 0);
+    sprintf(new_pwd, "%s=%s", "PWD", cwd);
+    putenv(new_pwd);
+    free(cwd);
     if (ret == -1)
     {
         warn("%s", args[1]);
         update_last_status(1);
     }
+    char *env = xcalloc(1, 256);
+    sprintf(env, "%s=%s", "OLDPWD", pwd);
+    putenv(env);
     update_last_status(0);
 }
 
@@ -316,14 +349,17 @@ void export(char **args)
     update_last_status(0);
 }
 
-void exit_shell(char **args)
+void exit_shell(void)
 {
-    if (args[0])
+    exit(atoi(program_data->last_cmd_status));
+}
+
+void func_continue(char **args)
+{
+    if (strcmp(args[0], "continue") == 0)
     {
-        if (args[1])
-            err(1, "exit: too many arguments\n");
-        exit(atoi(args[1]));
+        printf("bash: continue: only meaningful in a `for', `while', or `until' loop\n");
     }
-    else
-        exit(0);
+
+    update_last_status(0);
 }
