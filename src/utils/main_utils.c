@@ -9,6 +9,7 @@ void init_42sh_with_history(struct option_sh *option)
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     struct history *history = open_history();
+    file_manager = init_file_manager();
     if (!option->norc_flag)
     {
         char *path = xmalloc(strlen(getenv("HOME")) + 9);
@@ -251,6 +252,7 @@ void init_42sh_with_history(struct option_sh *option)
             else
             {
                 putchar(c);
+                // printf("%d", c);
                 if (c != 27)
                 {
                     if (buffer->index < char_after_start)
@@ -269,7 +271,7 @@ void init_42sh_with_history(struct option_sh *option)
                 }
             }
         }
-        free_garbage_collector();
+        // free_garbage_collector();
         if (line)
             free(line);
         printf("\n");
@@ -415,6 +417,14 @@ void delete_last_character(void)
 void sighandler(int signum)
 {
     (void) signum;
+    if (file_manager->fd_to_close != -1)
+    {
+        close(file_manager->fd_to_close);
+        fclose(file_manager->file);
+    }
+    dup2(file_manager->save_in, 0);
+    dup2(file_manager->save_out, 1);
+    dup2(file_manager->save_err, 2);
     free_garbage_collector();
     printf("\n");
     init_42sh_with_history(option);

@@ -26,6 +26,7 @@
 #include "./lexer/lexer.h"
 #include "./utils/xalloc.h"
 #include "./exec/exec.h"
+#include "./exec/redirection.h"
 #include "./utils/string_utils.h"
 #include "./print/ast_print.h"
 #include "./storage/var_storage.h"

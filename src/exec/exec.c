@@ -5,6 +5,7 @@
 #include <errno.h>
 
 #include "../exec/exec.h"
+#include "../exec/redirection.h"
 #include "../utils/string_utils.h"
 #include "../storage/var_storage.h"
 #include "../storage/program_data_storage.h"
@@ -17,11 +18,11 @@
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
 
-#define DEBUG_FLAG true
+#define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
     printf("%s\n", msg);
 
-struct command_continue cont = { 0, 1, false, 0};
+
 const struct commands cmd[8] = {
     {"cd", &cd}, 
     {"echo", &echo},
@@ -55,115 +56,20 @@ bool clean_extra_command(void)
     }
     return false;
 }
-
-bool dup_file(char *file, char *flag, int io, int *ptr_fd)
+void init_continue()
 {
-    FILE *f = fopen(file, flag);
-    if (!f)
-        return true;
-    int out = fileno(f);
-    if (out == -1)
-    {
-        return true;
-    }
-    close(io);
-    int fd = dup2(out, io);
-    *ptr_fd = out;
-    if (fd < 0)
-    {
-        close(out);
-        return true;
-    }
-    // close(fd);
-    close(out);
-    fclose(f);
-    return false;
+    cont.current_loop = 0;
+    cont.from_loop = false;
+    cont.is_continue = false;
+    cont.time_to_loop = 1;
+
 }
-
-bool manage_redirections(struct tab_redi tab, int *ptr_fd)
-{
-    // >
-    if (!is(tab.great.out, ""))
-        if (dup_file(tab.great.out, "w+", STDOUT_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.great.in, ""))
-        if (dup_file(tab.great.in, "w+", STDIN_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.great.err, ""))
-        if (dup_file(tab.great.err, "w+", STDERR_FILENO, ptr_fd))
-            return true;
-    
-    //  < 
-    if (!is(tab.less.in, ""))
-        if (dup_file(tab.less.in, "r", STDIN_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.less.out, ""))
-        if (dup_file(tab.less.out, "r", STDOUT_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.less.err, ""))
-        if (dup_file(tab.less.err, "r", STDERR_FILENO, ptr_fd))
-            return true;
-
-    // >>
-    if (!is(tab.dgreat.in, ""))
-        if (dup_file(tab.dgreat.in, "a+", STDIN_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.dgreat.out, ""))
-        if (dup_file(tab.dgreat.out, "a+", STDOUT_FILENO, ptr_fd))
-            return true;
-    if (!is(tab.dgreat.err, ""))
-        if (dup_file(tab.dgreat.err, "a+", STDERR_FILENO, ptr_fd))
-            return true;
-    
-    // >&
-    if (!is(tab.greatand.in, ""))
-    {
-        if (is(tab.greatand.in, "1"))
-            return dup2(1, 0) >= 0;
-        else if (is(tab.greatand.in, "2"))
-            return dup2(2, 0) >= 0;
-        else if (is(tab.greatand.in, "0"))
-            return false;
-        else if (dup_file(tab.greatand.in, "w+", STDIN_FILENO, ptr_fd))
-            return true;
-    }
-    if (!is(tab.greatand.out, ""))
-    {
-        if (is(tab.greatand.out, "0"))
-            return dup2(0, 1) >= 0;
-        else if (is(tab.greatand.out, "2"))
-            return dup2(2, 1) >= 0;
-        else if (is(tab.greatand.out, "1"))
-            return false;
-        if (dup_file(tab.greatand.out, "w+", STDOUT_FILENO, ptr_fd))
-            return true;
-    }
-    if (!is(tab.greatand.err, ""))
-        if (dup_file(tab.greatand.err, "w+", STDERR_FILENO, ptr_fd))
-            return true;
-
-    // // <<
-    // if (!is(tab.dless.in, ""))
-    //     if (dup_file(tab.dless.in, "a+", STDIN_FILENO, ptr_fd))
-    //         return true;
-    // if (!is(tab.dless.out, ""))
-    //     if (dup_file(tab.dless.out, "a+", STDOUT_FILENO, ptr_fd))
-    //         return true;
-    // if (!is(tab.dless.err, ""))
-    //     if (dup_file(tab.dless.err, "a+", STDERR_FILENO, ptr_fd))
-    //         return true;
-    
-    return false;
-}
-
-bool execute(char **args, struct tab_redi tab)
+bool execute(char **args, struct tab_redirection tab)
 {
     int *fd = xmalloc(sizeof(int));
     *fd = 1;
-    int *ptr_fd;
-    ptr_fd = fd;
     DEBUG("EXECUTE")
-    if (manage_redirections(tab, ptr_fd))
+    if (manage_duplication(tab))
         return true;
     if ((execvp(args[0], args)) == -1)
     {
@@ -174,27 +80,22 @@ bool execute(char **args, struct tab_redi tab)
     return false;
 }
 
-static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
+static bool execute_with_fork(char **args, struct tab_redirection tab, char *cmd_name)
 {
     DEBUG("EXECUTE WITH FORK")
     int status = 0;
     int child = 0;
     int *fd = xmalloc(sizeof(int));
     *fd = 1;
-    int *ptr_fd;
-    ptr_fd = fd;
-    int save_out = dup(1);
-    int save_in = dup(0);
-    int save_err = dup(2);
     if (args[0] && strcmp(args[0], "exit") == 0)
         exit_shell();
-    if (manage_redirections(tab, ptr_fd))
+    if (manage_duplication(tab))
     {
         warn("redirection ");
         update_last_status(1);
-        dup2(save_in, 0);
-        dup2(save_out, 1);
-        dup2(save_err, 2);
+        dup2(file_manager->save_in, 0);
+        dup2(file_manager->save_out, 1);
+        dup2(file_manager->save_err, 2);
         // WEXITSTATUS(status) = 1;
         return true;
     }
@@ -210,9 +111,9 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
     // }
     if (!extra_command(args, cmd_name))
     {
-        dup2(save_in, 0);
-        dup2(save_out, 1);
-        dup2(save_err, 2);
+        dup2(file_manager->save_in, 0);
+        dup2(file_manager->save_out, 1);
+        dup2(file_manager->save_err, 2);
         //return false;
         return false;
 
@@ -238,16 +139,16 @@ static bool execute_with_fork(char **args, struct tab_redi tab, char *cmd_name)
             {
                 //exit(status);
                 update_last_status(WEXITSTATUS(status));
-                dup2(save_in, 0);
-                dup2(save_out, 1);
-                dup2(save_err, 2);
+                dup2(file_manager->save_in, 0);
+                dup2(file_manager->save_out, 1);
+                dup2(file_manager->save_err, 2);
                 return WEXITSTATUS(status) >= 1;
             }
         }
     }
-    dup2(save_in, 0);
-    dup2(save_out, 1);
-    dup2(save_err, 2);
+    dup2(file_manager->save_in, 0);
+    dup2(file_manager->save_out, 1);
+    dup2(file_manager->save_err, 2);
     return false;
     
 }
@@ -404,6 +305,7 @@ bool exec_node_command(struct node_command *ast, bool with_fork)
 {
     DEBUG("COMMAND")
     int state = false;
+    init_continue();
     if (ast->type == SIMPLE_COMMAND)
         return exec_node_simple_command(ast->command.simple_command, with_fork);
     
@@ -428,130 +330,12 @@ bool exec_node_command(struct node_command *ast, bool with_fork)
     return state;
 }
 
-struct tab_redi init_tab_redi(struct tab_redi tab)
-{
-    tab.great.out = "";
-    tab.great.in = "";
-    tab.great.err = "";
-    tab.less.out = "";
-    tab.less.in = "";
-    tab.less.err = "";
-    tab.dgreat.out = "";
-    tab.dgreat.in = "";
-    tab.dgreat.err = "";
-    tab.dless.out = "";
-    tab.dless.in = "";
-    tab.dless.err = "";
-    tab.dlessdash.out = "";
-    tab.dlessdash.in = "";
-    tab.dlessdash.err = "";
-    tab.greatand.out = "";
-    tab.greatand.in = "";
-    tab.greatand.err = "";
-    tab.lessand.out = "";
-    tab.lessand.in = "";
-    tab.lessand.err = "";
-    tab.lessgreat.out = "";
-    tab.lessgreat.in = "";
-    tab.lessgreat.err = "";
-    tab.clobber.out = "";
-    tab.clobber.in = "";
-    tab.clobber.err = "";
-    return tab;
-}
-
-struct tab_redi append_tab_redi(struct tab_redi tab, struct node_redirection *e)
-{
-    if (is(type_to_str(e->type), "TOK_GREAT"))
-    {
-        if (!e->left || is(e->left, "") || is(e->left, "1"))
-            tab.great.out = e->right;
-        else if (is(e->left, "0"))
-            tab.great.in = e->right;
-        else if (is(e->left, "2"))
-            tab.great.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_LESS"))
-    {
-        if (is(e->left, "") || is(e->left, "0"))
-            tab.less.in = e->right;
-        else if (is(e->left, "1"))
-            tab.less.out = e->right;
-        else if (is(e->left, "2"))
-            tab.less.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_DLESS"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.dless.out = e->right;
-        else if (is(e->left, "0"))
-            tab.dless.in = e->right;
-        else if (is(e->left, "2"))
-            tab.dless.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_DLESSDASH"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.dlessdash.out = e->right;
-        else if (is(e->left, "0"))
-            tab.dlessdash.in = e->right;
-        else if (is(e->left, "2"))
-            tab.dlessdash.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_LESSGREAT"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.lessgreat.out = e->right;
-        else if (is(e->left, "0"))
-            tab.lessgreat.in = e->right;
-        else if (is(e->left, "2"))
-            tab.lessgreat.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_LESSAND"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.lessand.out = e->right;
-        else if (is(e->left, "0"))
-            tab.lessand.in = e->right;
-        else if (is(e->left, "2"))
-            tab.lessand.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_DGREAT"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.dgreat.out = e->right;
-        else if (is(e->left, "0"))
-            tab.dgreat.in = e->right;
-        else if (is(e->left, "2"))
-            tab.dgreat.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_GREATAND"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.greatand.out = e->right;
-        else if (is(e->left, "0"))
-            tab.greatand.in = e->right;
-        else if (is(e->left, "2"))
-            tab.greatand.err = e->right;
-    }
-    else if (is(type_to_str(e->type), "TOK_CLOBBER"))
-    {
-        if (is(e->left, "") || is(e->left, "1"))
-            tab.clobber.out = e->right;
-        else if (is(e->left, "0"))
-            tab.clobber.in = e->right;
-        else if (is(e->left, "2"))
-            tab.clobber.err = e->right;
-    }
-    return tab;
-}
-
 bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
 {
     DEBUG("SIMPLE_COMMAND")
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
-    struct tab_redi tab = init_tab_redi(tab);
+    struct tab_redirection tab = init_tab_redirection();
     char *args[256];
 
     while (p && (ast->to_export == false && ast->to_alias == false))
@@ -570,7 +354,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
                 put_var(var_storage, key, val);
         }
         else
-            tab = append_tab_redi(tab, p->prefix.redirection);
+            tab = append_tab_redirection(tab, p->prefix.redirection);
         p = p->next;
     }
     if (e) /* link the root node to the first element (ex: echo) */
@@ -578,21 +362,54 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         int size = 0;
         if (e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next == NULL && cont.from_loop)
         {
-            printf("yoloo\n");
+            printf("continue1\n");                               //cas du continue;
             cont.is_continue = true;
             return false;
         }
         else if(e->type == WORD && strcmp(e->element.word, "continue") == 0 && e->next != NULL)
         {
-            // tmp = time_to_loop;
-            // if (tmp > 1)
-            printf("yoloo2\n");
-            cont.time_to_loop = atoi(e->next->element.word);
-            printf("number of time loop after taking it from continue : %d\n", cont.time_to_loop);
+            printf("continue2\n");
+            if (cont.time_to_loop < atoi(e->next->element.word) && expr_is_number(e->next->element.word))
+            {
+                printf("continue3\n"); 
+                cont.time_to_loop = atoi(e->next->element.word);                        //cas du continue n
+                cont.is_continue = 1;
+                printf("value time_to_loop : %d\n", cont.time_to_loop);
+                printf("value is_continue: %d\n", cont.is_continue);
+                printf("value from_loop : %d\n", cont.from_loop);
+                printf("value current_loop : %d\n", cont.current_loop);
+                // if (cont.current_loop == cont.time_to_loop)
+                // {
+                //     printf("continue4\n"); 
+                //     cont.time_to_loop--;
+                //     cont.current_loop--;
+                //     cont.is_continue = true;
+                //     return false;
+                // }
+                return false;
+            }
+            else if (cont.time_to_loop == atoi(e->next->element.word) && expr_is_number(e->next->element.word))
+            {
+                printf("continue5\n"); 
+                cont.is_continue = true;
+                return false;
+            }
+            else if (atoi(e->next->element.word) < 0 && expr_is_number(e->next->element.word))
+            {
+                printf ("continue: %s: loop count out of range\n", e->next->element.word);
+                return true;
+            }
+            else if (!expr_is_number(e->next->element.word))
+            {
+                printf("continue: %s: numeric argument required\n", e->next->element.word);
+                return true;
+            }
+            
+            // printf("number of time loop after taking it from continue : %d\n", cont.time_to_loop);
             return false;
         }
         if (e->type == TOKEN_REDIRECTION)
-            tab = append_tab_redi(tab, e->element.redirection);
+            tab = append_tab_redirection(tab, e->element.redirection);
         else
             args[size++] = e->element.word;
         while (e->next) /* link each child between them */
@@ -600,7 +417,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             e = e->next;
             if (e->type == TOKEN_REDIRECTION)
             {
-                tab = append_tab_redi(tab, e->element.redirection);
+                tab = append_tab_redirection(tab, e->element.redirection);
             }
             else
             {
@@ -699,16 +516,19 @@ bool exec_node_compound_list(struct node_compound_list *ast)
     struct node_compound_list *c = ast;
     while (c)
     {
-        printf("number of time loop : %d\n", cont.time_to_loop);
+        //printf("number of time loop : %d\n", cont.time_to_loop);
         if (exec_node_and_or(c->and_or))
             return true;
+        printf("apres OR : value time_to_loop : %d\n", cont.time_to_loop);
+        printf("apres OR : value is_continue: %d\n", cont.is_continue);
+        printf("apres OR : value from_loop : %d\n", cont.from_loop);
+        printf("apres OR : value current_loop : %d\n", cont.current_loop);
         if (cont.is_continue && cont.time_to_loop == 1)
             return false;
-        else if (!cont.is_continue && cont.time_to_loop > 1)
+        else if (cont.is_continue && cont.time_to_loop > 1)
         {
             cont.time_to_loop--;
-            if (cont.time_to_loop == 1)
-                return false;
+            break;
         }
         c = c->next_sibling;
     }
@@ -718,18 +538,22 @@ bool exec_node_while(struct node_while *ast)
 {
     DEBUG("WHILE")
     bool state = false;
-    cont.from_loop = true;
     while (!exec_node_compound_list(ast->condition))
     {
         if (atoi(program_data->last_cmd_status) > 0)
             break;
-        if (cont.is_continue)
+        if (cont.is_continue && cont.time_to_loop == 1)
         {
             cont.is_continue = false;
             continue;
         }
         else
+        {
+            cont.from_loop = true;
+            cont.current_loop +=1;
             state = exec_node_do_group(ast->body);
+            cont.current_loop -=1;
+        }
     }
     if (!state)
         update_last_status(0);
@@ -738,16 +562,21 @@ bool exec_node_while(struct node_while *ast)
 bool exec_node_until(struct node_until *ast)
 {
     DEBUG("UNTIL")
-    cont.from_loop = true;
     while (exec_node_compound_list(ast->condition))
     {
-        if (cont.is_continue)
+        if (cont.is_continue && cont.time_to_loop == 1)
         {
             cont.is_continue = false;
             continue;
         }
         else
+        {
+            cont.from_loop = true;
+            cont.current_loop +=1;
             exec_node_do_group(ast->body);
+            cont.current_loop -=1;
+            
+        }
     }
     return false;
 }
@@ -809,6 +638,8 @@ bool exec_node_for(struct node_for *ast)
     //exec_node_do_group(ast->body);
     //return false;
 }
+//fd_max = getrlimit(RLMIIT_NOFILE, &rlim)
+//for (i = 0; i < fd_max; ++i) close (i);
 bool exec_node_else_clause(struct node_else_clause *ast)
 {
     DEBUG("ELSE_CLAUSE")
@@ -821,7 +652,11 @@ bool exec_node_else_clause(struct node_else_clause *ast)
 bool exec_node_do_group(struct node_do_group *ast)
 {
     DEBUG("DO_GROUP")
+    //cont.current_loop += 1;
     return exec_node_compound_list(ast->body);
+    // if (cont.current_loop > 0)
+    //     cont.current_loop -= 1;
+    //return a;
 }
 bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found)
 {

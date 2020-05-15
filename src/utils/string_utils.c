@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <errno.h>
+#include <stdbool.h>
 #include "../utils/string_utils.h"
 #include "../utils/xalloc.h"
 
@@ -86,4 +87,13 @@ char *my_strdup(const char *c)
 void error(char *msg)
 {
     fprintf(stderr, "%s\n", msg);
+}
+
+
+bool expr_is_number(char *expr)
+{
+    for (size_t i = 0; i < strlen(expr); i++)
+        if (!is_number(expr[i]))
+            return false;
+    return true;
 }

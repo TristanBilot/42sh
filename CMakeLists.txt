@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.0)
 enable_testing()
 
-# set the project name
 project(42sh)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic -fsanitize=address") #-Werror  
 
-include_directories(src src/storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
+include_directories(src src/expansion/arithmetic/lexer/ src/storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
 
 set(SOURCE_FILES
 	src/parser/parser.c
@@ -28,6 +27,7 @@ set(SOURCE_FILES
 	src/print/ast_print_dot.c
 	src/exec/exec_for.c
 	src/exec/exec.c
+	src/exec/redirection.c
 	src/storage/var_storage.c
 	src/storage/program_data_storage.c
 	src/history/history.c
@@ -38,13 +38,16 @@ set(SOURCE_FILES
 	src/expansion/expansion.c
 	src/expansion/my_popen.c
 	src/exec/commands.c
-	src/garbage_collector/garbage_collector.c)
+	src/garbage_collector/garbage_collector.c
+	src/expansion/arithmetic/lexer/arithmetic_lexer.c
+	src/expansion/arithmetic/lexer/arithmetic_token.c)
 
 
 add_executable(tests_lexer tests/tests_lexer.c ${SOURCE_FILES})
 add_executable(tests_parser tests/tests_parser.c ${SOURCE_FILES})
 add_executable(tests_storage tests/tests_storage.c ${SOURCE_FILES})
 add_executable(tests_history tests/tests_history.c ${SOURCE_FILES})
+add_executable(tests_arithmetic_lexer tests/tests_arithmetic_lexer.c ${SOURCE_FILES})
 add_executable(ast_print src/print/ast_print_main.c ${SOURCE_FILES})
 add_executable(token_printer src/print/token_printer.c ${SOURCE_FILES})
 add_executable(42sh src/main.c ${SOURCE_FILES})
@@ -64,6 +67,9 @@ target_include_directories(tests_storage PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 target_link_libraries(tests_history PRIVATE ${CRITERION_LIBRARIES})
 target_include_directories(tests_history PRIVATE ${CRITERION_INCLUDE_DIRS})
+
+target_link_libraries(tests_arithmetic_lexer PRIVATE ${CRITERION_LIBRARIES})
+target_include_directories(tests_arithmetic_lexer PRIVATE ${CRITERION_INCLUDE_DIRS})
 
 add_custom_target(doc
 	${PROJECT_SOURCE_DIR}/documentation.sh

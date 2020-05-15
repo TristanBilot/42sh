@@ -49,8 +49,13 @@ int perform_for_range(struct range *r, struct node_for *ast)
                 char *tmp = xmalloc(MAX_STR_LEN);
                 my_itoa(j, tmp);
                 put_var(var_storage, ast->variable_name, tmp);
+                cont.from_loop = true;
+                cont.current_loop += 1;
                 if (exec_node_do_group(ast->body))
                     return -1;
+                if (cont.current_loop > 0)
+                    cont.current_loop-= 1;
+                cont.from_loop = false;
             }
             del_var(var_storage, ast->variable_name);
             return 1;

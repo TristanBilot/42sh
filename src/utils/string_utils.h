@@ -13,6 +13,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_STR_LEN 256
 
@@ -54,5 +55,7 @@ char *substr(char *src, int pos, int len);
 */
 void error(char *msg);
 char *my_strdup(const char *c);
+
+bool expr_is_number(char *expr);
 
 #endif /* ! STRING_H */
