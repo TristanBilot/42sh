@@ -22,10 +22,7 @@ int main(int argc, char *argv[])
     if ((lexer = new_lexer(argv[1])))
     {
         if ((ast = parse(lexer)))
-        {
-            // exec_node_input(ast);
             print_ast(ast);
-        }
     }
 
     int ret = atoi(program_data->last_cmd_status);

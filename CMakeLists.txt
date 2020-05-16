@@ -4,14 +4,14 @@ enable_testing()
 project(42sh)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_C_FLAGS "-g -Wall -Wextra -std=c99 -pedantic -fsanitize=address") #-Werror  
+set(CMAKE_C_FLAGS "-g -Wall -Wextra -Werror -std=c99 -pedantic -fsanitize=address") 
 
 include_directories(src src/expansion/arithmetic/lexer/ src/storage src/eval src/parser src/ast src/lexer src/utils src/exec src/print /usr/local/include/criterion/)
 
 set(SOURCE_FILES
 	src/parser/parser.c
 	src/ast/ast.c
-	src/ast/free.c
+	#src/ast/free.c
 	src/lexer/token.c
 	src/lexer/lexer.c
 	src/lexer/lex_evaluation.c
@@ -73,8 +73,8 @@ target_include_directories(tests_arithmetic_lexer PRIVATE ${CRITERION_INCLUDE_DI
 
 add_custom_target(doc
 	${PROJECT_SOURCE_DIR}/documentation.sh
-	WORKING_DIRECTORY ../)
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
 add_custom_target(check
-	python3 ${PROJECT_SOURCE_DIR}/test_suite.py -t 2 build/42sh
-	WORKING_DIRECTORY ../)
+	python3 ${PROJECT_SOURCE_DIR}/test_suite.py -t 2 42sh
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})

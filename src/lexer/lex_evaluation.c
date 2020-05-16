@@ -39,7 +39,8 @@ struct token *lex_io_number(char *c, size_t *i)
     if (!c || !c[*i] || !c[*i+1])
         return NULL;
     
-    if (is_number(c[*i]) && ((*i == 0) || ((c[*i-1] && (c[*i-1] == ' ')) || !c[*i-1]))) /* 2>a */
+    if (is_number(c[*i]) && ((*i == 0) || ((c[*i-1] && (c[*i-1] == ' ')) ||
+        !c[*i-1]))) /* 2>a */
         if (c[*i+1] == '<' || c[*i+1] == '>')
             return new_token_io_number(c[*i]);
     return NULL;
@@ -73,7 +74,7 @@ struct token *lex_comments(char *c, size_t i)
 {
     if (!c || !c[i] || c[i] != '#')
         return NULL;
-    if (/*!c[i - 1]*/i == 0 || c[i - 1] == ' ' || c[i - 1] == '\n')
+    if (i == 0 || c[i - 1] == ' ' || c[i - 1] == '\n')
         return new_token_type(TOK_COMM);
     return NULL;
 }
@@ -88,10 +89,6 @@ struct token *lex_uni_character(char *c, size_t i)
         return new_token_type(TOK_SEMI);
     if (c[i] == '\n')
         return new_token_type(TOK_NEWLINE);
-    // if (c[i] == '{')
-    //     return new_token_type(TOK_LCURL);
-    // if (c[i] == '}')
-    //     return new_token_type(TOK_RCURL);
     if (c[i] == '(')
         return new_token_type(TOK_LPAREN);
     if (c[i] == ')')

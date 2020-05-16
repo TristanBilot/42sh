@@ -41,27 +41,6 @@ struct commands
     void (*function)(char **args);
 };
 
-// struct std
-// {
-//     char *in;
-//     char *out;
-//     char *err;
-// };
-
-// struct tab_redi
-// {
-//     struct std dless;
-//     struct std lessgreat;
-//     struct std lessand;
-//     struct std less;
-//     struct std dgreat;
-//     struct std greatand;
-//     struct std clobber;
-//     struct std great;
-//     struct std dlessdash;
-// };
-
-
 /** Global for continue command **/
 struct command_continue{
     bool is_continue; //= 0;
@@ -72,16 +51,9 @@ struct command_continue{
 
 struct command_continue cont;
 
-void init_continue();
 /** Global for continue command **/
+void init_continue();
 
-
-// /**
-// ** \brief create and init the table of redirection
-// ** 
-// ** \return struct tab_redirection* 
-// */
-// struct tab_redirection *init_tab_redirection(void);
 
 /**
 ** \brief execute input

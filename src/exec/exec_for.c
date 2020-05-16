@@ -14,6 +14,7 @@ int perform_for_range(struct range *r, struct node_for *ast)
     char *right_index = NULL;
     for (size_t i = 0; i < strlen(r->value); i++)
     {
+
         if (r->value[i] == '{' && is_number(r->value[i+1]))
         {
             i++;
@@ -55,7 +56,8 @@ int perform_for_range(struct range *r, struct node_for *ast)
                     return -1;
                 if (cont.current_loop > 0)
                     cont.current_loop-= 1;
-                cont.from_loop = false;
+                if (cont.current_loop == 0)
+                    cont.from_loop = false;
             }
             del_var(var_storage, ast->variable_name);
             return 1;
@@ -67,12 +69,19 @@ int perform_for_range(struct range *r, struct node_for *ast)
 bool perform_for_enumeration(struct node_for *ast, int len_range)
 {
     struct node_for *tmp = ast;
+    struct range *r = tmp->range;
     for (int i = 0; i < len_range; i++)
     {
-        put_var(var_storage, tmp->variable_name, tmp->range->value);
+        put_var(var_storage, tmp->variable_name, r->value);
+        cont.from_loop = true;
+        cont.current_loop += 1;
         if (exec_node_do_group(ast->body))
             return true;
-        tmp->range = tmp->range->next;
+        if (cont.current_loop > 0)
+                    cont.current_loop-= 1;
+        if (cont.current_loop == 0)
+            cont.from_loop = false;
+        r = r->next;
     }
     del_var(var_storage, tmp->variable_name);
     return false;

@@ -1,5 +1,5 @@
-#ifndef LEXER_H
-#define LEXER_H
+#ifndef ARITHMETIC_LEXER_H
+#define ARITHMETIC_LEXER_H
 
 #include "arithmetic_token.h"
 
@@ -21,4 +21,4 @@ struct arithmetic_token *peek_arithmetic(struct arithmetic_lexer *lexer);
 struct arithmetic_token *pop_arithmetic(struct arithmetic_lexer *lexer);
 void append_arithmetic(struct arithmetic_lexer *lexer, struct arithmetic_token *token);
 
-#endif /* ! LEXER_H */
+#endif /* ! ARITHMETIC_LEXER_H */

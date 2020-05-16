@@ -8,11 +8,14 @@
 ** \copyright Copyright (c) 2020
 ** 
 */
+
 #ifndef BUFFER_H
 #define BUFFER_H
 
 #include "../lexer/lexer.h"
+
 #define BUFFER_SIZE 512
+#define HUGE_BUFFER_SIZE 100000
 
 struct buffer {
     char *buf;

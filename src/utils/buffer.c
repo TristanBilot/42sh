@@ -15,7 +15,7 @@ struct buffer *new_buffer(void)
 struct buffer *new_huge_buffer(void)
 {
     struct buffer *buffer = xcalloc(sizeof(struct buffer), 1);
-    buffer->buf = xcalloc(1, 1000000);
+    buffer->buf = xcalloc(1, HUGE_BUFFER_SIZE);
     buffer->index = 0;
     return buffer;
 }
@@ -29,7 +29,7 @@ void append_buffer(struct buffer *buffer, char c)
 
 void append_huge_buffer(struct buffer *buffer, char c)
 {
-    if (buffer->index >= 1000000)
+    if (buffer->index >= HUGE_BUFFER_SIZE)
         return;
     buffer->buf[buffer->index++] = c;
 }

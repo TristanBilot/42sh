@@ -2,7 +2,6 @@
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "utils/string_utils.h"
-#include "ast/free.h"
 #include "../garbage_collector/garbage_collector.h"
 #include "../storage/var_storage.h"
 

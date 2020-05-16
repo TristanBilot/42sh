@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
-#include "arithmetic_lexer.h"
-#include "../utils/xalloc.h"
-#include "../utils/string_utils.h"
-#include "../../../lexer/lexer.h"
-#include "../utils/buffer.h"
+
+#include "./arithmetic_lexer.h"
+#include "../../../utils/xalloc.h"
+#include "../../../utils/string_utils.h"
+#include "../../../utils/buffer.h"
+#include "../../../utils/bracket_counter.h"
 
 // int evaluate_number(char *str, size_t *index)
 // {
@@ -23,8 +24,10 @@
 bool is_lexer_valid(struct arithmetic_lexer *lexer)
 {
     struct arithmetic_token *curr = lexer->token_list->first;
-    if (curr && curr->type != TOK_NUMBER && curr->type != TOK_END &&
-        curr->type != TOK_MINUS && curr->type != TOK_PLUS)
+    // fprintf(stderr, "%s ==> %s\n", lexer->input, token_str(curr->type));
+    if (curr && curr->type != TOK_A_NUMBER && curr->type != TOK_A_END &&
+        curr->type != TOK_A_MINUS && curr->type != TOK_A_PLUS && curr->type != TOK_A_LPAR &&
+        curr->type != TOK_A_NOT)
         return false;
     while (curr && curr->next)
     {
@@ -49,21 +52,29 @@ bool init_arithmetic_lexer(struct arithmetic_lexer *lexer)
     int type;
     struct buffer *buf = new_buffer();
 
-    for (size_t i = 0; i < strlen(lexer->input); i++)
+    if (count_closed_occurences(lexer->input, 0, COUNT_PAREN))
+        return false;
+
+    size_t len = strlen(lexer->input) - 1;
+    while (lexer->input[len] == ' ')
+        len--;
+    len++;
+
+    for (size_t i = 0; i < len; i++)
     {
-        while ((c = lexer->input[i]) == ' ')
+        while (i < len && (c = lexer->input[i]) == ' ')
             i++;
-        
-        if ((type = eval_arithmetic_char(lexer->input, i)) == TOK_UNKNOWN)
+        if (i >= len)
+            break;
+        if ((type = eval_arithmetic_char(lexer->input, i)) == TOK_A_UNKNOWN)
             return false;
-        if (type == TOK_OR || type == TOK_AND || type == TOK_POW)
+        if (type == TOK_A_OR || type == TOK_A_AND || type == TOK_A_POW)
             i++;
-        // fprintf(stderr, "%d %s\n", type, token_str(type));
-        
-        bool last = (i == strlen(lexer->input) - 1);
-        if (type != TOK_NUMBER || last)
+
+        bool last = (i == len - 1);
+        if (type != TOK_A_NUMBER || last)
         {
-            if (type == TOK_NUMBER && last)
+            if (type == TOK_A_NUMBER && last)
             {
                 append_buffer(buf, c);
                 append_arithmetic(lexer, new_arithmetic_number_token(atoi(buf->buf)));
@@ -73,15 +84,13 @@ bool init_arithmetic_lexer(struct arithmetic_lexer *lexer)
                 append_arithmetic(lexer, new_arithmetic_number_token(atoi(buf->buf)));
                 flush(buf);
             }
-            if (type != TOK_NUMBER)
+            if (type != TOK_A_NUMBER)
                 append_arithmetic(lexer, new_arithmetic_token(type));
         }
         else
             append_buffer(buf, c);
-        // if (type == TOK_NUMBER && last)
-        //     append_arithmetic(lexer, new_arithmetic_number_token(atoi(buf->buf)));
     }
-    append_arithmetic(lexer, new_arithmetic_token(TOK_END));
+    append_arithmetic(lexer, new_arithmetic_token(TOK_A_END));
     return is_lexer_valid(lexer);
 }
 

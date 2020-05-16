@@ -32,9 +32,9 @@ void create_alias(char **args)
         {
             if (!alias_storage->variables[i])
                 continue;
-            printf("%s", alias_storage->variables[i]->key);
-            printf("=");
-            printf("%s\n", alias_storage->variables[i]->value);
+            // printf("%s", alias_storage->variables[i]->key);
+            // printf("=");
+            // printf("%s\n", alias_storage->variables[i]->value);
         }
         return;
     }
@@ -57,12 +57,11 @@ void load_file(char *path)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        warn("%s: %s", path, strerror(errno));
+        //warn("%s: %s", path, strerror(errno));
         return;
     }
     while ((read = getline(&line, &len, fp)) != -1)
     {
-        printf("%s", line);
         lexer = new_lexer(line);
         ast = parse(lexer);
         exec_node_input(ast);
@@ -188,11 +187,6 @@ int	print_without_sp_madu(char *c)
                         break;
                     }
                 }
-                // else if (c[i] != '\\')
-                // {
-                //     printf("%c", c[i]);
-                //     i++;
-                // }
             }
             index_tab++;
         }
@@ -202,7 +196,6 @@ int	print_without_sp_madu(char *c)
     }
     return (0);
 }
-
 
 void print_echo(char **args, bool e, bool n)
 {
@@ -236,10 +229,6 @@ void print_echo(char **args, bool e, bool n)
         if (n == false)
             printf("%c", '\n');
     }
-    // else if (e == false && n == false)
-    // {
-    //     printf("%s", args[i]);
-    // }
 }
 
 void echo(char **args)
@@ -365,9 +354,6 @@ void exit_shell(void)
 void func_continue(char **args)
 {
     if (strcmp(args[0], "continue") == 0)
-    {
         printf("bash: continue: only meaningful in a `for', `while', or `until' loop\n");
-    }
-
     update_last_status(0);
 }

@@ -12,8 +12,6 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-// #define _XOPEN_SOURCE 700
-
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif

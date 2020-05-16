@@ -189,8 +189,6 @@ void init_42sh_with_history(struct option_sh *option)
                     exec_node_input(ast);
                     if (after_sig)
                         return;
-                    //if(!option->norc_flag)
-                        //  load_ressources();
                     if (option->print_ast_flag)
                         print_ast(ast);
                 }
@@ -252,7 +250,6 @@ void init_42sh_with_history(struct option_sh *option)
             else
             {
                 putchar(c);
-                // printf("%d", c);
                 if (c != 27)
                 {
                     if (buffer->index < char_after_start)
@@ -271,7 +268,6 @@ void init_42sh_with_history(struct option_sh *option)
                 }
             }
         }
-        // free_garbage_collector();
         if (line)
             free(line);
         printf("\n");
@@ -314,33 +310,6 @@ void init_42sh_without_history(struct option_sh *option)
             free(line);
     }
 }
-
-
-
-// void load_ressource_files()
-// {
-//     char line[LINE_BUFSIZE];
-//     int linenr;
-//     FILE *pipe;
-    
-//     /* Get a pipe where the output from the scripts comes in */
-//     pipe = popen("./42shrc.sh", "r");
-//     if (pipe == NULL) {  /* check for errors */
-//         perror(argv[0]); /* report error message */
-//         return 1;        /* return with exit code indicating error */
-//     }
-
-//     /* Read script output from the pipe line by line */
-//     linenr = 1;
-//     while (fgets(line, LINE_BUFSIZE, pipe) != NULL) {
-//         printf("Script output line %d: %s", linenr, line);
-//         ++linenr;
-//     }
-//     /* Once here, out of the loop, the script has ended. */
-//     pclose(pipe); /* Close the pipe */
-//     return 0;     /* return with exit code indicating success. */
-// }
-
 
 void print_usage()
 {
@@ -388,31 +357,6 @@ void delete_last_character(void)
     putchar('\b');  // se place sur l'espace pour qu'il soit écrasé par le prochain caractère
 }
 
-// void load_ressources()
-// {
-//     char cwd[MAX_STR_LEN];
-//     char *args[] = { "load_ressource", NULL };
-//     if (getcwd(cwd, sizeof(cwd)) != NULL)
-//     {
-//         printf("path :%s\n", cwd);
-//         strcat(cwd, "/load_ressource");
-//         printf("path :%s\n", cwd);
-//     }
-//    else
-//    {
-//        perror("getcwd() error");
-//    }
-   
-//     if (file_exists(cwd))
-//     {
-//         chmod(cwd, S_IRWXU);
-//         execv(cwd, args);
-//     }
-//     else
-//     {
-//         printf("erreur\n");
-//     }
-// }
 
 void sighandler(int signum)
 {

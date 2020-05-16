@@ -13,6 +13,5 @@ int main(int argc, char *argv[])
 
     if ((ast = parse(lexer)))
         exec_node_input(ast);
-    // free_lexer(lexer);
     free_garbage_collector();
 }

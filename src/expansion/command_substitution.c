@@ -27,16 +27,15 @@ char *perform_command_substitution(char *word)
         }
         else if (word[i] == '`')
         {
-            
             i++;
-            printf("word: %s\n", word);
             sub = substr(word, i, get_next_index(word, '`', i) - i);
         }
-        printf("sub: %s\n", sub);
-        printf("sidxub: %zu\n", get_next_index(word, '`', i));
         FILE *out = my_popen(sub, "r");
         if (!out)
-            printf("my popen null\n");
+        {
+            fprintf(stderr, "my popen null in command substitution\n");
+            return NULL;
+        }
         struct buffer *stdout_buf = new_huge_buffer();
         char ch;
         char next;

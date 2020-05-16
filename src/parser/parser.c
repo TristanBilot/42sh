@@ -4,15 +4,13 @@
 #include <string.h>
 
 #include "../parser/parser.h"
-#include "../ast/free.h"
-#include "../ast/ast.h"
 #include "../utils/parser_utils.h"
 #include "../utils/xalloc.h"
 #include "../utils/string_utils.h"
 
 #define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
-                        printf("%s", msg);
+    printf("%s", msg);
 
 struct parser *init_parser(struct lexer *lexer)
 {
@@ -21,15 +19,6 @@ struct parser *init_parser(struct lexer *lexer)
     parser->lexer = lexer;
     parser->current_token = peek(lexer);
     return parser;
-}
-
-void free_parser(struct parser *p)
-{
-    if (p)
-    {
-        free_lexer(p->lexer);
-        free(p);
-    }
 }
 
 struct token *get_next_token(struct parser *p)

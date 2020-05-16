@@ -1,28 +1,28 @@
-#ifndef TOKEN_H
-#define TOKEN_H
+#ifndef ARITHMETIC_TOKEN_H
+#define ARITHMETIC_TOKEN_H
 
 #include <stdbool.h>
 #include <stddef.h>
 
 enum arithmetic_token_type
 {
-    TOK_PLUS = 0,
-    TOK_MINUS,
-    TOK_MULTIPLY,
-    TOK_DIVIDE,
-    TOK_LPAR,
-    TOK_RPAR,
-    TOK_POW,
-    TOK_SEPAND,
-    TOK_PIPE,
-    TOK_XOR,
-    TOK_AND,
-    TOK_OR,
-    TOK_NOT,
-    TOK_TILDE,
-    TOK_NUMBER,
-    TOK_END,
-    TOK_UNKNOWN
+    TOK_A_PLUS = 0,
+    TOK_A_MINUS,
+    TOK_A_MULTIPLY,
+    TOK_A_DIVIDE,
+    TOK_A_LPAR,
+    TOK_A_RPAR,
+    TOK_A_POW,
+    TOK_A_SEPAND,
+    TOK_A_PIPE,
+    TOK_A_XOR,
+    TOK_A_AND,
+    TOK_A_OR,
+    TOK_A_NOT,
+    TOK_A_TILDE,
+    TOK_A_NUMBER,
+    TOK_A_END,
+    TOK_A_UNKNOWN
 };
 
 struct arithmetic_token
@@ -40,4 +40,4 @@ int eval_arithmetic_char(char *exp, size_t i);
 struct arithmetic_token *new_arithmetic_token(int type);
 struct arithmetic_token *new_arithmetic_number_token(int value);
 
-#endif /* ! TOKEN_H */
+#endif /* ! ARITHMETIC_TOKEN_H */

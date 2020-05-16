@@ -229,10 +229,5 @@ bool parse_case_clause(struct parser *parser, struct node_case_clause **ast);
 **\return false 
 */
 bool parse_case_item(struct parser *parser, struct node_case_item **ast);
-/**
-**\brief free the parser
-**
-**\param p 
-*/
-void free_parser(struct parser *p);
+
 #endif /* ! PARSER_H */

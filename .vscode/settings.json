@@ -75,7 +75,8 @@
         "istream": "c",
         "signal.h": "c",
         "sstream": "c",
-        "index_utils.h": "c"
+        "index_utils.h": "c",
+        "fstream": "c"
     },
     "cmake.configureOnOpen": false
 }

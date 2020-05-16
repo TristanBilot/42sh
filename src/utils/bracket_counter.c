@@ -66,3 +66,20 @@ bool check_closing_symbols_from_splitted(char **splitted, int i)
     append_buffer(buffer, '\0');
     return check_closing_symbols(buffer->buf);
 }
+
+int get_closing_parent_index(char *word, size_t i)
+{
+    int count = 1;
+    i++;
+    while (i < strlen(word) && count != 0)
+    {
+        if (word[i] == '(')
+            count++;
+        if (word[i] == ')')
+            count--;
+        i++;
+    }
+    if (i == strlen(word) - 1 && count != 0)
+        return -1;
+    return i - 1;
+}

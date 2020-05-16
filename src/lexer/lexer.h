@@ -33,13 +33,6 @@ struct lexer {
 struct lexer *new_lexer(char *str);
 
 /**
-** \brief Free all ressources allocated in the lexer.
-**
-** \param lexer the lexer to free.
-*/
-void free_lexer(struct lexer *lexer);
-
-/**
 ** \brief Return the next token without consume it.
 **
 ** \return the next token from the input stream

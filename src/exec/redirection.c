@@ -25,7 +25,6 @@ struct file_manager *init_file_manager(void)
 struct tab_redirection init_tab_redirection(void)
 {
     struct tab_redirection tab;
-    tab.redirections = NULL;
     tab.size = 0;
     return tab;
 }
@@ -37,15 +36,18 @@ struct tab_redirection append_tab_redirection(struct tab_redirection tab, struct
     new.file = e->right;
     if (is(e->left, ""))
     {
-        if (is(new.type, "TOK_LESS"))
+        if (is(new.type, "TOK_LESS") || is(new.type, "TOK_LESSAND")|| is(new.type, "TOK_LESSGREAT"))
             new.ionumber = 0;
         else
             new.ionumber = 1;
     }
     else
         new.ionumber = atoi(e->left);
-    tab.redirections = xrealloc(tab.redirections, sizeof(tab.redirections) + sizeof(struct std));
-    tab.redirections[tab.size++] = new;
+    if (tab.size < TAB_REDI_SIZE)
+    {
+        tab.redirections[tab.size] = new;
+        tab.size += 1;
+    }
     return tab;
 }
 
@@ -53,24 +55,72 @@ bool manage_duplication(struct tab_redirection tab)
 {
     for (int i = 0; i < tab.size; i++)
     {
-        if (is(tab.redirections[i].type, "TOK_GREAT"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber);
+        if (is(tab.redirections[i].type, "TOK_GREAT"))  // ne doit pas fonctionner quand noclobber est set
+        {
+            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+                return true;
+        }
         else if (is(tab.redirections[i].type, "TOK_LESS"))
-            return dup_file(tab.redirections[i].file, "r", tab.redirections[i].ionumber);
+        {
+            if (dup_file(tab.redirections[i].file, "r", tab.redirections[i].ionumber))
+                return true;
+        }  
         else if (is(tab.redirections[i].type, "TOK_DGREAT"))
-            return dup_file(tab.redirections[i].file, "a+", tab.redirections[i].ionumber);
-        else if (is(tab.redirections[i].type, "TOK_DLESS"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber); // à faire
-        else if (is(tab.redirections[i].type, "TOK_DLESSDASH"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber); // à faire
+        {
+            if (dup_file(tab.redirections[i].file, "a", tab.redirections[i].ionumber))
+                return true;
+        }
+        else if (is(tab.redirections[i].type, "TOK_DLESS")) // HEREDOC à faire
+        {
+            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+                return true;
+        }
+        else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC à faire
+        {
+            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+                return true;
+        }
         else if (is(tab.redirections[i].type, "TOK_LESSGREAT"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber); // à faire
+        {
+            if (dup_file(tab.redirections[i].file, "r+", tab.redirections[i].ionumber))
+                return true;
+        }
         else if (is(tab.redirections[i].type, "TOK_LESSAND"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber); // à faire
+        {
+            if (is(tab.redirections[i].file, "-"))
+                close(tab.redirections[i].ionumber);
+            else if (tab.redirections[i].file[0] && tab.redirections[i].file[1] && tab.redirections[i].file[1] == '-')
+            {
+                dup_fd(tab.redirections[i].file[0] - '0', "r", tab.redirections[i].ionumber);
+                close(tab.redirections[i].file[0] - '0');
+            }
+            else if (atoi(tab.redirections[i].file) == 0 && !is(tab.redirections[i].file, "0"))
+                return true;
+            else if (dup_fd(atoi(tab.redirections[i].file), "r", tab.redirections[i].ionumber))
+                return true;
+        }
         else if (is(tab.redirections[i].type, "TOK_GREATAND"))
-            return dup2(tab.redirections[i].ionumber, atoi(tab.redirections[i].file)) < 0;
+        {
+            if (is(tab.redirections[i].file, "-"))
+                close(tab.redirections[i].ionumber);
+            else if (tab.redirections[i].file[0] && tab.redirections[i].file[1] && tab.redirections[i].file[1] == '-')
+            {
+                dup_fd(tab.redirections[i].file[0] - '0', "a", tab.redirections[i].ionumber);
+                close(tab.redirections[i].file[0] - '0');
+            }
+            else if (atoi(tab.redirections[i].file) == 0 && !is(tab.redirections[i].file, "0"))
+            {
+                if (tab.redirections[i].ionumber != 1 || dup_file(tab.redirections[i].file, "w+", 12))
+                    return true;
+            }
+            else if (dup_fd(atoi(tab.redirections[i].file), "a", tab.redirections[i].ionumber))
+                return true;
+        }
         else if (is(tab.redirections[i].type, "TOK_CLOBBER"))
-            return dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber); // à faire
+        {
+            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+                return true;
+        }
     }
     return false;
 }
@@ -87,6 +137,28 @@ bool dup_file(char *file, char *flag, int io)
     }
     file_manager->fd_to_close = out;
     file_manager->file = f;
+    if (io == 12)
+    {
+        close(1);
+        close(2);
+        int fd = dup2(out, 1);
+        if (fd < 0)
+        {
+            close(out);
+            return true;
+        }
+        fd = dup2(out, 2);
+        if (fd < 0)
+        {
+            close(out);
+            return true;
+        }
+        close(out);
+        file_manager->fd_to_close = -1;
+        file_manager->file = NULL;
+        fclose(f);
+        return false;
+    }
     close(io);
     int fd = dup2(out, io);
     if (fd < 0)
@@ -94,10 +166,28 @@ bool dup_file(char *file, char *flag, int io)
         close(out);
         return true;
     }
-    // close(fd);
     close(out);
     file_manager->fd_to_close = -1;
     file_manager->file = NULL;
     fclose(f);
+    return false;
+}
+
+bool dup_fd(int file, char *flag, int io)
+{
+    FILE *f = fdopen(file, flag);
+    if (!f)
+        return true;
+    int out = fileno(f);
+    if (out == -1)
+        return true;
+    close(io);
+    int fd = dup2(out, io);
+    if (fd < 0)
+    {
+        close(out);
+        return true;
+    }
+    // Ne pas close
     return false;
 }

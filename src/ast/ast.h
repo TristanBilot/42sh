@@ -13,26 +13,6 @@
 #define AST_H
 
 #include <stdbool.h>
-//#include "parser/parser.h"
-
-// struct ast_node
-// {
-//     enum node_type
-//     {
-//         NODE_IF,                                // = KEYWORD
-//         NODE_SIMPLECOMMAND,                     // = TOKEN COMMAND
-//         NODE_WORD,                              // = WORD
-//         NODE_LOGICAL
-//     } type;
-
-//     union
-//     {
-//         struct ast_node_if *ast_node_if;
-//         struct ast_node_command *ast_node_simplecommand;
-//         struct ast_node_word *ast_node_word;
-//         struct ast_node_logical *ast_node_logical;
-//     } data;
-// };
 
 struct parser
 {
@@ -106,6 +86,15 @@ struct node_simple_command
     struct node_element *elements; /* LIST */
 };
 
+enum shell_type
+{
+    FOR,
+    WHILE,
+    UNTIL,
+    CASE,
+    IF
+};
+
 struct node_shell_command
 {
     enum type_clause
@@ -124,14 +113,7 @@ struct node_shell_command
         struct node_case *rule_case;
         struct node_if *rule_if;
     } shell;
-    enum shell_type /* NEED IMPLEMENTATION !!!!!!!!! */
-    {
-        FOR,
-        WHILE,
-        UNTIL,
-        CASE,
-        IF
-    } shell_type;
+    enum shell_type shell_type;
 };
 
 struct node_funcdec
@@ -143,17 +125,6 @@ struct node_funcdec
 
 struct node_redirection
 {
-    // enum type_redirection{
-    //     DLESSDASH,	// <<-
-    //     DLESS,		// <<
-    //     LESSGREAT,	// <>
-    //     LESSAND,	// <&
-    //     LESS,		// <
-    //     DGREAT,		// >>
-    //     GREATAND,	// >&
-    //     CLOBBER,	// >|
-    //     GREAT		// >
-    // }type;
     unsigned int type;
     char *left;
     char *right;
@@ -174,7 +145,7 @@ struct node_prefix
         {
             char *variable_name;
             char *value;
-        } *assigment_word; /* MAYBE CREATE A POINTER */
+        } *assigment_word;
         struct node_redirection *redirection;
     } prefix;
 };
@@ -222,7 +193,7 @@ struct node_case
 struct node_if                              // INSTANCE KEYWORD
 {
     struct node_compound_list *condition;   // the condition
-    struct node_compound_list *if_body;   // on peut mettre directement ici la liste de struct elif  // the body of the if
+    struct node_compound_list *if_body;     // on peut mettre directement ici la liste de struct elif  // the body of the if
     struct node_else_clause *else_clause;   // the body of the else, may be NULL
 };
 
@@ -274,17 +245,7 @@ struct word_list
 struct node_case_item
 {
     struct word_list *words;
-    /*enum item
-    {
-        COMPOUND,
-        NEXT
-    } type;*/
     struct node_compound_list *compound_list;
-    /*union next
-    {
-        
-        struct node_case_item *next;
-    } next;*/
 };
 
 

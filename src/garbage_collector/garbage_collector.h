@@ -43,10 +43,6 @@ void append_to_garbage(void *addr);
 */
 void free_garbage_collector();
 
-
-
-
-
 /**************************************************************************** GARBAGE VARIABLE *****************************************************************************************/
 
 struct garbage_variable

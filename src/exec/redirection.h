@@ -14,6 +14,8 @@
 #ifndef REDIRECTION_H
 #define REDIRECTION_H
 
+#define TAB_REDI_SIZE 256
+
 //  STRUCTURES
 
 struct file_manager
@@ -35,7 +37,7 @@ struct std
 
 struct tab_redirection
 {
-    struct std *redirections;
+    struct std redirections[TAB_REDI_SIZE];
     int size;
 };
 
@@ -79,7 +81,7 @@ struct tab_redirection append_tab_redirection(struct tab_redirection tab, struct
 bool manage_duplication(struct tab_redirection tab);
 
 /**
-** \brief apply file descriptor duplication
+** \brief apply file descriptor duplication from file name
 ** 
 ** \param file 
 ** \param flag 
@@ -89,5 +91,16 @@ bool manage_duplication(struct tab_redirection tab);
 ** \return false 
 */
 bool dup_file(char *file, char *flag, int io);
+
+/**
+** \brief apply file descriptor duplication from file descriptor
+** 
+** \param out 
+** \param flag 
+** \param io 
+** \return true 
+** \return false 
+*/
+bool dup_fd(int file, char *flag, int io);
 
 #endif /* ! REDIRECTION_H */

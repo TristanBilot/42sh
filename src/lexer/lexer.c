@@ -285,8 +285,8 @@ bool init_lexer(struct lexer *lexer)
                     continue;
                 }
                 else if (type == 1)
-                { // lex_multi_token retourne jamais 1
-                    error("Lexer error: invalid parenthesis"); // mais ça s'arrête quand même avec le error non ? aah ok
+                {
+                    error("Lexer error: invalid parenthesis");
                     update_last_status(2);
                     return false;
                 }
@@ -323,8 +323,7 @@ bool init_lexer(struct lexer *lexer)
         else
         {
             append(lexer, new_token_type(type));
-            // if (type == TOK_NEWLINE || type == TOK_SEPAND || type == TOK_SEMI)
-                is_word = false;
+            is_word = false;
             if (type == KW_CASE || type == KW_FOR)
                 is_kw_in = true;
             if (type == KW_IN)
@@ -346,26 +345,6 @@ struct lexer *new_lexer(char *str)
     lexer->input = str;
     bool state = init_lexer(lexer);
     return state ? lexer : NULL;
-}
-
-void free_lexer(struct lexer *lexer)
-{
-    if (!lexer)
-        return;
-    struct token *index = lexer->token_list->first;
-    struct token *tmp = NULL;
-    while (index)
-    {
-        tmp = index;
-        index = index->next;
-        if (tmp->type == TOK_IONUMBER || tmp->type == TOK_WORD || tmp->type == TOK_ASS_WORD)
-            free(tmp->value);
-        free(tmp);
-    }
-    if (index)
-        free(index);
-    free(lexer->token_list);
-    free(lexer);
 }
 
 struct token *peek(struct lexer *lexer)

@@ -18,7 +18,6 @@ void *xmalloc(size_t size)
 
 void *xrealloc(void *ptr, size_t size)
 {
-    // printf("ATTENTION A FREE LE REALLOC");
     void *ret = realloc(ptr, size);
     if (size && !ret)
         err(1, "%s", strerror(errno));
@@ -45,7 +44,6 @@ void *ymalloc(size_t size)
 }
 void *yrealloc(void *ptr, size_t size)
 {
-    // printf("ATTENTION A FREE LE REALLOC");
     void *ret = realloc(ptr, size);
     if (size && !ret)
         err(1, "%s", strerror(errno));

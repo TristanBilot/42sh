@@ -377,7 +377,7 @@
     checks:
       - returncode
       - stdout
-  - stdin: until cat< build/Makefile; do echo toto; done
+  - stdin: until cat< test_suite.py; do echo toto; done
     checks:
       - returncode
       - stdout
@@ -433,11 +433,11 @@
     checks:
       - returncode
       - stdout
-  - stdin: while cat<Makefile; do echo toto; done
+  - stdin: while cat<u; do echo toto; done
     checks:
       - returncode
       - stdout
-  - stdin: while cat<Makefile; do echo toto; done
+  - stdin: while cat<u; do echo toto; done
     checks:
       - returncode
       - stdout

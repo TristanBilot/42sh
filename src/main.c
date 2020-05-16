@@ -56,10 +56,7 @@ int main(int ac, char **av)
     if (av[optind])
         option->file_path = av[optind];
     init_42sh_with_history(option);
-    // printf("status : %s\n", program_data->last_cmd_status);
-    // printf("status: %s\n", program_data->last_cmd_status);
     int ret = atoi(program_data->last_cmd_status);
-    // printf("status int: %d\n", ret);
     free_garbage_collector();
     free(option);
     free_var_storage(var_storage);
