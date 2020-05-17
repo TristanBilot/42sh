@@ -65,7 +65,7 @@ bool put_var(struct var_storage *storage, char *key, char *val)
     return new->type != VAR_ERROR;
 }
 
-void del_var(struct var_storage *storage, char *key)
+bool del_var(struct var_storage *storage, char *key)
 {
     int h = hash(key);
     if (storage->variables[h])
@@ -73,7 +73,10 @@ void del_var(struct var_storage *storage, char *key)
         free(storage->variables[h]->value);
         free(storage->variables[h]);
         storage->variables[h] = NULL;
+        return true;
     }
+    else
+        return false;
 }
 
 struct variable *get_var(struct var_storage *storage, char *key)

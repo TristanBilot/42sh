@@ -46,7 +46,7 @@ void free_var_storage(struct var_storage *storage);
 bool var_exists(struct var_storage *storage, char *key);
 enum var_type get_var_type(char *value);
 bool put_var(struct var_storage *storage, char *key, char *val);
-void del_var(struct var_storage *storage, char *key);
+bool del_var(struct var_storage *storage, char *key);
 struct variable *get_var(struct var_storage *storage, char *key);
 char *get_value(struct var_storage *storage, char *key);
 

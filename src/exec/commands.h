@@ -12,6 +12,8 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
+#define UNALIAS_USAGE "unalias: usage: unalias [-a] name [name ...]\n"
+
 
 /**
 ** \brief function to delete an alias
@@ -95,4 +97,3 @@ void print_echo(char **args, bool e, bool n);
 void func_continue(char **args);
 
 #endif /* COMMANDS_H_ */
-

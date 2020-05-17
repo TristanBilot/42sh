@@ -17,32 +17,79 @@
 
 extern char **environ;
 
+/* args[0] = NULL for export and alias */
+
+static void print_alias_storage()
+{
+    for (int i = 0; i < STORAGE_SIZE; i++)
+    {
+        if (!alias_storage->variables[i])
+            continue;
+        printf("alias %s=", alias_storage->variables[i]->key);
+        printf("%s\n", alias_storage->variables[i]->value);
+    }
+}
+
 void delete_alias(char **args)
 {
-    if (!args[0])
-        warn("unalias bad argument");
-    del_var(alias_storage, args[0]);
+    if (args[1] && args[1][0] == '-')
+    {
+        for (int i = 1; args[1][i]; i++)
+        {
+            if (args[1][i] != 'a')
+            {
+                warn("unalias: -%c: invalid option\n", args[1][i]);
+                return;
+            }
+        }
+        free_var_storage(alias_storage);
+        alias_storage = new_var_storage();
+    }
+    else
+    {
+        if (!args[1])
+            warn(UNALIAS_USAGE);
+        else if (!del_var(alias_storage, args[1]))
+            warn("unalias: %s: not found\n", args[1]);
+    }
 }
 
 void create_alias(char **args)
 {
     if (!args[0])
     {
-        for (int i = 0; i < STORAGE_SIZE; i++)
-        {
-            if (!alias_storage->variables[i])
-                continue;
-            // printf("%s", alias_storage->variables[i]->key);
-            // printf("=");
-            // printf("%s\n", alias_storage->variables[i]->value);
-        }
+        print_alias_storage(alias_storage);
         return;
     }
-    if (!alias_storage)
-        alias_storage = new_var_storage();
-    char *key = strsep(&args[0], "=");
-    char *value = strsep(&args[0], "=");
-    put_var(alias_storage, key, value);
+    if (args[0] && args[0][0] == '-')
+    {
+        for (int i = 1; args[0][i]; i++)
+        {
+            if (args[0][i] != 'p')
+            {
+                warn("alias: -%c: invalid option\n", args[0][i]);
+                return;
+            }
+        }
+        print_alias_storage(alias_storage);
+    }
+    int i = 0;
+    if (args[0][0] == '-')
+        i += 1;
+    for (; args[i]; i++)
+    {
+        char *key = strsep(&args[i], "=");
+        char *value = strsep(&args[i], "=");
+        printf("key: %s\n value: %s\n", key, value);
+        if (!value)
+        {
+            if (var_exists(alias_storage, key))
+                printf("alias %s=%s\n", key, get_value(alias_storage, key));
+            else
+                warn("alias: %s: not found\n", key);
+        }
+        put_var(alias_storage, key, value);
+    }
 }
 
 void load_file(char *path)
@@ -57,11 +104,12 @@ void load_file(char *path)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        //warn("%s: %s", path, strerror(errno));
+        warn("%s: %s", path, strerror(errno));
         return;
     }
     while ((read = getline(&line, &len, fp)) != -1)
     {
+        printf("%s", line);
         lexer = new_lexer(line);
         ast = parse(lexer);
         exec_node_input(ast);
@@ -114,15 +162,6 @@ static void fill_echo_tab(struct echo_tab tab[10])
     tab[8].corresp = '\v';
 }
 
-void print_args(char **args)
-{
-    int i = 0;
-    while (args[i])
-    {
-        printf("args %d : %s\n", i, args[i]);
-        i++;
-    }
-}
 int	print_without_sp(char *c)
 {
     int i = 0;
@@ -187,6 +226,11 @@ int	print_without_sp_madu(char *c)
                         break;
                     }
                 }
+                // else if (c[i] != '\\')
+                // {
+                //     printf("%c", c[i]);
+                //     i++;
+                // }
             }
             index_tab++;
         }
@@ -196,6 +240,7 @@ int	print_without_sp_madu(char *c)
     }
     return (0);
 }
+
 
 void print_echo(char **args, bool e, bool n)
 {
@@ -354,6 +399,8 @@ void exit_shell(void)
 void func_continue(char **args)
 {
     if (strcmp(args[0], "continue") == 0)
+    {
         printf("bash: continue: only meaningful in a `for', `while', or `until' loop\n");
+    }
     update_last_status(0);
 }

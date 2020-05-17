@@ -431,6 +431,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             strcat(str, p->prefix.assigment_word->value);
             prefix = prefix->next;
             args[i] = str;
+            p = p->next;
             i += 1;
         }
         args[i] = NULL;
