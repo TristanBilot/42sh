@@ -104,3 +104,4 @@ bool dup_file(char *file, char *flag, int io);
 bool dup_fd(int file, char *flag, int io);
 
 #endif /* ! REDIRECTION_H */
+

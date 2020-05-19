@@ -357,7 +357,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
                 cont.is_continue = 1;
                 // if (cont.current_loop == cont.time_to_loop)
                 // {
-                //     printf("continue4\n"); 
+                //     printf("continue42222222222222222222222\n"); 
                 //     cont.time_to_loop--;
                 //     cont.current_loop--;
                 //     cont.is_continue = true;

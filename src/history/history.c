@@ -19,7 +19,7 @@ void load_history(struct history *history)
 
     if (!file)
     {
-        perror("fopen error @ history");
+        //perror("fopen error @ history");
         return;
     }
     
@@ -55,8 +55,8 @@ void append_history_command(struct history *history, char *cmd)
     // cmd_to_append[--j] = '\0';
     // cmd_to_append[--j] = '\0';
     FILE *f = fopen(DEFAULT_HISTORY_FILE_NAME, "a");
-    if (!f)
-        perror("fopen error @ append history");
+    //if (!f)
+    //    perror("fopen error @ append history");
     
     if (!is_only_spaces(cmd))
     {
