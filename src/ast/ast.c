@@ -20,7 +20,8 @@ struct node_list *build_list(void)
     return new;
 }
 
-struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, struct node_pipeline *right)
+struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left,
+    struct node_pipeline *right)
 {
     struct node_and_or *new = xcalloc(1, sizeof(struct node_and_or));
     new->is_final = true;
@@ -30,7 +31,8 @@ struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, 
     return new;
 }
 
-struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left, struct node_pipeline *right)
+struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left,
+    struct node_pipeline *right)
 {
     struct node_and_or *new = xcalloc(1, sizeof(struct node_and_or));
     new->is_final = false;
@@ -59,7 +61,8 @@ struct node_command *build_command(void)
 
 struct node_simple_command *build_simple_command(void)
 {
-    struct node_simple_command *new = xcalloc(1, sizeof(struct node_simple_command));
+    struct node_simple_command *new = xcalloc(1,
+        sizeof(struct node_simple_command));
     new->prefixes = NULL;
     new->elements = NULL;
     new->to_export = false;
@@ -69,7 +72,8 @@ struct node_simple_command *build_simple_command(void)
 
 struct node_shell_command *build_shell_command(struct parser *parser)
 {
-    struct node_shell_command *new = xcalloc(1, sizeof(struct node_shell_command));
+    struct node_shell_command *new = xcalloc(1,
+        sizeof(struct node_shell_command));
     new->shell.compound_list = NULL;
     if (is_type(parser->current_token, TOK_LPAREN))
         new->type = PARENTHESIS;
@@ -80,7 +84,7 @@ struct node_shell_command *build_shell_command(struct parser *parser)
     return new;
 }
 
-struct node_funcdec *build_funcdec()
+struct node_funcdec *build_funcdec(void)
 {
     struct node_funcdec *new = xcalloc(1, sizeof(struct node_funcdec));
     new->is_function = false;
@@ -92,10 +96,10 @@ struct node_funcdec *build_funcdec()
 
 struct node_redirection *build_redirection(struct parser *parser)
 {
-    struct node_redirection *new = xcalloc(1, sizeof(struct node_redirection));
+    struct node_redirection *new = xcalloc(1,
+        sizeof(struct node_redirection));
     new->left = parser->current_token->value;
     return new;
-    
 }
 
 struct node_prefix *build_prefix(struct parser *parser)
@@ -133,11 +137,11 @@ struct node_element *build_element(struct parser *parser)
     }
     return new;
 }
- 
 
 struct node_compound_list *build_compound_list(void)
 {
-    struct node_compound_list *new = xcalloc(1, sizeof(struct node_compound_list));
+    struct node_compound_list *new = xcalloc(1,
+        sizeof(struct node_compound_list));
     new->and_or = NULL;
     new->next_sibling = NULL;
     return new;
@@ -174,7 +178,7 @@ struct node_if *build_if(void)
     new->if_body = NULL;
     new->else_clause = NULL;
     return new;
-} 
+}
 
 struct node_for *build_for(void)
 {

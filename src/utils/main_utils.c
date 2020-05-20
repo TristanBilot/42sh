@@ -34,7 +34,7 @@ void init_42sh_with_history(struct option_sh *option)
     else
     {
         int char_after_start = 0;
-        char * line = NULL;
+        char *line = NULL;
         struct buffer *buffer = new_buffer();
         if (print_prompt() == 1)
             return;
@@ -80,7 +80,6 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Retire l'ancienne input du buffer
                     */
                     flush(buffer);
-                    
                     /*
                     ** Récupère l'history
                     ** Affiche et ajoute caractère par caractère la nouvelle input (history)
@@ -95,7 +94,6 @@ void init_42sh_with_history(struct option_sh *option)
                             append_buffer(buffer, command[i]);
                         }
                     }
-                    
                     continue;
                 }
                 else if (c == 66)
@@ -122,7 +120,6 @@ void init_42sh_with_history(struct option_sh *option)
                     ** Retire l'ancienne input du buffer
                     */
                     flush(buffer);
-                    
                     /*
                     ** Récupère l'history
                     ** Affiche et ajoute caractère par caractère la nouvelle input (history)
@@ -137,7 +134,6 @@ void init_42sh_with_history(struct option_sh *option)
                             append_buffer(buffer, command[i]);
                         }
                     }
-                    
                     continue;
                 }
                 else if (c == 67)
@@ -151,7 +147,6 @@ void init_42sh_with_history(struct option_sh *option)
                     }
                     else
                         putchar('a');
-                    
                     continue;
                 }
                 else if (c == 68)
@@ -161,7 +156,6 @@ void init_42sh_with_history(struct option_sh *option)
                         buffer->index--;
                         putchar('\b');
                     }
-                    
                     putchar('a');
                     continue;
                 }
@@ -185,7 +179,6 @@ void init_42sh_with_history(struct option_sh *option)
                 {
                     flush(buffer);
                     ast = parse(lexer);
-                    
                     exec_node_input(ast);
                     if (after_sig)
                         return;
@@ -204,13 +197,16 @@ void init_42sh_with_history(struct option_sh *option)
                     if (buffer->index < char_after_start)
                     {
                         putchar('\b');
-                        for (int i = buffer->index - 1; i <= char_after_start + 1; i++)
+                        for (int i = buffer->index - 1;
+                            i <= char_after_start + 1;
+                             i++)
                         {
                             buffer->buf[i] = buffer->buf[i + 1];
                             putchar(buffer->buf[i]);
                         }
                         putchar(' ');
-                        for (int i = buffer->index; i <= char_after_start; i++)
+                        for (int i = buffer->index; i <= char_after_start;
+                            i++)
                             putchar('\b');
                         char_after_start--;
                         buffer->index--;
@@ -229,7 +225,7 @@ void init_42sh_with_history(struct option_sh *option)
                 putchar('\n');
                 return;
             }
-            else if (c == 9) // Tabulation 
+            else if (c == 9) // Tabulation
             {
                 char *best_fit = get_auto_completion(history, buffer->buf);
                 if (best_fit)
@@ -257,9 +253,11 @@ void init_42sh_with_history(struct option_sh *option)
                         for (int i = char_after_start; i > buffer->index; i--)
                             buffer->buf[i] = buffer->buf[i - 1];
                         buffer->buf[buffer->index++] = c;
-                        for (int i = buffer->index; i <= char_after_start; i++)
+                        for (int i = buffer->index; i <= char_after_start;
+                             i++)
                             putchar(buffer->buf[i]);
-                        for (int i = buffer->index; i <= char_after_start; i++)
+                        for (int i = buffer->index; i <= char_after_start;
+                             i++)
                             putchar('\b');
                     }
                     else
@@ -291,7 +289,7 @@ void init_42sh_without_history(struct option_sh *option)
         free_garbage_collector();
     }
     else
-    {   
+    {
         char *line = NULL;
         size_t len = 0;
         ssize_t read;
@@ -311,13 +309,13 @@ void init_42sh_without_history(struct option_sh *option)
     }
 }
 
-void print_usage()
+void print_usage(void)
 {
     fprintf(stdout, USAGE);
     exit(1);
 }
 
-int print_prompt()
+int print_prompt(void)
 {
     char *buff = NULL;
     if ((buff = getcwd(NULL, 0)) == NULL)
@@ -333,7 +331,6 @@ int print_prompt()
         free(buff);
         return 1;
     }
-    
     free(buff);
     return 0;
 }
@@ -360,7 +357,7 @@ void delete_last_character(void)
 
 void sighandler(int signum)
 {
-    (void) signum;
+    signum = signum;
     if (file_manager->fd_to_close != -1)
     {
         close(file_manager->fd_to_close);
@@ -373,30 +370,27 @@ void sighandler(int signum)
     printf("\n");
     init_42sh_with_history(option);
     after_sig = true;
-    // exit(ret);
 }
 
-int getch2(void) 
+int getch2(void)
 {
     struct termios org_opts;
     struct termios new_opts;
-    int c=0;
-      
-    int res=0;
-    res=tcgetattr(STDIN_FILENO, &org_opts);
+    int c = 0;
+    int res = 0;
+    res = tcgetattr(STDIN_FILENO, &org_opts);
     if (res != 0)
     {
         printf("getch2(): first assertion failed\n");
         return -1;
     }
-        //---- set new terminal parms --------
+    //---- set new terminal parms --------
     memcpy(&new_opts, &org_opts, sizeof(new_opts));
-    new_opts.c_lflag &= ~(ICANON | ECHO /*| ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL*/);
+    new_opts.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
-    
-    c=getchar();
-        //------  restore old settings ---------
-    res=tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
+    c = getchar();
+    //------  restore old settings ---------
+    res = tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
     if (res != 0)
     {
         printf("getch2(): first assertion failed\n");

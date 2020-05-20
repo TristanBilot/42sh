@@ -1,6 +1,6 @@
 #include "./main.h"
 
-struct option_sh *init_option_sh()
+struct option_sh *init_option_sh(void)
 {
     struct option_sh *option = malloc(sizeof(struct option_sh));
     option->norc_flag = false;
@@ -29,8 +29,8 @@ int main(int ac, char **av)
     alias_storage = new_var_storage();
     new_program_data_storage(ac, av);
     srand(time(NULL));
-    
-    while ((opt = getopt_long(ac, av, "naoc:", long_options, &option_index)) != -1)
+    while ((opt = getopt_long(ac, av, "naoc:", long_options,
+        &option_index)) != -1)
     {
         if (opt == 'n')
             option->norc_flag = true;

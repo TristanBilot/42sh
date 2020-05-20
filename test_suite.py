@@ -77,7 +77,7 @@ if __name__ == "__main__":
         desc = test_case['description'][0]['name']
         debug_description = (desc + get_nb_tabs(desc)) if flag_l else ''
         should_print = check_flag_c_conditions(flag_c, args.flag_c, desc)
-        
+
         if should_print:
             if flag_t:
                 test(binary, test_case['description'], debug_description, int(flag_t[0]))

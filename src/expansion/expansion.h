@@ -1,12 +1,12 @@
 /**
 ** \file expansion.h
-** \author Team 
+** \author Team
 ** \brief Var storage structures and functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef EXPANSION_H
@@ -65,5 +65,9 @@ char *substitute_tilde(char *word, size_t *i);
 /* ++++++++++++++ Command substitution ++++++++++++++ */
 
 char *perform_command_substitution(char *word);
+
+/* ++++++++++++++ Arithmetic substitution ++++++++++++++ */
+
+char *perform_arithmetic_substitution(char *word);
 
 #endif /* EXPANSION_H */

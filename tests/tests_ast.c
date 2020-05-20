@@ -7,17 +7,17 @@
 /*                                Création de l'arbre et de ses noeuds                                    */
 /*
 
-Test(ast_node, creation_arbre_NULL){                             
+Test(ast_node, creation_arbre_NULL){
     struct ast_node *node = NULL;
     cr_assert(ast_node_init(NODE_IF) == NULL);
 }
 
-Test(ast_node, creation_arbre_NULL){                                
+Test(ast_node, creation_arbre_NULL){
     struct ast_node *node = ast_node_init();
     cr_assert(init_ast() != NULL);
 }
 
-Test(ast_node, test_enum_type_NODE_IF){                        
+Test(ast_node, test_enum_type_NODE_IF){
     struct ast_node *node = ast_node_if_init();
     cr_assert(node->type == NODE_IF);
 }

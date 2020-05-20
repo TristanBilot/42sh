@@ -7,20 +7,20 @@
 
 bool is_redirection(struct token *token)
 {
-    return (is_type(token, TOK_DLESSDASH) ||
-        is_type(token, TOK_DLESS) ||
-        is_type(token, TOK_LESSGREAT) ||
-        is_type(token, TOK_LESSAND) ||
-        is_type(token, TOK_LESS) ||
-        is_type(token, TOK_DGREAT) ||
-        is_type(token, TOK_GREATAND) ||
-        is_type(token, TOK_CLOBBER) ||
-        is_type(token, TOK_GREAT));
+    return (is_type(token, TOK_DLESSDASH)
+        || is_type(token, TOK_DLESS)
+        || is_type(token, TOK_LESSGREAT)
+        || is_type(token, TOK_LESSAND)
+        || is_type(token, TOK_LESS)
+        || is_type(token, TOK_DGREAT)
+        || is_type(token, TOK_GREATAND)
+        || is_type(token, TOK_CLOBBER)
+        || is_type(token, TOK_GREAT));
 }
 
 struct node_prefix *append_prefix(
     struct node_simple_command *ast,
-    struct node_prefix *prefix) 
+    struct node_prefix *prefix)
 {
     if (!ast)
         return NULL;
@@ -73,7 +73,7 @@ struct node_element *append_element(
 
 struct node_redirection *append_redirection(
     struct node_command *ast,
-    struct node_redirection *redirection) 
+    struct node_redirection *redirection)
 {
     if (!ast)
         return NULL;
@@ -100,7 +100,7 @@ struct node_redirection *append_redirection(
 
 struct range *append_value_to_for(
     struct node_for *ast,
-    char *value) 
+    char *value)
 {
     if (!ast)
         return NULL;

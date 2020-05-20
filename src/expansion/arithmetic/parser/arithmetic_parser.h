@@ -1,8 +1,8 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef ARITHMETIC_PARSER_H
+#define ARITHMETIC_PARSER_H
 
-#include "ast/ast.h"
-#include "lexer/lexer.h"
+#include "../ast/arithmetic_ast.h"
+#include "../lexer/arithmetic_lexer.h"
 
 #include <stdbool.h>
 
@@ -13,6 +13,6 @@
 ** \param lexer lexer to get token from
 ** \param ast placeholder for the ast to build
 */
-bool parse_expression(struct lexer *lexer, struct ast **ast);
+bool parse_expression(struct arithmetic_lexer *lexer, struct arithmetic_ast **ast);
 
-#endif /* ! PARSER_H */
+#endif /* ! ARITHMETIC_PARSER_H */

@@ -11,7 +11,8 @@ char *perform_command_substitution(char *word)
     struct buffer *buf = new_huge_buffer();
     for (size_t i = 0; i < strlen(word); i++)
     {
-        if (!(word[i] == '`' || (word[i] == '$' && ((word[i+1] && word[i+1] == '(')))))
+        if (!(word[i] == '`' || (word[i] == '$' && ((word[i + 1]
+            && word[i + 1] == '(')))))
         {
             append_huge_buffer(buf, word[i]);
             continue;
@@ -22,7 +23,10 @@ char *perform_command_substitution(char *word)
             i += 2;
             /* $(( should not be managed in this function */
             if (word[i] == '(')
+            {
+                append_string_to_huge_buffer(buf, "$((");
                 continue;
+            }
             sub = substr(word, i, get_next_index(word, ')', i) - i);
         }
         else if (word[i] == '`')

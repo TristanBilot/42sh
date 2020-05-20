@@ -6,22 +6,21 @@
 #include "../lexer/lexer.h"
 #include "../utils/xalloc.h"
 
-char *lex_backslash(char *c, size_t i)
-{
-    if (!c || !c[i] || c[i] != '\\')
-        return NULL;
+// char *lex_backslash(char *c, size_t i)
+// {
+//     if (!c || !c[i] || c[i] != '\\')
+//         return NULL;
 
-    char next = c[i + 1];
-    if (next == EOF)
-        (void) c; /* TODO (echo \ \\\) */
+//     char next = c[i + 1];
+//     if (next == EOF)
+//         (void) c; /* TODO (echo \ \\\) */
 
-    if (next && next != '\\')
-        return substr(c, i, strlen(c));
-        
-    if (next && next == '\\')
-        return "\\"; /* NEED IMPROVEMENTS LATER */
-    return NULL;
-}
+//     if (next && next != '\\')
+//         return substr(c, i, strlen(c));
+//     if (next && next == '\\')
+//         return "\\"; /* NEED IMPROVEMENTS LATER */
+//     return NULL;
+// }
 
 struct token *lex_great_less_and(const char *c, size_t i)
 {
@@ -36,12 +35,11 @@ struct token *lex_great_less_and(const char *c, size_t i)
 
 struct token *lex_io_number(char *c, size_t *i)
 {
-    if (!c || !c[*i] || !c[*i+1])
+    if (!c || !c[*i] || !c[*i + 1])
         return NULL;
-    
-    if (is_number(c[*i]) && ((*i == 0) || ((c[*i-1] && (c[*i-1] == ' ')) ||
-        !c[*i-1]))) /* 2>a */
-        if (c[*i+1] == '<' || c[*i+1] == '>')
+    if (is_number(c[*i]) && ((*i == 0) || ((c[*i - 1] && (c[*i - 1] == ' '))
+        || !c[*i - 1]))) /* 2>a */
+        if (c[*i + 1] == '<' || c[*i + 1] == '>')
             return new_token_io_number(c[*i]);
     return NULL;
 }
@@ -103,7 +101,8 @@ struct token *lex_assignment_value(char *c, size_t *i)
     size_t next_i = *i + 1;
     if (!c || !c[next_i])
         return NULL;
-    char *value = substr(c, next_i, get_next_separator_index(c, next_i) - next_i);
+    char *value = substr(c, next_i, get_next_separator_index(c,
+        next_i) - next_i);
     *i += strlen(value);
     struct token *new = new_token_type(TOK_WORD);
     new->value = value;

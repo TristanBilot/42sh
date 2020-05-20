@@ -15,7 +15,6 @@
 #include "../storage/var_storage.h"
 #include "../storage/program_data_storage.h"
 
-extern char **environ;
 
 /* args[0] = NULL for export and alias */
 
@@ -84,7 +83,8 @@ void create_alias(char **args)
         if (!value)
         {
             if (var_exists(alias_storage, key))
-                printf("alias %s=%s\n", key, get_value(alias_storage, key));
+                printf("alias %s=%s\n", key,
+                    get_value(alias_storage, key));
             else
                 warn("alias: %s: not found\n", key);
         }
@@ -285,7 +285,8 @@ void echo(char **args)
     else if (args[1][0] == '-' && args[1][1] != '\0')
     {
         int i = 0;
-        for (i = 1; (args[1][i] == 'n' || args[1][i] == 'e') && args[1][i]; i++)
+        for (i = 1; (args[1][i] == 'n'
+            || args[1][i] == 'e') && args[1][i]; i++)
         {
             if (args[1][i] == 'n')
                 n = true;
@@ -299,13 +300,13 @@ void echo(char **args)
             update_last_status(0);
             return;
         }
-        else 
+        else
             print_echo(args + 2, e, n);
     }
     else
         print_echo(args + 1, e, n);
     update_last_status(0);
-}   
+}
 
 void cd(char **args)
 {
@@ -346,7 +347,8 @@ void export(char **args)
     }
     else if (args[0][0] ==  '-')
     {
-        for (int i = 1; args[0][i] && (args[0][i] == 'p' || args[0][i] == 'n'); i++)
+        for (int i = 1; args[0][i] && (args[0][i] == 'p'
+            || args[0][i] == 'n'); i++)
         {
             if (args[0][i] == 'p')
                 p = true;
@@ -361,16 +363,13 @@ void export(char **args)
     }
     else if (p)
     {
+        printf("ooo\n");
         if (args[1])
-        {
             printf("declare -x %s\n", getenv(args[1]));
-        }
         else
-        {
             for (char **env = environ; *env != NULL; env++)
                 printf("declare -x %s\n", *env);
-        }
-    }
+   }
     else if (n)
     {
         if (!args[1])
@@ -381,7 +380,7 @@ void export(char **args)
         for (int i = 1; args[i]; i++)
             unsetenv(args[i]);
     }
-    else 
+    else
     {
         for (int i = 0; args[i]; i++)
         {
@@ -398,9 +397,13 @@ void exit_shell(void)
 
 void func_continue(char **args)
 {
-    if (strcmp(args[0], "continue") == 0)
+    if (args)
     {
-        printf("bash: continue: only meaningful in a `for', `while', or `until' loop\n");
+        if (strcmp(args[0], "continue") == 0)
+        {
+            printf("bash: continue: only meaningful in a `for', ");
+            printf("`while', or `until' loop\n");
+        }
+        update_last_status(0);
     }
-    update_last_status(0);
 }

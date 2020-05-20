@@ -22,7 +22,6 @@ void load_history(struct history *history)
         //perror("fopen error @ history");
         return;
     }
-    
     char *line = xcalloc(1, MAX_STR_LEN);
     while (fgets(line, MAX_STR_LEN, file))
     {
@@ -57,7 +56,6 @@ void append_history_command(struct history *history, char *cmd)
     FILE *f = fopen(DEFAULT_HISTORY_FILE_NAME, "a");
     //if (!f)
     //    perror("fopen error @ append history");
-    
     if (!is_only_spaces(cmd))
     {
         fprintf(f, "%s\n", cmd);

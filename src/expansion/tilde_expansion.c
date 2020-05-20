@@ -12,9 +12,11 @@ char *perform_tilde_expansion(char *word)
             i++;
             if (word[i])
             {
-                if (word[i] == '+' && (sub = substitute_plus_tilde(word, &i)))
+                if (word[i] == '+'
+                    && (sub = substitute_plus_tilde(word, &i)))
                     append_string_to_buffer(buf, sub);
-                else if (word[i] == '-' && (sub = substitute_minus_tilde(word, &i)))
+                else if (word[i] == '-'
+                && (sub = substitute_minus_tilde(word, &i)))
                     append_string_to_buffer(buf, sub);
                 else if ((sub = substitute_tilde(word, &i)))
                     append_string_to_buffer(buf, sub);
@@ -37,7 +39,7 @@ bool is_valid_tilde(char *word, size_t i)
     if (word[i] && word[i] == '/')
         return true;
     return (!word[i] || ((word[i] == '+' || word[i] == '-') \
-        && (!word[i+1] || word[i+1] == '/')));
+        && (!word[i + 1] || word[i + 1] == '/')));
 }
 
 char *substitute_minus_tilde(char *word, size_t *i)

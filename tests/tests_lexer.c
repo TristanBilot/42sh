@@ -14,7 +14,7 @@ Test(lexer, basic_tokens)
     cr_assert(peek(lex)->type == TOK_AND);
     cr_assert(peek(lex)->type == TOK_AND);
     cr_assert(pop(lex)->type == TOK_AND);
-    cr_assert(peek(lex)->type == TOK_OR); 
+    cr_assert(peek(lex)->type == TOK_OR);
     cr_assert(pop(lex)->type == TOK_OR);
     cr_assert(pop(lex)->type == KW_DSEMI);
     free_garbage_collector();
@@ -84,7 +84,7 @@ Test(lexer, backslash)
     // struct token *t2 = pop(lexer);
     // cr_assert(t2->type == TOK_WORD);
     // cr_assert(is(t2->value, "\n"));
-    
+
     // struct token *t3 = pop(lexer);
     // cr_assert(t3->type == TOK_WORD);
     // cr_assert(is(t3->value, "\n"));
@@ -550,7 +550,7 @@ Test(lexer, parenthesis)
     cr_assert(pop(lexer4)->type == TOK_RPAREN);
     cr_assert(pop(lexer4)->type == TOK_WORD);
     free_garbage_collector();
-    
+
     char input5[] = "if(";
     struct lexer *lexer5 = new_lexer(input5);
     cr_assert(pop(lexer5)->type == TOK_WORD);

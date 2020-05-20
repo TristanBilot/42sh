@@ -73,7 +73,7 @@ Test(parser, parser_simple_command2){
     cr_assert(success("ls;echo tototo;ls"));
     cr_assert(success("ls;  echo toto;ls"));
     cr_assert(success("ls;\n"));
-    cr_assert(fail("ls;\n\necho toto;ls\n"));                           
+    cr_assert(fail("ls;\n\necho toto;ls\n"));
     cr_assert(fail("ls \n echo toto \n ls\n"));
 }
 
@@ -98,14 +98,14 @@ Test(parser, parse_simple_if)
 Test(parser, parser_and_or_simple)
 {
     cr_assert(success("ls | cat test"));
-    cr_assert(success("ls | cat test")); 
+    cr_assert(success("ls | cat test"));
     cr_assert(success("ls & cat Makefile"));
     cr_assert(success("ls && cat Makefile"));
     cr_assert(fail("ls && || cat Makefile"));
     cr_assert(fail("ls || cat Makefile &&"));
 }
 
-Test(parser, parser_multi_logical)          
+Test(parser, parser_multi_logical)
 {
     cr_assert(success("ls | echo test || cat test"));
     cr_assert(success("ls || echo test || cat test"));
@@ -189,8 +189,8 @@ Test(parser, rule_until)
     // cr_assert(fail("until a + b do echo toto done"));
     // cr_assert(fail("until ( a+b ) do echo toto done"));
     // cr_assert(fail("until ( a+b && ( 2 * 3 ) ) do echo toto done"));
-    // cr_assert(fail("until ( a + b ) do echo toto done"));                
-    // cr_assert(fail("\nuntil a + b do echo toto"));  
+    // cr_assert(fail("until ( a + b ) do echo toto done"));
+    // cr_assert(fail("\nuntil a + b do echo toto"));
     // cr_assert(fail("until a + b  echo toto done"));
     // cr_assert(fail("until a + b echo toto done"));
     // cr_assert(fail("until do echo toto done"));

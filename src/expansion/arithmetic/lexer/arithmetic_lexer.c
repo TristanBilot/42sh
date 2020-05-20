@@ -26,14 +26,15 @@ bool is_lexer_valid(struct arithmetic_lexer *lexer)
     struct arithmetic_token *curr = lexer->token_list->first;
     // fprintf(stderr, "%s ==> %s\n", lexer->input, token_str(curr->type));
     if (curr && curr->type != TOK_A_NUMBER && curr->type != TOK_A_END &&
-        curr->type != TOK_A_MINUS && curr->type != TOK_A_PLUS && curr->type != TOK_A_LPAR &&
-        curr->type != TOK_A_NOT)
+        curr->type != TOK_A_MINUS && curr->type != TOK_A_PLUS
+        && curr->type != TOK_A_LPAR && curr->type != TOK_A_NOT)
         return false;
     while (curr && curr->next)
     {
         if  (!is_valid_arithmetic_syntax(curr->type, curr->next->type))
         {
-            fprintf(stderr, "err: %s %s\n", token_str(curr->type), token_str(curr->next->type));
+            fprintf(stderr, "err: %s %s\n", token_str(curr->type),
+                token_str(curr->next->type));
             return false;
         }
         curr = curr->next;
@@ -77,11 +78,13 @@ bool init_arithmetic_lexer(struct arithmetic_lexer *lexer)
             if (type == TOK_A_NUMBER && last)
             {
                 append_buffer(buf, c);
-                append_arithmetic(lexer, new_arithmetic_number_token(atoi(buf->buf)));
+                append_arithmetic(lexer,
+                    new_arithmetic_number_token(atoi(buf->buf)));
             }
             else if (buffer_len(buf) > 0)
             {
-                append_arithmetic(lexer, new_arithmetic_number_token(atoi(buf->buf)));
+                append_arithmetic(lexer,
+                    new_arithmetic_number_token(atoi(buf->buf)));
                 flush(buf);
             }
             if (type != TOK_A_NUMBER)
@@ -125,7 +128,8 @@ struct arithmetic_token *pop_arithmetic(struct arithmetic_lexer *lexer)
     return next;
 }
 
-void append_arithmetic(struct arithmetic_lexer *lexer, struct arithmetic_token *token)
+void append_arithmetic(struct arithmetic_lexer *lexer,
+    struct arithmetic_token *token)
 {
     if (!lexer || !token)
         return;

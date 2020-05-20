@@ -1,13 +1,14 @@
 ####################################################### TEST BASE ####################################################### 
 - description:
     - name: BASE
-    - stdin: "\n"                               
+    - stdin: "\n"
       checks:
         - returncode
         - stdout
-      
+
     - stdin: gdjklgndgdl
       checks:
+        - returncode
         - has_stderr
 
 ###################################################### TEST ECHO ####################################################### 
@@ -43,6 +44,68 @@
       - returncode
       - stdout
   - stdin: echo toto;echo tata;echo tati
+    checks:
+      - returncode
+      - stdout
+
+###################################################### TEST EXPORT ####################################################### 
+  - stdin: export
+    checks:
+      - returncode
+      - stdout
+  - stdin: export -p
+    checks:
+      - returncode
+      - stdout
+  - stdin: export -pppppp
+    checks:
+      - returncode
+      - stdout
+  - stdin: export -up
+    checks:
+      - returncode
+      - stdout
+  - stdin: export test_variable=first 
+    checks:
+      - returncode
+      - stdout
+  - stdin: export -n test_variable 
+    checks:
+      - returncode
+      - stdout
+  - stdin: export test1=first test2=second test3=third
+    checks:
+      - returncode
+      - stdout
+
+###################################################### TEST CD ####################################################### 
+  - stdin: cd; pwd
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd /home; pwd
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ae; pwd
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd -; pwd
+    checks:
+      - returncode
+      - stdout
+
+###################################################### TEST ALIAS ####################################################### 
+  - stdin: alias
+    checks:
+      - returncode
+      - stdout
+  - stdin: alias a=lol; alias
+    checks:
+      - returncode
+      - stdout
+  - stdin: alias -p
     checks:
       - returncode
       - stdout
@@ -155,7 +218,7 @@
   - stdin: echo toto | kdsfs
     checks:
       - has_stderr
-  
+
 ####################################################### TEST LOGICAL ########################################################
 - description:
   - name: LOGICAL
@@ -163,27 +226,27 @@
     checks:
       - returncode
       - stdout
-    
+
   - stdin: echo toto || echo tata || echo tati
     checks:
     - returncode
     - stdout
-    
+
   - stdin: echo toto && ls
     checks:
       - returncode
       - stdout
-    
+
   # - stdin: echo toto && ls && tree
   #   checks:
   #     - returncode
   #     - stdout
-    
+
   # - stdin: echo toto && ls && tree && echo tati
   #   checks:
   #     - returncode
   #     - stdout
-    
+
   # - stdin: echo toto && ls || tree && echo tati || ls -la
   #   checks:
   #     - returncode
@@ -217,7 +280,7 @@
       - returncode
       - stdout
 
-  - stdin: if cat shgldsg; then echo success; elif cat urilezrhze; then echo success; elif ls; then echo success; else echo failed; fi
+  - stdin: if cat shgldsg; then echo success; elif cat urilezrhze; then echo success; elif cat dsbfjksdbf; then echo failed; elif ls; then echo success; else echo failed; fi
     checks:
       - returncode
       - stdout
@@ -345,7 +408,7 @@
       - returncode
       - has_stderr
       - stdout
-  
+
 ####################################################### TEST UNTIL ########################################################
 - description:
   - name : UNTIL

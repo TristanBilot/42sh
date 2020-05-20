@@ -39,11 +39,13 @@ char *perform_var_expansion(char *word)
             int type = is_special_char(word[i]);
             char *sub = NULL;
             bool should_continue = false;
-            if ((sub = substitute_random(word, &i, &should_continue, is_brack)) ||
-                (sub = substitute_uid(word, &i, &should_continue, is_brack)) ||
-                (sub = substitute_pid(word, &i, &should_continue, is_brack)) ||
-                (sub = substitute_oldpwd(word, &i, &should_continue, is_brack)) ||
-                (sub = substitute_ifs(word, &i, &should_continue, is_brack)))
+            if ((sub = substitute_random(word, &i, &should_continue, is_brack))
+                || (sub = substitute_uid(word, &i, &should_continue, is_brack))
+                || (sub = substitute_pid(word, &i, &should_continue, is_brack))
+                || (sub = substitute_oldpwd(word, &i,
+                    &should_continue, is_brack))
+                || (sub = substitute_ifs(word, &i,
+                    &should_continue, is_brack)))
             {
                 if (should_continue)
                 {
@@ -92,7 +94,8 @@ char *perform_var_expansion(char *word)
             else
             {
                 /* find the nearest possible delimitor stuck to the variable */
-                end = next_close_paren < next_close_dollar ? next_close_paren : next_close_dollar;
+                end = next_close_paren < next_close_dollar ?
+                    next_close_paren : next_close_dollar;
                 end = end < next_separator ? end : next_separator;
                 end = end < next_back_quote ? end : next_back_quote;
             }
@@ -162,19 +165,21 @@ char *substitute_ques(void)
 * $RANDOM$UID$1 is right
 * $RANDOMstring is wrong
 */
-bool next_param_is_printable(char *word, size_t i, size_t param_len, bool is_brack)
+bool next_param_is_printable(char *word, size_t i, size_t param_len,
+    bool is_brack)
 {
     if (is_brack && word[i +param_len] != '}')
         return false;
-    return strlen(word) - (i + param_len + is_brack) == 0 || word[i + param_len + is_brack] == '$';
+    return strlen(word) - (i + param_len + is_brack) == 0
+        || word[i + param_len + is_brack] == '$';
 }
 
-char *substitute_random(char *word, size_t *i, bool *should_continue, int is_brack)
+char *substitute_random(char *word, size_t *i, bool *should_continue,
+    int is_brack)
 {
     size_t len = strlen("RANDOM");
     if ((*i + len) > strlen(word))
         return NULL;
-    
     if (is(substr(word, *i, len), "RANDOM"))
     {
         char *sub = xmalloc(MAX_STR_LEN);
@@ -189,12 +194,12 @@ char *substitute_random(char *word, size_t *i, bool *should_continue, int is_bra
     return NULL;
 }
 
-char *substitute_uid(char *word, size_t *i, bool *should_continue, int is_brack)
+char *substitute_uid(char *word, size_t *i, bool *should_continue,
+    int is_brack)
 {
     size_t len = strlen("UID");
     if ((*i + len) > strlen(word))
         return NULL;
-    
     if (is(substr(word, *i, len), "UID"))
     {
         unsigned long int uid = (unsigned long int) getuid();
@@ -210,12 +215,12 @@ char *substitute_uid(char *word, size_t *i, bool *should_continue, int is_brack)
     return NULL;
 }
 
-char *substitute_pid(char *word, size_t *i, bool *should_continue, int is_brack)
+char *substitute_pid(char *word, size_t *i, bool *should_continue,
+    int is_brack)
 {
     size_t len = strlen("$");
     if ((*i + len) > strlen(word))
         return NULL;
-    
     if (is(substr(word, *i, len), "$"))
     {
         unsigned long int uid = (unsigned long int) getpid();
@@ -231,7 +236,8 @@ char *substitute_pid(char *word, size_t *i, bool *should_continue, int is_brack)
     return NULL;
 }
 
-char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, int is_brack)
+char *substitute_oldpwd(char *word, size_t *i, bool *should_continue,
+    int is_brack)
 {
     char *old_pwd = getenv("OLDPWD");
     if (!old_pwd)
@@ -240,7 +246,6 @@ char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, int is_bra
     size_t len = strlen("OLDPWD");
     if ((*i + len) > strlen(word))
         return NULL;
-    
     if (is(substr(word, *i, len), "OLDPWD"))
     {
         char *sub = xmalloc(MAX_STR_LEN);
@@ -255,7 +260,8 @@ char *substitute_oldpwd(char *word, size_t *i, bool *should_continue, int is_bra
     return NULL;
 }
 
-char *substitute_ifs(char *word, size_t *i, bool *should_continue, int is_brack)
+char *substitute_ifs(char *word, size_t *i, bool *should_continue,
+    int is_brack)
 {
     char *ifs = getenv("IFS");
     if (!ifs)
@@ -264,7 +270,6 @@ char *substitute_ifs(char *word, size_t *i, bool *should_continue, int is_brack)
     size_t len = strlen("IFS");
     if ((*i + len) > strlen(word))
         return NULL;
-    
     if (is(substr(word, *i, len), "IFS"))
     {
         char *sub = xmalloc(MAX_STR_LEN);

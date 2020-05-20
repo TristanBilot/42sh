@@ -1,12 +1,12 @@
 /**
 ** \file garbage_collector.h
-** \author Team 
+** \author Team
 ** \brief Execution functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef GARBAGE_COLLECTOR_H
@@ -34,7 +34,7 @@ void new_garbage_collector(void);
 /**
 **\brief append addr to list of elements
 **
-**\param addr 
+**\param addr
 */
 void append_to_garbage(void *addr);
 /**
@@ -67,7 +67,7 @@ void new_garbage_collector_variable(void);
 /**
 **\brief append addr to list of elements
 **
-**\param addr 
+**\param addr
 */
 void append_to_garbage_variable(void *addr);
 /**

@@ -15,7 +15,7 @@ int perform_for_range(struct range *r, struct node_for *ast)
     for (size_t i = 0; i < strlen(r->value); i++)
     {
 
-        if (r->value[i] == '{' && is_number(r->value[i+1]))
+        if (r->value[i] == '{' && is_number(r->value[i + 1]))
         {
             i++;
             /* Left parsing */
@@ -30,7 +30,7 @@ int perform_for_range(struct range *r, struct node_for *ast)
             left_index = buf->buf;
 
             buf = new_buffer();
-            if (r->value[i+1] != '.')
+            if (r->value[i + 1] != '.')
                 return -1;
             i += 2;
 
@@ -51,11 +51,11 @@ int perform_for_range(struct range *r, struct node_for *ast)
                 my_itoa(j, tmp);
                 put_var(var_storage, ast->variable_name, tmp);
                 cont.from_loop = true;
-                cont.current_loop += 1;
+                cont.current_loop++;
                 if (exec_node_do_group(ast->body))
                     return -1;
                 if (cont.current_loop > 0)
-                    cont.current_loop-= 1;
+                    cont.current_loop--;
                 if (cont.current_loop == 0)
                     cont.from_loop = false;
             }
@@ -74,11 +74,11 @@ bool perform_for_enumeration(struct node_for *ast, int len_range)
     {
         put_var(var_storage, tmp->variable_name, r->value);
         cont.from_loop = true;
-        cont.current_loop += 1;
+        cont.current_loop++;
         if (exec_node_do_group(ast->body))
             return true;
         if (cont.current_loop > 0)
-                    cont.current_loop-= 1;
+            cont.current_loop--;
         if (cont.current_loop == 0)
             cont.from_loop = false;
         r = r->next;

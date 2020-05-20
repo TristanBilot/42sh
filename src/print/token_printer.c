@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
     new_program_data_storage(argc, argv);
     alias_storage = new_var_storage();
     struct lexer *lexer = NULL;
-    
     if ((lexer = new_lexer(argv[1])))
     {
         struct token *token = NULL;

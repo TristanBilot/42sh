@@ -13,7 +13,8 @@
 
 struct file_manager *init_file_manager(void)
 {
-    struct file_manager *file_manager = xcalloc(1, sizeof(struct file_manager));
+    struct file_manager *file_manager = xcalloc(1,
+        sizeof(struct file_manager));
     file_manager->fd_to_close = -1;
     file_manager->file = NULL;
     file_manager->save_in = dup(0);
@@ -29,14 +30,16 @@ struct tab_redirection init_tab_redirection(void)
     return tab;
 }
 
-struct tab_redirection append_tab_redirection(struct tab_redirection tab, struct node_redirection *e)
+struct tab_redirection append_tab_redirection(struct tab_redirection tab,
+    struct node_redirection *e)
 {
     struct std new;
     new.type = type_to_str(e->type);
     new.file = e->right;
     if (is(e->left, ""))
     {
-        if (is(new.type, "TOK_LESS") || is(new.type, "TOK_LESSAND")|| is(new.type, "TOK_LESSGREAT"))
+        if (is(new.type, "TOK_LESS") || is(new.type, "TOK_LESSAND")
+            || is(new.type, "TOK_LESSGREAT"))
             new.ionumber = 0;
         else
             new.ionumber = 1;
@@ -57,68 +60,86 @@ bool manage_duplication(struct tab_redirection tab)
     {
         if (is(tab.redirections[i].type, "TOK_GREAT"))  // ne doit pas fonctionner quand noclobber est set
         {
-            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "w+",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_LESS"))
         {
-            if (dup_file(tab.redirections[i].file, "r", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "r",
+                tab.redirections[i].ionumber))
                 return true;
-        }  
+        }
         else if (is(tab.redirections[i].type, "TOK_DGREAT"))
         {
-            if (dup_file(tab.redirections[i].file, "a", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "a",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_DLESS")) // HEREDOC à faire
         {
-            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "w+",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC à faire
         {
-            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "w+",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_LESSGREAT"))
         {
-            if (dup_file(tab.redirections[i].file, "r+", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "r+",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_LESSAND"))
         {
             if (is(tab.redirections[i].file, "-"))
                 close(tab.redirections[i].ionumber);
-            else if (tab.redirections[i].file[0] && tab.redirections[i].file[1] && tab.redirections[i].file[1] == '-')
+            else if (tab.redirections[i].file[0]
+                && tab.redirections[i].file[1]
+                && tab.redirections[i].file[1] == '-')
             {
-                dup_fd(tab.redirections[i].file[0] - '0', "r", tab.redirections[i].ionumber);
+                dup_fd(tab.redirections[i].file[0] - '0', "r",
+                    tab.redirections[i].ionumber);
                 close(tab.redirections[i].file[0] - '0');
             }
-            else if (atoi(tab.redirections[i].file) == 0 && !is(tab.redirections[i].file, "0"))
+            else if (atoi(tab.redirections[i].file) == 0
+                && !is(tab.redirections[i].file, "0"))
                 return true;
-            else if (dup_fd(atoi(tab.redirections[i].file), "r", tab.redirections[i].ionumber))
+            else if (dup_fd(atoi(tab.redirections[i].file), "r",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_GREATAND"))
         {
             if (is(tab.redirections[i].file, "-"))
                 close(tab.redirections[i].ionumber);
-            else if (tab.redirections[i].file[0] && tab.redirections[i].file[1] && tab.redirections[i].file[1] == '-')
+            else if (tab.redirections[i].file[0]
+                && tab.redirections[i].file[1]
+                && tab.redirections[i].file[1] == '-')
             {
-                dup_fd(tab.redirections[i].file[0] - '0', "a", tab.redirections[i].ionumber);
+                dup_fd(tab.redirections[i].file[0] - '0', "a",
+                    tab.redirections[i].ionumber);
                 close(tab.redirections[i].file[0] - '0');
             }
-            else if (atoi(tab.redirections[i].file) == 0 && !is(tab.redirections[i].file, "0"))
+            else if (atoi(tab.redirections[i].file) == 0
+                && !is(tab.redirections[i].file, "0"))
             {
-                if (tab.redirections[i].ionumber != 1 || dup_file(tab.redirections[i].file, "w+", 12))
+                if (tab.redirections[i].ionumber != 1
+                    || dup_file(tab.redirections[i].file, "w+", 12))
                     return true;
             }
-            else if (dup_fd(atoi(tab.redirections[i].file), "a", tab.redirections[i].ionumber))
+            else if (dup_fd(atoi(tab.redirections[i].file), "a",
+                tab.redirections[i].ionumber))
                 return true;
         }
         else if (is(tab.redirections[i].type, "TOK_CLOBBER"))
         {
-            if (dup_file(tab.redirections[i].file, "w+", tab.redirections[i].ionumber))
+            if (dup_file(tab.redirections[i].file, "w+",
+                tab.redirections[i].ionumber))
                 return true;
         }
     }

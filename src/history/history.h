@@ -1,12 +1,12 @@
 /**
 ** \file history.h
-** \author Team 
+** \author Team
 ** \brief History functions
 ** \version 0.1
 ** \date 2020-05-04
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef HISTORY_H

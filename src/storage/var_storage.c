@@ -50,8 +50,8 @@ bool put_var(struct var_storage *storage, char *key, char *val)
     int h = hash(key);
     if (var_exists(storage, key))
     {
-        storage->variables[h]->value = \
-            realloc(storage->variables[h]->value, strlen(val) + 1);
+        storage->variables[h]->value \
+            = realloc(storage->variables[h]->value, strlen(val) + 1);
         strcpy(storage->variables[h]->value, val);
         storage->variables[h]->type = get_var_type(val);
         return storage->variables[h]->type != VAR_ERROR;
@@ -107,7 +107,6 @@ enum var_type get_var_type(char *value)
     }
     if (point_counter > 1)
         return VAR_STRING;
-        
     if (should_be_number)
         return point_counter == 0 ? VAR_INT : VAR_FLOAT;
     return VAR_STRING;

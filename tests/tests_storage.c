@@ -14,7 +14,7 @@ Test(var_storage, basic_operation)
     free_var_storage(var_storage);
     free_garbage_collector();
     free(garbage_collector);
-    
+
 }
 
 Test(var_storage, unknown_key)
@@ -27,8 +27,7 @@ Test(var_storage, unknown_key)
     free_var_storage(var_storage);
     free_garbage_collector();
     free(garbage_collector);
-    
-    
+
 }
 
 Test(var_storage, hard_operations)
@@ -41,7 +40,7 @@ Test(var_storage, hard_operations)
     put_var(var_storage, "key", "123");
     var = get_var(var_storage, "key");
     cr_assert(is(var->value, "123"));
-    cr_assert(var->type == VAR_INT); 
+    cr_assert(var->type == VAR_INT);
 
     put_var(var_storage, "key2", "");
     var = get_var(var_storage, "key2");
@@ -96,6 +95,4 @@ Test(var_storage, types)
     free_var_storage(var_storage);
     free_garbage_collector();
     free(garbage_collector);
-    
-    
 }

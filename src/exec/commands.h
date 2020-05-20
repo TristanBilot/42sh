@@ -4,9 +4,9 @@
 ** \brief Extra commands functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef COMMANDS_H_
@@ -14,49 +14,51 @@
 
 #define UNALIAS_USAGE "unalias: usage: unalias [-a] name [name ...]\n"
 
+extern char **environ;
+
 
 /**
 ** \brief function to delete an alias
 **
-** \param args 
+** \param args
 */
 void delete_alias(char **args);
 /**
 ** \brief function to create an alias
 **
-** \param args 
+** \param args
 */
 void create_alias(char **args);
 /**
 ** \brief function to give a file to the 42sh
 **
-** \param args 
+** \param args
 */
 void load_file(char *path);
 /**
 ** \brief implementation of command sourcefnac
 **
-** \param args 
+** \param args
 */
 void source(char **args);
 /**
 ** \brief implementation of command echo
 **
-** \param args 
+** \param args
 */
 void echo(char **args);
 
 /**
-** \brief 
-** 
-** \param args 
+** \brief
+**
+** \param args
 */
 void cd(char **args);
 
 /**
 ** \brief implementation of command export
 **
-** \param args 
+** \param args
 */
 void export(char **args);
 /**
@@ -72,24 +74,24 @@ struct echo_tab
   char corresp;
 };
 /**
-**\brief Print all args on stdout
+**\brief Print all argson stdout
 **
-**\param args 
+**\param args
 */
 void print_args(char **args);
 /**
 **\brief Particular print with option -e from echo
 **
-**\param c 
-**\return int 
+**\param c
+**\return int
 */
 int	print_without_sp(char *c);
 /**
-**\brief Echo function 
+**\brief Echo function
 **
-**\param args 
-**\param e 
-**\param n 
+**\param args
+**\param e
+**\param n
 */
 void print_echo(char **args, bool e, bool n);
 

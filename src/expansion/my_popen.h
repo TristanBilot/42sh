@@ -23,19 +23,19 @@
     return NULL;
 
 /**
-** \brief 
-** 
-** \param cmd 
-** \param mode 
-** \return FILE* 
+** \brief
+**
+** \param cmd
+** \param mode
+** \return FILE*
 */
 FILE *my_popen(const char *cmd, const char *mode);
 
 /**
-** \brief 
-** 
-** \param stream 
-** \return int 
+** \brief
+**
+** \param stream
+** \return int
 */
 int my_pclose(FILE *stream);
 

@@ -1,12 +1,12 @@
 /**
 ** \file token.h
-** \author Team 
+** \author Team
 ** \brief Token structures and functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef TOKEN_H
@@ -26,7 +26,7 @@ enum token_type
     TOK_SEPAND,		// &                                    4
     TOK_OR,		    // ||                                   5
     TOK_PIPE,		// |                                    6
-    TOK_SEMI,		// ;                                    7   
+    TOK_SEMI,		// ;                                    7
     TOK_LPAREN,		// (                                    8
     TOK_RPAREN,		// )                                    9
     TOK_LCURL,		// {                                    10

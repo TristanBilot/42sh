@@ -4,9 +4,9 @@
 ** \brief Define ast and parser structures
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef AST_H
@@ -219,7 +219,7 @@ struct node_else_clause
     } type;
     union
     {
-        struct node_if *elif; 
+        struct node_if *elif;
         struct node_compound_list *else_body;
     } clause;
 };
@@ -252,153 +252,153 @@ struct node_case_item
 /**
 ** \brief build node input
 **
-** \return struct node_input* 
+** \return struct node_input*
 */
 struct node_input *build_input(void);
 /**
 ** \brief build node list
 **
-** \return struct node_list* 
+** \return struct node_list*
 */
 struct node_list *build_list(void);
 /**
 ** \brief build node and_or_final
 **
-** \param is_and 
-** \param left 
-** \param right 
-** \return struct node_and_or* 
+** \param is_and
+** \param left
+** \param right
+** \return struct node_and_or*
 */
 struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, struct node_pipeline *right);
 /**
 ** \brief build node_and_or_merge
 **
-** \param is_and 
-** \param left 
-** \param right 
-** \return struct node_and_or* 
+** \param is_and
+** \param left
+** \param right
+** \return struct node_and_or*
 */
 struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left, struct node_pipeline *right);
 /**
 ** \brief build node pipeline
 **
-** \param is_not 
-** \return struct node_pipeline* 
+** \param is_not
+** \return struct node_pipeline*
 */
 struct node_pipeline *build_pipeline(bool is_not);
 /**
 ** \brief build command
 **
-** \return struct node_command* 
+** \return struct node_command*
 */
 struct node_command *build_command(void);
 /**
 ** \brief build simple command
 **
-** \return struct node_simple_command* 
+** \return struct node_simple_command*
 */
 struct node_simple_command *build_simple_command(void);
 /**
 ** \brief build shell command
 **
-** \param parser 
-** \return struct node_shell_command* 
+** \param parser
+** \return struct node_shell_command*
 */
 struct node_shell_command *build_shell_command(struct parser *parser);
 /**
 ** \brief build node funcdec
 **
-** \return struct node_funcdec* 
+** \return struct node_funcdec*
 */
-struct node_funcdec *build_funcdec();
+struct node_funcdec *build_funcdec(void);
 /**
 ** \brief build node redirection
 **
-** \param parser 
-** \return struct node_redirection* 
+** \param parser
+** \return struct node_redirection*
 */
 struct node_redirection *build_redirection(struct parser *parser);
 /**
 ** \brief build node prefix
 **
-** \param parser 
-** \return struct node_prefix* 
+** \param parser
+** \return struct node_prefix*
 */
 struct node_prefix *build_prefix(struct parser *parser);
 /**
 ** \brief build node element
 **
-** \param parser 
-** \return struct node_element* 
+** \param parser
+** \return struct node_element*
 */
 struct node_element *build_element(struct parser *parser);
 /**
 ** \brief build node compound list
 **
-** \return struct node_compound_list* 
+** \return struct node_compound_list*
 */
 struct node_compound_list *build_compound_list(void);
 /**
 ** \brief build node while
 **
-** \return struct node_while* 
+** \return struct node_while*
 */
 struct node_while *build_while(void);
 /**
 ** \brief build node until
 **
-** \return struct node_until* 
+** \return struct node_until*
 */
 struct node_until *build_until(void);
 /**
 ** \brief build node case
 **
-** \param parser 
-** \return struct node_case* 
+** \param parser
+** \return struct node_case*
 */
 struct node_case *build_case(struct parser *parser);
 /**
 ** \brief build node if
 **
-** \return struct node_if* 
+** \return struct node_if*
 */
 struct node_if *build_if(void);
 /**
 ** \brief build node for
 **
-** \return struct node_for* 
+** \return struct node_for*
 */
 struct node_for *build_for(void);
 /**
 ** \brief build node else clause
 **
-** \param parser 
-** \return struct node_else_clause* 
+** \param parser
+** \return struct node_else_clause*
 */
 struct node_else_clause *build_else_clause(struct parser *parser);
 /**
 ** \brief build do group
 **
-** \return struct node_do_group* 
+** \return struct node_do_group*
 */
 struct node_do_group *build_do_group(void);
 /**
 ** \brief build node case clause
 **
-** \return struct node_case_clause* 
+** \return struct node_case_clause*
 */
 struct node_case_clause *build_case_clause(void);
 /**
 ** \brief build node case item
 **
-** \return struct node_case_item* 
+** \return struct node_case_item*
 */
 struct node_case_item *build_case_item(void);
 /**
 ** \brief build node export
 **
-** \param flag 
-** \return struct node_export* 
+** \param flag
+** \return struct node_export*
 */
 //struct node_export *build_export(unsigned int flag);
 

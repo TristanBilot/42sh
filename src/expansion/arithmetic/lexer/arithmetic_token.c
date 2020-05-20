@@ -13,14 +13,14 @@
 
 //     if (token->type != TOK_A_NUMBER)
 //         return token_strs[token->type];
-        
 //     sprintf(number_str, "%d", token->value);
 //     return number_str;
 // }
 
 const char *token_str(int type)
 {
-    static const char *token_strs[] = { "+", "-", "*", "/", "(", ")", "**", "&", "|", "^", "&&", "||", "!", "~" };
+    static const char *token_strs[] = { "+", "-", "*", "/", "(", ")", "**",
+        "&","|", "^", "&&", "||", "!", "~" };
     if (type == 14)
         return "NUMBER";
     if (type == 15)
@@ -49,16 +49,20 @@ bool is_valid_arithmetic_syntax(int type1, int type2)
         return false;
     if (type1 != TOK_A_NUMBER && type2 != TOK_A_NUMBER && type2 != TOK_A_END)
     {
-        if ((type1 == TOK_A_LPAR && type2 == TOK_A_LPAR) || (type2 == TOK_A_RPAR && type1 == TOK_A_RPAR))
+        if ((type1 == TOK_A_LPAR && type2 == TOK_A_LPAR)
+            ||  (type2 == TOK_A_RPAR && type1 == TOK_A_RPAR))
             return true;
-        if ((type1 == TOK_A_LPAR && type2 == TOK_A_RPAR) || (type2 == TOK_A_LPAR && type1 == TOK_A_RPAR))
+        if ((type1 == TOK_A_LPAR && type2 == TOK_A_RPAR)
+            || (type2 == TOK_A_LPAR && type1 == TOK_A_RPAR))
             return false;
-        if ((is_parenhesis(type1) && !is_parenhesis(type2)) || (is_parenhesis(type2) && !is_parenhesis(type1)))
+        if ((is_parenhesis(type1) && !is_parenhesis(type2))
+            || (is_parenhesis(type2) && !is_parenhesis(type1)))
             return true;
         if (is_plus_or_minus(type1) || is_plus_or_minus(type2))
             return true;
-        if ((is_plus_or_minus(type1) && (type2 == TOK_A_MULTIPLY || type2 == TOK_A_DIVIDE)) ||
-            (is_plus_or_minus(type2) && (type1 == TOK_A_MULTIPLY || type1 == TOK_A_DIVIDE)))
+        if ((is_plus_or_minus(type1) && (type2 == TOK_A_MULTIPLY
+            || type2 == TOK_A_DIVIDE)) || (is_plus_or_minus(type2)
+            &&  (type1 == TOK_A_MULTIPLY || type1 == TOK_A_DIVIDE)))
             return true;
         return false;
     }

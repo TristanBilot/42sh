@@ -1,12 +1,12 @@
 /**
 ** \file string_utils.h
-** \author Team 
+** \author Team
 ** \brief String usage functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 #ifndef STRING_H
 #define STRING_H

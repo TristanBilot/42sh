@@ -1,12 +1,12 @@
 /**
 ** \file index_utils.h
-** \author Team 
+** \author Team
 ** \brief Index functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 #ifndef INDEX_UTILS_H
 #define INDEX_UTILS_H

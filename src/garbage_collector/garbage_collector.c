@@ -33,7 +33,6 @@ void free_garbage_collector(void)
 {
     struct garbage_element *index = garbage_collector->first;
     struct garbage_element *tmp = NULL;
-    
     while (index)
     {
         tmp = index;
@@ -61,11 +60,12 @@ void print_garbage_collector(void)
     }
 }
 /******************************************************************* GARBAGE VARIABLE ********************************************************************************************/
- 
+
 
 void new_garbage_collector_variable(void)
 {
-    garbage_collector_variable = calloc(1, sizeof(struct garbage_collector_variable));
+    garbage_collector_variable = calloc(1,
+        sizeof(struct garbage_collector_variable));
     garbage_collector_variable->first = NULL;
     garbage_collector_variable->next = NULL;
     garbage_collector_variable->last = NULL;
@@ -76,7 +76,8 @@ void append_to_garbage_variable(void *addr)
     if (!addr)
         return;
 
-    struct garbage_variable *new = calloc(1, sizeof(struct garbage_variable));
+    struct garbage_variable *new = calloc(1,
+        sizeof(struct garbage_variable));
     new->addr = addr;
     if (!garbage_collector_variable->first)
     {
@@ -96,7 +97,6 @@ void free_garbage_collector_variable(void)
         return;
     struct garbage_variable *index = garbage_collector_variable->first;
     struct garbage_variable *tmp = NULL;
-    
     while (index)
     {
         tmp = index;

@@ -3,7 +3,8 @@
 
 #include "arithmetic_token.h"
 
-struct arithmetic_lexer {
+struct arithmetic_lexer
+{
     char *input;
     struct arithmetic_token_list *token_list;
 };

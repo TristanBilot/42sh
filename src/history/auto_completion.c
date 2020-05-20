@@ -8,7 +8,9 @@
 */
 int levenshtein(const char *s, int len1, const char *t, int len2)
 {
-    int a, b, c;
+    int a;
+    int b;
+    int c;
     if (!len1)
         return len2;
     if (!len2)
@@ -51,7 +53,8 @@ char *get_auto_completion(struct history *history, char *cmd)
     {
         curr = xcalloc(1, len + 1);
         j = 0;
-        for (; history->commands[i] && j < strlen(history->commands[i]) && j < len; j++)
+        for (; history->commands[i]
+            && j < strlen(history->commands[i]) && j < len; j++)
             curr[j] = history->commands[i][j];
         curr[j] = '\0';
 

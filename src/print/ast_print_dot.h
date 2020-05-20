@@ -1,12 +1,12 @@
 /**
 ** \file ast_print_dot.h
-** \author Team 
+** \author Team
 ** \brief Dot file usage functions
 ** \version 0.1
 ** \date 2020-05-03
-** 
+**
 ** \copyright Copyright (c) 2020
-** 
+**
 */
 
 #ifndef AST_PRINT_DOT_H
@@ -32,25 +32,25 @@
 /**
 **\brief create new dote file
 **
-**\return FILE* 
+**\return FILE*
 */
 FILE *new_dot(void);
 /**
 **\brief append line to the dot file
 **
-**\param dot_file 
-**\param str 
-**\param is_new_line 
-**\return true 
-**\return false 
+**\param dot_file
+**\param str
+**\param is_new_line
+**\return true
+**\return false
 */
 bool append_to_dot(FILE *dot_file, const char *str, bool is_new_line);
 /**
 **\brief close dot file
 **
-**\param dot_file 
-**\return true 
-**\return false 
+**\param dot_file
+**\return true
+**\return false
 */
 bool close_dot(FILE *dot_file);
 /**
@@ -61,15 +61,15 @@ void convert_dot_to_png(void);
 /**
 **\brief create string
 **
-**\param ptr 
-**\return char* 
+**\param ptr
+**\return char*
 */
 char *str(void *ptr);
 /**
 **\brief concatenate string
 **
-**\param arr 
-**\return char* 
+**\param arr
+**\return char*
 */
 char *concat(char *arr[]);
 

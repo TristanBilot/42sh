@@ -6,29 +6,30 @@
 
 char *type_to_str(int type)
 {
-    char *types[] = {
+    char *types[] =
+    {
         "TOK_ERROR",
         "TOK_NEWLINE",
-        "TOK_EOF",	
-        "TOK_AND",	
-        "TOK_SEPAND",	
-        "TOK_OR",		   
-        "TOK_PIPE",	
-        "TOK_SEMI",	
-        "TOK_LPAREN",	
-        "TOK_RPAREN",	
+        "TOK_EOF",
+        "TOK_AND",
+        "TOK_SEPAND",
+        "TOK_OR",
+        "TOK_PIPE",
+        "TOK_SEMI",
+        "TOK_LPAREN",
+        "TOK_RPAREN",
         "TOK_LCURL",
         "TOK_RCURL",
         "TOK_DLESSDASH",
-        "TOK_DLESS",	
+        "TOK_DLESS",
         "TOK_LESSGREAT",
         "TOK_LESSAND",
-        "TOK_LESS",	
-        "TOK_DGREAT",	
+        "TOK_LESS",
+        "TOK_DGREAT",
         "TOK_GREATAND",
         "TOK_CLOBBER",
         "TOK_ASS_WORD",
-        "TOK_GREAT",	
+        "TOK_GREAT",
         "TOK_IONUMBER",
         "TOK_NOT",
         "TOK_COMM",
@@ -80,7 +81,7 @@ char *my_strdup(const char *c)
 {
     char *dup = xmalloc(strlen(c) + 1);
     if (dup != NULL)
-       strcpy(dup, c);
+        strcpy(dup, c);
     return dup;
 }
 
