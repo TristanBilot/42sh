@@ -34,7 +34,7 @@ void create_alias(char **args);
 **
 ** \param args
 */
-void load_file(char *path);
+bool load_file(char *path, bool warning);
 /**
 ** \brief implementation of command sourcefnac
 **

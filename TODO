@@ -3,12 +3,8 @@
 # Standard input
 # AST Printer
 # Handle the four options
-<<<<<<< HEAD
 # Parse comments
 # Parse "" and ''
 # Don't forget -Werror in makefile
-=======
-#Parse commentary
->>>>>>> 36903306d4fb7c39408128d3d618f752f87d97a8
 
 --- Don't forget to write tests while coding ---

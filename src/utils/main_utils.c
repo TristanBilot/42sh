@@ -15,11 +15,11 @@ void init_42sh_with_history(struct option_sh *option)
         char *path = xmalloc(strlen(getenv("HOME")) + 9);
         path = strcpy(path, getenv("HOME"));
         path = strcat(path, "/.42shrc");
-        load_file(path);
-        load_file("/etc/42shrc");
+        load_file(path, true);
+        load_file("/etc/42shrc", true);
     }
     else if (option->file_path)
-        load_file(option->file_path);
+        load_file(option->file_path, true);
     if (option->cmd)
     {
         if ((lexer = new_lexer(option->cmd)))

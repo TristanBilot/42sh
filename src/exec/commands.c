@@ -92,7 +92,7 @@ void create_alias(char **args)
     }
 }
 
-void load_file(char *path)
+bool load_file(char *path, bool warning)
 {
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
@@ -104,8 +104,9 @@ void load_file(char *path)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        warn("%s: %s", path, strerror(errno));
-        return;
+        if (warning)
+            warn("%s: %s", path, strerror(errno));
+        return false;
     }
     while ((read = getline(&line, &len, fp)) != -1)
     {
@@ -115,6 +116,7 @@ void load_file(char *path)
         exec_node_input(ast);
     }
     fclose(fp);
+    return true;
 }
 
 void source(char **args)
@@ -122,20 +124,22 @@ void source(char **args)
     if (!args[1])
         warn("source: not enough arguments\n");
     char *path = NULL;
-    if (!strstr(args[1], ".sh") && !strchr(args[1], '/'))
+    if (!strchr(args[1], '/'))
     {
-        char *env = getenv("PATH");
-        path = xmalloc(strlen(env) + strlen(args[1]) + 10);
-        strcpy(path, getenv("PATH"));
-        strcat(path, "/");
-        strcat(path, args[1]);
+        char *env = strdup(getenv("PATH"));
+        while ((path = strsep(&env, ":")) != NULL)
+        {
+            char *path_file = xcalloc(strlen(path) + strlen(args[1]) + 2, sizeof(char));
+            strcat(path_file, path);
+            strcat(path_file, "/");
+            strcat(path_file, args[1]);
+            if (load_file(path_file, false))
+                return;
+        }
     }
     for (int i = 2; args[i]; i++)
         append_program_data(args[i]);
-    if (path == NULL)
-        load_file(args[1]);
-    else
-        load_file(path);
+    load_file(args[1], true);
 }
 
 static void fill_echo_tab(struct echo_tab tab[10])
