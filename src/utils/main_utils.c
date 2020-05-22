@@ -274,7 +274,7 @@ void init_42sh_with_history(struct option_sh *option)
 
 void init_42sh_without_history(struct option_sh *option)
 {
-    signal(SIGINT, sighandler);
+    signal(SIGINT, sighandler_without);
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     if (option->cmd)
@@ -303,6 +303,7 @@ void init_42sh_without_history(struct option_sh *option)
                 if (option->print_ast_flag)
                     print_ast(ast);
             }
+            close(0);
         }
         if (line)
             free(line);
@@ -370,6 +371,21 @@ void sighandler(int signum)
     printf("\n");
     init_42sh_with_history(option);
     after_sig = true;
+}
+
+void sighandler_without(int signum)
+{
+    signum = signum;
+    if (file_manager->fd_to_close != -1)
+    {
+        close(file_manager->fd_to_close);
+        fclose(file_manager->file);
+    }
+    dup2(file_manager->save_in, 0);
+    dup2(file_manager->save_out, 1);
+    dup2(file_manager->save_err, 2);
+    free_garbage_collector();
+    printf("\n");
 }
 
 int getch2(void)

@@ -55,6 +55,7 @@ int print_prompt(void);
 void delete_last_character(void);
 int file_exists(const char *filename);
 void sighandler(int signum);
+void sighandler_without(int signum);
 bool sould_use_history(void);
 int getch2(void);
 

@@ -18,7 +18,7 @@
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
 
-#define DEBUG_FLAG true
+#define DEBUG_FLAG false
 #define DEBUG(msg) if (DEBUG_FLAG) \
     printf("%s\n", msg);
 
@@ -41,7 +41,6 @@ static bool extra_command(char **args, char *cmd_name)
     {
         if (strcmp(cmd_name, cmd[i].name) == 0)
         {
-            printf("args 0 : %s\n", args[0]);
             cmd[i].function(args);
             return false;
         }
@@ -95,7 +94,22 @@ static bool execute_with_fork(char **args, struct tab_redirection tab,
     int *fd = xmalloc(sizeof(int));
     *fd = 1;
     if (args[0] && strcmp(args[0], "exit") == 0)
-        exit_shell();
+    {
+        if (args[1] && !(atoi(args[1]) > 0 || is(args[1], "0")))
+        {
+            update_last_status(24);
+            printf("exit : illegal number: %s\n", args[1]);
+            return false;
+        }
+        else if (args[1])
+        {
+            strcpy(program_data->last_cmd_status, args[1]);
+            //printf("pgr data : %s\n", program_data->last_cmd_status);
+            exit_shell();
+        }
+        else
+            exit_shell();
+    }
     if (manage_duplication(tab))
     {
         warn("redirection ");
@@ -324,7 +338,7 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
     struct node_prefix *p = ast->prefixes;
     struct node_element *e = ast->elements;
     struct tab_redirection tab = init_tab_redirection();
-    char *args[1024];
+    char *args[2048];
 
     while (p && (ast->to_export == false && ast->to_alias == false))
     {
@@ -401,7 +415,13 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
         if (e->type == TOKEN_REDIRECTION)
             tab = append_tab_redirection(tab, e->element.redirection);
         else
-            args[size++] = e->element.word;
+        {
+            char *expanded_word = substitute(e->element.word);
+            if (!expanded_word)
+                return true;
+            args[size++] = expanded_word;
+            // args[size++] = e->element.word;
+        }
         while (e->next) /* link each child between them */
         {
             e = e->next;
@@ -418,19 +438,14 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
         }
         args[size++] = NULL;
-        bool ret = false;
         if (ast->to_export)
-            ret = with_fork ? execute_with_fork(args, tab, "export")
+            return with_fork ? execute_with_fork(args, tab, "export")
                 : execute(args, tab);
         if (ast->to_alias)
-            ret = with_fork ? execute_with_fork(args, tab, "alias")
+            return with_fork ? execute_with_fork(args, tab, "alias")
                 : execute(args, tab);
-        else
-        {
-            ret = with_fork ? execute_with_fork(args, tab, args[0])
+        return with_fork ? execute_with_fork(args, tab, args[0])
                 : execute(args, tab);
-        }
-        return ret;
     }
     if (ast->prefixes != NULL && (ast->to_export == true
         || ast->to_alias == true))
@@ -442,9 +457,10 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             char *key = p->prefix.assigment_word->variable_name;
             char *val = p->prefix.assigment_word->value;
             char *str = xmalloc((strlen(key) + 1 + strlen(val) + 1));
-            str = p->prefix.assigment_word->variable_name;
-            strcat(str,"=");
-            strcat(str, p->prefix.assigment_word->value);
+            sprintf(str, "%s=%s", p->prefix.assigment_word->variable_name, p->prefix.assigment_word->value);
+            // str = p->prefix.assigment_word->variable_name;
+            // strcat(str,"=");
+            // strcat(str, p->prefix.assigment_word->value);
             prefix = prefix->next;
             args[i] = str;
             p = p->next;
@@ -653,7 +669,11 @@ bool exec_node_case_clause(struct node_case_clause *ast, char *word_to_found)
         return true;
     while (c)
     {
-        if (!exec_node_case_item(c->case_item, word_to_found))
+        char *expanded_word = substitute(word_to_found);
+        if (!expanded_word)
+            return true;
+        //args[size++] = expanded_word;
+        if (!exec_node_case_item(c->case_item, expanded_word))
             return false;
         c = c->next;
     }
@@ -664,7 +684,10 @@ bool exec_node_case_item(struct node_case_item *ast, char *word_to_found)
     DEBUG("CASE_ITEM")
     while (ast->words)
     {
-        if (strcmp(word_to_found, ast->words->word) == 0)
+        char *expanded_word = substitute(ast->words->word);
+        if (!expanded_word)
+            return true;
+        if (strcmp(word_to_found, expanded_word) == 0)
         {
             if (ast->compound_list)
             {

@@ -342,10 +342,17 @@ void export(char **args)
 {
     bool p = false;
     bool n = false;
+    char *s;
+    const char *delim = "=";
     if (!args[0])
     {
         for (char **env = environ; *env != NULL; env++)
-            printf("declare -x %s\n", *env);
+        {
+            s = strtok(*env, delim);
+            printf("declare -x %s", s);
+            s = strtok(*env, delim);
+            printf("=\"%s\"\n", s);
+        }
         update_last_status(0);
         return;
     }
@@ -355,7 +362,9 @@ void export(char **args)
             || args[0][i] == 'n'); i++)
         {
             if (args[0][i] == 'p')
+            {
                 p = true;
+            }
             if (args[0][i] == 'n')
                 n = true;
         }
@@ -388,6 +397,12 @@ void export(char **args)
     {
         for (int i = 0; args[i]; i++)
         {
+            if (getenv(args[i]))
+                sprintf(args[i], "%s=\"%s\"", args[i],
+                    getenv(args[i]));
+            else if (var_exists(var_storage, args[i]))
+                sprintf(args[i], "%s=\"%s\"", args[i],
+                    get_value(var_storage, args[i]));
             putenv(args[i]);
         }
     }

@@ -22,7 +22,7 @@ int perform_for_range(struct range *r, struct node_for *ast)
             while (r->value[i] != '.')
             {
                 if (!is_number(r->value[i]))
-                    return -1;
+                    return 0;
                 append_buffer(buf, r->value[i]);
                 i++;
             }
@@ -31,12 +31,14 @@ int perform_for_range(struct range *r, struct node_for *ast)
 
             buf = new_buffer();
             if (r->value[i + 1] != '.')
-                return -1;
+                return 0;
             i += 2;
 
             /* Right parsing */
             while (r->value[i] != '}')
             {
+                if (!is_number(r->value[i]))
+                    return 0;
                 append_buffer(buf, r->value[i]);
                 i++;
             }

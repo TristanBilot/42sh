@@ -23,7 +23,7 @@ char **split(char *str)
 {
     if (!str)
         return NULL;
-    const char delim[2] = " ";
+    const char delim[3] = " \t";
     char **res = xcalloc(1, sizeof(char *) * MAX_TOKEN);
     char *splitted = strtok(my_strdup(str), delim);
     int i = 0;

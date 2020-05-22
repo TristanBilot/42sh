@@ -32,7 +32,10 @@ void create_alias(char **args);
 /**
 ** \brief function to give a file to the 42sh
 **
-** \param args
+** \param path
+** \param warning
+** \return true
+** \return false
 */
 bool load_file(char *path, bool warning);
 /**
