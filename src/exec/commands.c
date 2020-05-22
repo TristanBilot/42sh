@@ -79,11 +79,10 @@ void create_alias(char **args)
     {
         char *key = strsep(&args[i], "=");
         char *value = strsep(&args[i], "=");
-        printf("key: %s\n value: %s\n", key, value);
         if (!value)
         {
             if (var_exists(alias_storage, key))
-                printf("alias %s=%s\n", key,
+                printf("%s=%s\n", key,
                     get_value(alias_storage, key));
             else
                 warn("alias: %s: not found\n", key);
@@ -349,9 +348,11 @@ void export(char **args)
         for (char **env = environ; *env != NULL; env++)
         {
             s = strtok(*env, delim);
-            printf("declare -x %s", s);
+            if (s)
+                printf("declare -x %s", s);
             s = strtok(*env, delim);
-            printf("=\"%s\"\n", s);
+            if (s)
+                printf("=\"%s\"\n", s);
         }
         update_last_status(0);
         return;
@@ -376,12 +377,18 @@ void export(char **args)
     }
     else if (p)
     {
-        printf("ooo\n");
         if (args[1])
-            printf("declare -x %s\n", getenv(args[1]));
+            printf("declare -x %s=\"%s\"\n", args[1], getenv(args[1]));
         else
             for (char **env = environ; *env != NULL; env++)
-                printf("declare -x %s\n", *env);
+            {
+                s = strtok(*env, delim);
+                if (s)
+                    printf("declare -x %s", s);
+                s = strtok(*env, delim);
+                if (s)
+                    printf("=\"%s\"\n", s);
+            }
    }
     else if (n)
     {

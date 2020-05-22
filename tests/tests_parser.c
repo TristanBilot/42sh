@@ -3,16 +3,19 @@
 #include "parser/parser.h"
 #include "utils/string_utils.h"
 #include "../garbage_collector/garbage_collector.h"
+#include "./storage/program_data_storage.h"
 #include "../storage/var_storage.h"
 
 bool test(char *expr)
 {
     new_garbage_collector();
+    new_program_data_storage(1, NULL);
     alias_storage = new_var_storage();
     struct lexer *lexer = new_lexer(expr);
     struct node_input *ast = parse(lexer);
     bool res = ast == NULL;
     free_garbage_collector();
+    free_program_data_storage();
     free(garbage_collector);
     free_var_storage(alias_storage);
     return res;
@@ -250,3 +253,13 @@ Test(parser, comments)
     cr_assert(success("ls;#commentaire")); // ça marche sur le terminal
     cr_assert(fail("#commentaire\necho test"));
 }
+
+Test(parser, bultins)
+{
+    cr_assert(success("export"));
+    cr_assert(success("export test1=first test2=second test3=third"));
+    cr_assert(success("export -p lol=a"));
+    cr_assert(success("export -p lol======a"));
+    cr_assert(success("alias -p var1=lol"));
+}
+

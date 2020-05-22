@@ -48,36 +48,6 @@
       - returncode
       - stdout
 
-###################################################### TEST EXPORT ####################################################### 
-  - stdin: export
-    checks:
-      - returncode
-      - stdout
-  - stdin: export -p
-    checks:
-      - returncode
-      - stdout
-  - stdin: export -pppppp
-    checks:
-      - returncode
-      - stdout
-  - stdin: export -up
-    checks:
-      - returncode
-      - stdout
-  - stdin: export test_variable=first 
-    checks:
-      - returncode
-      - stdout
-  - stdin: export -n test_variable 
-    checks:
-      - returncode
-      - stdout
-  - stdin: export test1=first test2=second test3=third
-    checks:
-      - returncode
-      - stdout
-
 ###################################################### TEST CD ####################################################### 
   - stdin: cd; pwd
     checks:
@@ -106,6 +76,18 @@
       - returncode
       - stdout
   - stdin: alias -p
+    checks:
+      - returncode
+      - stdout
+  - stdin: alias -a; alias
+    checks:
+      - returncode
+      - stdout
+  - stdin: alias a=value1 b=value2; alias
+    checks:
+      - returncode
+      - stdout
+  - stdin: unalias a; alias
     checks:
       - returncode
       - stdout
