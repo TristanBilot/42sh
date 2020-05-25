@@ -1,0 +1,115 @@
+.TH "src/expansion/arithmetic/parser/arithmetic_parser.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/parser/arithmetic_parser.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./lexer/arithmetic_lexer\&.h'\fP
+.br
+\fC#include '\&.\&./ast/arithmetic_ast\&.h'\fP
+.br
+\fC#include 'arithmetic_parser\&.h'\fP
+.br
+\fC#include '\&.\&./\&.\&./\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBtoken_is_sop\fP (struct \fBarithmetic_token\fP *\fBtoken\fP)"
+.br
+.ti -1c
+.RI "bool \fBtoken_is_eop\fP (struct \fBarithmetic_token\fP *\fBtoken\fP)"
+.br
+.ti -1c
+.RI "bool \fBparse_parenthesis\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.RI "Parse from the given lexer and allocate a new ast in \fC*ast\fP "
+.ti -1c
+.RI "bool \fBparse_texp\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_log_not\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_exponent\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_sexp\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_exp\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_bit_and\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_bit_xor\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_bit_or\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_log_and\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_log_or\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.ti -1c
+.RI "bool \fBparse_expression\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_ast\fP **ast)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "bool parse_bit_and (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_bit_or (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_bit_xor (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_exp (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_exponent (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_expression (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_log_and (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_log_not (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_log_or (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_parenthesis (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.PP
+Parse from the given lexer and allocate a new ast in \fC*ast\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+true if no error occured, false otherwise\&. 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlexer\fP lexer to get token from 
+.br
+\fIast\fP placeholder for the ast to build 
+.RE
+.PP
+
+.SS "bool parse_sexp (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool parse_texp (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_ast\fP ** ast)"
+
+.SS "bool token_is_eop (struct \fBarithmetic_token\fP * token)"
+
+.SS "bool token_is_sop (struct \fBarithmetic_token\fP * token)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

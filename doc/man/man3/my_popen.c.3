@@ -1,4 +1,4 @@
-.TH "src/expansion/my_popen.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/my_popen.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -8,7 +8,7 @@ src/expansion/my_popen.c
 .PP
 \fC#include 'my_popen\&.h'\fP
 .br
-\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
+\fC#include 'utils/xalloc\&.h'\fP
 .br
 \fC#include <stdio\&.h>\fP
 .br
@@ -33,7 +33,33 @@ src/expansion/my_popen.c
 .PP 
 .SS "int my_pclose (FILE * stream)"
 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+int 
+.RE
+.PP
+
 .SS "FILE* my_popen (const char * cmd, const char * mode)"
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcmd\fP 
+.br
+\fImode\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+FILE* 
+.RE
+.PP
 
 .SH "Author"
 .PP 

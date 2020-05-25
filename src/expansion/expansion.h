@@ -20,6 +20,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "../storage/program_data_storage.h"
+
+#define FAIL_WITH_ERR(err) \
+    fprintf(stderr, "%s\n", err); \
+    update_last_status(1); \
+    return NULL;
+
 char *substitute(char *word);
 
 /* ++++++++++++++ Parameters ++++++++++++++ */

@@ -1,4 +1,4 @@
-.TH "node_shell_command" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "node_shell_command" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,9 +21,6 @@ node_shell_command
 .ti -1c
 .RI "enum \fBtype_clause\fP { \fBC_BRACKETS\fP, \fBPARENTHESIS\fP, \fBRULE\fP }"
 .br
-.ti -1c
-.RI "enum \fBshell_type\fP { \fBFOR\fP, \fBWHILE\fP, \fBUNTIL\fP, \fBCASE\fP, \fBIF\fP }"
-.br
 .in -1c
 .SS "Data Fields"
 
@@ -35,26 +32,11 @@ node_shell_command
 .RI "union \fBnode_shell_command::shell\fP \fBshell\fP"
 .br
 .ti -1c
-.RI "enum \fBnode_shell_command::shell_type\fP \fBshell_type\fP"
+.RI "enum \fBshell_type\fP \fBshell_type\fP"
 .br
 .in -1c
 .SH "Member Enumeration Documentation"
 .PP 
-.SS "enum \fBshell_type\fP"
-
-.PP
-\fBEnumerator\fP
-.in +1c
-.TP
-\fB\fIFOR \fP\fP
-.TP
-\fB\fIWHILE \fP\fP
-.TP
-\fB\fIUNTIL \fP\fP
-.TP
-\fB\fICASE \fP\fP
-.TP
-\fB\fIIF \fP\fP
 .SS "enum \fBtype_clause\fP"
 
 .PP
@@ -70,7 +52,7 @@ node_shell_command
 .PP 
 .SS "union \fBnode_shell_command::shell\fP  \fBshell\fP"
 
-.SS "enum \fBnode_shell_command::shell_type\fP  \fBshell_type\fP"
+.SS "enum \fBshell_type\fP \fBshell_type\fP"
 
 .SS "enum \fBnode_shell_command::type_clause\fP  type"
 

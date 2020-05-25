@@ -1,4 +1,4 @@
-.TH "src/expansion/var_expansion.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/var_expansion.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,6 +13,8 @@ src/expansion/var_expansion.c
 \fC#include <unistd\&.h>\fP
 .br
 \fC#include <sys/types\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
 .br
 \fC#include 'expansion\&.h'\fP
 .br
@@ -58,6 +60,9 @@ src/expansion/var_expansion.c
 .RI "char * \fBsubstitute_uid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
 .br
 .ti -1c
+.RI "char * \fBsubstitute_pid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
 .RI "char * \fBsubstitute_oldpwd\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
 .br
 .ti -1c
@@ -89,6 +94,8 @@ src/expansion/var_expansion.c
 .SS "char* substitute_number (char c)"
 
 .SS "char* substitute_oldpwd (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_pid (char * word, size_t * i, bool * should_continue, int is_brack)"
 
 .SS "char* substitute_ques (void)"
 

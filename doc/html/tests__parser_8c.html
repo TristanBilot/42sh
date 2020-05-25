@@ -74,19 +74,20 @@ $(function() {
 <code>#include &quot;<a class="el" href="lexer_8h_source.html">lexer/lexer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="parser_8h_source.html">parser/parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="string__utils_8h_source.html">utils/string_utils.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="free_8h_source.html">ast/free.h</a>&quot;</code><br />
 <code>#include &quot;../garbage_collector/garbage_collector.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="program__data__storage_8h_source.html">./storage/program_data_storage.h</a>&quot;</code><br />
+<code>#include &quot;../storage/var_storage.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for tests_parser.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="tests__parser_8c__incl.png" border="0" usemap="#tests_2tests__parser_8c" alt=""/></div>
 <map name="tests_2tests__parser_8c" id="tests_2tests__parser_8c">
-<area shape="rect" id="node3" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="130,169,223,196"/>
+<area shape="rect" id="node3" href="lexer_8h.html" title="Main lexing functions. " alt="" coords="115,169,209,196"/>
 <area shape="rect" id="node6" href="parser_8h.html" title="Parsing functions. " alt="" coords="210,87,319,114"/>
-<area shape="rect" id="node8" href="string__utils_8h.html" title="String usage functions. " alt="" coords="445,87,569,114"/>
-<area shape="rect" id="node11" href="free_8h.html" title="Free functions. " alt="" coords="343,87,421,114"/>
-<area shape="rect" id="node4" href="token_8h.html" title="Token structures and functions. " alt="" coords="106,244,215,271"/>
-<area shape="rect" id="node7" href="ast_8h.html" title="Define ast and parser structures. " alt="" coords="302,169,387,196"/>
+<area shape="rect" id="node8" href="string__utils_8h.html" title="String usage functions. " alt="" coords="344,87,468,114"/>
+<area shape="rect" id="node12" href="program__data__storage_8h.html" title="./storage/program_data\l_storage.h" alt="" coords="656,80,812,121"/>
+<area shape="rect" id="node4" href="token_8h.html" title="Token structures and functions. " alt="" coords="107,244,217,271"/>
+<area shape="rect" id="node7" href="ast_8h.html" title="Define ast and parser structures. " alt="" coords="283,169,369,196"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -138,6 +139,8 @@ Functions</h2></td></tr>
 <tr class="separator:ae45e78dfb7f89ca2f2c5f38735edb6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ff6d9774336e265545c63c5e5517120"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tests__parser_8c.html#a7ff6d9774336e265545c63c5e5517120">Test</a> (<a class="el" href="structparser.html">parser</a>, comments)</td></tr>
 <tr class="separator:a7ff6d9774336e265545c63c5e5517120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac021b5cf3fe2ff3e45a384aa31961a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tests__parser_8c.html#ac021b5cf3fe2ff3e45a384aa31961a3c">Test</a> (<a class="el" href="structparser.html">parser</a>, bultins)</td></tr>
+<tr class="separator:ac021b5cf3fe2ff3e45a384aa31961a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a01dafc85688fa938e608a2a1000595a5"></a>
@@ -195,7 +198,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae65c858133df7550047133477bf62bef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae65c858133df7550047133477bf62bef">&#9670;&nbsp;</a></span>Test() <span class="overload">[1/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae65c858133df7550047133477bf62bef">&#9670;&nbsp;</a></span>Test() <span class="overload">[1/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -223,7 +226,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab801ce16607faa35a045bc839b9dbadb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab801ce16607faa35a045bc839b9dbadb">&#9670;&nbsp;</a></span>Test() <span class="overload">[2/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab801ce16607faa35a045bc839b9dbadb">&#9670;&nbsp;</a></span>Test() <span class="overload">[2/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +254,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7316a926d16bc015bcc295d0503fad42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7316a926d16bc015bcc295d0503fad42">&#9670;&nbsp;</a></span>Test() <span class="overload">[3/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7316a926d16bc015bcc295d0503fad42">&#9670;&nbsp;</a></span>Test() <span class="overload">[3/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +282,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4aafab682340840d6f35b09edfb758d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4aafab682340840d6f35b09edfb758d3">&#9670;&nbsp;</a></span>Test() <span class="overload">[4/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4aafab682340840d6f35b09edfb758d3">&#9670;&nbsp;</a></span>Test() <span class="overload">[4/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -307,7 +310,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a638e70a49f4a904c0561c25f3f434a70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a638e70a49f4a904c0561c25f3f434a70">&#9670;&nbsp;</a></span>Test() <span class="overload">[5/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a638e70a49f4a904c0561c25f3f434a70">&#9670;&nbsp;</a></span>Test() <span class="overload">[5/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,7 +338,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7e004b2a1f991190a4ae5974fb484ba0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e004b2a1f991190a4ae5974fb484ba0">&#9670;&nbsp;</a></span>Test() <span class="overload">[6/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e004b2a1f991190a4ae5974fb484ba0">&#9670;&nbsp;</a></span>Test() <span class="overload">[6/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -363,7 +366,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a33ecfc74f0fcad7a92b9841c1f925a3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33ecfc74f0fcad7a92b9841c1f925a3f">&#9670;&nbsp;</a></span>Test() <span class="overload">[7/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a33ecfc74f0fcad7a92b9841c1f925a3f">&#9670;&nbsp;</a></span>Test() <span class="overload">[7/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -391,7 +394,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aae8280d89f96ab6f9d96ef42661f7f62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae8280d89f96ab6f9d96ef42661f7f62">&#9670;&nbsp;</a></span>Test() <span class="overload">[8/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae8280d89f96ab6f9d96ef42661f7f62">&#9670;&nbsp;</a></span>Test() <span class="overload">[8/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -419,7 +422,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a71e48270ad8c2a99c934ef9c3fb46581"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71e48270ad8c2a99c934ef9c3fb46581">&#9670;&nbsp;</a></span>Test() <span class="overload">[9/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e48270ad8c2a99c934ef9c3fb46581">&#9670;&nbsp;</a></span>Test() <span class="overload">[9/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,7 +450,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a786db6e41ca5a9641e8bae99b7df57f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a786db6e41ca5a9641e8bae99b7df57f7">&#9670;&nbsp;</a></span>Test() <span class="overload">[10/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a786db6e41ca5a9641e8bae99b7df57f7">&#9670;&nbsp;</a></span>Test() <span class="overload">[10/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -475,7 +478,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a8331e671aaf5559934beeae35b517a85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8331e671aaf5559934beeae35b517a85">&#9670;&nbsp;</a></span>Test() <span class="overload">[11/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8331e671aaf5559934beeae35b517a85">&#9670;&nbsp;</a></span>Test() <span class="overload">[11/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -503,7 +506,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a1ea863cba8ff9e7e1f9d619f948ea30f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ea863cba8ff9e7e1f9d619f948ea30f">&#9670;&nbsp;</a></span>Test() <span class="overload">[12/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ea863cba8ff9e7e1f9d619f948ea30f">&#9670;&nbsp;</a></span>Test() <span class="overload">[12/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -531,7 +534,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="abfaceaaf85bdc6389e22c8c2dee53564"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfaceaaf85bdc6389e22c8c2dee53564">&#9670;&nbsp;</a></span>Test() <span class="overload">[13/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abfaceaaf85bdc6389e22c8c2dee53564">&#9670;&nbsp;</a></span>Test() <span class="overload">[13/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -559,7 +562,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a07c8350f5ef22c7279afc3805a435c5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07c8350f5ef22c7279afc3805a435c5f">&#9670;&nbsp;</a></span>Test() <span class="overload">[14/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c8350f5ef22c7279afc3805a435c5f">&#9670;&nbsp;</a></span>Test() <span class="overload">[14/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -587,7 +590,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad1c178eca657587513b16ff6942882cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1c178eca657587513b16ff6942882cd">&#9670;&nbsp;</a></span>Test() <span class="overload">[15/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c178eca657587513b16ff6942882cd">&#9670;&nbsp;</a></span>Test() <span class="overload">[15/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -615,7 +618,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="afb84bff0bea383f90d0e43afc69ab1be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb84bff0bea383f90d0e43afc69ab1be">&#9670;&nbsp;</a></span>Test() <span class="overload">[16/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afb84bff0bea383f90d0e43afc69ab1be">&#9670;&nbsp;</a></span>Test() <span class="overload">[16/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -643,7 +646,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aae5790559cdf5ad81e0e756763ca8f22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae5790559cdf5ad81e0e756763ca8f22">&#9670;&nbsp;</a></span>Test() <span class="overload">[17/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5790559cdf5ad81e0e756763ca8f22">&#9670;&nbsp;</a></span>Test() <span class="overload">[17/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -671,7 +674,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa146cd9bfa31f9a2ea9852f663342ae0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa146cd9bfa31f9a2ea9852f663342ae0">&#9670;&nbsp;</a></span>Test() <span class="overload">[18/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa146cd9bfa31f9a2ea9852f663342ae0">&#9670;&nbsp;</a></span>Test() <span class="overload">[18/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -699,7 +702,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae45e78dfb7f89ca2f2c5f38735edb6b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae45e78dfb7f89ca2f2c5f38735edb6b6">&#9670;&nbsp;</a></span>Test() <span class="overload">[19/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae45e78dfb7f89ca2f2c5f38735edb6b6">&#9670;&nbsp;</a></span>Test() <span class="overload">[19/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -727,7 +730,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7ff6d9774336e265545c63c5e5517120"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ff6d9774336e265545c63c5e5517120">&#9670;&nbsp;</a></span>Test() <span class="overload">[20/20]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ff6d9774336e265545c63c5e5517120">&#9670;&nbsp;</a></span>Test() <span class="overload">[20/21]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -742,6 +745,34 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">comments&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac021b5cf3fe2ff3e45a384aa31961a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac021b5cf3fe2ff3e45a384aa31961a3c">&#9670;&nbsp;</a></span>Test() <span class="overload">[21/21]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Test </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structparser.html">parser</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bultins&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>

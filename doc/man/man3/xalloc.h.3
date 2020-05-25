@@ -1,4 +1,4 @@
-.TH "src/utils/xalloc.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/xalloc.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -7,8 +7,6 @@ src/utils/xalloc.h \- Special allocation functions\&.
 .SH SYNOPSIS
 .br
 .PP
-\fC#include '\&.\&./utils/attr\&.h'\fP
-.br
 \fC#include <stddef\&.h>\fP
 .br
 
@@ -16,7 +14,7 @@ src/utils/xalloc.h \- Special allocation functions\&.
 
 .in +1c
 .ti -1c
-.RI "void * \fBxmalloc\fP (size_t size) \fB__malloc\fP"
+.RI "void * \fBxmalloc\fP (size_t size)"
 .br
 .RI "Safe malloc wrapper\&. "
 .ti -1c
@@ -27,7 +25,7 @@ src/utils/xalloc.h \- Special allocation functions\&.
 .RI "void * \fBxcalloc\fP (size_t nmb, size_t size)"
 .br
 .ti -1c
-.RI "void * \fBymalloc\fP (size_t size) \fB__malloc\fP"
+.RI "void * \fBymalloc\fP (size_t size)"
 .br
 .ti -1c
 .RI "void * \fByrealloc\fP (void *ptr, size_t size)"

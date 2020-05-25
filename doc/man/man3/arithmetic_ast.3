@@ -1,0 +1,81 @@
+.TH "arithmetic_ast" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+arithmetic_ast
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <arithmetic_ast\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "enum \fBarithmetic_ast_type\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "union {"
+.br
+.ti -1c
+.RI "   struct {"
+.br
+.ti -1c
+.RI "      struct \fBarithmetic_ast\fP * \fBleft\fP"
+.br
+.ti -1c
+.RI "      struct \fBarithmetic_ast\fP * \fBright\fP"
+.br
+.ti -1c
+.RI "   } \fBchildren\fP"
+.br
+.ti -1c
+.RI "   int \fBvalue\fP"
+.br
+.ti -1c
+.RI "} \fBdata\fP"
+.br
+.ti -1c
+.RI "union {"
+.br
+.ti -1c
+.RI "   struct {"
+.br
+.ti -1c
+.RI "      struct \fBarithmetic_ast\fP * \fBleft\fP"
+.br
+.ti -1c
+.RI "      struct \fBarithmetic_ast\fP * \fBright\fP"
+.br
+.ti -1c
+.RI "   } \fBchildren\fP"
+.br
+.ti -1c
+.RI "   int \fBvalue\fP"
+.br
+.ti -1c
+.RI "} \fBdata\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "struct { \&.\&.\&. }   children"
+
+.SS "struct { \&.\&.\&. }   children"
+
+.SS "union { \&.\&.\&. }   data"
+
+.SS "union { \&.\&.\&. }   data"
+
+.SS "struct \fBarithmetic_ast\fP* left"
+
+.SS "struct \fBarithmetic_ast\fP* right"
+
+.SS "enum \fBarithmetic_ast_type\fP type"
+
+.SS "int value"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

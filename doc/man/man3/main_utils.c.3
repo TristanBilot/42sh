@@ -1,4 +1,4 @@
-.TH "src/utils/main_utils.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/main_utils.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,10 +19,10 @@ src/utils/main_utils.c
 .RI "void \fBinit_42sh_without_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
 .br
 .ti -1c
-.RI "void \fBprint_usage\fP ()"
+.RI "void \fBprint_usage\fP (void)"
 .br
 .ti -1c
-.RI "int \fBprint_prompt\fP ()"
+.RI "int \fBprint_prompt\fP (void)"
 .br
 .ti -1c
 .RI "int \fBfile_exists\fP (const char *filename)"
@@ -32,6 +32,9 @@ src/utils/main_utils.c
 .br
 .ti -1c
 .RI "void \fBsighandler\fP (int signum)"
+.br
+.ti -1c
+.RI "void \fBsighandler_without\fP (int signum)"
 .br
 .ti -1c
 .RI "int \fBgetch2\fP (void)"
@@ -61,6 +64,8 @@ src/utils/main_utils.c
 .SS "void print_usage (void)"
 
 .SS "void sighandler (int signum)"
+
+.SS "void sighandler_without (int signum)"
 
 .SH "Variable Documentation"
 .PP 

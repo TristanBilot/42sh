@@ -1,0 +1,240 @@
+.TH "src/exec/redirection.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/exec/redirection.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./exec/exec\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBfile_manager\fP"
+.br
+.ti -1c
+.RI "struct \fBstd\fP"
+.br
+.ti -1c
+.RI "struct \fBtab_redirection\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTAB_REDI_SIZE\fP   256"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBreset_streams\fP (struct \fBtab_redirection\fP \fBtab\fP)"
+.br
+.RI "Resets streams with last configurations\&. "
+.ti -1c
+.RI "struct \fBtab_redirection\fP \fBcopy_tab_redirection\fP (struct \fBtab_redirection\fP \fBtab\fP)"
+.br
+.RI "Copy content of \fBtab_redirection\fP in a new one\&. "
+.ti -1c
+.RI "struct \fBfile_manager\fP * \fBinit_file_manager\fP (void)"
+.br
+.RI "initialize file manager "
+.ti -1c
+.RI "struct \fBtab_redirection\fP \fBinit_tab_redirection\fP (void)"
+.br
+.RI "create and init the table of redirection "
+.ti -1c
+.RI "struct \fBtab_redirection\fP \fBappend_tab_redirection\fP (struct \fBtab_redirection\fP \fBtab\fP, struct \fBnode_redirection\fP *e)"
+.br
+.ti -1c
+.RI "bool \fBmanage_duplication\fP (struct \fBtab_redirection\fP \fBtab\fP)"
+.br
+.RI "manage duplications for each redirections "
+.ti -1c
+.RI "bool \fBdup_file\fP (char *file, char *flag, int io)"
+.br
+.RI "apply file descriptor duplication from file name "
+.ti -1c
+.RI "bool \fBdup_fd\fP (int file, char *flag, int io)"
+.br
+.RI "apply file descriptor duplication from file descriptor "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBfile_manager\fP * \fBfile_manager\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Team 
+.RE
+.PP
+\fBVersion:\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2020-05-15
+.RE
+.PP
+\fBCopyright:\fP
+.RS 4
+Copyright (c) 2020 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TAB_REDI_SIZE   256"
+
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBtab_redirection\fP append_tab_redirection (struct \fBtab_redirection\fP tab, struct \fBnode_redirection\fP * e)"
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fItab\fP complete the redirection table with output/input file name 
+.br
+\fIe\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct \fBtab_redirection\fP 
+.RE
+.PP
+
+.SS "struct \fBtab_redirection\fP copy_tab_redirection (struct \fBtab_redirection\fP tab)"
+
+.PP
+Copy content of \fBtab_redirection\fP in a new one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItab\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+struct \fBtab_redirection\fP 
+.RE
+.PP
+
+.SS "bool dup_fd (int file, char * flag, int io)"
+
+.PP
+apply file descriptor duplication from file descriptor 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIout\fP 
+.br
+\fIflag\fP 
+.br
+\fIio\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "bool dup_file (char * file, char * flag, int io)"
+
+.PP
+apply file descriptor duplication from file name 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP 
+.br
+\fIflag\fP 
+.br
+\fIio\fP 
+.br
+\fIptr_fd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "struct \fBfile_manager\fP* init_file_manager (void)"
+
+.PP
+initialize file manager 
+.PP
+\fBReturns:\fP
+.RS 4
+struct file_manager* 
+.RE
+.PP
+
+.SS "struct \fBtab_redirection\fP init_tab_redirection (void)"
+
+.PP
+create and init the table of redirection 
+.PP
+\fBReturns:\fP
+.RS 4
+struct \fBtab_redirection\fP 
+.RE
+.PP
+
+.SS "bool manage_duplication (struct \fBtab_redirection\fP tab)"
+
+.PP
+manage duplications for each redirections 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItab\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
+.RE
+.PP
+
+.SS "void reset_streams (struct \fBtab_redirection\fP tab)"
+
+.PP
+Resets streams with last configurations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItab\fP 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBfile_manager\fP* \fBfile_manager\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

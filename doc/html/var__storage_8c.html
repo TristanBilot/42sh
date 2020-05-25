@@ -77,10 +77,9 @@ Include dependency graph for var_storage.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="var__storage_8c__incl.png" border="0" usemap="#src_2storage_2var__storage_8c" alt=""/></div>
 <map name="src_2storage_2var__storage_8c" id="src_2storage_2var__storage_8c">
-<area shape="rect" id="node2" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="107,80,208,107"/>
-<area shape="rect" id="node4" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="104,155,211,181"/>
-<area shape="rect" id="node7" href="string__utils_8h.html" title="String usage functions. " alt="" coords="235,155,371,181"/>
-<area shape="rect" id="node5" href="attr_8h.html" title="../utils/attr.h" alt="" coords="19,229,111,256"/>
+<area shape="rect" id="node2" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="99,80,200,107"/>
+<area shape="rect" id="node4" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="5,155,112,181"/>
+<area shape="rect" id="node6" href="string__utils_8h.html" title="String usage functions. " alt="" coords="187,155,323,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -88,44 +87,54 @@ Include dependency graph for var_storage.c:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a6a531e9c58b2d085801e3ac51fc6d9c5"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a6a531e9c58b2d085801e3ac51fc6d9c5">new_var_storage</a> (void)</td></tr>
 <tr class="separator:a6a531e9c58b2d085801e3ac51fc6d9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a171b2f7e750a1e2799e105419fd2162b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a171b2f7e750a1e2799e105419fd2162b">free_var_storage</a> (void)</td></tr>
-<tr class="separator:a171b2f7e750a1e2799e105419fd2162b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ceeadb20809d2f1f9eee56b548df2db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a7ceeadb20809d2f1f9eee56b548df2db">free_var_storage</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage)</td></tr>
+<tr class="separator:a7ceeadb20809d2f1f9eee56b548df2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d95dd3ffd39252eccb4b968ea061ec3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a1d95dd3ffd39252eccb4b968ea061ec3">hash</a> (char *key)</td></tr>
 <tr class="separator:a1d95dd3ffd39252eccb4b968ea061ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab37e65010e9205d1956ce0805abb825c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#ab37e65010e9205d1956ce0805abb825c">var_exists</a> (char *key)</td></tr>
-<tr class="separator:ab37e65010e9205d1956ce0805abb825c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3edb0647d53bbc788776422303ba573"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#af3edb0647d53bbc788776422303ba573">put_var</a> (char *key, char *val)</td></tr>
-<tr class="separator:af3edb0647d53bbc788776422303ba573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e850693bde3613a5c8c7c9c9f3534b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a3e850693bde3613a5c8c7c9c9f3534b4">del_var</a> (char *key)</td></tr>
-<tr class="separator:a3e850693bde3613a5c8c7c9c9f3534b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af887f56362110bdea1f33465042941ee"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structvariable.html">variable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#af887f56362110bdea1f33465042941ee">get_var</a> (char *key)</td></tr>
-<tr class="separator:af887f56362110bdea1f33465042941ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a339a79298fffccb8980de077667a8350"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a339a79298fffccb8980de077667a8350">get_value</a> (char *key)</td></tr>
-<tr class="separator:a339a79298fffccb8980de077667a8350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c75e7c4386abafc31b4df4264a3317"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a84c75e7c4386abafc31b4df4264a3317">var_exists</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage, char *key)</td></tr>
+<tr class="separator:a84c75e7c4386abafc31b4df4264a3317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a647db7b1ffeb3c7b19ac64b82be16c14"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a647db7b1ffeb3c7b19ac64b82be16c14">put_var</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage, char *key, char *val)</td></tr>
+<tr class="separator:a647db7b1ffeb3c7b19ac64b82be16c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ef03ccae6322e30ad6627575f939bc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a6ef03ccae6322e30ad6627575f939bc5">del_var</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage, char *key)</td></tr>
+<tr class="separator:a6ef03ccae6322e30ad6627575f939bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73159c8d4acb8e5116a085ad09b76894"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structvariable.html">variable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a73159c8d4acb8e5116a085ad09b76894">get_var</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage, char *key)</td></tr>
+<tr class="separator:a73159c8d4acb8e5116a085ad09b76894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac120e5d4d8a5b15a8386894b620b5213"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#ac120e5d4d8a5b15a8386894b620b5213">get_value</a> (struct <a class="el" href="structvar__storage.html">var_storage</a> *storage, char *key)</td></tr>
+<tr class="separator:ac120e5d4d8a5b15a8386894b620b5213"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fdb5ce67a539b64cfcde4a1e2cc3f73"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="var__storage_8h.html#a5fdb90fadbb7be7ff35472930d4bfed4">var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="var__storage_8c.html#a2fdb5ce67a539b64cfcde4a1e2cc3f73">get_var_type</a> (char *value)</td></tr>
 <tr class="separator:a2fdb5ce67a539b64cfcde4a1e2cc3f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a3e850693bde3613a5c8c7c9c9f3534b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e850693bde3613a5c8c7c9c9f3534b4">&#9670;&nbsp;</a></span>del_var()</h2>
+<a id="a6ef03ccae6322e30ad6627575f939bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ef03ccae6322e30ad6627575f939bc5">&#9670;&nbsp;</a></span>del_var()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void del_var </td>
+          <td class="memname">bool del_var </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a171b2f7e750a1e2799e105419fd2162b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a171b2f7e750a1e2799e105419fd2162b">&#9670;&nbsp;</a></span>free_var_storage()</h2>
+<a id="a7ceeadb20809d2f1f9eee56b548df2db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ceeadb20809d2f1f9eee56b548df2db">&#9670;&nbsp;</a></span>free_var_storage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,8 +142,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void free_var_storage </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -142,8 +151,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a339a79298fffccb8980de077667a8350"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a339a79298fffccb8980de077667a8350">&#9670;&nbsp;</a></span>get_value()</h2>
+<a id="ac120e5d4d8a5b15a8386894b620b5213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac120e5d4d8a5b15a8386894b620b5213">&#9670;&nbsp;</a></span>get_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,17 +160,27 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">char* get_value </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af887f56362110bdea1f33465042941ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af887f56362110bdea1f33465042941ee">&#9670;&nbsp;</a></span>get_var()</h2>
+<a id="a73159c8d4acb8e5116a085ad09b76894"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73159c8d4acb8e5116a085ad09b76894">&#9670;&nbsp;</a></span>get_var()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,9 +188,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">struct <a class="el" href="structvariable.html">variable</a>* get_var </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -232,8 +261,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af3edb0647d53bbc788776422303ba573"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3edb0647d53bbc788776422303ba573">&#9670;&nbsp;</a></span>put_var()</h2>
+<a id="a647db7b1ffeb3c7b19ac64b82be16c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a647db7b1ffeb3c7b19ac64b82be16c14">&#9670;&nbsp;</a></span>put_var()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,6 +270,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool put_var </td>
           <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>key</em>, </td>
         </tr>
@@ -260,8 +295,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab37e65010e9205d1956ce0805abb825c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab37e65010e9205d1956ce0805abb825c">&#9670;&nbsp;</a></span>var_exists()</h2>
+<a id="a84c75e7c4386abafc31b4df4264a3317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c75e7c4386abafc31b4df4264a3317">&#9670;&nbsp;</a></span>var_exists()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,9 +304,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool var_exists </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structvar__storage.html">var_storage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

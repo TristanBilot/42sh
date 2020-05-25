@@ -1,4 +1,4 @@
-.TH "src/exec/exec.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/exec.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -58,19 +58,10 @@ src/exec/exec.c
 
 .in +1c
 .ti -1c
-.RI "bool \fBextra_command\fP (char **args, char *cmd_name)"
+.RI "void \fBinit_continue\fP (void)"
 .br
 .ti -1c
-.RI "bool \fBclean_extra_command\fP (void)"
-.br
-.ti -1c
-.RI "bool \fBdup_file\fP (char *file, char *flag, int io, int *ptr_fd)"
-.br
-.ti -1c
-.RI "bool \fBmanage_redirections\fP (struct \fBtab_redi\fP tab, int *ptr_fd)"
-.br
-.ti -1c
-.RI "bool \fBexecute\fP (char **args, struct \fBtab_redi\fP tab)"
+.RI "bool \fBexecute\fP (char **args, struct \fBtab_redirection\fP \fBtab\fP)"
 .br
 .ti -1c
 .RI "bool \fBexec_node_input\fP (struct \fBnode_input\fP *ast)"
@@ -92,12 +83,6 @@ src/exec/exec.c
 .RI "bool \fBexec_node_command\fP (struct \fBnode_command\fP *ast, bool with_fork)"
 .br
 .RI "execute command "
-.ti -1c
-.RI "struct \fBtab_redi\fP \fBinit_tab_redi\fP (struct \fBtab_redi\fP tab)"
-.br
-.ti -1c
-.RI "struct \fBtab_redi\fP \fBappend_tab_redi\fP (struct \fBtab_redi\fP tab, struct \fBnode_redirection\fP *e)"
-.br
 .ti -1c
 .RI "bool \fBexec_node_simple_command\fP (struct \fBnode_simple_command\fP *ast, bool with_fork)"
 .br
@@ -159,7 +144,10 @@ src/exec/exec.c
 
 .in +1c
 .ti -1c
-.RI "const struct \fBcommands\fP \fBcmd\fP [4]"
+.RI "struct \fBtab_redirection\fP \fBtab\fP"
+.br
+.ti -1c
+.RI "const struct \fBcommands\fP \fBcmd\fP [8]"
 .br
 .in -1c
 .SH "Macro Definition Documentation"
@@ -185,12 +173,6 @@ if (DEBUG_FLAG) \
 
 .SH "Function Documentation"
 .PP 
-.SS "struct \fBtab_redi\fP append_tab_redi (struct \fBtab_redi\fP tab, struct \fBnode_redirection\fP * e)"
-
-.SS "bool clean_extra_command (void)"
-
-.SS "bool dup_file (char * file, char * flag, int io, int * ptr_fd)"
-
 .SS "bool exec_node_and_or (struct \fBnode_and_or\fP * ast)"
 
 .PP
@@ -537,26 +519,30 @@ false
 .RE
 .PP
 
-.SS "bool execute (char ** args, struct \fBtab_redi\fP tab)"
+.SS "bool execute (char ** args, struct \fBtab_redirection\fP tab)"
 
-.SS "bool extra_command (char ** args, char * cmd_name)"
-
-.SS "struct \fBtab_redi\fP init_tab_redi (struct \fBtab_redi\fP tab)"
-
-.SS "bool manage_redirections (struct \fBtab_redi\fP tab, int * ptr_fd)"
-
+.SS "void init_continue (void)"
+Global for continue command 
 .SH "Variable Documentation"
 .PP 
-.SS "const struct \fBcommands\fP cmd[4]"
+.SS "const struct \fBcommands\fP cmd[8]"
 \fBInitial value:\fP
 .PP
 .nf
-= {
-    {"cd", &cd}, 
-    {"echo", &echo},
-    {"export", &export},
-    {NULL, NULL}}
+=
+{
+        {"cd", &cd},
+        {"echo", &echo},
+        {"export", &export},
+        {"source", &source},
+        {"alias", &create_alias},
+        {"unalias", &delete_alias},
+        {"continue", &func_continue},
+        {NULL, NULL}
+}
 .fi
+.SS "struct \fBtab_redirection\fP tab"
+
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 42h from the source code\&.

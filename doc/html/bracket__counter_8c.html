@@ -92,6 +92,8 @@ Functions</h2></td></tr>
 <tr class="separator:af7cd89c3838494b4d7dc208d64600093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dbd3c292f37f0ef895591cae6ff72ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bracket__counter_8c.html#a8dbd3c292f37f0ef895591cae6ff72ef">check_closing_symbols_from_splitted</a> (char **splitted, int i)</td></tr>
 <tr class="separator:a8dbd3c292f37f0ef895591cae6ff72ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e91d09171974b7331fc15f38cf88fcd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bracket__counter_8c.html#a5e91d09171974b7331fc15f38cf88fcd">get_closing_parent_index</a> (char *word, size_t i)</td></tr>
+<tr class="separator:a5e91d09171974b7331fc15f38cf88fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="af7cd89c3838494b4d7dc208d64600093"></a>
@@ -109,6 +111,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
@@ -137,6 +148,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">splitted</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
@@ -161,8 +182,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum <a class="el" href="bracket__counter_8h.html#a8e403ea38004f727a72bc30b25de4dce">countable</a> <a class="el" href="bracket__counter_8h.html#a8e403ea38004f727a72bc30b25de4dce">countable</a>&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramtype">enum <a class="el" href="bracket__counter_8h.html#a8e403ea38004f727a72bc30b25de4dce">countable</a>&#160;</td>
+          <td class="paramname"><em>countable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -171,6 +192,52 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+    <tr><td class="paramname">countable</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="a5e91d09171974b7331fc15f38cf88fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e91d09171974b7331fc15f38cf88fcd">&#9670;&nbsp;</a></span>get_closing_parent_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_closing_parent_index </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>word</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>the closing parent index</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">word</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
 
 </div>
 </div>

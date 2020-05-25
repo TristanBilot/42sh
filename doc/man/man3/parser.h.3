@@ -1,4 +1,4 @@
-.TH "src/parser/parser.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/parser/parser.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -113,10 +113,6 @@ src/parser/parser.h \- Parsing functions\&.
 .RI "bool \fBparse_case_item\fP (struct \fBparser\fP *\fBparser\fP, struct \fBnode_case_item\fP **ast)"
 .br
 .RI "parse rule case item "
-.ti -1c
-.RI "void \fBfree_parser\fP (struct \fBparser\fP *p)"
-.br
-.RI "free the parser "
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -147,17 +143,6 @@ Copyright (c) 2020
 
 .SH "Function Documentation"
 .PP 
-.SS "void free_parser (struct \fBparser\fP * p)"
-
-.PP
-free the parser 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIp\fP 
-.RE
-.PP
-
 .SS "struct \fBparser\fP* init_parser (struct \fBlexer\fP * lexer)"
 
 .PP

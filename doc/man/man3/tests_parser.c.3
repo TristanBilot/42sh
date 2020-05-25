@@ -1,4 +1,4 @@
-.TH "tests/tests_parser.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "tests/tests_parser.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,9 +14,11 @@ tests/tests_parser.c
 .br
 \fC#include 'utils/string_utils\&.h'\fP
 .br
-\fC#include 'ast/free\&.h'\fP
-.br
 \fC#include '\&.\&./garbage_collector/garbage_collector\&.h'\fP
+.br
+\fC#include '\&./storage/program_data_storage\&.h'\fP
+.br
+\fC#include '\&.\&./storage/var_storage\&.h'\fP
 .br
 
 .SS "Functions"
@@ -91,6 +93,9 @@ tests/tests_parser.c
 .ti -1c
 .RI "\fBTest\fP (\fBparser\fP, comments)"
 .br
+.ti -1c
+.RI "\fBTest\fP (\fBparser\fP, bultins)"
+.br
 .in -1c
 .SH "Function Documentation"
 .PP 
@@ -139,6 +144,8 @@ tests/tests_parser.c
 .SS "Test (\fBparser\fP, parenthesis_near)"
 
 .SS "Test (\fBparser\fP, comments)"
+
+.SS "Test (\fBparser\fP, bultins)"
 
 .SH "Author"
 .PP 

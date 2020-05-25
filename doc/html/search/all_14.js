@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['value',['value',['../structnode__prefix_1_1prefix_1_1assigment__word.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'node_prefix::prefix::assigment_word::value()'],['../structrange.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'range::value()'],['../structtoken.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'token::value()'],['../structvariable.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'variable::value()']]],
+  ['value',['value',['../structnode__prefix_1_1prefix_1_1assigment__word.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'node_prefix::prefix::assigment_word::value()'],['../structrange.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'range::value()'],['../structarithmetic__ast.html#ac4f474c82e82cbb89ca7c36dd52be0ed',1,'arithmetic_ast::value()'],['../structarithmetic__token.html#ac4f474c82e82cbb89ca7c36dd52be0ed',1,'arithmetic_token::value()'],['../structtoken.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'token::value()'],['../structvariable.html#a4e9aec275e566b978a3ccb4e043d8c61',1,'variable::value()']]],
   ['var_5ferror',['VAR_ERROR',['../var__storage_8h.html#a5fdb90fadbb7be7ff35472930d4bfed4aa3aebb84f00dd4555c8bb5f034ac502b',1,'var_storage.h']]],
-  ['var_5fexists',['var_exists',['../var__storage_8c.html#ab37e65010e9205d1956ce0805abb825c',1,'var_exists(char *key):&#160;var_storage.c'],['../var__storage_8h.html#ab37e65010e9205d1956ce0805abb825c',1,'var_exists(char *key):&#160;var_storage.c']]],
+  ['var_5fexists',['var_exists',['../var__storage_8c.html#a84c75e7c4386abafc31b4df4264a3317',1,'var_exists(struct var_storage *storage, char *key):&#160;var_storage.c'],['../var__storage_8h.html#a84c75e7c4386abafc31b4df4264a3317',1,'var_exists(struct var_storage *storage, char *key):&#160;var_storage.c']]],
   ['var_5fexpansion_2ec',['var_expansion.c',['../var__expansion_8c.html',1,'']]],
   ['var_5ffloat',['VAR_FLOAT',['../var__storage_8h.html#a5fdb90fadbb7be7ff35472930d4bfed4aa25f96b33612e203167f219b79603545',1,'var_storage.h']]],
   ['var_5fint',['VAR_INT',['../var__storage_8h.html#a5fdb90fadbb7be7ff35472930d4bfed4adb5ba2a9a32328f0d562693a1f7b1d5e',1,'var_storage.h']]],

@@ -92,9 +92,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a1e65150dd1beda8f9cbd1e39ca2581ea"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtoken.html">token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex__evaluation_8h.html#a1e65150dd1beda8f9cbd1e39ca2581ea">lex_io_number</a> (char *c, size_t *i)</td></tr>
 <tr class="memdesc:a1e65150dd1beda8f9cbd1e39ca2581ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">process io number into token  <a href="#a1e65150dd1beda8f9cbd1e39ca2581ea">More...</a><br /></td></tr>
 <tr class="separator:a1e65150dd1beda8f9cbd1e39ca2581ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6146d799979113f1c1d826b3d24ea396"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex__evaluation_8h.html#a6146d799979113f1c1d826b3d24ea396">lex_backslash</a> (const char *c, size_t i)</td></tr>
-<tr class="memdesc:a6146d799979113f1c1d826b3d24ea396"><td class="mdescLeft">&#160;</td><td class="mdescRight">process backslash in the lexer  <a href="#a6146d799979113f1c1d826b3d24ea396">More...</a><br /></td></tr>
-<tr class="separator:a6146d799979113f1c1d826b3d24ea396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c76296eb1c72c01ee6e71abe409be91"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtoken.html">token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex__evaluation_8h.html#a9c76296eb1c72c01ee6e71abe409be91">lex_great_less</a> (char *c, size_t i)</td></tr>
 <tr class="memdesc:a9c76296eb1c72c01ee6e71abe409be91"><td class="mdescLeft">&#160;</td><td class="mdescRight">process great less into token  <a href="#a9c76296eb1c72c01ee6e71abe409be91">More...</a><br /></td></tr>
 <tr class="separator:a9c76296eb1c72c01ee6e71abe409be91"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,7 +140,7 @@ Functions</h2></td></tr>
 <p>Return the associated keyword of a string token. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>the string to be compared to all the keywords. </td></tr>
+    <tr><td class="paramname">cthe</td><td>string to be compared to all the keywords. </td></tr>
   </table>
   </dd>
 </dl>
@@ -169,7 +166,7 @@ Functions</h2></td></tr>
 <p>Return the associated type of a string token. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>the string to be compared to all the tokens. </td></tr>
+    <tr><td class="paramname">cthe</td><td>string to be compared to all the tokens. </td></tr>
   </table>
   </dd>
 </dl>
@@ -252,44 +249,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6146d799979113f1c1d826b3d24ea396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6146d799979113f1c1d826b3d24ea396">&#9670;&nbsp;</a></span>lex_backslash()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* lex_backslash </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>process backslash in the lexer </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td></td></tr>
-    <tr><td class="paramname">i</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>char* </dd></dl>
-
-</div>
-</div>
 <a id="af1c17d3735ea6e0f4f1e7cd549a8eda2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1c17d3735ea6e0f4f1e7cd549a8eda2">&#9670;&nbsp;</a></span>lex_comments()</h2>
 
@@ -325,7 +284,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>struct token* </dd></dl>
-<p>c[i - 1] </p>
 
 </div>
 </div>

@@ -1,0 +1,3 @@
+ls
+echo $?
+echo $(ls)

@@ -66,9 +66,19 @@ $(function() {
 <li>SET_ERRNO_AND_RETURN
 : <a class="el" href="my__popen_8h.html#ab0b8e43896dfb15ab17c1dab9869d32b">my_popen.h</a>
 </li>
+<li>shell_type
+: <a class="el" href="ast_8h.html#a0ad980f813d1f7469e9b9ff20f73fce9">ast.h</a>
+</li>
+<li>should_fail()
+: <a class="el" href="tests__arithmetic__lexer_8c.html#acc783599f93b1b0997f06c4e909943d4">tests_arithmetic_lexer.c</a>
+</li>
 <li>sighandler()
 : <a class="el" href="main_8h.html#ae9fa379677100866fa335a0b8adf3ea2">main.h</a>
 , <a class="el" href="main__utils_8c.html#ae9fa379677100866fa335a0b8adf3ea2">main_utils.c</a>
+</li>
+<li>sighandler_without()
+: <a class="el" href="main_8h.html#a6e8821c2343da213f8b38c44e0843cb4">main.h</a>
+, <a class="el" href="main__utils_8c.html#a6e8821c2343da213f8b38c44e0843cb4">main_utils.c</a>
 </li>
 <li>sould_use_history()
 : <a class="el" href="main_8h.html#abe15fa55f34aff621229580608ac5ca1">main.h</a>
@@ -85,9 +95,11 @@ $(function() {
 </li>
 <li>STDIN_FILENO
 : <a class="el" href="exec_8c.html#afcf80a6d91178952d107ad00b165752b">exec.c</a>
+, <a class="el" href="redirection_8c.html#afcf80a6d91178952d107ad00b165752b">redirection.c</a>
 </li>
 <li>STDOUT_FILENO
-: <a class="el" href="exec_8c.html#abd165ee6474b5b75bf075842fff13a04">exec.c</a>
+: <a class="el" href="redirection_8c.html#abd165ee6474b5b75bf075842fff13a04">redirection.c</a>
+, <a class="el" href="exec_8c.html#abd165ee6474b5b75bf075842fff13a04">exec.c</a>
 </li>
 <li>STORAGE_SIZE
 : <a class="el" href="var__storage_8h.html#a8d6f782ffe53d87f0fd0327d4b09352c">var_storage.h</a>
@@ -95,13 +107,17 @@ $(function() {
 <li>str()
 : <a class="el" href="ast__print__dot_8h.html#a86305cd9546c17c4e19ca559dde7499e">ast_print_dot.h</a>
 </li>
+<li>str_to_arithmetic_type()
+: <a class="el" href="arithmetic__token_8c.html#ae7222a98872c5b80f58f7bb9604bfbda">arithmetic_token.c</a>
+, <a class="el" href="arithmetic__token_8h.html#ae7222a98872c5b80f58f7bb9604bfbda">arithmetic_token.h</a>
+</li>
 <li>STRINGIFY
 : <a class="el" href="_c_make_c_compiler_id_8c.html#a43e1cad902b6477bec893cb6430bd6c8">CMakeCCompilerId.c</a>
 , <a class="el" href="_c_make_c_x_x_compiler_id_8cpp.html#a43e1cad902b6477bec893cb6430bd6c8">CMakeCXXCompilerId.cpp</a>
 </li>
 <li>STRINGIFY_HELPER
-: <a class="el" href="_c_make_c_x_x_compiler_id_8cpp.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d">CMakeCXXCompilerId.cpp</a>
-, <a class="el" href="_c_make_c_compiler_id_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d">CMakeCCompilerId.c</a>
+: <a class="el" href="_c_make_c_compiler_id_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d">CMakeCCompilerId.c</a>
+, <a class="el" href="_c_make_c_x_x_compiler_id_8cpp.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d">CMakeCXXCompilerId.cpp</a>
 </li>
 <li>substitute()
 : <a class="el" href="expansion_8c.html#ac6341b007cafe61c3d3545e9025c2aaa">expansion.c</a>
@@ -116,48 +132,52 @@ $(function() {
 , <a class="el" href="var__expansion_8c.html#a30102db2934f23801dca3ad41a1c8fef">var_expansion.c</a>
 </li>
 <li>substitute_ifs()
-: <a class="el" href="expansion_8h.html#ae8c2c0199dbe4169483a3d58a80c58f8">expansion.h</a>
-, <a class="el" href="var__expansion_8c.html#ae8c2c0199dbe4169483a3d58a80c58f8">var_expansion.c</a>
+: <a class="el" href="var__expansion_8c.html#ae8c2c0199dbe4169483a3d58a80c58f8">var_expansion.c</a>
+, <a class="el" href="expansion_8h.html#ae8c2c0199dbe4169483a3d58a80c58f8">expansion.h</a>
 </li>
 <li>substitute_minus_tilde()
 : <a class="el" href="expansion_8h.html#a519148bd8ee850ad12593a2098a23d6e">expansion.h</a>
 , <a class="el" href="tilde__expansion_8c.html#a519148bd8ee850ad12593a2098a23d6e">tilde_expansion.c</a>
 </li>
 <li>substitute_number()
-: <a class="el" href="expansion_8h.html#a952d4bb2aff29f3d69b0963cb654c07a">expansion.h</a>
-, <a class="el" href="var__expansion_8c.html#a952d4bb2aff29f3d69b0963cb654c07a">var_expansion.c</a>
+: <a class="el" href="var__expansion_8c.html#a952d4bb2aff29f3d69b0963cb654c07a">var_expansion.c</a>
+, <a class="el" href="expansion_8h.html#a952d4bb2aff29f3d69b0963cb654c07a">expansion.h</a>
 </li>
 <li>substitute_oldpwd()
 : <a class="el" href="expansion_8h.html#abd4f975c30498cf1e3a90a9afb0c7059">expansion.h</a>
 , <a class="el" href="var__expansion_8c.html#abd4f975c30498cf1e3a90a9afb0c7059">var_expansion.c</a>
+</li>
+<li>substitute_pid()
+: <a class="el" href="expansion_8h.html#a8211d0ee8807ceae7780eba3a134571a">expansion.h</a>
+, <a class="el" href="var__expansion_8c.html#a8211d0ee8807ceae7780eba3a134571a">var_expansion.c</a>
 </li>
 <li>substitute_plus_tilde()
 : <a class="el" href="tilde__expansion_8c.html#ab474e1d77e36bccfe8451a4b5c1313cf">tilde_expansion.c</a>
 , <a class="el" href="expansion_8h.html#ab474e1d77e36bccfe8451a4b5c1313cf">expansion.h</a>
 </li>
 <li>substitute_ques()
-: <a class="el" href="expansion_8h.html#a8995d7b1af1e9be0db778eb6707e207e">expansion.h</a>
-, <a class="el" href="var__expansion_8c.html#a8995d7b1af1e9be0db778eb6707e207e">var_expansion.c</a>
+: <a class="el" href="var__expansion_8c.html#a8995d7b1af1e9be0db778eb6707e207e">var_expansion.c</a>
+, <a class="el" href="expansion_8h.html#a8995d7b1af1e9be0db778eb6707e207e">expansion.h</a>
 </li>
 <li>substitute_random()
 : <a class="el" href="var__expansion_8c.html#af6eb0ffc2214bb507769198a81f15e89">var_expansion.c</a>
 , <a class="el" href="expansion_8h.html#af6eb0ffc2214bb507769198a81f15e89">expansion.h</a>
 </li>
 <li>substitute_star()
-: <a class="el" href="var__expansion_8c.html#adec671cbe0a767bbe8f2e2a21c77daea">var_expansion.c</a>
-, <a class="el" href="expansion_8h.html#adec671cbe0a767bbe8f2e2a21c77daea">expansion.h</a>
+: <a class="el" href="expansion_8h.html#adec671cbe0a767bbe8f2e2a21c77daea">expansion.h</a>
+, <a class="el" href="var__expansion_8c.html#adec671cbe0a767bbe8f2e2a21c77daea">var_expansion.c</a>
 </li>
 <li>substitute_tilde()
 : <a class="el" href="tilde__expansion_8c.html#a0d9da5a5a1baffdce13e5947a52d8756">tilde_expansion.c</a>
 , <a class="el" href="expansion_8h.html#a0d9da5a5a1baffdce13e5947a52d8756">expansion.h</a>
 </li>
 <li>substitute_uid()
-: <a class="el" href="expansion_8h.html#adfb505f6e25f1b13f7262a9c9772c70c">expansion.h</a>
-, <a class="el" href="var__expansion_8c.html#adfb505f6e25f1b13f7262a9c9772c70c">var_expansion.c</a>
+: <a class="el" href="var__expansion_8c.html#adfb505f6e25f1b13f7262a9c9772c70c">var_expansion.c</a>
+, <a class="el" href="expansion_8h.html#adfb505f6e25f1b13f7262a9c9772c70c">expansion.h</a>
 </li>
 <li>substr()
-: <a class="el" href="string__utils_8h.html#a92c201a8e2d3381da8c1a9414d29e2d2">string_utils.h</a>
-, <a class="el" href="string__utils_8c.html#a92c201a8e2d3381da8c1a9414d29e2d2">string_utils.c</a>
+: <a class="el" href="string__utils_8c.html#a92c201a8e2d3381da8c1a9414d29e2d2">string_utils.c</a>
+, <a class="el" href="string__utils_8h.html#a92c201a8e2d3381da8c1a9414d29e2d2">string_utils.h</a>
 </li>
 <li>success()
 : <a class="el" href="tests__parser_8c.html#aa0110edcc1fdd9f3b551d61d6cf51fc6">tests_parser.c</a>

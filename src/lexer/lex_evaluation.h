@@ -29,14 +29,6 @@ struct token *lex_great_less_and(const char *c, size_t i);
 */
 struct token *lex_io_number(char *c, size_t *i);
 /**
-**\brief process backslash in the lexer
-**
-**\param c
-**\param i
-**\return char*
-*/
-char *lex_backslash(const char *c, size_t i);
-/**
 **\brief process great less into token
 **
 **\param c

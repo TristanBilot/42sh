@@ -1,4 +1,4 @@
-.TH "node_simple_command" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "node_simple_command" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,6 +15,9 @@ node_simple_command
 .RI "bool \fBto_export\fP"
 .br
 .ti -1c
+.RI "bool \fBto_alias\fP"
+.br
+.ti -1c
 .RI "struct \fBnode_prefix\fP * \fBprefixes\fP"
 .br
 .ti -1c
@@ -26,6 +29,8 @@ node_simple_command
 .SS "struct \fBnode_element\fP* elements"
 
 .SS "struct \fBnode_prefix\fP* prefixes"
+
+.SS "bool to_alias"
 
 .SS "bool to_export"
 

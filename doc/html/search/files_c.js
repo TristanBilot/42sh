@@ -1,7 +1,9 @@
 var searchData=
 [
   ['test_5fsuite_2epy',['test_suite.py',['../test__suite_8py.html',1,'']]],
+  ['tests_5farithmetic_5flexer_2ec',['tests_arithmetic_lexer.c',['../tests__arithmetic__lexer_8c.html',1,'']]],
   ['tests_5fast_2ec',['tests_ast.c',['../tests__ast_8c.html',1,'']]],
+  ['tests_5fbultins_2ec',['tests_bultins.c',['../tests__bultins_8c.html',1,'']]],
   ['tests_5fhistory_2ec',['tests_history.c',['../tests__history_8c.html',1,'']]],
   ['tests_5flexer_2ec',['tests_lexer.c',['../tests__lexer_8c.html',1,'']]],
   ['tests_5fparser_2ec',['tests_parser.c',['../tests__parser_8c.html',1,'']]],

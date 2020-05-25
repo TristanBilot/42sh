@@ -24,8 +24,8 @@ static void print_alias_storage()
     {
         if (!alias_storage->variables[i])
             continue;
-        printf("alias %s=", alias_storage->variables[i]->key);
-        printf("%s\n", alias_storage->variables[i]->value);
+        printf("%s=", alias_storage->variables[i]->key);
+        printf("\'%s\'\n", alias_storage->variables[i]->value);
     }
 }
 
@@ -38,6 +38,7 @@ void delete_alias(char **args)
             if (args[1][i] != 'a')
             {
                 warn("unalias: -%c: invalid option\n", args[1][i]);
+                update_last_status(1);
                 return;
             }
         }
@@ -51,6 +52,7 @@ void delete_alias(char **args)
         else if (!del_var(alias_storage, args[1]))
             warn("unalias: %s: not found\n", args[1]);
     }
+    update_last_status(0);
 }
 
 void create_alias(char **args)
@@ -58,6 +60,7 @@ void create_alias(char **args)
     if (!args[0])
     {
         print_alias_storage(alias_storage);
+        update_last_status(0);
         return;
     }
     if (args[0] && args[0][0] == '-')
@@ -67,6 +70,7 @@ void create_alias(char **args)
             if (args[0][i] != 'p')
             {
                 warn("alias: -%c: invalid option\n", args[0][i]);
+                update_last_status(1);
                 return;
             }
         }
@@ -89,6 +93,7 @@ void create_alias(char **args)
         }
         put_var(alias_storage, key, value);
     }
+    update_last_status(0);
 }
 
 bool load_file(char *path, bool warning)
@@ -103,13 +108,13 @@ bool load_file(char *path, bool warning)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        if (warning)
-            warn("%s: %s", path, strerror(errno));
+        warning = warning;
+        // if (warning)
+        //     warn("%s: %s", path, strerror(errno));
         return false;
     }
     while ((read = getline(&line, &len, fp)) != -1)
     {
-        printf("%s", line);
         lexer = new_lexer(line);
         ast = parse(lexer);
         exec_node_input(ast);
@@ -133,12 +138,21 @@ void source(char **args)
             strcat(path_file, "/");
             strcat(path_file, args[1]);
             if (load_file(path_file, false))
+            {
                 return;
+
+            }
         }
     }
     for (int i = 2; args[i]; i++)
         append_program_data(args[i]);
-    load_file(args[1], true);
+    if (load_file(args[1], true))
+        update_last_status(0);
+    else
+    {
+        warn("source: no such file or directory %s\n", args[1]);
+        update_last_status(2);
+    }
 }
 
 static void fill_echo_tab(struct echo_tab tab[10])
@@ -369,11 +383,12 @@ void export(char **args)
             if (args[0][i] == 'n')
                 n = true;
         }
-    }
-    if (p && n)
-    {
-        fprintf(stderr, "export: bad option\n");
-        update_last_status(1);
+        if ((!p && !n) || ( p && n))
+        {
+            fprintf(stderr, "export: bad option\n");
+            update_last_status(2);
+            return;
+        }
     }
     else if (p)
     {
@@ -396,6 +411,7 @@ void export(char **args)
         {
             fprintf(stderr, "export: bad option\n");
             update_last_status(1);
+            return;
         }
         for (int i = 1; args[i]; i++)
             unsetenv(args[i]);

@@ -66,6 +66,22 @@ $(function() {
 <li>NB_MAX_PIPE
 : <a class="el" href="exec_8h.html#a8aced7229099cf018e89f28c4cb40891">exec.h</a>
 </li>
+<li>new_arithmetic_ast()
+: <a class="el" href="arithmetic__ast_8c.html#aa800bd406e3e514c826ff6e6da09dcda">arithmetic_ast.c</a>
+, <a class="el" href="arithmetic__ast_8h.html#a7b8519fb0614dbeb80d5fc902ef9342e">arithmetic_ast.h</a>
+</li>
+<li>new_arithmetic_lexer()
+: <a class="el" href="arithmetic__lexer_8c.html#ad50c20f23d34cd6e7c2670c7d2252dc8">arithmetic_lexer.c</a>
+, <a class="el" href="arithmetic__lexer_8h.html#ad50c20f23d34cd6e7c2670c7d2252dc8">arithmetic_lexer.h</a>
+</li>
+<li>new_arithmetic_number_token()
+: <a class="el" href="arithmetic__token_8c.html#a70ef549a794f2ff072ec4b06e709f944">arithmetic_token.c</a>
+, <a class="el" href="arithmetic__token_8h.html#a70ef549a794f2ff072ec4b06e709f944">arithmetic_token.h</a>
+</li>
+<li>new_arithmetic_token()
+: <a class="el" href="arithmetic__token_8c.html#a5bc0a7f4347e5c4dabb78e638528fca1">arithmetic_token.c</a>
+, <a class="el" href="arithmetic__token_8h.html#a5bc0a7f4347e5c4dabb78e638528fca1">arithmetic_token.h</a>
+</li>
 <li>new_buffer()
 : <a class="el" href="buffer_8c.html#a40f6acc3b53c384491b6b67106469cd7">buffer.c</a>
 , <a class="el" href="buffer_8h.html#a40f6acc3b53c384491b6b67106469cd7">buffer.h</a>
@@ -99,20 +115,20 @@ $(function() {
 , <a class="el" href="token_8h.html#a096565af4f69c15a2b53c17d5163338e">token.h</a>
 </li>
 <li>new_token_error()
-: <a class="el" href="token_8c.html#ac8b80f5b4652e095dc2b70867b9f6eb3">token.c</a>
-, <a class="el" href="token_8h.html#ac8b80f5b4652e095dc2b70867b9f6eb3">token.h</a>
+: <a class="el" href="token_8h.html#ac8b80f5b4652e095dc2b70867b9f6eb3">token.h</a>
+, <a class="el" href="token_8c.html#ac8b80f5b4652e095dc2b70867b9f6eb3">token.c</a>
 </li>
 <li>new_token_io_number()
 : <a class="el" href="token_8c.html#a0a77ae483216942b039b4d4be10b925b">token.c</a>
 , <a class="el" href="token_8h.html#a0a77ae483216942b039b4d4be10b925b">token.h</a>
 </li>
 <li>new_token_type()
-: <a class="el" href="token_8c.html#aec07e4f12b35bf83f5b0951d718bd497">token.c</a>
-, <a class="el" href="token_8h.html#aec07e4f12b35bf83f5b0951d718bd497">token.h</a>
+: <a class="el" href="token_8h.html#aec07e4f12b35bf83f5b0951d718bd497">token.h</a>
+, <a class="el" href="token_8c.html#aec07e4f12b35bf83f5b0951d718bd497">token.c</a>
 </li>
 <li>new_token_word()
-: <a class="el" href="token_8h.html#ae48a9978290200309fe021271dd5d1ea">token.h</a>
-, <a class="el" href="token_8c.html#ae48a9978290200309fe021271dd5d1ea">token.c</a>
+: <a class="el" href="token_8c.html#ae48a9978290200309fe021271dd5d1ea">token.c</a>
+, <a class="el" href="token_8h.html#ae48a9978290200309fe021271dd5d1ea">token.h</a>
 </li>
 <li>new_var_storage()
 : <a class="el" href="var__storage_8h.html#a6a531e9c58b2d085801e3ac51fc6d9c5">var_storage.h</a>
@@ -124,8 +140,23 @@ $(function() {
 <li>next_token()
 : <a class="el" href="parser_8c.html#a3a4a26cf793ed90e813b6c4f065fa44e">parser.c</a>
 </li>
+<li>NODE_ADD
+: <a class="el" href="arithmetic__ast_8h.html#aae7b30f149b32a0c22a08b4d634e96f9aed4881c4c0a35eff7a99706fd61bb70e">arithmetic_ast.h</a>
+</li>
+<li>NODE_DIV
+: <a class="el" href="arithmetic__ast_8h.html#aae7b30f149b32a0c22a08b4d634e96f9aaef9e0cf88a2d2fa9eec08226a403eb3">arithmetic_ast.h</a>
+</li>
+<li>NODE_MUL
+: <a class="el" href="arithmetic__ast_8h.html#aae7b30f149b32a0c22a08b4d634e96f9afda380a77c2941780b32560fc1b6b83e">arithmetic_ast.h</a>
+</li>
+<li>NODE_NUM
+: <a class="el" href="arithmetic__ast_8h.html#aae7b30f149b32a0c22a08b4d634e96f9aa405d7ef3681a8984df32bff321bb265">arithmetic_ast.h</a>
+</li>
+<li>NODE_SUB
+: <a class="el" href="arithmetic__ast_8h.html#aae7b30f149b32a0c22a08b4d634e96f9aa95b00a4e04cb03cfc627350f356e37f">arithmetic_ast.h</a>
+</li>
 <li>number_digits()
-: <a class="el" href="my__itoa_8c.html#a949a3f6528d9e77b1c2b530774e173c9">my_itoa.c</a>
+: <a class="el" href="my__itoa_8c.html#a84553db16189ca1d8155c5b940ddf64f">my_itoa.c</a>
 </li>
 </ul>
 </div><!-- contents -->

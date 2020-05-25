@@ -1,4 +1,4 @@
-.TH "src/storage/var_storage.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/storage/var_storage.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -45,30 +45,33 @@ src/storage/var_storage.h \- Var storage structures and functions\&.
 .RI "struct \fBvar_storage\fP * \fBnew_var_storage\fP (void)"
 .br
 .ti -1c
-.RI "void \fBfree_var_storage\fP (void)"
+.RI "void \fBfree_var_storage\fP (struct \fBvar_storage\fP *storage)"
 .br
 .ti -1c
-.RI "bool \fBvar_exists\fP (char *key)"
+.RI "bool \fBvar_exists\fP (struct \fBvar_storage\fP *storage, char *key)"
 .br
 .ti -1c
 .RI "enum \fBvar_type\fP \fBget_var_type\fP (char *value)"
 .br
 .ti -1c
-.RI "bool \fBput_var\fP (char *key, char *val)"
+.RI "bool \fBput_var\fP (struct \fBvar_storage\fP *storage, char *key, char *val)"
 .br
 .ti -1c
-.RI "void \fBdel_var\fP (char *key)"
+.RI "bool \fBdel_var\fP (struct \fBvar_storage\fP *storage, char *key)"
 .br
 .ti -1c
-.RI "struct \fBvariable\fP * \fBget_var\fP (char *key)"
+.RI "struct \fBvariable\fP * \fBget_var\fP (struct \fBvar_storage\fP *storage, char *key)"
 .br
 .ti -1c
-.RI "char * \fBget_value\fP (char *key)"
+.RI "char * \fBget_value\fP (struct \fBvar_storage\fP *storage, char *key)"
 .br
 .in -1c
 .SS "Variables"
 
 .in +1c
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBalias_storage\fP"
+.br
 .ti -1c
 .RI "struct \fBvar_storage\fP * \fBvar_storage\fP"
 .br
@@ -121,24 +124,26 @@ Copyright (c) 2020
 \fB\fIVAR_ERROR \fP\fP
 .SH "Function Documentation"
 .PP 
-.SS "void del_var (char * key)"
+.SS "bool del_var (struct \fBvar_storage\fP * storage, char * key)"
 
-.SS "void free_var_storage (void)"
+.SS "void free_var_storage (struct \fBvar_storage\fP * storage)"
 
-.SS "char* get_value (char * key)"
+.SS "char* get_value (struct \fBvar_storage\fP * storage, char * key)"
 
-.SS "struct \fBvariable\fP* get_var (char * key)"
+.SS "struct \fBvariable\fP* get_var (struct \fBvar_storage\fP * storage, char * key)"
 
 .SS "enum \fBvar_type\fP get_var_type (char * value)"
 
 .SS "struct \fBvar_storage\fP* new_var_storage (void)"
 
-.SS "bool put_var (char * key, char * val)"
+.SS "bool put_var (struct \fBvar_storage\fP * storage, char * key, char * val)"
 
-.SS "bool var_exists (char * key)"
+.SS "bool var_exists (struct \fBvar_storage\fP * storage, char * key)"
 
 .SH "Variable Documentation"
 .PP 
+.SS "struct \fBvar_storage\fP* alias_storage"
+
 .SS "struct \fBvar_storage\fP* \fBvar_storage\fP"
 
 .SH "Author"

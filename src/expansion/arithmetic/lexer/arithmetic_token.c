@@ -6,17 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// const char *token_str(struct arithmetic_token *token)
-// {
-//     static const char *token_strs[] = { "+", "-", "*", "/", "(", ")", "**", "&", "|", "^", "&&", "||", "!", "~" };
-//     static char number_str[15];
-
-//     if (token->type != TOK_A_NUMBER)
-//         return token_strs[token->type];
-//     sprintf(number_str, "%d", token->value);
-//     return number_str;
-// }
-
 const char *token_str(int type)
 {
     static const char *token_strs[] = { "+", "-", "*", "/", "(", ")", "**",
@@ -42,9 +31,6 @@ bool is_plus_or_minus(int type)
 
 bool is_valid_arithmetic_syntax(int type1, int type2)
 {
-    // int n = eval_arithmetic_char(exp, i);
-    // int m = eval_arithmetic_char(exp, i + 1);
-    // printf("%s %s\n", token_str(n), token_str(m));
     if (type2 == TOK_A_UNKNOWN)
         return false;
     if (type1 != TOK_A_NUMBER && type2 != TOK_A_NUMBER && type2 != TOK_A_END)
@@ -119,6 +105,10 @@ int eval_arithmetic_char(char *exp, size_t i)
         return TOK_A_AND;
     else if (c == '|' && strlen(exp) > i && exp[i+1] == '|')
         return TOK_A_OR;
+    else if (c == '+' && strlen(exp) > i && exp[i+1] == '=')
+        return TOK_A_PLUS_EQ;
+    else if (c == '-' && strlen(exp) > i && exp[i+1] == '=')
+        return TOK_A_MINUS_EQ;
     else if (c == '/')
         return TOK_A_DIVIDE;
     else if (c == '(')

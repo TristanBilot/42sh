@@ -1,14 +1,22 @@
 #ifndef ARITHMETIC_AST_H
 #define ARITHMETIC_AST_H
 
-// #include "utils/attr.h"
-
 enum arithmetic_ast_type
 {
     EXPR_ADDITION = 0,
     EXPR_SUBTRACTION,
     EXPR_MULTIPLICATION,
     EXPR_DIVISION,
+    EXPR_POW,
+    EXPR_SEPAND,
+    EXPR_PIPE,
+    EXPR_XOR,
+    EXPR_AND,
+    EXPR_OR,
+    EXPR_NOT,
+    EXPR_TILDE,
+    EXPR_PLUS_EQ,
+    EXPR_MINUS_EQ,
     EXPR_NUMBER
 };
 

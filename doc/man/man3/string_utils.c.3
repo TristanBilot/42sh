@@ -1,4 +1,4 @@
-.TH "src/utils/string_utils.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/string_utils.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -9,6 +9,8 @@ src/utils/string_utils.c
 \fC#include <stdio\&.h>\fP
 .br
 \fC#include <errno\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
 .br
 \fC#include '\&.\&./utils/string_utils\&.h'\fP
 .br
@@ -41,6 +43,9 @@ src/utils/string_utils.c
 .RI "void \fBerror\fP (char *msg)"
 .br
 .RI "Print an error in stderr when an invalid token appeared\&. "
+.ti -1c
+.RI "bool \fBexpr_is_number\fP (char *expr)"
+.br
 .in -1c
 .SH "Function Documentation"
 .PP 
@@ -54,6 +59,8 @@ Print an error in stderr when an invalid token appeared\&.
 \fImsg\fP the message to display\&. 
 .RE
 .PP
+
+.SS "bool expr_is_number (char * expr)"
 
 .SS "int is (const char * a, const char * b)"
 

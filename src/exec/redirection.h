@@ -49,6 +49,19 @@ struct file_manager *file_manager;
 //   FUNCTIONS
 
 /**
+** \brief Resets streams with last configurations
+**
+** \param tab
+*/
+void reset_streams(struct tab_redirection tab);
+/**
+** \brief Copy content of tab_redirection in a new one
+**
+** \param tab
+** \return struct tab_redirection
+*/
+struct tab_redirection copy_tab_redirection(struct tab_redirection tab);
+/**
 ** \brief initialize file manager
 **
 ** \return struct file_manager*
@@ -69,7 +82,8 @@ struct tab_redirection init_tab_redirection(void);
 ** \param e
 ** \return struct tab_redirection
 */
-struct tab_redirection append_tab_redirection(struct tab_redirection tab, struct node_redirection *e);
+struct tab_redirection append_tab_redirection(struct tab_redirection tab,
+    struct node_redirection *e);
 
 /**
 ** \brief manage duplications for each redirections

@@ -192,9 +192,12 @@ struct node_case
 
 struct node_if                              // INSTANCE KEYWORD
 {
-    struct node_compound_list *condition;   // the condition
-    struct node_compound_list *if_body;     // on peut mettre directement ici la liste de struct elif  // the body of the if
-    struct node_else_clause *else_clause;   // the body of the else, may be NULL
+    // the condition
+    struct node_compound_list *condition;
+    // the body of the if
+    struct node_compound_list *if_body;
+    // the body of the else, may be NULL
+    struct node_else_clause *else_clause;
 };
 
 /* ONLY FOR NODE_FOR */
@@ -269,7 +272,8 @@ struct node_list *build_list(void);
 ** \param right
 ** \return struct node_and_or*
 */
-struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, struct node_pipeline *right);
+struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left,
+    struct node_pipeline *right);
 /**
 ** \brief build node_and_or_merge
 **
@@ -278,7 +282,8 @@ struct node_and_or *build_and_or_final(bool is_and, struct node_pipeline *left, 
 ** \param right
 ** \return struct node_and_or*
 */
-struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left, struct node_pipeline *right);
+struct node_and_or *build_and_or_merge(bool is_and, struct node_and_or *left,
+    struct node_pipeline *right);
 /**
 ** \brief build node pipeline
 **

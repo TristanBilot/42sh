@@ -1,4 +1,4 @@
-.TH "src/lexer/lexer.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/lexer.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -32,22 +32,14 @@ src/lexer/lexer.c
 .br
 \fC#include '\&.\&./storage/program_data_storage\&.h'\fP
 .br
-
-.SS "Macros"
-
-.in +1c
-.ti -1c
-.RI "#define \fB_POSIX_C_SOURCE\fP   200112L"
+\fC#include '\&.\&./storage/var_storage\&.h'\fP
 .br
-.in -1c
+
 .SS "Functions"
 
 .in +1c
 .ti -1c
 .RI "char ** \fBsplit\fP (char *\fBstr\fP)"
-.br
-.ti -1c
-.RI "int \fBlex_full\fP (struct \fBlexer\fP *\fBlexer\fP, char *c, size_t j)"
 .br
 .ti -1c
 .RI "int \fBlex_parenthesis\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
@@ -69,6 +61,9 @@ src/lexer/lexer.c
 .RI "int \fBlex_part\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
 .br
 .ti -1c
+.RI "int \fBlex_backslash\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
+.br
+.ti -1c
 .RI "bool \fBinit_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
 .RI "Fill the token list by creating all the tokens from the given string\&. "
@@ -76,10 +71,6 @@ src/lexer/lexer.c
 .RI "struct \fBlexer\fP * \fBnew_lexer\fP (char *\fBstr\fP)"
 .br
 .RI "Allocate and init a new lexer\&. "
-.ti -1c
-.RI "void \fBfree_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
-.br
-.RI "Free all ressources allocated in the lexer\&. "
 .ti -1c
 .RI "struct \fBtoken\fP * \fBpeek\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
@@ -106,10 +97,6 @@ src/lexer/lexer.c
 .RI "bool \fBis_ass_w\fP = false"
 .br
 .in -1c
-.SH "Macro Definition Documentation"
-.PP 
-.SS "#define _POSIX_C_SOURCE   200112L"
-
 .SH "Function Documentation"
 .PP 
 .SS "void append (struct \fBlexer\fP * lexer, struct \fBtoken\fP * token)"
@@ -122,17 +109,6 @@ Append a new token to the \fBtoken_list\fP of the lexer\&.
 \fIlexer\fP the lexer\&. 
 .br
 \fItoken\fP the token to append\&. 
-.RE
-.PP
-
-.SS "void free_lexer (struct \fBlexer\fP * lexer)"
-
-.PP
-Free all ressources allocated in the lexer\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIlexer\fP the lexer to free\&. 
 .RE
 .PP
 
@@ -165,7 +141,7 @@ struct token*
 .RE
 .PP
 
-.SS "int lex_full (struct \fBlexer\fP * lexer, char * c, size_t j)"
+.SS "int lex_backslash (struct \fBbuffer\fP * buffer, char * c, size_t * j)"
 
 .SS "int lex_multi_token (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer, char ** splitted, int * i, size_t * j)"
 

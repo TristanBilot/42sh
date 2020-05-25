@@ -1,4 +1,4 @@
-.TH "src/utils/my_itoa.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/my_itoa.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -8,12 +8,14 @@ src/utils/my_itoa.c
 .PP
 \fC#include <stdlib\&.h>\fP
 .br
+\fC#include <stdbool\&.h>\fP
+.br
 
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "unsigned int \fBnumber_digits\fP (unsigned int n)"
+.RI "int \fBnumber_digits\fP (int n)"
 .br
 .ti -1c
 .RI "int \fBpower\fP (int x, int y)"
@@ -26,7 +28,7 @@ src/utils/my_itoa.c
 .PP 
 .SS "char* my_itoa (int value, char * s)"
 
-.SS "unsigned int number_digits (unsigned int n)"
+.SS "int number_digits (int n)"
 
 .SS "int power (int x, int y)"
 

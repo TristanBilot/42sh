@@ -79,7 +79,7 @@
     checks:
       - returncode
       - stdout
-  - stdin: alias -a; alias
+  - stdin: unalias -a; alias
     checks:
       - returncode
       - stdout
@@ -91,6 +91,31 @@
     checks:
       - returncode
       - stdout
+  - stdin: unalias -o
+    checks:
+      - returncode
+  - stdin: alias -o
+    checks:
+      - returncode
+
+###################################################### TEST EXPORT ####################################################### 
+  - stdin: export -ooo
+    checks:
+      - returncode
+      - stdout
+
+####################################################### TEST SOURCE ########################################################
+
+  - stdin: source
+    checks:
+      - returncode
+      - stdout
+  - stdin: source nofile
+    checks:
+    - returncode
+    - stdout
+
+
 
 ####################################################### TEST LS ########################################################
 - description:
@@ -599,3 +624,123 @@
       - returncode
       - stdout
       - has_stderr
+
+  #---------------------
+
+  - stdin: cd ~; echo `ls`
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo `echo toto`
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo `ls -l`
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo word`pwd`word
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo ``ls```
+    checks:
+      - returncode
+      - stdout
+  - stdin: cd ~;echo ``ls`
+    checks:
+      - returncode
+      - stdout
+      - has_stderr
+
+  ####################################################### TEST ARITHMETIC ########################################################
+- description:
+  - name : ARITH
+  - stdin: echo $((1+2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((2*33/2-2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((10/0))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((0/22 + -20/2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((200---4))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((200+++4))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((200**4))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((~44))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((!3&&1 || 3))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((5|1^2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((2^3))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((2&3|2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((-2+3**3))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((-4&2&2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((-4|3|3))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((----4+++ + 2 ---1))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((-2+ 3 || 4 *2))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((-2- 3 + 1&& 4/4-1))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((~2- ~3 + ~1&& ~4/4-1))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((4^3**3))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((1+++1*3--5- -1))
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo $((1+2*4*2/4/2-1*3))
+    checks:
+      - returncode
+      - stdout

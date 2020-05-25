@@ -1,4 +1,4 @@
-.TH "src/parser/parser.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/parser/parser.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -16,15 +16,13 @@ src/parser/parser.c
 .br
 \fC#include '\&.\&./parser/parser\&.h'\fP
 .br
-\fC#include '\&.\&./ast/free\&.h'\fP
-.br
-\fC#include '\&.\&./ast/ast\&.h'\fP
-.br
 \fC#include '\&.\&./utils/parser_utils\&.h'\fP
 .br
 \fC#include '\&.\&./utils/xalloc\&.h'\fP
 .br
 \fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
 .br
 
 .SS "Macros"
@@ -44,10 +42,6 @@ src/parser/parser.c
 .RI "struct \fBparser\fP * \fBinit_parser\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
 .RI "initialize a parser "
-.ti -1c
-.RI "void \fBfree_parser\fP (struct \fBparser\fP *p)"
-.br
-.RI "free the parser "
 .ti -1c
 .RI "struct \fBtoken\fP * \fBget_next_token\fP (struct \fBparser\fP *p)"
 .br
@@ -165,23 +159,12 @@ src/parser/parser.c
 .PP
 .nf
 if (DEBUG_FLAG) \
-                        printf("%s", msg);
+    printf("%s", msg);
 .fi
 .SS "#define DEBUG_FLAG   false"
 
 .SH "Function Documentation"
 .PP 
-.SS "void free_parser (struct \fBparser\fP * p)"
-
-.PP
-free the parser 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIp\fP 
-.RE
-.PP
-
 .SS "struct \fBtoken\fP* get_next_token (struct \fBparser\fP * p)"
 
 .SS "struct \fBparser\fP* init_parser (struct \fBlexer\fP * lexer)"

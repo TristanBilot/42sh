@@ -560,7 +560,7 @@ Test(lexer, parenthesis)
     char input6[] = ")if";
     struct lexer *lexer6 = new_lexer(input6);
     cr_assert(pop(lexer6)->type == TOK_RPAREN);
-    cr_assert(pop(lexer6)->type == TOK_WORD);
+    cr_assert(pop(lexer6)->type == KW_IF);
     free_garbage_collector();
 
     free(garbage_collector);

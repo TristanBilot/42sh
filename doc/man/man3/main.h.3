@@ -1,4 +1,4 @@
-.TH "src/main.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/main.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -37,6 +37,8 @@ src/main.h
 \fC#include '\&./utils/xalloc\&.h'\fP
 .br
 \fC#include '\&./exec/exec\&.h'\fP
+.br
+\fC#include '\&./exec/redirection\&.h'\fP
 .br
 \fC#include '\&./utils/string_utils\&.h'\fP
 .br
@@ -109,6 +111,9 @@ src/main.h
 .RI "void \fBsighandler\fP (int signum)"
 .br
 .ti -1c
+.RI "void \fBsighandler_without\fP (int signum)"
+.br
+.ti -1c
 .RI "bool \fBsould_use_history\fP (void)"
 .br
 .ti -1c
@@ -158,6 +163,8 @@ src/main.h
 .SS "void print_usage (void)"
 
 .SS "void sighandler (int signum)"
+
+.SS "void sighandler_without (int signum)"
 
 .SS "bool sould_use_history (void)"
 

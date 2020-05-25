@@ -11,6 +11,122 @@
 #define STDOUT_FILENO 1
 #define STDIN_FILENO 0
 
+void reset_streams(struct tab_redirection tab)
+{
+    if (tab.size == 0)
+    {
+        dup2(file_manager->save_in, 0);
+        dup2(file_manager->save_out, 1);
+        dup2(file_manager->save_err, 2);
+    }
+    else
+    {
+        // manage_duplication(tab);
+        for (int i = 0; i < tab.size; i++)
+        {
+            if (is(tab.redirections[i].type, "TOK_GREAT"))
+            {
+                if (dup_file(tab.redirections[i].file, "a",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_LESS"))
+            {
+                if (dup_file(tab.redirections[i].file, "r",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_DGREAT"))
+            {
+                if (dup_file(tab.redirections[i].file, "a",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_DLESS")) // HEREDOC
+            {
+                if (dup_file(tab.redirections[i].file, "w+",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC
+            {
+                if (dup_file(tab.redirections[i].file, "w+",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_LESSGREAT"))
+            {
+                if (dup_file(tab.redirections[i].file, "r+",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_LESSAND"))
+            {
+                if (is(tab.redirections[i].file, "-"))
+                    close(tab.redirections[i].ionumber);
+                else if (tab.redirections[i].file[0]
+                    && tab.redirections[i].file[1]
+                    && tab.redirections[i].file[1] == '-')
+                {
+                    dup_fd(tab.redirections[i].file[0] - '0', "r",
+                        tab.redirections[i].ionumber);
+                    close(tab.redirections[i].file[0] - '0');
+                }
+                else if (atoi(tab.redirections[i].file) == 0
+                    && !is(tab.redirections[i].file, "0"))
+                    return;
+                else if (dup_fd(atoi(tab.redirections[i].file), "r",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_GREATAND"))
+            {
+                if (is(tab.redirections[i].file, "-"))
+                    close(tab.redirections[i].ionumber);
+                else if (tab.redirections[i].file[0]
+                    && tab.redirections[i].file[1]
+                    && tab.redirections[i].file[1] == '-')
+                {
+                    dup_fd(tab.redirections[i].file[0] - '0', "a",
+                        tab.redirections[i].ionumber);
+                    close(tab.redirections[i].file[0] - '0');
+                }
+                else if (atoi(tab.redirections[i].file) == 0
+                    && !is(tab.redirections[i].file, "0"))
+                {
+                    if (tab.redirections[i].ionumber != 1
+                        || dup_file(tab.redirections[i].file, "a", 12))
+                        return;
+                }
+                else if (dup_fd(atoi(tab.redirections[i].file), "a",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+            else if (is(tab.redirections[i].type, "TOK_CLOBBER"))
+            {
+                if (dup_file(tab.redirections[i].file, "a",
+                    tab.redirections[i].ionumber))
+                    return;
+            }
+        }
+    }
+}
+
+struct tab_redirection copy_tab_redirection(struct tab_redirection tab)
+{
+    struct tab_redirection new = init_tab_redirection();
+    new.size = tab.size;
+    for (int i = 0; i < tab.size; i++)
+    {
+        struct std new_std;
+        new_std.type = tab.redirections[i].type;
+        new_std.file = tab.redirections[i].file;
+        new_std.ionumber = tab.redirections[i].ionumber;
+        new.redirections[i] = new_std;
+    }
+    return new;
+}
+
 struct file_manager *init_file_manager(void)
 {
     struct file_manager *file_manager = xcalloc(1,
@@ -58,7 +174,8 @@ bool manage_duplication(struct tab_redirection tab)
 {
     for (int i = 0; i < tab.size; i++)
     {
-        if (is(tab.redirections[i].type, "TOK_GREAT"))  // ne doit pas fonctionner quand noclobber est set
+        // ne doit pas fonctionner quand noclobber est set
+        if (is(tab.redirections[i].type, "TOK_GREAT"))
         {
             if (dup_file(tab.redirections[i].file, "w+",
                 tab.redirections[i].ionumber))
@@ -82,7 +199,7 @@ bool manage_duplication(struct tab_redirection tab)
                 tab.redirections[i].ionumber))
                 return true;
         }
-        else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC à faire
+        else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC
         {
             if (dup_file(tab.redirections[i].file, "w+",
                 tab.redirections[i].ionumber))

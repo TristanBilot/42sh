@@ -1,0 +1,70 @@
+.TH "src/expansion/arithmetic/lexer/arithmetic_token.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/lexer/arithmetic_token.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'arithmetic_token\&.h'\fP
+.br
+\fC#include '\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBtoken_str\fP (int type)"
+.br
+.ti -1c
+.RI "bool \fBis_parenhesis\fP (int type)"
+.br
+.ti -1c
+.RI "bool \fBis_plus_or_minus\fP (int type)"
+.br
+.ti -1c
+.RI "bool \fBis_valid_arithmetic_syntax\fP (int type1, int type2)"
+.br
+.ti -1c
+.RI "int \fBstr_to_arithmetic_type\fP (char *exp)"
+.br
+.ti -1c
+.RI "int \fBeval_arithmetic_char\fP (char *exp, size_t i)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBnew_arithmetic_token\fP (int type)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBnew_arithmetic_number_token\fP (int value)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int eval_arithmetic_char (char * exp, size_t i)"
+
+.SS "bool is_parenhesis (int type)"
+
+.SS "bool is_plus_or_minus (int type)"
+
+.SS "bool is_valid_arithmetic_syntax (int type1, int type2)"
+
+.SS "struct \fBarithmetic_token\fP* new_arithmetic_number_token (int value)"
+
+.SS "struct \fBarithmetic_token\fP* new_arithmetic_token (int type)"
+
+.SS "int str_to_arithmetic_type (char * exp)"
+
+.SS "const char* token_str (int type)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

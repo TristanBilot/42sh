@@ -20,6 +20,7 @@ bool init_arithmetic_lexer(struct arithmetic_lexer *lexer);
 struct arithmetic_lexer *new_arithmetic_lexer(char *str);
 struct arithmetic_token *peek_arithmetic(struct arithmetic_lexer *lexer);
 struct arithmetic_token *pop_arithmetic(struct arithmetic_lexer *lexer);
-void append_arithmetic(struct arithmetic_lexer *lexer, struct arithmetic_token *token);
+void append_arithmetic(struct arithmetic_lexer *lexer,
+    struct arithmetic_token *token);
 
 #endif /* ! ARITHMETIC_LEXER_H */

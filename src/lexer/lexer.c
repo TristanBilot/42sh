@@ -161,12 +161,13 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
     char *c = splitted[*i];
     if (!c)
         return 1;
-    if (c[*j] == '"' || c[*j] == '\'' || (c[*j] == '$' && c[*j + 1]
+    if (c[*j] == '"' || c[*j] == '\'' || c[*j] == '`' || (c[*j] == '$' && c[*j + 1]
         && c[*j + 1] == '('))
     {
         append_word_if_needed(lexer, buffer);
         bool wait_doub_quote = c[*j] == '"';
         bool wait_simp_quote = c[*j] == '\'';
+        bool wait_back_quote = c[*j] == '`';
         bool wait_close_paren = c[*j] == '$' && c[*j + 1] && c[*j + 1] == '(';
         int stuck_left_paren_count = 0;
         int stuck_right_paren_count = 0;
@@ -186,6 +187,11 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
         /* only for " and ' => ignore theses caracters */
         if (c[*j] == '"' || c[*j] == '\'')
             (*j)++;
+        else if (wait_back_quote)
+        {
+            (*j)++;
+            append_buffer(buffer, '`');
+        }
         /* start at ' " $ */
         while (splitted[*i])
         {
@@ -194,7 +200,8 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
             {
                 if ((wait_doub_quote && c[*j] == '"')
                     || (wait_simp_quote && c[*j] == '\'')
-                    || (wait_close_paren && c[*j] == ')'))
+                    || (wait_close_paren && c[*j] == ')')
+                    || (wait_back_quote && c[*j] == '`'))
                 {
                     /* only for $(): add max 2 )) at the end of word */
                     while (wait_close_paren && c[*j] && c[*j] == ')')
@@ -211,6 +218,8 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
                     /* need to decrement j because of while loop */
                     if (wait_close_paren)
                         (*j)--;
+                    if (wait_back_quote)
+                        append_buffer(buffer, '`');
                     append_buffer(buffer, '\0');
                     append(lexer, new_token_word(buffer->buf));
                     flush(buffer);
@@ -267,6 +276,14 @@ int lex_part(struct lexer *lexer, struct buffer *buffer, char *c, size_t *j)
     return token ? -1 : 0;
 }
 
+int lex_backslash(struct buffer *buffer, char *c, size_t *j)
+{
+    if (c[*j] != '\\')
+        return 0;
+    append_buffer(buffer, c[++(*j)]);
+    return -1;
+}
+
 bool init_lexer(struct lexer *lexer)
 {
     char **splitted = split(lexer->input);
@@ -307,8 +324,8 @@ bool init_lexer(struct lexer *lexer)
                     continue;
                 else if (type == 1)
                     break;
-
-                append_buffer(buffer, c[j]);
+                if ((type = lex_backslash(buffer, c, &j)) != -1)
+                    append_buffer(buffer, c[j]);
                 if (j == strlen(c) - 1)
                 {
                     if (((type = evaluate_keyword(buffer->buf)) != KW_UNKNOWN)

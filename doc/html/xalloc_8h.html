@@ -73,14 +73,12 @@ $(function() {
 
 <p>Special allocation functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="attr_8h_source.html">../utils/attr.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for xalloc.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="xalloc_8h__incl.png" border="0" usemap="#src_2utils_2xalloc_8h" alt=""/></div>
 <map name="src_2utils_2xalloc_8h" id="src_2utils_2xalloc_8h">
-<area shape="rect" id="node2" href="attr_8h.html" title="../utils/attr.h" alt="" coords="5,80,97,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -89,29 +87,38 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="xalloc_8h__dep__incl.png" border="0" usemap="#src_2utils_2xalloc_8hdep" alt=""/></div>
 <map name="src_2utils_2xalloc_8hdep" id="src_2utils_2xalloc_8hdep">
 <area shape="rect" id="node2" href="ast_8c.html" title="src/ast/ast.c" alt="" coords="5,87,100,114"/>
-<area shape="rect" id="node3" href="exec_8h.html" title="Execution functions. " alt="" coords="226,169,341,196"/>
-<area shape="rect" id="node5" href="commands_8c.html" title="src/exec/commands.c" alt="" coords="39,244,189,271"/>
-<area shape="rect" id="node8" href="main_8h.html" title="src/main.h" alt="" coords="753,244,835,271"/>
-<area shape="rect" id="node11" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="506,87,677,114"/>
-<area shape="rect" id="node12" href="var__expansion_8c.html" title="src/expansion/var_expansion.c" alt="" coords="831,169,1034,196"/>
-<area shape="rect" id="node15" href="command__substitution_8c.html" title="src/expansion/command\l_substitution.c" alt="" coords="1021,80,1185,121"/>
-<area shape="rect" id="node16" href="auto__completion_8c.html" title="src/history/auto_completion.c" alt="" coords="1209,87,1403,114"/>
-<area shape="rect" id="node17" href="history_8c.html" title="src/history/history.c" alt="" coords="1427,87,1564,114"/>
-<area shape="rect" id="node18" href="lex__evaluation_8c.html" title="src/lexer/lex_evaluation.c" alt="" coords="1589,87,1759,114"/>
-<area shape="rect" id="node19" href="lexer_8c.html" title="src/lexer/lexer.c" alt="" coords="1783,87,1898,114"/>
-<area shape="rect" id="node20" href="token_8c.html" title="src/lexer/token.c" alt="" coords="1923,87,2041,114"/>
-<area shape="rect" id="node21" href="parser_8c.html" title="src/parser/parser.c" alt="" coords="2065,87,2195,114"/>
-<area shape="rect" id="node22" href="buffer_8c.html" title="src/utils/buffer.c" alt="" coords="2220,87,2336,114"/>
-<area shape="rect" id="node23" href="parser__utils_8c.html" title="src/utils/parser_utils.c" alt="" coords="2360,87,2511,114"/>
-<area shape="rect" id="node24" href="string__utils_8c.html" title="src/utils/string_utils.c" alt="" coords="2535,87,2682,114"/>
-<area shape="rect" id="node25" href="xalloc_8c.html" title="src/utils/xalloc.c" alt="" coords="2706,87,2823,114"/>
-<area shape="rect" id="node4" href="ast__exec_8c.html" title="src/exec/ast_exec.c" alt="" coords="213,244,353,271"/>
-<area shape="rect" id="node6" href="exec_8c.html" title="src/exec/exec.c" alt="" coords="539,244,654,271"/>
-<area shape="rect" id="node7" href="exec__for_8c.html" title="src/exec/exec_for.c" alt="" coords="377,244,515,271"/>
-<area shape="rect" id="node9" href="main_8c.html" title="src/main.c" alt="" coords="683,319,766,345"/>
-<area shape="rect" id="node10" href="main__utils_8c.html" title="src/utils/main_utils.c" alt="" coords="791,319,933,345"/>
-<area shape="rect" id="node13" href="var__storage_8c.html" title="src/storage/var_storage.c" alt="" coords="415,169,586,196"/>
-<area shape="rect" id="node14" href="tests__storage_8c.html" title="tests/tests_storage.c" alt="" coords="611,169,756,196"/>
+<area shape="rect" id="node3" href="exec_8h.html" title="Execution functions. " alt="" coords="1301,177,1415,203"/>
+<area shape="rect" id="node7" href="main_8h.html" title="src/main.h" alt="" coords="935,333,1018,360"/>
+<area shape="rect" id="node10" href="commands_8c.html" title="src/exec/commands.c" alt="" coords="391,259,541,285"/>
+<area shape="rect" id="node13" href="var__storage_8h.html" title="Var storage structures and functions. " alt="" coords="741,87,911,114"/>
+<area shape="rect" id="node14" href="var__expansion_8c.html" title="src/expansion/var_expansion.c" alt="" coords="226,177,429,203"/>
+<area shape="rect" id="node15" href="lexer_8c.html" title="src/lexer/lexer.c" alt="" coords="1439,177,1554,203"/>
+<area shape="rect" id="node20" href="ast_2arithmetic__ast_8c.html" title="src/expansion/arithmetic\l/ast/arithmetic_ast.c" alt="" coords="1037,80,1201,121"/>
+<area shape="rect" id="node21" href="arithmetic__lexer_8c.html" title="src/expansion/arithmetic\l/lexer/arithmetic_lexer.c" alt="" coords="1225,80,1389,121"/>
+<area shape="rect" id="node22" href="arithmetic__parser_8c.html" title="src/expansion/arithmetic\l/parser/arithmetic_parser.c" alt="" coords="1413,80,1591,121"/>
+<area shape="rect" id="node23" href="arithmetic__expansion_8c.html" title="src/expansion/arithmetic\l_expansion.c" alt="" coords="1615,80,1779,121"/>
+<area shape="rect" id="node24" href="command__substitution_8c.html" title="src/expansion/command\l_substitution.c" alt="" coords="1803,80,1967,121"/>
+<area shape="rect" id="node25" href="my__popen_8c.html" title="src/expansion/my_popen.c" alt="" coords="1991,87,2170,114"/>
+<area shape="rect" id="node26" href="auto__completion_8c.html" title="src/history/auto_completion.c" alt="" coords="2195,87,2388,114"/>
+<area shape="rect" id="node27" href="history_8c.html" title="src/history/history.c" alt="" coords="2412,87,2549,114"/>
+<area shape="rect" id="node28" href="lex__evaluation_8c.html" title="src/lexer/lex_evaluation.c" alt="" coords="2574,87,2745,114"/>
+<area shape="rect" id="node29" href="token_8c.html" title="src/lexer/token.c" alt="" coords="2769,87,2888,114"/>
+<area shape="rect" id="node30" href="parser_8c.html" title="src/parser/parser.c" alt="" coords="2911,87,3042,114"/>
+<area shape="rect" id="node31" href="buffer_8c.html" title="src/utils/buffer.c" alt="" coords="3067,87,3183,114"/>
+<area shape="rect" id="node32" href="parser__utils_8c.html" title="src/utils/parser_utils.c" alt="" coords="3207,87,3357,114"/>
+<area shape="rect" id="node33" href="string__utils_8c.html" title="src/utils/string_utils.c" alt="" coords="3382,87,3529,114"/>
+<area shape="rect" id="node34" href="xalloc_8c.html" title="src/utils/xalloc.c" alt="" coords="3553,87,3670,114"/>
+<area shape="rect" id="node4" href="ast__exec_8c.html" title="src/exec/ast_exec.c" alt="" coords="1271,259,1411,285"/>
+<area shape="rect" id="node5" href="redirection_8h.html" title="src/exec/redirection.h" alt="" coords="1435,259,1582,285"/>
+<area shape="rect" id="node11" href="exec_8c.html" title="src/exec/exec.c" alt="" coords="919,259,1034,285"/>
+<area shape="rect" id="node12" href="exec__for_8c.html" title="src/exec/exec_for.c" alt="" coords="1109,259,1247,285"/>
+<area shape="rect" id="node6" href="redirection_8c.html" title="src/exec/redirection.c" alt="" coords="1435,333,1582,360"/>
+<area shape="rect" id="node8" href="main_8c.html" title="src/main.c" alt="" coords="867,408,950,435"/>
+<area shape="rect" id="node9" href="main__utils_8c.html" title="src/utils/main_utils.c" alt="" coords="975,408,1117,435"/>
+<area shape="rect" id="node16" href="ast__print__main_8c.html" title="src/print/ast_print\l_main.c" alt="" coords="970,169,1093,211"/>
+<area shape="rect" id="node17" href="token__printer_8c.html" title="src/print/token_printer.c" alt="" coords="1117,177,1276,203"/>
+<area shape="rect" id="node18" href="var__storage_8c.html" title="src/storage/var_storage.c" alt="" coords="503,177,674,203"/>
+<area shape="rect" id="node19" href="tests__storage_8c.html" title="tests/tests_storage.c" alt="" coords="699,177,844,203"/>
 </map>
 </div>
 </div>
@@ -119,16 +126,16 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2ebcd01a0ecb9f5132e485a0f8ce4d13"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a2ebcd01a0ecb9f5132e485a0f8ce4d13">xmalloc</a> (size_t size) <a class="el" href="attr_8h.html#a2af11cdadae8fef7c77866b7355e66f7">__malloc</a></td></tr>
-<tr class="memdesc:a2ebcd01a0ecb9f5132e485a0f8ce4d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe malloc wrapper.  <a href="#a2ebcd01a0ecb9f5132e485a0f8ce4d13">More...</a><br /></td></tr>
-<tr class="separator:a2ebcd01a0ecb9f5132e485a0f8ce4d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ccfa6fc49cc4ce90cc44cd05052490"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a42ccfa6fc49cc4ce90cc44cd05052490">xmalloc</a> (size_t size)</td></tr>
+<tr class="memdesc:a42ccfa6fc49cc4ce90cc44cd05052490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe malloc wrapper.  <a href="#a42ccfa6fc49cc4ce90cc44cd05052490">More...</a><br /></td></tr>
+<tr class="separator:a42ccfa6fc49cc4ce90cc44cd05052490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93a8ec6e8a6eef0f62b7e5b50d0bf9e4"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a93a8ec6e8a6eef0f62b7e5b50d0bf9e4">xrealloc</a> (void *ptr, size_t size)</td></tr>
 <tr class="memdesc:a93a8ec6e8a6eef0f62b7e5b50d0bf9e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe realloc wrapper.  <a href="#a93a8ec6e8a6eef0f62b7e5b50d0bf9e4">More...</a><br /></td></tr>
 <tr class="separator:a93a8ec6e8a6eef0f62b7e5b50d0bf9e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37b399013c9ca4620b4ddf936be12505"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a37b399013c9ca4620b4ddf936be12505">xcalloc</a> (size_t nmb, size_t size)</td></tr>
 <tr class="separator:a37b399013c9ca4620b4ddf936be12505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e1327ccb810f2962f189f9de8fe511a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a6e1327ccb810f2962f189f9de8fe511a">ymalloc</a> (size_t size) <a class="el" href="attr_8h.html#a2af11cdadae8fef7c77866b7355e66f7">__malloc</a></td></tr>
-<tr class="separator:a6e1327ccb810f2962f189f9de8fe511a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20022f7843438dccec544ebde6e6889b"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a20022f7843438dccec544ebde6e6889b">ymalloc</a> (size_t size)</td></tr>
+<tr class="separator:a20022f7843438dccec544ebde6e6889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e97622ee0067c99fd4810108646c21a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a0e97622ee0067c99fd4810108646c21a">yrealloc</a> (void *ptr, size_t size)</td></tr>
 <tr class="separator:a0e97622ee0067c99fd4810108646c21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a485457e73cfb46296526ed5afaecdf87"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xalloc_8h.html#a485457e73cfb46296526ed5afaecdf87">ycalloc</a> (size_t nmb, size_t size)</td></tr>
@@ -169,8 +176,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ebcd01a0ecb9f5132e485a0f8ce4d13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ebcd01a0ecb9f5132e485a0f8ce4d13">&#9670;&nbsp;</a></span>xmalloc()</h2>
+<a id="a42ccfa6fc49cc4ce90cc44cd05052490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ccfa6fc49cc4ce90cc44cd05052490">&#9670;&nbsp;</a></span>xmalloc()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,8 +269,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6e1327ccb810f2962f189f9de8fe511a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e1327ccb810f2962f189f9de8fe511a">&#9670;&nbsp;</a></span>ymalloc()</h2>
+<a id="a20022f7843438dccec544ebde6e6889b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20022f7843438dccec544ebde6e6889b">&#9670;&nbsp;</a></span>ymalloc()</h2>
 
 <div class="memitem">
 <div class="memproto">

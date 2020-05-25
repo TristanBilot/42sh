@@ -1,4 +1,4 @@
-.TH "src/lexer/lexer.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/lexer.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -28,10 +28,6 @@ src/lexer/lexer.h \- Main lexing functions\&.
 .br
 .RI "Allocate and init a new lexer\&. "
 .ti -1c
-.RI "void \fBfree_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
-.br
-.RI "Free all ressources allocated in the lexer\&. "
-.ti -1c
 .RI "struct \fBtoken\fP * \fBpeek\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
 .RI "Return the next token without consume it\&. "
@@ -55,7 +51,7 @@ src/lexer/lexer.h \- Main lexing functions\&.
 .PP 
 Main lexing functions\&. 
 
-Bracket counter functions\&.
+
 .PP
 \fBAuthor:\fP
 .RS 4
@@ -70,26 +66,6 @@ Team
 \fBDate:\fP
 .RS 4
 2020-05-03
-.RE
-.PP
-\fBCopyright:\fP
-.RS 4
-Copyright (c) 2020
-.RE
-.PP
-\fBAuthor:\fP
-.RS 4
-Team 
-.RE
-.PP
-\fBVersion:\fP
-.RS 4
-0\&.1 
-.RE
-.PP
-\fBDate:\fP
-.RS 4
-2020-05-12
 .RE
 .PP
 \fBCopyright:\fP
@@ -110,17 +86,6 @@ Append a new token to the \fBtoken_list\fP of the lexer\&.
 \fIlexer\fP the lexer\&. 
 .br
 \fItoken\fP the token to append\&. 
-.RE
-.PP
-
-.SS "void free_lexer (struct \fBlexer\fP * lexer)"
-
-.PP
-Free all ressources allocated in the lexer\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIlexer\fP the lexer to free\&. 
 .RE
 .PP
 

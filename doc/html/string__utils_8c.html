@@ -72,6 +72,7 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;errno.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="string__utils_8h_source.html">../utils/string_utils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="xalloc_8h_source.html">../utils/xalloc.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -79,9 +80,8 @@ Include dependency graph for string_utils.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="string__utils_8c__incl.png" border="0" usemap="#src_2utils_2string__utils_8c" alt=""/></div>
 <map name="src_2utils_2string__utils_8c" id="src_2utils_2string__utils_8c">
-<area shape="rect" id="node4" href="string__utils_8h.html" title="String usage functions. " alt="" coords="179,80,315,107"/>
-<area shape="rect" id="node7" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="339,80,445,107"/>
-<area shape="rect" id="node8" href="attr_8h.html" title="../utils/attr.h" alt="" coords="335,155,427,181"/>
+<area shape="rect" id="node5" href="string__utils_8h.html" title="String usage functions. " alt="" coords="229,80,365,107"/>
+<area shape="rect" id="node8" href="xalloc_8h.html" title="Special allocation functions. " alt="" coords="401,80,508,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -104,6 +104,8 @@ Functions</h2></td></tr>
 <tr class="memitem:aad9796c174f7ef5d226cd169f2520fd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8c.html#aad9796c174f7ef5d226cd169f2520fd5">error</a> (char *msg)</td></tr>
 <tr class="memdesc:aad9796c174f7ef5d226cd169f2520fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an error in stderr when an invalid token appeared.  <a href="#aad9796c174f7ef5d226cd169f2520fd5">More...</a><br /></td></tr>
 <tr class="separator:aad9796c174f7ef5d226cd169f2520fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b0a6dd0f12434e28a34e34261214675"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8c.html#a4b0a6dd0f12434e28a34e34261214675">expr_is_number</a> (char *expr)</td></tr>
+<tr class="separator:a4b0a6dd0f12434e28a34e34261214675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="aad9796c174f7ef5d226cd169f2520fd5"></a>
@@ -129,6 +131,24 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a4b0a6dd0f12434e28a34e34261214675"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b0a6dd0f12434e28a34e34261214675">&#9670;&nbsp;</a></span>expr_is_number()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool expr_is_number </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>expr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

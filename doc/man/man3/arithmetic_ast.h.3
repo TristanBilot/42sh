@@ -1,0 +1,128 @@
+.TH "src/expansion/arithmetic/ast/arithmetic_ast.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/ast/arithmetic_ast.h
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBarithmetic_ast\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBarithmetic_ast_type\fP { \fBNODE_ADD\fP = 0, \fBNODE_SUB\fP, \fBNODE_MUL\fP, \fBNODE_DIV\fP, \fBNODE_NUM\fP, \fBEXPR_ADDITION\fP = 0, \fBEXPR_SUBTRACTION\fP, \fBEXPR_MULTIPLICATION\fP, \fBEXPR_DIVISION\fP, \fBEXPR_POW\fP, \fBEXPR_SEPAND\fP, \fBEXPR_PIPE\fP, \fBEXPR_XOR\fP, \fBEXPR_AND\fP, \fBEXPR_OR\fP, \fBEXPR_NOT\fP, \fBEXPR_TILDE\fP, \fBEXPR_PLUS_EQ\fP, \fBEXPR_MINUS_EQ\fP, \fBEXPR_NUMBER\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBarithmetic_ast\fP * \fBast_alloc\fP (void)"
+.br
+.RI "Ast node allocator and initialiser\&. "
+.ti -1c
+.RI "struct \fBarithmetic_ast\fP * \fBast_alloc_number\fP (int value)"
+.br
+.RI "Number ast node allocator and initialiser\&. "
+.ti -1c
+.RI "void \fBast_free\fP (struct \fBarithmetic_ast\fP *ast)"
+.br
+.RI "Wrapper to release memory of an ast node and its children\&. "
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBarithmetic_ast_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINODE_ADD \fP\fP
+.TP
+\fB\fINODE_SUB \fP\fP
+.TP
+\fB\fINODE_MUL \fP\fP
+.TP
+\fB\fINODE_DIV \fP\fP
+.TP
+\fB\fINODE_NUM \fP\fP
+.TP
+\fB\fIEXPR_ADDITION \fP\fP
+.TP
+\fB\fIEXPR_SUBTRACTION \fP\fP
+.TP
+\fB\fIEXPR_MULTIPLICATION \fP\fP
+.TP
+\fB\fIEXPR_DIVISION \fP\fP
+.TP
+\fB\fIEXPR_POW \fP\fP
+.TP
+\fB\fIEXPR_SEPAND \fP\fP
+.TP
+\fB\fIEXPR_PIPE \fP\fP
+.TP
+\fB\fIEXPR_XOR \fP\fP
+.TP
+\fB\fIEXPR_AND \fP\fP
+.TP
+\fB\fIEXPR_OR \fP\fP
+.TP
+\fB\fIEXPR_NOT \fP\fP
+.TP
+\fB\fIEXPR_TILDE \fP\fP
+.TP
+\fB\fIEXPR_PLUS_EQ \fP\fP
+.TP
+\fB\fIEXPR_MINUS_EQ \fP\fP
+.TP
+\fB\fIEXPR_NUMBER \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBarithmetic_ast\fP* ast_alloc (void)"
+
+.PP
+Ast node allocator and initialiser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated ast node 
+.RE
+.PP
+
+.SS "struct \fBarithmetic_ast\fP* ast_alloc_number (int value)"
+
+.PP
+Number ast node allocator and initialiser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP the value to store inthe node 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated ast node 
+.RE
+.PP
+
+.SS "void ast_free (struct \fBarithmetic_ast\fP * ast)"
+
+.PP
+Wrapper to release memory of an ast node and its children\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP the node to free 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

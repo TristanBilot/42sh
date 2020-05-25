@@ -1,0 +1,76 @@
+.TH "src/expansion/arithmetic/ast/arithmetic_ast.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/ast/arithmetic_ast.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'arithmetic_ast\&.h'\fP
+.br
+\fC#include 'utils/xalloc\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBarithmetic_ast\fP * \fBast_alloc\fP (void)"
+.br
+.RI "Ast node allocator and initialiser\&. "
+.ti -1c
+.RI "void \fBast_free\fP (struct \fBarithmetic_ast\fP *ast)"
+.br
+.RI "Wrapper to release memory of an ast node and its children\&. "
+.ti -1c
+.RI "struct \fBarithmetic_ast\fP * \fBast_alloc_number\fP (int value)"
+.br
+.RI "Number ast node allocator and initialiser\&. "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBarithmetic_ast\fP* ast_alloc (void)"
+
+.PP
+Ast node allocator and initialiser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated ast node 
+.RE
+.PP
+
+.SS "struct \fBarithmetic_ast\fP* ast_alloc_number (int value)"
+
+.PP
+Number ast node allocator and initialiser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP the value to store inthe node 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to the allocated ast node 
+.RE
+.PP
+
+.SS "void ast_free (struct \fBarithmetic_ast\fP * ast)"
+
+.PP
+Wrapper to release memory of an ast node and its children\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIast\fP the node to free 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

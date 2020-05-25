@@ -1,4 +1,4 @@
-.TH "src/print/ast_print.c" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/print/ast_print.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -32,6 +32,9 @@ src/print/ast_print.c
 .SS "Functions"
 
 .in +1c
+.ti -1c
+.RI "void * \fBcast_to_void\fP (void *ast)"
+.br
 .ti -1c
 .RI "void \fBprint_node_input\fP (struct \fBnode_input\fP *ast, FILE *f)"
 .br
@@ -138,6 +141,8 @@ if (PRINT_FLAG) \
 .fi
 .SH "Function Documentation"
 .PP 
+.SS "void* cast_to_void (void * ast)"
+
 .SS "void print_ast (struct \fBnode_input\fP * ast)"
 
 .PP

@@ -54,8 +54,27 @@ int perform_for_range(struct range *r, struct node_for *ast)
                 put_var(var_storage, ast->variable_name, tmp);
                 cont.from_loop = true;
                 cont.current_loop++;
+                if (cont.is_continue && cont.time_to_loop > 1
+                    && cont.time_to_loop == cont.current_loop)
+                {
+                    cont.current_loop = 0;
+                    cont.from_loop = false;
+                    cont.time_to_loop = 1;
+                    cont.is_continue = false;
+                    break;
+                }
                 if (exec_node_do_group(ast->body))
                     return -1;
+                if (cont.is_continue && cont.time_to_loop > 1
+                    && cont.time_to_loop == cont.current_loop)
+                {
+                    cont.current_loop = 0;
+                    cont.from_loop = false;
+                    cont.time_to_loop = 1;
+                    cont.is_continue = false;
+                    break;
+                }
+                cont.is_continue = false;
                 if (cont.current_loop > 0)
                     cont.current_loop--;
                 if (cont.current_loop == 0)
@@ -77,10 +96,30 @@ bool perform_for_enumeration(struct node_for *ast, int len_range)
         put_var(var_storage, tmp->variable_name, r->value);
         cont.from_loop = true;
         cont.current_loop++;
+        if (cont.is_continue && cont.time_to_loop > 1
+            && cont.time_to_loop == cont.current_loop)
+        {
+            cont.current_loop = 0;
+            cont.from_loop = false;
+            cont.time_to_loop = 1;
+            cont.is_continue = false;
+            break;
+        }
         if (exec_node_do_group(ast->body))
             return true;
-        if (cont.current_loop > 0)
+        if (cont.is_continue && cont.time_to_loop > 1
+            && cont.time_to_loop == cont.current_loop)
+        {
+            cont.current_loop = 0;
+            cont.from_loop = false;
+            cont.time_to_loop = 1;
+            cont.is_continue = false;
+            break;
+        }
+        while (cont.current_loop > 0)
             cont.current_loop--;
+        // if (cont.current_loop > 0)
+        //     cont.current_loop--;
         if (cont.current_loop == 0)
             cont.from_loop = false;
         r = r->next;

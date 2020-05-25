@@ -1,0 +1,66 @@
+.TH "src/expansion/arithmetic/lexer/arithmetic_lexer.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/lexer/arithmetic_lexer.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include '\&./arithmetic_lexer\&.h'\fP
+.br
+\fC#include '\&.\&./\&.\&./\&.\&./utils/xalloc\&.h'\fP
+.br
+\fC#include '\&.\&./\&.\&./\&.\&./utils/string_utils\&.h'\fP
+.br
+\fC#include '\&.\&./\&.\&./\&.\&./utils/buffer\&.h'\fP
+.br
+\fC#include '\&.\&./\&.\&./\&.\&./utils/bracket_counter\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBis_lexer_valid\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP)"
+.br
+.ti -1c
+.RI "bool \fBinit_arithmetic_lexer\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_lexer\fP * \fBnew_arithmetic_lexer\fP (char *\fBstr\fP)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBpeek_arithmetic\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBpop_arithmetic\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP)"
+.br
+.ti -1c
+.RI "void \fBappend_arithmetic\fP (struct \fBarithmetic_lexer\fP *\fBlexer\fP, struct \fBarithmetic_token\fP *\fBtoken\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void append_arithmetic (struct \fBarithmetic_lexer\fP * lexer, struct \fBarithmetic_token\fP * token)"
+
+.SS "bool init_arithmetic_lexer (struct \fBarithmetic_lexer\fP * lexer)"
+
+.SS "bool is_lexer_valid (struct \fBarithmetic_lexer\fP * lexer)"
+
+.SS "struct \fBarithmetic_lexer\fP* new_arithmetic_lexer (char * str)"
+
+.SS "struct \fBarithmetic_token\fP* peek_arithmetic (struct \fBarithmetic_lexer\fP * lexer)"
+
+.SS "struct \fBarithmetic_token\fP* pop_arithmetic (struct \fBarithmetic_lexer\fP * lexer)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

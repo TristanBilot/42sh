@@ -1,4 +1,4 @@
-.TH "src/ast/ast.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/ast/ast.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -104,6 +104,13 @@ src/ast/ast.h \- Define ast and parser structures\&.
 .RI "struct \fBnode_case_item\fP"
 .br
 .in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBshell_type\fP { \fBFOR\fP, \fBWHILE\fP, \fBUNTIL\fP, \fBCASE\fP, \fBIF\fP }"
+.br
+.in -1c
 .SS "Functions"
 
 .in +1c
@@ -140,7 +147,7 @@ src/ast/ast.h \- Define ast and parser structures\&.
 .br
 .RI "build shell command "
 .ti -1c
-.RI "struct \fBnode_funcdec\fP * \fBbuild_funcdec\fP ()"
+.RI "struct \fBnode_funcdec\fP * \fBbuild_funcdec\fP (void)"
 .br
 .RI "build node funcdec "
 .ti -1c
@@ -223,6 +230,23 @@ Copyright (c) 2020
 .RE
 .PP
 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBshell_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIFOR \fP\fP
+.TP
+\fB\fIWHILE \fP\fP
+.TP
+\fB\fIUNTIL \fP\fP
+.TP
+\fB\fICASE \fP\fP
+.TP
+\fB\fIIF \fP\fP
 .SH "Function Documentation"
 .PP 
 .SS "struct \fBnode_and_or\fP* build_and_or_final (bool is_and, struct \fBnode_pipeline\fP * left, struct \fBnode_pipeline\fP * right)"
@@ -379,7 +403,7 @@ struct node_for*
 .RE
 .PP
 
-.SS "struct \fBnode_funcdec\fP* build_funcdec ()"
+.SS "struct \fBnode_funcdec\fP* build_funcdec (void)"
 
 .PP
 build node funcdec 

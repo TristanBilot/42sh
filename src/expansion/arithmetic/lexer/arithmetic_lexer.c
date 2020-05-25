@@ -9,25 +9,13 @@
 #include "../../../utils/buffer.h"
 #include "../../../utils/bracket_counter.h"
 
-// int evaluate_number(char *str, size_t *index)
-// {
-//     int res = 0;
-//     while (index && *index < strlen(str) &&
-//         str[*index] >= '0' && str[*index] <= '9')
-//     {
-//         res *= 10;
-//         res += (str[(*index)++] - '0');
-//     }
-//     return res;
-// }
-
 bool is_lexer_valid(struct arithmetic_lexer *lexer)
 {
     struct arithmetic_token *curr = lexer->token_list->first;
-    // fprintf(stderr, "%s ==> %s\n", lexer->input, token_str(curr->type));
-    if (curr && curr->type != TOK_A_NUMBER && curr->type != TOK_A_END &&
-        curr->type != TOK_A_MINUS && curr->type != TOK_A_PLUS
-        && curr->type != TOK_A_LPAR && curr->type != TOK_A_NOT)
+    if (curr && curr->type != TOK_A_NUMBER && curr->type != TOK_A_END
+        && curr->type != TOK_A_MINUS && curr->type != TOK_A_PLUS
+        && curr->type != TOK_A_LPAR && curr->type != TOK_A_NOT
+        && curr->type != TOK_A_TILDE)
         return false;
     while (curr && curr->next)
     {
@@ -41,11 +29,6 @@ bool is_lexer_valid(struct arithmetic_lexer *lexer)
     }
     return true;
 }
-
-// bool check_first_token(int type, bool *first)
-// {
-//     return *first && type != TOK_NUMBER && type != TOK_)
-// }
 
 bool init_arithmetic_lexer(struct arithmetic_lexer *lexer)
 {
@@ -68,7 +51,9 @@ bool init_arithmetic_lexer(struct arithmetic_lexer *lexer)
         if (i >= len)
             break;
         if ((type = eval_arithmetic_char(lexer->input, i)) == TOK_A_UNKNOWN)
+        {
             return false;
+        }
         if (type == TOK_A_OR || type == TOK_A_AND || type == TOK_A_POW)
             i++;
 

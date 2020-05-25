@@ -1,4 +1,4 @@
-.TH "src/exec/commands.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/commands.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,11 +14,26 @@ src/exec/commands.h \- Extra commands functions\&.
 .RI "struct \fBecho_tab\fP"
 .br
 .in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUNALIAS_USAGE\fP   'unalias: usage: unalias [\-a] name [name \&.\&.\&.]\\n'"
+.br
+.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBload_file\fP (char *path)"
+.RI "void \fBdelete_alias\fP (char **args)"
+.br
+.RI "function to delete an alias "
+.ti -1c
+.RI "void \fBcreate_alias\fP (char **args)"
+.br
+.RI "function to create an alias "
+.ti -1c
+.RI "bool \fBload_file\fP (char *path, bool warning)"
 .br
 .RI "function to give a file to the 42sh "
 .ti -1c
@@ -37,13 +52,13 @@ src/exec/commands.h \- Extra commands functions\&.
 .br
 .RI "implementation of command export "
 .ti -1c
-.RI "void \fBexit_shell\fP (char **args)"
+.RI "void \fBexit_shell\fP (void)"
 .br
 .RI "implementation of exit_shell "
 .ti -1c
 .RI "void \fBprint_args\fP (char **args)"
 .br
-.RI "Print all args on stdout\&. "
+.RI "Print all argson stdout\&. "
 .ti -1c
 .RI "int \fBprint_without_sp\fP (char *c)"
 .br
@@ -52,6 +67,16 @@ src/exec/commands.h \- Extra commands functions\&.
 .RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
 .br
 .RI "Echo function\&. "
+.ti -1c
+.RI "void \fBfunc_continue\fP (char **args)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char ** \fBenviron\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -80,10 +105,36 @@ Copyright (c) 2020
 .RE
 .PP
 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define UNALIAS_USAGE   'unalias: usage: unalias [\-a] name [name \&.\&.\&.]\\n'"
+
 .SH "Function Documentation"
 .PP 
 .SS "void cd (char ** args)"
 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void create_alias (char ** args)"
+
+.PP
+function to create an alias 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP 
+.RE
+.PP
+
+.SS "void delete_alias (char ** args)"
+
+.PP
+function to delete an alias 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -102,17 +153,10 @@ implementation of command echo
 .RE
 .PP
 
-.SS "void exit_shell (char ** args)"
+.SS "void exit_shell (void)"
 
 .PP
 implementation of exit_shell 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIargs\fP 
-.RE
-.PP
-
 .SS "void export (char ** args)"
 
 .PP
@@ -124,21 +168,32 @@ implementation of command export
 .RE
 .PP
 
-.SS "void load_file (char * path)"
+.SS "void func_continue (char ** args)"
+
+.SS "bool load_file (char * path, bool warning)"
 
 .PP
 function to give a file to the 42sh 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIargs\fP 
+\fIpath\fP 
+.br
+\fIwarning\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true 
+.PP
+false 
 .RE
 .PP
 
 .SS "void print_args (char ** args)"
 
 .PP
-Print all args on stdout\&. 
+Print all argson stdout\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -187,6 +242,10 @@ implementation of command sourcefnac
 \fIargs\fP 
 .RE
 .PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "char** environ"
 
 .SH "Author"
 .PP 

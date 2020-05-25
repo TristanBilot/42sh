@@ -1,0 +1,111 @@
+.TH "src/expansion/arithmetic/lexer/arithmetic_token.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/expansion/arithmetic/lexer/arithmetic_token.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBarithmetic_token\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBarithmetic_token_type\fP { \fBTOK_A_PLUS\fP = 0, \fBTOK_A_MINUS\fP, \fBTOK_A_MULTIPLY\fP, \fBTOK_A_DIVIDE\fP, \fBTOK_A_LPAR\fP, \fBTOK_A_RPAR\fP, \fBTOK_A_POW\fP, \fBTOK_A_SEPAND\fP, \fBTOK_A_PIPE\fP, \fBTOK_A_XOR\fP, \fBTOK_A_AND\fP, \fBTOK_A_OR\fP, \fBTOK_A_NOT\fP, \fBTOK_A_TILDE\fP, \fBTOK_A_MINUS_EQ\fP, \fBTOK_A_PLUS_EQ\fP, \fBTOK_A_NUMBER\fP, \fBTOK_A_END\fP, \fBTOK_A_UNKNOWN\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBtoken_str\fP (int type)"
+.br
+.ti -1c
+.RI "bool \fBis_valid_arithmetic_syntax\fP (int type1, int type2)"
+.br
+.ti -1c
+.RI "int \fBstr_to_arithmetic_type\fP (char *exp)"
+.br
+.ti -1c
+.RI "int \fBeval_arithmetic_char\fP (char *exp, size_t i)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBnew_arithmetic_token\fP (int type)"
+.br
+.ti -1c
+.RI "struct \fBarithmetic_token\fP * \fBnew_arithmetic_number_token\fP (int value)"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBarithmetic_token_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fITOK_A_PLUS \fP\fP
+.TP
+\fB\fITOK_A_MINUS \fP\fP
+.TP
+\fB\fITOK_A_MULTIPLY \fP\fP
+.TP
+\fB\fITOK_A_DIVIDE \fP\fP
+.TP
+\fB\fITOK_A_LPAR \fP\fP
+.TP
+\fB\fITOK_A_RPAR \fP\fP
+.TP
+\fB\fITOK_A_POW \fP\fP
+.TP
+\fB\fITOK_A_SEPAND \fP\fP
+.TP
+\fB\fITOK_A_PIPE \fP\fP
+.TP
+\fB\fITOK_A_XOR \fP\fP
+.TP
+\fB\fITOK_A_AND \fP\fP
+.TP
+\fB\fITOK_A_OR \fP\fP
+.TP
+\fB\fITOK_A_NOT \fP\fP
+.TP
+\fB\fITOK_A_TILDE \fP\fP
+.TP
+\fB\fITOK_A_MINUS_EQ \fP\fP
+.TP
+\fB\fITOK_A_PLUS_EQ \fP\fP
+.TP
+\fB\fITOK_A_NUMBER \fP\fP
+.TP
+\fB\fITOK_A_END \fP\fP
+.TP
+\fB\fITOK_A_UNKNOWN \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "int eval_arithmetic_char (char * exp, size_t i)"
+
+.SS "bool is_valid_arithmetic_syntax (int type1, int type2)"
+
+.SS "struct \fBarithmetic_token\fP* new_arithmetic_number_token (int value)"
+
+.SS "struct \fBarithmetic_token\fP* new_arithmetic_token (int type)"
+
+.SS "int str_to_arithmetic_type (char * exp)"
+
+.SS "const char* token_str (int type)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 42h from the source code\&.

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['write_5fend',['WRITE_END',['../exec_8c.html#a2efd706d915e621e5e18b3f0803c4ed2',1,'exec.c']]]
+  ['unalias_5fusage',['UNALIAS_USAGE',['../commands_8h.html#a17f578abbfaebf8f2173248e20bc9d27',1,'commands.h']]],
+  ['usage',['USAGE',['../main_8h.html#a56fe9bff0a1be75aae2da3e593053e2c',1,'main.h']]]
 ];

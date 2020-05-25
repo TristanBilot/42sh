@@ -78,16 +78,20 @@ $(function() {
 Include dependency graph for bracket_counter.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="bracket__counter_8h__incl.png" border="0" usemap="#src_2utils_2bracket__counter_8h" alt=""/></div>
+<map name="src_2utils_2bracket__counter_8h" id="src_2utils_2bracket__counter_8h">
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="bracket__counter_8h__dep__incl.png" border="0" usemap="#src_2utils_2bracket__counter_8hdep" alt=""/></div>
 <map name="src_2utils_2bracket__counter_8hdep" id="src_2utils_2bracket__counter_8hdep">
-<area shape="rect" id="node2" href="command__substitution_8c.html" title="src/expansion/command\l_substitution.c" alt="" coords="5,80,169,121"/>
-<area shape="rect" id="node3" href="expansion_8c.html" title="src/expansion/expansion.c" alt="" coords="193,87,371,114"/>
-<area shape="rect" id="node4" href="lexer_8c.html" title="src/lexer/lexer.c" alt="" coords="395,87,510,114"/>
-<area shape="rect" id="node5" href="bracket__counter_8c.html" title="src/utils/bracket_counter.c" alt="" coords="534,87,710,114"/>
+<area shape="rect" id="node2" href="arithmetic__lexer_8c.html" title="src/expansion/arithmetic\l/lexer/arithmetic_lexer.c" alt="" coords="5,80,169,121"/>
+<area shape="rect" id="node3" href="arithmetic__expansion_8c.html" title="src/expansion/arithmetic\l_expansion.c" alt="" coords="193,80,357,121"/>
+<area shape="rect" id="node4" href="command__substitution_8c.html" title="src/expansion/command\l_substitution.c" alt="" coords="381,80,545,121"/>
+<area shape="rect" id="node5" href="expansion_8c.html" title="src/expansion/expansion.c" alt="" coords="569,87,747,114"/>
+<area shape="rect" id="node6" href="lexer_8c.html" title="src/lexer/lexer.c" alt="" coords="771,87,886,114"/>
+<area shape="rect" id="node7" href="bracket__counter_8c.html" title="src/utils/bracket_counter.c" alt="" coords="910,87,1086,114"/>
 </map>
 </div>
 </div>
@@ -110,8 +114,15 @@ Functions</h2></td></tr>
 <tr class="separator:af7cd89c3838494b4d7dc208d64600093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dbd3c292f37f0ef895591cae6ff72ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bracket__counter_8h.html#a8dbd3c292f37f0ef895591cae6ff72ef">check_closing_symbols_from_splitted</a> (char **splitted, int i)</td></tr>
 <tr class="separator:a8dbd3c292f37f0ef895591cae6ff72ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e91d09171974b7331fc15f38cf88fcd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bracket__counter_8h.html#a5e91d09171974b7331fc15f38cf88fcd">get_closing_parent_index</a> (char *word, size_t i)</td></tr>
+<tr class="separator:a5e91d09171974b7331fc15f38cf88fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Team </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2020-05-16</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a8e403ea38004f727a72bc30b25de4dce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8e403ea38004f727a72bc30b25de4dce">&#9670;&nbsp;</a></span>countable</h2>
 
@@ -148,6 +159,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
@@ -176,6 +196,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">splitted</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
@@ -210,6 +240,52 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+    <tr><td class="paramname">countable</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="a5e91d09171974b7331fc15f38cf88fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e91d09171974b7331fc15f38cf88fcd">&#9670;&nbsp;</a></span>get_closing_parent_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_closing_parent_index </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>word</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>the closing parent index</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">word</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
 
 </div>
 </div>

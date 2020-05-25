@@ -20,6 +20,8 @@ enum arithmetic_token_type
     TOK_A_OR,
     TOK_A_NOT,
     TOK_A_TILDE,
+    TOK_A_MINUS_EQ,
+    TOK_A_PLUS_EQ,
     TOK_A_NUMBER,
     TOK_A_END,
     TOK_A_UNKNOWN
@@ -33,7 +35,6 @@ struct arithmetic_token
 };
 
 const char *token_str(int type);
-// const char *token_str(struct arithmetic_token *token);
 bool is_valid_arithmetic_syntax(int type1, int type2);
 int str_to_arithmetic_type(char *exp);
 int eval_arithmetic_char(char *exp, size_t i);

@@ -1,4 +1,4 @@
-.TH "src/expansion/expansion.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/expansion.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,12 +19,17 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .br
 \fC#include <unistd\&.h>\fP
 .br
+\fC#include '\&.\&./storage/program_data_storage\&.h'\fP
+.br
 
 .SS "Macros"
 
 .in +1c
 .ti -1c
 .RI "#define \fB_XOPEN_SOURCE\fP   700"
+.br
+.ti -1c
+.RI "#define \fBFAIL_WITH_ERR\fP(err)"
 .br
 .in -1c
 .SS "Enumerations"
@@ -68,6 +73,9 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .RI "char * \fBsubstitute_uid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
 .br
 .ti -1c
+.RI "char * \fBsubstitute_pid\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
+.br
+.ti -1c
 .RI "char * \fBsubstitute_oldpwd\fP (char *word, size_t *i, bool *should_continue, int is_brack)"
 .br
 .ti -1c
@@ -96,6 +104,9 @@ src/expansion/expansion.h \- Var storage structures and functions\&.
 .br
 .ti -1c
 .RI "char * \fBperform_command_substitution\fP (char *word)"
+.br
+.ti -1c
+.RI "char * \fBperform_arithmetic_substitution\fP (char *word)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -129,6 +140,14 @@ Copyright (c) 2020
 .PP 
 .SS "#define _XOPEN_SOURCE   700"
 
+.SS "#define FAIL_WITH_ERR(err)"
+\fBValue:\fP
+.PP
+.nf
+fprintf(stderr, "%s\n", err); \
+    update_last_status(1); \
+    return NULL;
+.fi
 .SH "Enumeration Type Documentation"
 .PP 
 .SS "enum \fBparam_type\fP"
@@ -158,6 +177,8 @@ Copyright (c) 2020
 
 .SS "enum \fBparam_type\fP is_special_char (char c)"
 
+.SS "char* perform_arithmetic_substitution (char * word)"
+
 .SS "char* perform_command_substitution (char * word)"
 
 .SS "char* perform_tilde_expansion (char * word)"
@@ -177,6 +198,8 @@ Copyright (c) 2020
 .SS "char* substitute_number (char c)"
 
 .SS "char* substitute_oldpwd (char * word, size_t * i, bool * should_continue, int is_brack)"
+
+.SS "char* substitute_pid (char * word, size_t * i, bool * should_continue, int is_brack)"
 
 .SS "char* substitute_plus_tilde (char * word, size_t * i)"
 

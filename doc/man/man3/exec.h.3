@@ -1,4 +1,4 @@
-.TH "src/exec/exec.h" 3 "Wed May 13 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/exec.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -37,6 +37,8 @@ src/exec/exec.h \- Execution functions\&.
 .br
 \fC#include '\&.\&./storage/var_storage\&.h'\fP
 .br
+\fC#include '\&.\&./exec/redirection\&.h'\fP
+.br
 
 .SS "Data Structures"
 
@@ -45,10 +47,7 @@ src/exec/exec.h \- Execution functions\&.
 .RI "struct \fBcommands\fP"
 .br
 .ti -1c
-.RI "struct \fBstd\fP"
-.br
-.ti -1c
-.RI "struct \fBtab_redi\fP"
+.RI "struct \fBcommand_continue\fP"
 .br
 .in -1c
 .SS "Macros"
@@ -65,9 +64,8 @@ src/exec/exec.h \- Execution functions\&.
 
 .in +1c
 .ti -1c
-.RI "struct tab_redirection * \fBinit_tab_redirection\fP (void)"
+.RI "void \fBinit_continue\fP (void)"
 .br
-.RI "create and init the table of redirection "
 .ti -1c
 .RI "bool \fBexec_node_input\fP (struct \fBnode_input\fP *ast)"
 .br
@@ -164,6 +162,13 @@ src/exec/exec.h \- Execution functions\&.
 .RI "bool \fBperform_for_enumeration\fP (struct \fBnode_for\fP *ast, int len_range)"
 .br
 .RI "for function to perform enumeration "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcommand_continue\fP \fBcont\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -605,17 +610,8 @@ false
 .RE
 .PP
 
-.SS "struct tab_redirection* init_tab_redirection (void)"
-
-.PP
-create and init the table of redirection 
-.PP
-\fBReturns:\fP
-.RS 4
-struct tab_redirection* 
-.RE
-.PP
-
+.SS "void init_continue (void)"
+Global for continue command 
 .SS "bool perform_for_enumeration (struct \fBnode_for\fP * ast, int len_range)"
 
 .PP
@@ -653,6 +649,10 @@ for function to execute different range
 int 
 .RE
 .PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBcommand_continue\fP cont"
 
 .SH "Author"
 .PP 

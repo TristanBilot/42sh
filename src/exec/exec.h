@@ -29,6 +29,7 @@
 #include "../utils/my_itoa.h"
 #include "../utils/xalloc.h"
 #include "../storage/var_storage.h"
+#include "../exec/redirection.h"
 
 #define NB_MAX_PIPE 10
 #define ERROR(msg) \
@@ -43,7 +44,7 @@ struct commands
 
 /** Global for continue command **/
 struct command_continue{
-    bool is_continue;    //= 0;
+    bool is_continue;    //= false;
     int time_to_loop;    //= 1;
     bool from_loop;      //= false;
     int current_loop;    //= O;
