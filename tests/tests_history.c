@@ -3,6 +3,10 @@
 #include "utils/string_utils.h"
 #include "garbage_collector/garbage_collector.h"
 
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
+
 Test(history, basic)
 {
     new_garbage_collector();

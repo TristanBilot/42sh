@@ -100,5 +100,6 @@ void print_echo(char **args, bool e, bool n);
 
 
 void func_continue(char **args);
+void func_break(char **args);
 
 #endif /* COMMANDS_H_ */

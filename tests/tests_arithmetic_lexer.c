@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
+
 bool should_fail(char *exp)
 {
     new_garbage_collector();

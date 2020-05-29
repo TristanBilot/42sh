@@ -5,7 +5,11 @@
 #include "../garbage_collector/garbage_collector.h"
 #include "../storage/program_data_storage.h"
 #include "../storage/var_storage.h"
+#include "../exec/redirection.h"
 
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -15,6 +19,8 @@ int main(int argc, char *argv[])
     }
     new_garbage_collector();
     new_program_data_storage(argc, argv);
+    file_manager = init_file_manager();
+    var_storage = new_var_storage();
     alias_storage = new_var_storage();
     struct lexer *lexer = NULL;
     if ((lexer = new_lexer(argv[1])))

@@ -1,16 +1,16 @@
 #include "./main.h"
-
-struct option_sh *init_option_sh(void)
+struct option_sh *option;
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+void init_option_sh(void)
 {
-    struct option_sh *option = malloc(sizeof(struct option_sh));
+    option = malloc(sizeof(struct option_sh));
     option->norc_flag = false;
     option->print_ast_flag = false;
     option->cmd = NULL;
     option->file_path = NULL;
     option->shotp = false;
-    return option;
 }
-
 int main(int ac, char **av)
 {
     struct option long_options[] =
@@ -24,7 +24,7 @@ int main(int ac, char **av)
     int option_index = 0;
     int opt = -1;
     new_garbage_collector();
-    option = init_option_sh();
+    init_option_sh();
     var_storage = new_var_storage();
     alias_storage = new_var_storage();
     new_program_data_storage(ac, av);
@@ -55,7 +55,7 @@ int main(int ac, char **av)
     }
     if (av[optind])
         option->file_path = av[optind];
-    init_42sh_with_history(option);
+    init_42sh_with_history();
     int ret = atoi(program_data->last_cmd_status);
     free_garbage_collector();
     free(option);

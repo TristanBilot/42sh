@@ -9,10 +9,13 @@
 char *perform_command_substitution(char *word)
 {
     struct buffer *buf = new_huge_buffer();
+    // bool forbid_expansion = false;
     for (size_t i = 0; i < strlen(word); i++)
     {
-        if (!(word[i] == '`' || (word[i] == '$' && ((word[i + 1]
-            && word[i + 1] == '(')))))
+        // if (word[i] == '\'')
+        //     forbid_expansion = !forbid_expansion;
+        if (/*forbid_expansion || */!(word[i] == '`' || (word[i] == '$'
+            && ((word[i + 1] && word[i + 1] == '(')))))
         {
             append_huge_buffer(buf, word[i]);
             continue;

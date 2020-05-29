@@ -133,27 +133,31 @@ int lex_separator(struct lexer *lexer, struct buffer *buffer, char *c,
     return 0;
 }
 
-int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c,
-    size_t *j)
-{
-    if (c[*j] == '$' && c[*j + 1] && c[*j + 1] == '{')
-    {
-        append_word_if_needed(lexer, buffer);
-        size_t close_index = c[*j + 1] == '{' ?
-            get_next_close_curl_index(c, *j) :
-            get_next_close_parent_index(c, *j);
-        char *content = substr(c, *j, close_index - *j);
-        append(lexer, new_token_word(content));
-        *j += strlen(content) - 1;
-        flush(buffer);
-        return -1;
-    }
-    return 0;
-}
+// int lex_parameter(struct lexer *lexer, struct buffer *buffer, char *c,
+//     size_t *j)
+// {
+//     if (c[*j] == '$' && c[*j + 1] && c[*j + 1] == '{')
+//     {
+//         append_word_if_needed(lexer, buffer);
+//         size_t close_index = c[*j + 1] == '{' ?
+//             get_next_close_curl_index(c, *j) :
+//             get_next_close_parent_index(c, *j);
+//         char *content = substr(c, *j, close_index - *j);
+//         append(lexer, new_token_word(content));
+//         *j += strlen(content) - 1;
+//         flush(buffer);
+//         return -1;
+//     }
+//     return 0;
+// }
 
 /*
 * echo "a && b"
 * echo $(ls pwd  tree .)
+*
+* return 0: continue lexing
+* return -1: continue for loop
+* return 1|2: exit status error
 */
 int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
     char **splitted, int *i, size_t *j)
@@ -161,20 +165,33 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
     char *c = splitted[*i];
     if (!c)
         return 1;
-    if (c[*j] == '"' || c[*j] == '\'' || c[*j] == '`' || (c[*j] == '$' && c[*j + 1]
-        && c[*j + 1] == '('))
+    bool wait_doub_quote = c[*j] == '"';
+    bool wait_simp_quote = c[*j] == '\'';
+    bool wait_back_quote = c[*j] == '`';
+    bool wait_close_paren = c[*j] == '$' && c[*j + 1] && c[*j + 1] == '(';
+    bool wait_close_brack = c[*j] == '$' && c[*j + 1] && c[*j + 1] == '{';
+    if (wait_doub_quote || wait_simp_quote || wait_back_quote
+        || wait_close_paren || wait_close_brack)
     {
-        append_word_if_needed(lexer, buffer);
-        bool wait_doub_quote = c[*j] == '"';
-        bool wait_simp_quote = c[*j] == '\'';
-        bool wait_back_quote = c[*j] == '`';
-        bool wait_close_paren = c[*j] == '$' && c[*j + 1] && c[*j + 1] == '(';
         int stuck_left_paren_count = 0;
         int stuck_right_paren_count = 0;
+        int stuck_left_brack_count = 0;
+        if (wait_doub_quote || wait_simp_quote)
+            append_word_if_needed(lexer, buffer);
          /* only for $(): add max 2 (( at the start of word */
-        if (wait_close_paren)
+        if (wait_close_paren || wait_close_brack)
         {
             append_buffer(buffer, '$');
+            (*j)++;
+        }
+        while (wait_close_brack && c[*j] && c[*j] == '{')
+        {
+            stuck_left_brack_count++;
+            /* ${{a}} should exit with status 1 */
+            if (stuck_left_brack_count >= 2)
+                return 1;
+            append_buffer(buffer, '{');
+
             (*j)++;
         }
         while (wait_close_paren && c[*j] && c[*j] == '(')
@@ -185,8 +202,13 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
             (*j)++;
         }
         /* only for " and ' => ignore theses caracters */
-        if (c[*j] == '"' || c[*j] == '\'')
+        if (c[*j] == '"') //
             (*j)++;
+        else if (c[*j] == '\'') //
+        {
+            (*j)++; //
+            append_buffer(buffer, '\''); //
+        } //
         else if (wait_back_quote)
         {
             (*j)++;
@@ -201,6 +223,7 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
                 if ((wait_doub_quote && c[*j] == '"')
                     || (wait_simp_quote && c[*j] == '\'')
                     || (wait_close_paren && c[*j] == ')')
+                    || (wait_close_brack && c[*j] == '}')
                     || (wait_back_quote && c[*j] == '`'))
                 {
                     /* only for $(): add max 2 )) at the end of word */
@@ -211,18 +234,33 @@ int lex_multi_token(struct lexer *lexer, struct buffer *buffer,
                         stuck_right_paren_count++;
                         (*j)++;
                     }
-                    /* if nb of right parenthesis is > than left ones, error */
+                    while (wait_close_brack && c[*j] && c[*j] == '}')
+                    {
+                        append_buffer(buffer, '}');
+                        (*j)++;
+                    }
+
+                    /* if nb of right parenthesis is > than left ones,
+                       should exit with status 2 */
                     if (stuck_left_paren_count < stuck_right_paren_count)
-                        return 1;
+                        return 2;
                     /* TODO: when left parenthesis > right, should wait input*/
                     /* need to decrement j because of while loop */
-                    if (wait_close_paren)
+                    if (wait_close_paren || wait_close_brack)
                         (*j)--;
                     if (wait_back_quote)
                         append_buffer(buffer, '`');
-                    append_buffer(buffer, '\0');
-                    append(lexer, new_token_word(buffer->buf));
-                    flush(buffer);
+                    /* only append word token if it is the last character of a word
+                       if not, don't append: ex => $(ls)word */
+                    if (wait_doub_quote || wait_simp_quote ||
+                        (*j + 1 >= strlen(c)))
+                    {
+                        if (wait_simp_quote) //
+                            append_buffer(buffer, '\''); //
+                        append_buffer(buffer, '\0');
+                        append(lexer, new_token_word(buffer->buf));
+                        flush(buffer);
+                    }
                     return -1;
                 }
                 append_buffer(buffer, c[*j]);
@@ -306,10 +344,10 @@ bool init_lexer(struct lexer *lexer)
                     c = splitted[i];
                     continue;
                 }
-                else if (type == 1)
+                else if (type != 0)
                 {
                     error("Lexer error: invalid parenthesis");
-                    update_last_status(2);
+                    update_last_status(type);
                     return false;
                 }
                 if ((type = lex_separator(lexer, buffer, c, &j)) == -1)
@@ -318,8 +356,8 @@ bool init_lexer(struct lexer *lexer)
                     continue;
                 else if (type == 1)
                     break;
-                if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
-                    continue;
+                // if ((type = lex_parameter(lexer, buffer, c, &j)) == -1)
+                //     continue;
                 if ((type = lex_part(lexer, buffer, c, &j)) == -1)
                     continue;
                 else if (type == 1)

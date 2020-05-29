@@ -1,3 +1,4 @@
 ls
 echo $?
 echo $(ls)
+cd -

@@ -14,9 +14,12 @@
 char *perform_var_expansion(char *word)
 {
     struct buffer *buf = new_buffer();
+    // bool forbid_expansion = false;
     for (size_t i = 0; i < strlen(word); i++)
     {
-        if (word[i] == '$')
+        // if (word[i] == '\'')
+        //     forbid_expansion = !forbid_expansion;
+        if (/*!forbid_expansion && */word[i] == '$')
         {
             i++;
             if (word[i] == '\0' || word[i] == '\n')

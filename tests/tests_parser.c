@@ -5,12 +5,18 @@
 #include "../garbage_collector/garbage_collector.h"
 #include "./storage/program_data_storage.h"
 #include "../storage/var_storage.h"
+#include "../exec/redirection.h"
+
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
 
 bool test(char *expr)
 {
     new_garbage_collector();
     new_program_data_storage(1, NULL);
     alias_storage = new_var_storage();
+    var_storage = new_var_storage();
     struct lexer *lexer = new_lexer(expr);
     struct node_input *ast = parse(lexer);
     bool res = ast == NULL;
@@ -18,6 +24,7 @@ bool test(char *expr)
     free_program_data_storage();
     free(garbage_collector);
     free_var_storage(alias_storage);
+    free_var_storage(var_storage);
     return res;
 }
 

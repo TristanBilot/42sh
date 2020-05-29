@@ -4,7 +4,9 @@
 #include "../garbage_collector/garbage_collector.h"
 #include "../storage/program_data_storage.h"
 #include "../storage/var_storage.h"
-
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
 Test(lexer, basic_tokens)
 {
     new_garbage_collector();
@@ -448,11 +450,7 @@ Test(lexer, assignment_word)
     cr_assert(peek(lexer8)->type == TOK_ASS_WORD);
     cr_assert(is(pop(lexer8)->value, "var"));
     cr_assert(peek(lexer8)->type == TOK_WORD);
-    cr_assert(is(pop(lexer8)->value, "hi"));
-    cr_assert(peek(lexer8)->type == TOK_WORD);
-    cr_assert(is(pop(lexer8)->value, "$(echo hey whats up)"));
-    cr_assert(peek(lexer8)->type == TOK_WORD);
-    cr_assert(is(pop(lexer8)->value, "hi"));
+    cr_assert(is(pop(lexer8)->value, "hi$(echo hey whats up)hi"));
     free_garbage_collector();
 
     char input9[] = "var=hi\"echo hey whats up\"hi";
@@ -489,22 +487,14 @@ Test(lexer, variables)
     alias_storage = new_var_storage();
     char input1[] = "before${var}";
     struct lexer *lexer1 = new_lexer(input1);
-    cr_assert(peek(lexer1)->type == TOK_WORD);
-    cr_assert(is(pop(lexer1)->value, "before"));
-    cr_assert(is(peek(lexer1)->value, "${var}"));
+    cr_assert(is(peek(lexer1)->value, "before${var}"));
     cr_assert(pop(lexer1)->type == TOK_WORD);
     free_garbage_collector();
 
-    char input2[] = "${v}${v2}before${var";
+    char input2[] = "${v}${v2}before${var}";
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(peek(lexer2)->type == TOK_WORD);
-    cr_assert(is(pop(lexer2)->value, "${v}"));
-    cr_assert(is(peek(lexer2)->value, "${v2}"));
-    cr_assert(pop(lexer2)->type == TOK_WORD);
-    cr_assert(is(peek(lexer2)->value, "before"));
-    cr_assert(pop(lexer2)->type == TOK_WORD);
-    cr_assert(is(peek(lexer2)->value, "${var"));
-    cr_assert(pop(lexer2)->type == TOK_WORD);
+    cr_assert(is(peek(lexer2)->value, "${v}${v2}before${var}"));
     free_garbage_collector();
     free(garbage_collector);
     free_var_storage(alias_storage);
@@ -744,22 +734,14 @@ Test(lexer, cmd_substitution)
     struct lexer *lexer2 = new_lexer(input2);
     cr_assert(pop(lexer2)->type == TOK_WORD);
     cr_assert(peek(lexer2)->type == TOK_WORD);
-    cr_assert(is(pop(lexer2)->value, "hi"));
-    cr_assert(peek(lexer2)->type == TOK_WORD);
-    cr_assert(is(pop(lexer2)->value, "$(ls)"));
-    cr_assert(peek(lexer2)->type == TOK_WORD);
-    cr_assert(is(pop(lexer2)->value, "hi"));
+    cr_assert(is(pop(lexer2)->value, "hi$(ls)hi"));
     free_garbage_collector();
 
     char input3[] = "echo hi$(ls -l a lot of stuff)hi";
     struct lexer *lexer3 = new_lexer(input3);
     cr_assert(pop(lexer3)->type == TOK_WORD);
     cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "hi"));
-    cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "$(ls -l a lot of stuff)"));
-    cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "hi"));
+    cr_assert(is(pop(lexer3)->value, "hi$(ls -l a lot of stuff)hi"));
     free_garbage_collector();
 
     free(garbage_collector);
@@ -785,11 +767,11 @@ Test(lexer, hard_cmd_substitution)
     char input3[] = "hi$((((some stuff))))hi";
     struct lexer *lexer3 = new_lexer(input3);
     cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "hi"));
-    cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "$((some stuff))"));
-    cr_assert(peek(lexer3)->type == TOK_WORD);
-    cr_assert(is(pop(lexer3)->value, "hi"));
+    // cr_assert(is(pop(lexer3)->value, "hi"));
+    // cr_assert(peek(lexer3)->type == TOK_WORD);
+    cr_assert(is(pop(lexer3)->value, "hi$((some stuff))hi"));
+    // cr_assert(peek(lexer3)->type == TOK_WORD);
+    // cr_assert(is(pop(lexer3)->value, "hi"));
     free_garbage_collector();
 
     new_program_data_storage(0, NULL);

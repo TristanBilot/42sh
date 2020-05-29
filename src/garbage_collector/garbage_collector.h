@@ -25,7 +25,7 @@ struct garbage_collector
     struct garbage_element *last;
 };
 
-struct garbage_collector *garbage_collector;
+extern struct garbage_collector *garbage_collector;
 /**
 **\brief create the garbage collector
 **
@@ -42,39 +42,6 @@ void append_to_garbage(void *addr);
 **
 */
 void free_garbage_collector();
-
-/**************************************************************************** GARBAGE VARIABLE *****************************************************************************************/
-
-struct garbage_variable
-{
-    struct garbage_variable *next;
-    void *addr;
-};
-
-struct garbage_collector_variable
-{
-    struct garbage_variable *first;
-    struct garbage_variable *next;
-    struct garbage_variable *last;
-};
-
-struct garbage_collector_variable *garbage_collector_variable;
-/**
-**\brief create the garbage collector
-**
-*/
-void new_garbage_collector_variable(void);
-/**
-**\brief append addr to list of elements
-**
-**\param addr
-*/
-void append_to_garbage_variable(void *addr);
-/**
-**\brief free list of elements
-**
-*/
-void free_garbage_collector_variable();
 
 
 #endif /* GARBAGE_COLLECTOR_H */

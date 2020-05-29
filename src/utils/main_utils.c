@@ -1,8 +1,9 @@
 #include "../main.h"
 
 bool after_sig = false;
+struct file_manager *file_manager;
 
-void init_42sh_with_history(struct option_sh *option)
+void init_42sh_with_history(void)
 {
     signal(SIGINT, sighandler);
 
@@ -272,7 +273,7 @@ void init_42sh_with_history(struct option_sh *option)
     }
 }
 
-void init_42sh_without_history(struct option_sh *option)
+void init_42sh_without_history(void)
 {
     signal(SIGINT, sighandler_without);
     struct lexer *lexer = NULL;
@@ -328,7 +329,7 @@ int print_prompt(void)
     }
     else
     {
-        init_42sh_without_history(option);
+        init_42sh_without_history();
         free(buff);
         return 1;
     }
@@ -369,7 +370,7 @@ void sighandler(int signum)
     dup2(file_manager->save_err, 2);
     free_garbage_collector();
     printf("\n");
-    init_42sh_with_history(option);
+    init_42sh_with_history();
     after_sig = true;
 }
 

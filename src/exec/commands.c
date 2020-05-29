@@ -38,7 +38,7 @@ void delete_alias(char **args)
             if (args[1][i] != 'a')
             {
                 warn("unalias: -%c: invalid option\n", args[1][i]);
-                update_last_status(1);
+                update_last_status(2);
                 return;
             }
         }
@@ -70,7 +70,7 @@ void create_alias(char **args)
             if (args[0][i] != 'p')
             {
                 warn("alias: -%c: invalid option\n", args[0][i]);
-                update_last_status(1);
+                update_last_status(2);
                 return;
             }
         }
@@ -126,7 +126,11 @@ bool load_file(char *path, bool warning)
 void source(char **args)
 {
     if (!args[1])
+    {
         warn("source: not enough arguments\n");
+        update_last_status(2);
+        return;
+    }
     char *path = NULL;
     if (!strchr(args[1], '/'))
     {
@@ -139,8 +143,8 @@ void source(char **args)
             strcat(path_file, args[1]);
             if (load_file(path_file, false))
             {
+                update_last_status(0);
                 return;
-
             }
         }
     }
@@ -207,56 +211,56 @@ int	print_without_sp(char *c)
     return (0);
 }
 
-int	print_without_sp_madu(char *c)
-{
-    int i = 0;
-    struct echo_tab tab[9];
-    int index_tab = 0;
+// int	print_without_sp_madu(char *c)
+// {
+//     int i = 0;
+//     struct echo_tab tab[9];
+//     int index_tab = 0;
 
-    fill_echo_tab(tab);
-    while (c[i] != '\0')
-    {
-        index_tab = 0;
-        while (index_tab < 9)
-        {
-            if (c[i] == '\\')
-            {
-                i++;
-                if (c[i] == '\\')
-                {
-                    i++;
-                    if (tab[index_tab].name == c[i])
-                    {
-                        printf("\\\\%c", tab[index_tab].corresp);
-                        index_tab = 0;
-                        i++;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (tab[index_tab].name == c[i])
-                    {
-                        printf("%c", tab[index_tab].corresp);
-                        index_tab = 0;
-                        i++;
-                        break;
-                    }
-                }
-                // else if (c[i] != '\\')
-                // {
-                //     printf("%c", c[i]);
-                //     i++;
-                // }
-            }
-            index_tab++;
-        }
-        if (index_tab == 9)
-            printf("%c", c[i]);
-        i++;
-    }
-    return (0);
-}
+//     fill_echo_tab(tab);
+//     while (c[i] != '\0')
+//     {
+//         index_tab = 0;
+//         while (index_tab < 9)
+//         {
+//             if (c[i] == '\\')
+//             {
+//                 i++;
+//                 if (c[i] == '\\')
+//                 {
+//                     i++;
+//                     if (tab[index_tab].name == c[i])
+//                     {
+//                         printf("\\\\%c", tab[index_tab].corresp);
+//                         index_tab = 0;
+//                         i++;
+//                         break;
+//                     }
+//                 }
+//                 else
+//                 {
+//                     if (tab[index_tab].name == c[i])
+//                     {
+//                         printf("%c", tab[index_tab].corresp);
+//                         index_tab = 0;
+//                         i++;
+//                         break;
+//                     }
+//                 }
+//                 // else if (c[i] != '\\')
+//                 // {
+//                 //     printf("%c", c[i]);
+//                 //     i++;
+//                 // }
+//             }
+//             index_tab++;
+//         }
+//         if (index_tab == 9)
+//             printf("%c", c[i]);
+//         i++;
+//     }
+//     return (0);
+// }
 
 
 void print_echo(char **args, bool e, bool n)
@@ -276,6 +280,8 @@ void print_echo(char **args, bool e, bool n)
         for (int i = 0; args[i]; i++)
         {
             printf("%s", args[i]);
+            fflush(stdout);
+            //fprintf(stdout, "%s", args[i]);
             if (args[i + 1])
                 printf("%c", ' ');
         }
@@ -390,7 +396,7 @@ void export(char **args)
             return;
         }
     }
-    else if (p)
+    if (p)
     {
         if (args[1])
             printf("declare -x %s=\"%s\"\n", args[1], getenv(args[1]));
@@ -418,14 +424,22 @@ void export(char **args)
     }
     else
     {
+        char *str;
         for (int i = 0; args[i]; i++)
         {
             if (getenv(args[i]))
-                sprintf(args[i], "%s=\"%s\"", args[i],
+            {
+                str = xmalloc(strlen(args[i]) + strlen(getenv(args[i]) + 3));
+                sprintf(str, "%s=\"%s\"", args[i],
                     getenv(args[i]));
+            }
             else if (var_exists(var_storage, args[i]))
-                sprintf(args[i], "%s=\"%s\"", args[i],
+            {
+                str = xmalloc(strlen(args[i]) +
+                strlen(get_value(var_storage, args[i]) + 3));
+                sprintf(str, "%s=\"%s\"", args[i],
                     get_value(var_storage, args[i]));
+            }
             putenv(args[i]);
         }
     }
@@ -444,6 +458,18 @@ void func_continue(char **args)
         if (strcmp(args[0], "continue") == 0)
         {
             printf("bash: continue: only meaningful in a `for', ");
+            printf("`while', or `until' loop\n");
+        }
+        update_last_status(0);
+    }
+}
+void func_break(char **args)
+{
+    if (args)
+    {
+        if (strcmp(args[0], "break") == 0)
+        {
+            printf("bash: break: only meaningful in a `for', ");
             printf("`while', or `until' loop\n");
         }
         update_last_status(0);

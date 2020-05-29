@@ -2,6 +2,9 @@
 #include "var_storage.h"
 #include "../src/garbage_collector/garbage_collector.h"
 
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
 Test(var_storage, basic_operation)
 {
     new_garbage_collector();

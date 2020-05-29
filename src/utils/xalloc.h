@@ -28,10 +28,6 @@ void *xmalloc(size_t size);
 ** \return a pointer to the allocated memory
 */
 void *xrealloc(void *ptr, size_t size);
-
 void *xcalloc(size_t nmb, size_t size);
 
-void *ymalloc(size_t size);
-void *yrealloc(void *ptr, size_t size);
-void *ycalloc(size_t nmb, size_t size);
 #endif /* ! XALLOC_H */

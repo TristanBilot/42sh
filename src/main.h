@@ -45,10 +45,10 @@ struct option_sh
     char *file_path;
 };
 
-struct option_sh *option;
+extern struct option_sh *option;
 
-void init_42sh_with_history(struct option_sh *option);
-void init_42sh_without_history(struct option_sh *option);
+void init_42sh_with_history(void);
+void init_42sh_without_history(void);
 
 void print_usage(void);
 int print_prompt(void);
@@ -60,6 +60,6 @@ bool sould_use_history(void);
 int getch2(void);
 
 
-struct option_sh *init_option_sh(void);
+void init_option_sh(void);
 
 #endif /* ! MAIN_H */

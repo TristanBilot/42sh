@@ -97,6 +97,22 @@
   - stdin: alias -o
     checks:
       - returncode
+  - stdin: alias a=ls b=pwd; alias
+    checks:
+      - returncode
+      - stdout
+  - stdin: a; b
+    checks:
+      - returncode
+      - stdout
+  - stdin: unalias -a
+    checks:
+      - returncode
+      - stdout
+  - stdin: a; b
+    checks:
+      - returncode
+      - stdout
 
 ###################################################### TEST EXPORT ####################################################### 
   - stdin: export -ooo
@@ -408,12 +424,10 @@
   - stdin: for i in {0.9}; do echo $i;done
     checks:
       - returncode
-      - has_stderr
       - stdout
   - stdin: for i in {0..9}}; do echo $i;done
     checks:
       - returncode
-      - has_stderr
       - stdout
 
 ####################################################### TEST UNTIL ########################################################
@@ -643,15 +657,15 @@
     checks:
       - returncode
       - stdout
-  - stdin: cd ~;echo ``ls```
-    checks:
-      - returncode
-      - stdout
-  - stdin: cd ~;echo ``ls`
-    checks:
-      - returncode
-      - stdout
-      - has_stderr
+  # - stdin: cd ~;echo ``ls```
+  #   checks:
+  #     - returncode
+  #     - stdout
+  # - stdin: cd ~;echo ``ls`
+  #   checks:
+  #     - returncode
+  #     - stdout
+  #     - has_stderr
 
   ####################################################### TEST ARITHMETIC ########################################################
 - description:
@@ -741,6 +755,14 @@
       - returncode
       - stdout
   - stdin: echo $((1+2*4*2/4/2-1*3))
+    checks:
+      - returncode
+      - stdout
+
+  ####################################################### TEST ECHO HARD ########################################################
+- description:
+  - name : ECHO
+  - stdin: echo $a${a}aaa$a$(pwd)a$((1+2))
     checks:
       - returncode
       - stdout

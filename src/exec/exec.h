@@ -50,10 +50,24 @@ struct command_continue{
     int current_loop;    //= O;
 };
 
-struct command_continue cont;
+extern struct command_continue cont;
 
 /** Global for continue command **/
 void init_continue(void);
+
+
+/** Global for breakcommand **/
+struct command_break{
+    bool is_break;    //= false;
+    bool from_loop; // = false
+    int current_loop;
+    int time_to_loop;
+};
+
+extern struct command_break br;
+
+/** Global for continue command **/
+void init_break(void);
 
 
 /**

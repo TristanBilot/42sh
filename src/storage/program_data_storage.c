@@ -3,6 +3,7 @@
 #include "program_data_storage.h"
 #include "../utils/string_utils.h"
 
+struct program_data_storage *program_data;
 void new_program_data_storage(int argc, char *argv[])
 {
     program_data = malloc(sizeof(struct program_data_storage));

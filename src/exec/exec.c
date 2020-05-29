@@ -22,8 +22,10 @@
 #define DEBUG(msg) if (DEBUG_FLAG) \
     printf("%s\n", msg);
 
+struct command_continue cont;
+struct command_break br;
 struct tab_redirection tab;
-const struct commands cmd[8] =
+const struct commands cmd[9] =
 {
         {"cd", &cd},
         {"echo", &echo},
@@ -32,6 +34,7 @@ const struct commands cmd[8] =
         {"alias", &create_alias},
         {"unalias", &delete_alias},
         {"continue", &func_continue},
+        {"break", &func_break},
         {NULL, NULL}
 };
 
@@ -55,6 +58,14 @@ void init_continue(void)
     cont.from_loop = false;
     cont.is_continue = false;
     cont.time_to_loop = 0;
+}
+
+void init_break(void)
+{
+    br.is_break = false;
+    br.from_loop = false;
+    br.current_loop = 0;
+    br.time_to_loop = 0;
 }
 
 bool execute(char **args, struct tab_redirection tab)
@@ -137,6 +148,7 @@ bool exec_node_input(struct node_input *ast)
     if(!ast)
         return false;
     init_continue();
+    init_break();
     tab = init_tab_redirection();
     return ast->node_list ? exec_node_list(ast->node_list) : false;
 }
@@ -396,6 +408,33 @@ bool exec_node_simple_command(struct node_simple_command *ast, bool with_fork)
             }
             return false;
         }
+        if (e->type == WORD && strcmp(e->element.word, "break") == 0
+            && e->next == NULL)
+            {
+                //printf("is_break = true\n");
+                br.is_break = true;
+                if (!br.from_loop)
+                {
+                    //printf("ne viens pas d'une boucle\n");
+                    args[0] = "break";
+                    if (manage_duplication(save_tab))
+                    {
+                        warn("redirection ");
+                        update_last_status(1);
+                        return true;
+                    }
+                    bool res = execute_with_fork(args, save_tab, "break");
+                    return res;
+                }
+                else if (br.from_loop)
+                {
+                    //printf("from loop \n");
+                    br.time_to_loop = 1;
+                    //printf("break : time_to_loop : %d, is_break : %d, current_loop : %d, from_loop : %d\n", br.time_to_loop, br.is_break, br.current_loop, br.from_loop);
+                    return false;
+
+                }
+            }
         if (e->type == TOKEN_REDIRECTION)
             save_tab = append_tab_redirection(save_tab,
                 e->element.redirection);
@@ -542,15 +581,32 @@ bool exec_node_compound_list(struct node_compound_list *ast)
         if (cont.is_continue && cont.time_to_loop > 1
             && cont.time_to_loop == cont.current_loop)
         {
-            //cont.time_to_loop--;
-            //printf("yolo4535345\n");
+            break;
+        }
+        //printf("COMPOUND LIST : break : time_to_loop : %d, is_break : %d, current_loop : %d, from_loop : %d\n", br.time_to_loop, br.is_break, br.current_loop, br.from_loop);
+        if (br.is_break && br.time_to_loop == 1)
+        {
+            //printf("yolo3\n");
+            br.from_loop = false;
+            //br.is_break = false;
             break;
         }
         if (exec_node_and_or(c->and_or))
             return true;
+        //printf("YIYII\n");
         if (cont.is_continue && cont.time_to_loop == 1)
         {
+            //printf("yoloooooo\n");
             return false;
+        }
+        //printf("AFTER AND OR : break : time_to_loop : %d, is_break : %d, current_loop : %d, from_loop : %d\n", br.time_to_loop, br.is_break, br.current_loop, br.from_loop);
+        if (br.is_break && br.time_to_loop == 1)
+        {
+            //printf("yolo2\n");
+            br.from_loop = false;
+            //br.is_break = false;
+            break;
+            //printf("yolo10000\n");
         }
         c = c->next_sibling;
     }

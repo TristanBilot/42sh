@@ -17,8 +17,8 @@
 
 #define STORAGE_SIZE 2048
 
-struct var_storage *alias_storage;
-struct var_storage *var_storage;
+extern struct var_storage *alias_storage;
+extern struct var_storage *var_storage;
 
 /* Variables */
 enum var_type

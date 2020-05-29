@@ -43,7 +43,7 @@ struct tab_redirection
 
 //  GLOBAL VARIABLES
 
-struct file_manager *file_manager;
+extern struct file_manager *file_manager;
 
 
 //   FUNCTIONS

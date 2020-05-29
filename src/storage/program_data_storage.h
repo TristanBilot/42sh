@@ -12,7 +12,7 @@
 #ifndef PROGRAM_DATA_STORAGE_H
 #define PROGRAM_DATA_STORAGE_H
 
-struct program_data_storage *program_data;
+extern struct program_data_storage *program_data;
 
 struct program_data_storage
 {

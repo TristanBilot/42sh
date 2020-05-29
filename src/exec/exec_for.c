@@ -105,8 +105,15 @@ bool perform_for_enumeration(struct node_for *ast, int len_range)
             cont.is_continue = false;
             break;
         }
+        br.from_loop = true;
+        br.current_loop++;
         if (exec_node_do_group(ast->body))
             return true;
+        if (br.is_break)
+        {
+            br.is_break = false;
+            break;
+        }
         if (cont.is_continue && cont.time_to_loop > 1
             && cont.time_to_loop == cont.current_loop)
         {
@@ -118,10 +125,12 @@ bool perform_for_enumeration(struct node_for *ast, int len_range)
         }
         while (cont.current_loop > 0)
             cont.current_loop--;
-        // if (cont.current_loop > 0)
-        //     cont.current_loop--;
+        while (br.current_loop > 0)
+            br.current_loop--;
         if (cont.current_loop == 0)
             cont.from_loop = false;
+        if (br.current_loop == 0)
+            br.from_loop = false;
         r = r->next;
     }
     del_var(var_storage, tmp->variable_name);

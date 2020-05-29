@@ -5,9 +5,12 @@ char *perform_tilde_expansion(char *word)
 {
     struct buffer *buf = new_buffer();
     char *sub = NULL;
+    // bool forbid_expansion = false;
     for (size_t i = 0; i < strlen(word); i++)
     {
-        if (word[i] == '~' && i == 0)
+        // if (word[i] == '\'')
+        //     forbid_expansion = !forbid_expansion;
+        if (/*!forbid_expansion &&*/ word[i] == '~' && i == 0)
         {
             i++;
             if (word[i])

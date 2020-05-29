@@ -9,6 +9,9 @@
 **
 */
 
+#ifndef AST_PRINT_H
+#define AST_PRINT_H
+
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../lexer/token.h"
@@ -218,3 +221,5 @@ void print_node_case_item(struct node_case_item *ast, FILE *f, void *node);
 ** \return * void
 */
 void print_ast(struct node_input *ast);
+
+#endif  /* ! AST_PRINT_H */

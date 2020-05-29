@@ -26,7 +26,7 @@ bool is_parenhesis(int type)
 
 bool is_plus_or_minus(int type)
 {
-    return type == TOK_A_PLUS || type == TOK_A_MINUS;
+    return type == TOK_A_PLUS || type == TOK_A_MINUS || type == TOK_A_TILDE;
 }
 
 bool is_valid_arithmetic_syntax(int type1, int type2)

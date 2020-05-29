@@ -26,7 +26,7 @@
 #define AST_STYLE_LOGIC \
   "style=filled color=\"1.0 .3 .7\" fontname=\"Helvetica\" fontsize=12 "
 
-# define AST_STYLE_FUNCTION \
+#define AST_STYLE_FUNCTION \
   "style=filled,dotted "    \
   "fontname=\"Helvetica\" fontsize=9"
 /**

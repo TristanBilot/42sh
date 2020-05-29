@@ -6,6 +6,10 @@
 #include "../storage/var_storage.h"
 #include "./ast_print.h"
 
+struct var_storage *alias_storage;
+struct var_storage *var_storage;
+struct file_manager *file_manager;
+
 int main(int argc, char *argv[])
 {
     if (argc < 2)
