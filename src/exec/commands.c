@@ -286,6 +286,7 @@ void print_echo(char **args, bool e, bool n)
                 printf("%c", ' ');
         }
     }
+
     else if (e == true)
     {
         for (int i = 0; args[i]; i++)
