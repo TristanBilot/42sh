@@ -1,4 +1,4 @@
-.TH "tests/tests_storage.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "tests/tests_storage.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -29,15 +29,36 @@ tests/tests_storage.c
 .RI "\fBTest\fP (\fBvar_storage\fP, types)"
 .br
 .in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBalias_storage\fP"
+.br
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBvar_storage\fP"
+.br
+.ti -1c
+.RI "struct \fBfile_manager\fP * \fBfile_manager\fP"
+.br
+.in -1c
 .SH "Function Documentation"
 .PP 
 .SS "Test (\fBvar_storage\fP, basic_operation)"
 
-.SS "Test (\fBvar_storage\fP, unknown_key)"
-
 .SS "Test (\fBvar_storage\fP, hard_operations)"
 
 .SS "Test (\fBvar_storage\fP, types)"
+
+.SS "Test (\fBvar_storage\fP, unknown_key)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBvar_storage\fP* alias_storage"
+
+.SS "struct \fBfile_manager\fP* \fBfile_manager\fP"
+
+.SS "struct \fBvar_storage\fP* \fBvar_storage\fP"
 
 .SH "Author"
 .PP 

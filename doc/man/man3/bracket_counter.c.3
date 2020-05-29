@@ -1,4 +1,4 @@
-.TH "src/utils/bracket_counter.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/bracket_counter.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -32,12 +32,12 @@ src/utils/bracket_counter.c
 .SS "bool check_closing_symbols (char * s)"
 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIs\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -48,14 +48,14 @@ false
 .SS "bool check_closing_symbols_from_splitted (char ** splitted, int i)"
 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIsplitted\fP 
 .br
 \fIi\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -65,33 +65,17 @@ false
 
 .SS "int count_closed_occurences (char * s, size_t i, enum \fBcountable\fP countable)"
 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIs\fP 
-.br
-\fIi\fP 
-.br
-\fIcountable\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-int 
-.RE
-.PP
-
 .SS "int get_closing_parent_index (char * word, size_t i)"
-the closing parent index
+\\briefGet the closing parent index
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIword\fP 
 .br
 \fIi\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 int 
 .RE

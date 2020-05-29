@@ -101,7 +101,7 @@ bool load_file(char *path, bool warning)
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
     FILE *fp;
-    char * line = NULL;
+    char *line = NULL;
     size_t len = 0;
     ssize_t read;
 
@@ -119,6 +119,7 @@ bool load_file(char *path, bool warning)
         ast = parse(lexer);
         exec_node_input(ast);
     }
+    free(line);
     fclose(fp);
     return true;
 }
@@ -197,7 +198,7 @@ int	print_without_sp(char *c)
         {
             if (c[i] == '\\' && tab[index_tab].name == c[i + 1])
             {
-                printf("%c", tab[index_tab].corresp);
+                dprintf(1, "%c", tab[index_tab].corresp);
                 index_tab = 0;
                 i++;
                 break;
@@ -205,98 +206,45 @@ int	print_without_sp(char *c)
             index_tab++;
         }
         if (index_tab == 9)
-            printf("%c", c[i]);
+            dprintf(1, "%c", c[i]);
         i++;
     }
     return (0);
 }
 
-// int	print_without_sp_madu(char *c)
-// {
-//     int i = 0;
-//     struct echo_tab tab[9];
-//     int index_tab = 0;
-
-//     fill_echo_tab(tab);
-//     while (c[i] != '\0')
-//     {
-//         index_tab = 0;
-//         while (index_tab < 9)
-//         {
-//             if (c[i] == '\\')
-//             {
-//                 i++;
-//                 if (c[i] == '\\')
-//                 {
-//                     i++;
-//                     if (tab[index_tab].name == c[i])
-//                     {
-//                         printf("\\\\%c", tab[index_tab].corresp);
-//                         index_tab = 0;
-//                         i++;
-//                         break;
-//                     }
-//                 }
-//                 else
-//                 {
-//                     if (tab[index_tab].name == c[i])
-//                     {
-//                         printf("%c", tab[index_tab].corresp);
-//                         index_tab = 0;
-//                         i++;
-//                         break;
-//                     }
-//                 }
-//                 // else if (c[i] != '\\')
-//                 // {
-//                 //     printf("%c", c[i]);
-//                 //     i++;
-//                 // }
-//             }
-//             index_tab++;
-//         }
-//         if (index_tab == 9)
-//             printf("%c", c[i]);
-//         i++;
-//     }
-//     return (0);
-// }
-
-
-void print_echo(char **args, bool e, bool n)
+static void print_echo(char **args, bool e, bool n)
 {
     if (e == false && n == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            printf("%s", args[i]);
+            dprintf(1, "%s", args[i]);
             if (args[i + 1])
-                printf("%c", ' ');
+                dprintf(1, "%c", ' ');
         }
-        printf("\n");
+        dprintf(1, "%c",'\n');
     }
     else if (n == true && e == false)
     {
         for (int i = 0; args[i]; i++)
         {
-            printf("%s", args[i]);
+            dprintf(1, "%s", args[i]);
             fflush(stdout);
             //fprintf(stdout, "%s", args[i]);
             if (args[i + 1])
-                printf("%c", ' ');
+                dprintf(1, "%c", ' ');
         }
     }
-
     else if (e == true)
     {
         for (int i = 0; args[i]; i++)
         {
             print_without_sp(args[i]);
             if (args[i + 1])
-                printf("%c", ' ');
+                dprintf(1, "%c", ' ');
         }
         if (n == false)
-            printf("%c", '\n');
+            dprintf(1, "%c", '\n');
     }
 }
 
@@ -305,30 +253,40 @@ void echo(char **args)
     bool n = false;
     bool e = false;
     if (!args[1])
-        printf("\n");
-    else if (args[1][0] == '-' && args[1][1] != '\0')
+    {
+        dprintf(1,"%c",'\n');
+        update_last_status(0);
+        return;
+    }
+    int j = 1;
+    while (args[j][0] == '-' && args[j])
     {
         int i = 0;
-        for (i = 1; (args[1][i] == 'n'
-            || args[1][i] == 'e') && args[1][i]; i++)
+        for (i = 1; (args[j][i] == 'n'
+            || args[j][i] == 'e') && args[j][i]; i++)
         {
-            if (args[1][i] == 'n')
+            if (args[j][i] == 'n')
                 n = true;
-            if (args[1][i] == 'e')
+            else if (args[j][i] == 'e')
                 e = true;
+            else if (args[j][i] == 'E')
+                e = false;
         }
-        if (args[1][i] != 0)
-            print_echo(args + 1, false, false);
-        else if (!args[2])
+        if (args[j][i] != 0)
+        {
+            print_echo(args + j, e, n);
+            return;
+        }
+        if (!args[j + 1])
         {
             update_last_status(0);
             return;
         }
-        else
-            print_echo(args + 2, e, n);
+        j++;
     }
-    else
-        print_echo(args + 1, e, n);
+    //dprintf(2, "%d\n", n);
+    //dprintf(2, "%d\n", e);
+    print_echo(args + j, e, n);
     update_last_status(0);
 }
 
@@ -339,7 +297,10 @@ void cd(char **args)
     if (!args[1])
         ret = chdir(getenv("HOME"));
     else if (strcmp(args[1], "-") == 0)
+    {
+        dprintf(1, "%s\n", getenv("OLDPWD"));
         ret = chdir(getenv("OLDPWD"));
+    }
     else
         ret = chdir(args[1]);
     char *new_pwd = xcalloc(1, 256);
@@ -370,10 +331,10 @@ void export(char **args)
         {
             s = strtok(*env, delim);
             if (s)
-                printf("declare -x %s", s);
+                dprintf(1, "declare -x %s", s);
             s = strtok(*env, delim);
             if (s)
-                printf("=\"%s\"\n", s);
+                dprintf(1,"=\"%s\"\n", s);
         }
         update_last_status(0);
         return;
@@ -400,16 +361,16 @@ void export(char **args)
     if (p)
     {
         if (args[1])
-            printf("declare -x %s=\"%s\"\n", args[1], getenv(args[1]));
+            dprintf(1, "declare -x %s=\"%s\"\n", args[1], getenv(args[1]));
         else
             for (char **env = environ; *env != NULL; env++)
             {
                 s = strtok(*env, delim);
                 if (s)
-                    printf("declare -x %s", s);
+                    dprintf(1, "declare -x %s", s);
                 s = strtok(*env, delim);
                 if (s)
-                    printf("=\"%s\"\n", s);
+                    dprintf(1, "=\"%s\"\n", s);
             }
    }
     else if (n)
@@ -458,8 +419,8 @@ void func_continue(char **args)
     {
         if (strcmp(args[0], "continue") == 0)
         {
-            printf("bash: continue: only meaningful in a `for', ");
-            printf("`while', or `until' loop\n");
+            dprintf(1, "%s", "bash: continue: only meaningful in a `for', ");
+            dprintf(1,"%s","`while', or `until' loop\n");
         }
         update_last_status(0);
     }
@@ -470,8 +431,8 @@ void func_break(char **args)
     {
         if (strcmp(args[0], "break") == 0)
         {
-            printf("bash: break: only meaningful in a `for', ");
-            printf("`while', or `until' loop\n");
+            dprintf(1, "%s","bash: break: only meaningful in a `for', ");
+            dprintf(1, "%s","`while', or `until' loop\n");
         }
         update_last_status(0);
     }

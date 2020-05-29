@@ -1,4 +1,4 @@
-.TH "src/parser/parser.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/parser/parser.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -120,22 +120,22 @@ Parsing functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -148,12 +148,12 @@ Copyright (c) 2020
 .PP
 initialize a parser 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct parser* 
 .RE
@@ -164,12 +164,12 @@ struct parser*
 .PP
 parse all of the token given by lexer 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 void* 
 .RE
@@ -180,14 +180,14 @@ void*
 .PP
 parse rule and or 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -200,14 +200,14 @@ false
 .PP
 parse rule case clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -220,14 +220,14 @@ false
 .PP
 parse rule case item 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -240,14 +240,14 @@ false
 .PP
 parse rule command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -260,14 +260,14 @@ false
 .PP
 parse rule compound list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -280,14 +280,14 @@ false
 .PP
 parse rule do group 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -300,14 +300,14 @@ false
 .PP
 parse rule element 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -320,14 +320,14 @@ false
 .PP
 parse else clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -340,14 +340,14 @@ false
 .PP
 parse rule funcdec 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -360,14 +360,14 @@ false
 .PP
 parse rule input 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -380,14 +380,14 @@ false
 .PP
 parse rule list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -400,14 +400,14 @@ false
 .PP
 look the next token without moving the list of tokens 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIexpected_token\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -420,14 +420,14 @@ false
 .PP
 parse rule pipeline 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -440,14 +440,14 @@ false
 .PP
 parse rule prefix 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -460,14 +460,14 @@ false
 .PP
 parse rule redirection 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -480,14 +480,14 @@ false
 .PP
 parse rule case 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -500,14 +500,14 @@ false
 .PP
 parse rule for 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -520,14 +520,14 @@ false
 .PP
 parse rule if 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -540,14 +540,14 @@ false
 .PP
 parse rule until 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -560,14 +560,14 @@ false
 .PP
 parse rule while 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -580,14 +580,14 @@ false
 .PP
 parse rule shell command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -600,14 +600,14 @@ false
 .PP
 parse rule simple command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP

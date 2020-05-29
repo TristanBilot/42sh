@@ -29,6 +29,7 @@ char **split(char *str)
     int i = 0;
     while (splitted != NULL)
     {
+
         res[i++] = splitted;
         splitted = strtok(NULL, delim);
     }
@@ -322,8 +323,40 @@ int lex_backslash(struct buffer *buffer, char *c, size_t *j)
     return -1;
 }
 
+void substitute_alias(struct lexer *lexer)
+{
+    if (!lexer->input)
+        return;
+    struct buffer *buffer = new_buffer();
+    struct buffer *fast_buffer = new_buffer();
+    size_t j = 0;
+    for (size_t i = 0; i < strlen(lexer->input); i++)
+    {
+        j = i;
+        if (i == 0 || !lexer->input[i - 1] || lexer->input[i - 1] == ' '
+            || lexer->input[i - 1] == '\t'
+            || is_separator(lexer->input[i - 1]))
+        {
+            while ((j < strlen(lexer->input)) && (lexer->input[j] != ' '
+                && !is_separator(lexer->input[j])))
+                append_buffer(fast_buffer, lexer->input[j++]);
+
+            if (var_exists(alias_storage, fast_buffer->buf))
+            {
+                append_string_to_buffer(buffer,
+                    get_value(alias_storage, fast_buffer->buf));
+                i += strlen(fast_buffer->buf);
+            }
+        }
+        append_buffer(buffer, lexer->input[i]);
+        flush(fast_buffer);
+    }
+    lexer->input = buffer->buf;
+}
+
 bool init_lexer(struct lexer *lexer)
 {
+    substitute_alias(lexer);
     char **splitted = split(lexer->input);
     int i = 0;
     int type;

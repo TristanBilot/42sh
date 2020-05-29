@@ -1,4 +1,4 @@
-.TH "src/utils/xalloc.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/xalloc.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -24,15 +24,6 @@ src/utils/xalloc.h \- Special allocation functions\&.
 .ti -1c
 .RI "void * \fBxcalloc\fP (size_t nmb, size_t size)"
 .br
-.ti -1c
-.RI "void * \fBymalloc\fP (size_t size)"
-.br
-.ti -1c
-.RI "void * \fByrealloc\fP (void *ptr, size_t size)"
-.br
-.ti -1c
-.RI "void * \fBycalloc\fP (size_t nmb, size_t size)"
-.br
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -40,22 +31,22 @@ Special allocation functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -70,12 +61,12 @@ Copyright (c) 2020
 .PP
 Safe malloc wrapper\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIsize\fP the size to allocate 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 a pointer to the allocated memory 
 .RE
@@ -86,24 +77,18 @@ a pointer to the allocated memory
 .PP
 Safe realloc wrapper\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIptr\fP the pointer to reallocate 
 .br
 \fIsize\fP the new size to allocate 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 a pointer to the allocated memory 
 .RE
 .PP
-
-.SS "void* ycalloc (size_t nmb, size_t size)"
-
-.SS "void* ymalloc (size_t size)"
-
-.SS "void* yrealloc (void * ptr, size_t size)"
 
 .SH "Author"
 .PP 

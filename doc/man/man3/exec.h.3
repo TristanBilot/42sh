@@ -1,4 +1,4 @@
-.TH "src/exec/exec.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/exec.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -49,6 +49,9 @@ src/exec/exec.h \- Execution functions\&.
 .ti -1c
 .RI "struct \fBcommand_continue\fP"
 .br
+.ti -1c
+.RI "struct \fBcommand_break\fP"
+.br
 .in -1c
 .SS "Macros"
 
@@ -65,6 +68,9 @@ src/exec/exec.h \- Execution functions\&.
 .in +1c
 .ti -1c
 .RI "void \fBinit_continue\fP (void)"
+.br
+.ti -1c
+.RI "void \fBinit_break\fP (void)"
 .br
 .ti -1c
 .RI "bool \fBexec_node_input\fP (struct \fBnode_input\fP *ast)"
@@ -169,6 +175,9 @@ src/exec/exec.h \- Execution functions\&.
 .ti -1c
 .RI "struct \fBcommand_continue\fP \fBcont\fP"
 .br
+.ti -1c
+.RI "struct \fBcommand_break\fP \fBbr\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -176,22 +185,22 @@ Execution functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -203,7 +212,7 @@ Copyright (c) 2020
 \fBValue:\fP
 .PP
 .nf
-fprintf(stderr, "%s\n", msg); \
+            fprintf(stderr, "%s\n", msg); \
             return true; \
 .fi
 .SS "#define NB_MAX_PIPE   10"
@@ -215,12 +224,12 @@ fprintf(stderr, "%s\n", msg); \
 .PP
 execute and/or 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -233,12 +242,12 @@ false
 .PP
 execute case 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -251,12 +260,12 @@ false
 .PP
 execute case clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -269,12 +278,12 @@ false
 .PP
 execute case item 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -287,14 +296,14 @@ false
 .PP
 execute command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIwith_fork\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -307,12 +316,12 @@ false
 .PP
 execute compound list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -325,12 +334,12 @@ false
 .PP
 execute do group 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -343,12 +352,12 @@ false
 .PP
 execute element 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -361,12 +370,12 @@ false
 .PP
 execute elif 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -379,12 +388,12 @@ false
 .PP
 execute else clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -397,12 +406,12 @@ false
 .PP
 execute for 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -415,12 +424,12 @@ false
 .PP
 execute funcdec 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -433,12 +442,12 @@ false
 .PP
 execute if 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -451,12 +460,12 @@ false
 .PP
 execute input 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -469,12 +478,12 @@ false
 .PP
 execute list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -487,12 +496,12 @@ false
 .PP
 execute pipeline 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -505,12 +514,12 @@ false
 .PP
 execute prefix 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -523,12 +532,12 @@ false
 .PP
 execute redirection 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -541,12 +550,12 @@ false
 .PP
 execute shell command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -559,14 +568,14 @@ false
 .PP
 execute simple command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIwith_fork\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -579,12 +588,12 @@ false
 .PP
 execute until 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -597,12 +606,12 @@ false
 .PP
 execute while 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -610,6 +619,8 @@ false
 .RE
 .PP
 
+.SS "void init_break (void)"
+Global for continue command 
 .SS "void init_continue (void)"
 Global for continue command 
 .SS "bool perform_for_enumeration (struct \fBnode_for\fP * ast, int len_range)"
@@ -617,14 +628,14 @@ Global for continue command
 .PP
 for function to perform enumeration 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIlen_range\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -637,14 +648,14 @@ false
 .PP
 for function to execute different range 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIr\fP 
 .br
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 int 
 .RE
@@ -652,6 +663,8 @@ int
 
 .SH "Variable Documentation"
 .PP 
+.SS "struct \fBcommand_break\fP br"
+
 .SS "struct \fBcommand_continue\fP cont"
 
 .SH "Author"

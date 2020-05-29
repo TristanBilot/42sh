@@ -1,4 +1,4 @@
-.TH "src/exec/commands.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/commands.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -66,14 +66,6 @@ src/exec/commands.c
 .ti -1c
 .RI "int \fBprint_without_sp\fP (char *c)"
 .br
-.RI "Particular print with option -e from echo\&. "
-.ti -1c
-.RI "int \fBprint_without_sp_madu\fP (char *c)"
-.br
-.ti -1c
-.RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
-.br
-.RI "Echo function\&. "
 .ti -1c
 .RI "void \fBecho\fP (char **args)"
 .br
@@ -92,6 +84,10 @@ src/exec/commands.c
 .ti -1c
 .RI "void \fBfunc_continue\fP (char **args)"
 .br
+.RI "Particular print with option -e from echo\&. "
+.ti -1c
+.RI "void \fBfunc_break\fP (char **args)"
+.br
 .in -1c
 .SH "Macro Definition Documentation"
 .PP 
@@ -102,7 +98,7 @@ src/exec/commands.c
 .SS "void cd (char ** args)"
 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -113,7 +109,7 @@ src/exec/commands.c
 .PP
 function to create an alias 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -124,7 +120,7 @@ function to create an alias
 .PP
 function to delete an alias 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -135,7 +131,7 @@ function to delete an alias
 .PP
 implementation of command echo 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -150,27 +146,43 @@ implementation of exit_shell
 .PP
 implementation of command export 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
 .PP
 
+.SS "void func_break (char ** args)"
+
 .SS "void func_continue (char ** args)"
+
+.PP
+Particular print with option -e from echo\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIc\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
 
 .SS "bool load_file (char * path, bool warning)"
 
 .PP
 function to give a file to the 42sh 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIpath\fP 
 .br
 \fIwarning\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -178,45 +190,14 @@ false
 .RE
 .PP
 
-.SS "void print_echo (char ** args, bool e, bool n)"
-
-.PP
-Echo function\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIargs\fP 
-.br
-\fIe\fP 
-.br
-\fIn\fP 
-.RE
-.PP
-
 .SS "int print_without_sp (char * c)"
-
-.PP
-Particular print with option -e from echo\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIc\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-int 
-.RE
-.PP
-
-.SS "int print_without_sp_madu (char * c)"
 
 .SS "void source (char ** args)"
 
 .PP
 implementation of command sourcefnac 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE

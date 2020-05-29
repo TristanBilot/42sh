@@ -1,4 +1,4 @@
-.TH "src/storage/program_data_storage.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/storage/program_data_storage.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -31,6 +31,13 @@ src/storage/program_data_storage.c
 .RI "void \fBupdate_last_status\fP (int status)"
 .br
 .in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprogram_data_storage\fP * \fBprogram_data\fP"
+.br
+.in -1c
 .SH "Function Documentation"
 .PP 
 .SS "void append_program_data (char * element)"
@@ -40,6 +47,10 @@ src/storage/program_data_storage.c
 .SS "void new_program_data_storage (int argc, char * argv[])"
 
 .SS "void update_last_status (int status)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBprogram_data_storage\fP* program_data"
 
 .SH "Author"
 .PP 

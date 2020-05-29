@@ -11,16 +11,7 @@ void init_42sh_with_history(void)
     struct node_input *ast = NULL;
     struct history *history = open_history();
     file_manager = init_file_manager();
-    if (!option->norc_flag)
-    {
-        char *path = xmalloc(strlen(getenv("HOME")) + 9);
-        path = strcpy(path, getenv("HOME"));
-        path = strcat(path, "/.42shrc");
-        load_file(path, true);
-        load_file("/etc/42shrc", true);
-    }
-    else if (option->file_path)
-        load_file(option->file_path, true);
+
     if (option->cmd)
     {
         if ((lexer = new_lexer(option->cmd)))
@@ -31,6 +22,7 @@ void init_42sh_with_history(void)
                 print_ast(ast);
         }
         free_garbage_collector();
+        return;
     }
     else
     {
@@ -39,6 +31,18 @@ void init_42sh_with_history(void)
         struct buffer *buffer = new_buffer();
         if (print_prompt() == 1)
             return;
+
+        if (!option->norc_flag)
+        {
+            char *path = xmalloc(strlen(getenv("HOME")) + 9);
+            path = strcpy(path, getenv("HOME"));
+            path = strcat(path, "/.42shrc");
+            load_file(path, true);
+            load_file("/etc/42shrc", true);
+        }
+        else if (option->file_path)
+            load_file(option->file_path, true);
+
         int c;
         if (after_sig)
             return;
@@ -278,6 +282,17 @@ void init_42sh_without_history(void)
     signal(SIGINT, sighandler_without);
     struct lexer *lexer = NULL;
     struct node_input *ast = NULL;
+    file_manager = init_file_manager();
+    // if (!option->norc_flag)
+    // {
+    //     char *path = xmalloc(strlen(getenv("HOME")) + 9);
+    //     path = strcpy(path, getenv("HOME"));
+    //     path = strcat(path, "/.42shrc");
+    //     load_file(path, true);
+    //     load_file("/etc/42shrc", true);
+    // }
+    // else if (option->file_path)
+    //     load_file(option->file_path, true);
     if (option->cmd)
     {
         if ((lexer = new_lexer(option->cmd)))
@@ -322,7 +337,7 @@ int print_prompt(void)
     char *buff = NULL;
     if ((buff = getcwd(NULL, 0)) == NULL)
         exit(1);
-    if (isatty(0) == 1)
+    if (isatty(STDIN_FILENO) == 1)
     {
         dprintf(0, "%s[%s%s%s", START_COLOR, CYAN, buff, END_COLOR);
         dprintf(0, "%s[%s %s> %s", START_COLOR, CYAN, BLINK, END_COLOR);

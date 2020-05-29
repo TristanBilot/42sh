@@ -1,4 +1,4 @@
-.TH "src/lexer/lexer.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/lexer.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -52,9 +52,6 @@ src/lexer/lexer.c
 .RI "int \fBlex_separator\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
 .br
 .ti -1c
-.RI "int \fBlex_parameter\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
-.br
-.ti -1c
 .RI "int \fBlex_multi_token\fP (struct \fBlexer\fP *\fBlexer\fP, struct \fBbuffer\fP *\fBbuffer\fP, char **splitted, int *i, size_t *j)"
 .br
 .ti -1c
@@ -62,6 +59,9 @@ src/lexer/lexer.c
 .br
 .ti -1c
 .RI "int \fBlex_backslash\fP (struct \fBbuffer\fP *\fBbuffer\fP, char *c, size_t *j)"
+.br
+.ti -1c
+.RI "void \fBsubstitute_alias\fP (struct \fBlexer\fP *\fBlexer\fP)"
 .br
 .ti -1c
 .RI "bool \fBinit_lexer\fP (struct \fBlexer\fP *\fBlexer\fP)"
@@ -104,7 +104,7 @@ src/lexer/lexer.c
 .PP
 Append a new token to the \fBtoken_list\fP of the lexer\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP the lexer\&. 
 .br
@@ -117,7 +117,7 @@ Append a new token to the \fBtoken_list\fP of the lexer\&.
 .PP
 Fill the token list by creating all the tokens from the given string\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP the lexer\&. 
 .RE
@@ -128,14 +128,14 @@ Fill the token list by creating all the tokens from the given string\&.
 .PP
 process assignment word into token 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIc\fP 
 .br
 \fIi\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct token* 
 .RE
@@ -144,8 +144,6 @@ struct token*
 .SS "int lex_backslash (struct \fBbuffer\fP * buffer, char * c, size_t * j)"
 
 .SS "int lex_multi_token (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer, char ** splitted, int * i, size_t * j)"
-
-.SS "int lex_parameter (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer, char * c, size_t * j)"
 
 .SS "int lex_parenthesis (struct \fBlexer\fP * lexer, struct \fBbuffer\fP * buffer, char * c, size_t * j)"
 
@@ -158,7 +156,7 @@ struct token*
 .PP
 Allocate and init a new lexer\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIstr\fP the string to use as input stream\&. 
 .RE
@@ -169,12 +167,12 @@ Allocate and init a new lexer\&.
 .PP
 Return the next token without consume it\&. 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 the next token from the input stream 
 .RE
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP the lexer to lex from 
 .RE
@@ -185,18 +183,20 @@ the next token from the input stream
 .PP
 Return and consume the next token from the input stream\&. 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 the next token from the input stream 
 .RE
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIlexer\fP the lexer to lex from 
 .RE
 .PP
 
 .SS "char** split (char * str)"
+
+.SS "void substitute_alias (struct \fBlexer\fP * lexer)"
 
 .SH "Variable Documentation"
 .PP 

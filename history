@@ -2,3 +2,6 @@ ls
 echo $?
 echo $(ls)
 cd -
+cd ..
+cd -
+ls

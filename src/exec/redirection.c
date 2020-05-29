@@ -42,13 +42,13 @@ void reset_streams(struct tab_redirection tab)
                     tab.redirections[i].ionumber))
                     return;
             }
-            else if (is(tab.redirections[i].type, "TOK_DLESS")) // HEREDOC
+            else if (is(tab.redirections[i].type, "TOK_DLESS"))// HEREDOC
             {
                 if (dup_file(tab.redirections[i].file, "w+",
                     tab.redirections[i].ionumber))
                     return;
             }
-            else if (is(tab.redirections[i].type, "TOK_DLESSDASH")) // HEREDOC
+            else if (is(tab.redirections[i].type, "TOK_DLESSDASH"))// HEREDOC
             {
                 if (dup_file(tab.redirections[i].file, "w+",
                     tab.redirections[i].ionumber))

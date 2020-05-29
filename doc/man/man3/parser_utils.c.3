@@ -1,4 +1,4 @@
-.TH "src/utils/parser_utils.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/parser_utils.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -58,14 +58,14 @@ src/utils/parser_utils.c
 .PP
 Add element node to the element list of the simple command node\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIelement\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_element* 
 .RE
@@ -76,14 +76,14 @@ struct node_element*
 .PP
 Add prefix node to the prefix list of simple command node\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIprefix\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_prefix* 
 .RE
@@ -94,14 +94,14 @@ struct node_prefix*
 .PP
 Add redirection node to the redirection list of the command node\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIredirection\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_redirection* 
 .RE
@@ -112,14 +112,14 @@ struct node_redirection*
 .PP
 Add new value to the range list of the for node\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIvalue\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct range* 
 .RE
@@ -130,14 +130,14 @@ struct range*
 .PP
 Add new value to the pipeline list of the case item node\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
 \fIvalue\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct word_list* 
 .RE
@@ -148,12 +148,12 @@ struct word_list*
 .PP
 Get the shell command type object\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItype\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 enum shell_type 
 .RE
@@ -164,12 +164,12 @@ enum shell_type
 .PP
 check if there is a redirection Return true if the token is a redirection\&.
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItoken\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP

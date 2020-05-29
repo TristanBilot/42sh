@@ -1,4 +1,4 @@
-.TH "src/print/ast_print.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/print/ast_print.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -136,7 +136,7 @@ src/print/ast_print.c
 \fBValue:\fP
 .PP
 .nf
-if (PRINT_FLAG) \
+            if (PRINT_FLAG) \
             fprintf(f, "%s\n", msg)
 .fi
 .SH "Function Documentation"
@@ -148,12 +148,12 @@ if (PRINT_FLAG) \
 .PP
 print ast 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -164,7 +164,7 @@ print ast
 .PP
 print \fBnode_and_or\fP 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -173,7 +173,7 @@ print \fBnode_and_or\fP
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -184,7 +184,7 @@ print \fBnode_and_or\fP
 .PP
 print node case 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -193,7 +193,7 @@ print node case
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -204,7 +204,7 @@ print node case
 .PP
 print node do group 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -213,7 +213,7 @@ print node do group
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -224,7 +224,7 @@ print node do group
 .PP
 print node case_item 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -233,7 +233,7 @@ print node case_item
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -244,7 +244,7 @@ print node case_item
 .PP
 print node command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -253,7 +253,7 @@ print node command
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -264,7 +264,7 @@ print node command
 .PP
 print node compound list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -273,7 +273,7 @@ print node compound list
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -284,7 +284,7 @@ print node compound list
 .PP
 print node do group 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -293,7 +293,7 @@ print node do group
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -304,7 +304,7 @@ print node do group
 .PP
 print node element 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -313,7 +313,7 @@ print node element
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -324,7 +324,7 @@ print node element
 .PP
 print node elif 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -333,7 +333,7 @@ print node elif
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -344,7 +344,7 @@ print node elif
 .PP
 print node else clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -353,7 +353,7 @@ print node else clause
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -364,7 +364,7 @@ print node else clause
 .PP
 print node for 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -373,7 +373,7 @@ print node for
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -384,7 +384,7 @@ print node for
 .PP
 print node funcdec 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -393,7 +393,7 @@ print node funcdec
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -404,7 +404,7 @@ print node funcdec
 .PP
 print node if 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -413,7 +413,7 @@ print node if
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -424,7 +424,7 @@ print node if
 .PP
 print \fBnode_input\fP 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -437,7 +437,7 @@ print \fBnode_input\fP
 .PP
 print node list 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -450,7 +450,7 @@ print node list
 .PP
 print node pipeline 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -459,7 +459,7 @@ print node pipeline
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -470,7 +470,7 @@ print node pipeline
 .PP
 print node prefix 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -479,7 +479,7 @@ print node prefix
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -490,7 +490,7 @@ print node prefix
 .PP
 print node redirection 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -499,7 +499,7 @@ print node redirection
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -510,7 +510,7 @@ print node redirection
 .PP
 print note shell command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -519,7 +519,7 @@ print note shell command
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -530,7 +530,7 @@ print note shell command
 .PP
 print note simple command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -539,7 +539,7 @@ print note simple command
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -550,7 +550,7 @@ print note simple command
 .PP
 print node until 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -559,7 +559,7 @@ print node until
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE
@@ -570,7 +570,7 @@ print node until
 .PP
 print node while 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIast\fP 
 .br
@@ -579,7 +579,7 @@ print node while
 \fInode\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 * void 
 .RE

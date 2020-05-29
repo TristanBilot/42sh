@@ -1,4 +1,4 @@
-.TH "src/main.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/main.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -68,7 +68,7 @@ src/main.h
 
 .in +1c
 .ti -1c
-.RI "#define \fBUSAGE\fP   'Usage : \&./42sh [GNU long option] [option] [file]\\n'"
+.RI "#define \fBUSAGE\fP   'Usage : \&./42sh [GNU long \fBoption\fP] [\fBoption\fP] [file]\\n'"
 .br
 .ti -1c
 .RI "#define \fBSTART_COLOR\fP   '\\033'"
@@ -90,10 +90,10 @@ src/main.h
 
 .in +1c
 .ti -1c
-.RI "void \fBinit_42sh_with_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.RI "void \fBinit_42sh_with_history\fP (void)"
 .br
 .ti -1c
-.RI "void \fBinit_42sh_without_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.RI "void \fBinit_42sh_without_history\fP (void)"
 .br
 .ti -1c
 .RI "void \fBprint_usage\fP (void)"
@@ -120,7 +120,7 @@ src/main.h
 .RI "int \fBgetch2\fP (void)"
 .br
 .ti -1c
-.RI "struct \fBoption_sh\fP * \fBinit_option_sh\fP (void)"
+.RI "void \fBinit_option_sh\fP (void)"
 .br
 .in -1c
 .SS "Variables"
@@ -142,7 +142,7 @@ src/main.h
 
 .SS "#define START_COLOR   '\\033'"
 
-.SS "#define USAGE   'Usage : \&./42sh [GNU long option] [option] [file]\\n'"
+.SS "#define USAGE   'Usage : \&./42sh [GNU long \fBoption\fP] [\fBoption\fP] [file]\\n'"
 
 .SH "Function Documentation"
 .PP 
@@ -152,11 +152,11 @@ src/main.h
 
 .SS "int getch2 (void)"
 
-.SS "void init_42sh_with_history (struct \fBoption_sh\fP * option)"
+.SS "void init_42sh_with_history (void)"
 
-.SS "void init_42sh_without_history (struct \fBoption_sh\fP * option)"
+.SS "void init_42sh_without_history (void)"
 
-.SS "struct \fBoption_sh\fP* init_option_sh (void)"
+.SS "void init_option_sh (void)"
 
 .SS "int print_prompt (void)"
 

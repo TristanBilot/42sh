@@ -1,4 +1,4 @@
-.TH "src/garbage_collector/garbage_collector.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/garbage_collector/garbage_collector.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -16,12 +16,6 @@ src/garbage_collector/garbage_collector.h \- Execution functions\&.
 .ti -1c
 .RI "struct \fBgarbage_collector\fP"
 .br
-.ti -1c
-.RI "struct \fBgarbage_variable\fP"
-.br
-.ti -1c
-.RI "struct \fBgarbage_collector_variable\fP"
-.br
 .in -1c
 .SS "Functions"
 
@@ -38,27 +32,12 @@ src/garbage_collector/garbage_collector.h \- Execution functions\&.
 .RI "void \fBfree_garbage_collector\fP ()"
 .br
 .RI "free list of elements "
-.ti -1c
-.RI "void \fBnew_garbage_collector_variable\fP (void)"
-.br
-.RI "create the garbage collector "
-.ti -1c
-.RI "void \fBappend_to_garbage_variable\fP (void *addr)"
-.br
-.RI "append addr to list of elements "
-.ti -1c
-.RI "void \fBfree_garbage_collector_variable\fP ()"
-.br
-.RI "free list of elements "
 .in -1c
 .SS "Variables"
 
 .in +1c
 .ti -1c
 .RI "struct \fBgarbage_collector\fP * \fBgarbage_collector\fP"
-.br
-.ti -1c
-.RI "struct \fBgarbage_collector_variable\fP * \fBgarbage_collector_variable\fP"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -67,22 +46,22 @@ Execution functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -95,18 +74,7 @@ Copyright (c) 2020
 .PP
 append addr to list of elements 
 .PP
-\fBParameters:\fP
-.RS 4
-\fIaddr\fP 
-.RE
-.PP
-
-.SS "void append_to_garbage_variable (void * addr)"
-
-.PP
-append addr to list of elements 
-.PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIaddr\fP 
 .RE
@@ -116,23 +84,13 @@ append addr to list of elements
 
 .PP
 free list of elements 
-.SS "void free_garbage_collector_variable ()"
-
-.PP
-free list of elements 
 .SS "void new_garbage_collector (void)"
-
-.PP
-create the garbage collector 
-.SS "void new_garbage_collector_variable (void)"
 
 .PP
 create the garbage collector 
 .SH "Variable Documentation"
 .PP 
 .SS "struct \fBgarbage_collector\fP* \fBgarbage_collector\fP"
-
-.SS "struct \fBgarbage_collector_variable\fP* \fBgarbage_collector_variable\fP"
 
 .SH "Author"
 .PP 

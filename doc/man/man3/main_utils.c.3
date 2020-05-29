@@ -1,4 +1,4 @@
-.TH "src/utils/main_utils.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/utils/main_utils.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,10 +13,10 @@ src/utils/main_utils.c
 
 .in +1c
 .ti -1c
-.RI "void \fBinit_42sh_with_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.RI "void \fBinit_42sh_with_history\fP (void)"
 .br
 .ti -1c
-.RI "void \fBinit_42sh_without_history\fP (struct \fBoption_sh\fP *\fBoption\fP)"
+.RI "void \fBinit_42sh_without_history\fP (void)"
 .br
 .ti -1c
 .RI "void \fBprint_usage\fP (void)"
@@ -46,6 +46,9 @@ src/utils/main_utils.c
 .ti -1c
 .RI "bool \fBafter_sig\fP = false"
 .br
+.ti -1c
+.RI "struct \fBfile_manager\fP * \fBfile_manager\fP"
+.br
 .in -1c
 .SH "Function Documentation"
 .PP 
@@ -55,9 +58,9 @@ src/utils/main_utils.c
 
 .SS "int getch2 (void)"
 
-.SS "void init_42sh_with_history (struct \fBoption_sh\fP * option)"
+.SS "void init_42sh_with_history (void)"
 
-.SS "void init_42sh_without_history (struct \fBoption_sh\fP * option)"
+.SS "void init_42sh_without_history (void)"
 
 .SS "int print_prompt (void)"
 
@@ -70,6 +73,8 @@ src/utils/main_utils.c
 .SH "Variable Documentation"
 .PP 
 .SS "bool after_sig = false"
+
+.SS "struct \fBfile_manager\fP* \fBfile_manager\fP"
 
 .SH "Author"
 .PP 

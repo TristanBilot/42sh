@@ -1,4 +1,4 @@
-.TH "tests/tests_lexer.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "tests/tests_lexer.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -89,51 +89,72 @@ tests/tests_lexer.c
 .RI "\fBTest\fP (\fBlexer\fP, hard_cmd_substitution)"
 .br
 .in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBalias_storage\fP"
+.br
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBvar_storage\fP"
+.br
+.ti -1c
+.RI "struct \fBfile_manager\fP * \fBfile_manager\fP"
+.br
+.in -1c
 .SH "Function Documentation"
 .PP 
+.SS "Test (\fBlexer\fP, assignment_word)"
+
+.SS "Test (\fBlexer\fP, backslash)"
+
 .SS "Test (\fBlexer\fP, basic_tokens)"
 
 .SS "Test (\fBlexer\fP, basic_word_tokens)"
 
-.SS "Test (\fBlexer\fP, newline)"
+.SS "Test (\fBlexer\fP, cmd_substitution)"
 
-.SS "Test (\fBlexer\fP, eof)"
-
-.SS "Test (\fBlexer\fP, backslash)"
-
-.SS "Test (\fBlexer\fP, io_number)"
-
-.SS "Test (\fBlexer\fP, spaced_redirections)"
-
-.SS "Test (\fBlexer\fP, no_spaced_redirections)"
-
-.SS "Test (\fBlexer\fP, semicolon)"
-
-.SS "Test (\fBlexer\fP, not)"
+.SS "Test (\fBlexer\fP, comments)"
 
 .SS "Test (\fBlexer\fP, curly_braces)"
 
-.SS "Test (\fBlexer\fP, assignment_word)"
+.SS "Test (\fBlexer\fP, dollar)"
 
-.SS "Test (\fBlexer\fP, variables)"
+.SS "Test (\fBlexer\fP, eof)"
 
-.SS "Test (\fBlexer\fP, parenthesis)"
+.SS "Test (\fBlexer\fP, hard_cmd_substitution)"
 
-.SS "Test (\fBlexer\fP, parenthesis2)"
-
-.SS "Test (\fBlexer\fP, comments)"
+.SS "Test (\fBlexer\fP, hard_stuck)"
 
 .SS "Test (\fBlexer\fP, if_test)"
 
 .SS "Test (\fBlexer\fP, if_test2)"
 
-.SS "Test (\fBlexer\fP, dollar)"
+.SS "Test (\fBlexer\fP, io_number)"
 
-.SS "Test (\fBlexer\fP, hard_stuck)"
+.SS "Test (\fBlexer\fP, newline)"
 
-.SS "Test (\fBlexer\fP, cmd_substitution)"
+.SS "Test (\fBlexer\fP, no_spaced_redirections)"
 
-.SS "Test (\fBlexer\fP, hard_cmd_substitution)"
+.SS "Test (\fBlexer\fP, not)"
+
+.SS "Test (\fBlexer\fP, parenthesis)"
+
+.SS "Test (\fBlexer\fP, parenthesis2)"
+
+.SS "Test (\fBlexer\fP, semicolon)"
+
+.SS "Test (\fBlexer\fP, spaced_redirections)"
+
+.SS "Test (\fBlexer\fP, variables)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBvar_storage\fP* alias_storage"
+
+.SS "struct \fBfile_manager\fP* \fBfile_manager\fP"
+
+.SS "struct \fBvar_storage\fP* \fBvar_storage\fP"
 
 .SH "Author"
 .PP 

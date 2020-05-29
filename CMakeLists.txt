@@ -78,5 +78,5 @@ add_custom_target(doc
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
 add_custom_target(check
-	python3 ${PROJECT_SOURCE_DIR}/test_suite.py -t 2 build/42sh
+	python3 ${PROJECT_SOURCE_DIR}/test_suite.py -t 2 42sh
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})

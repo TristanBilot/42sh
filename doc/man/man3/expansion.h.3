@@ -1,4 +1,4 @@
-.TH "src/expansion/expansion.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/expansion/expansion.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -115,22 +115,22 @@ Var storage structures and functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -144,7 +144,7 @@ Copyright (c) 2020
 \fBValue:\fP
 .PP
 .nf
-fprintf(stderr, "%s\n", err); \
+    fprintf(stderr, "%s\n", err); \
     update_last_status(1); \
     return NULL;
 .fi
@@ -182,9 +182,9 @@ fprintf(stderr, "%s\n", err); \
 .SS "char* perform_command_substitution (char * word)"
 
 .SS "char* perform_tilde_expansion (char * word)"
-
+forbid_expansion &&
 .SS "char* perform_var_expansion (char * word)"
-
+forbid_expansion &&
 .SS "char* substitute (char * word)"
 
 .SS "struct \fBbuffer\fP* substitute_at (void)"

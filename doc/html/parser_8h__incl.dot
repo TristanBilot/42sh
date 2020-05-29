@@ -1,0 +1,17 @@
+digraph "src/parser/parser.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="src/parser/parser.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Parsing functions."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="../lexer/lexer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$lexer_8h.html",tooltip="Main lexing functions."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="../lexer/token.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$token_8h.html",tooltip="Token structures and functions."];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="stdbool.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="../ast/ast.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ast_8h.html",tooltip="Define ast and parser structures."];
+  Node5 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

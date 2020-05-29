@@ -1,4 +1,4 @@
-.TH "src/main.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/main.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,17 +13,38 @@ src/main.c
 
 .in +1c
 .ti -1c
-.RI "struct \fBoption_sh\fP * \fBinit_option_sh\fP (void)"
+.RI "void \fBinit_option_sh\fP (void)"
 .br
 .ti -1c
 .RI "int \fBmain\fP (int ac, char **av)"
 .br
 .in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBoption_sh\fP * \fBoption\fP"
+.br
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBalias_storage\fP"
+.br
+.ti -1c
+.RI "struct \fBvar_storage\fP * \fBvar_storage\fP"
+.br
+.in -1c
 .SH "Function Documentation"
 .PP 
-.SS "struct \fBoption_sh\fP* init_option_sh (void)"
+.SS "void init_option_sh (void)"
 
 .SS "int main (int ac, char ** av)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBvar_storage\fP* alias_storage"
+
+.SS "struct \fBoption_sh\fP* option"
+
+.SS "struct \fBvar_storage\fP* \fBvar_storage\fP"
 
 .SH "Author"
 .PP 

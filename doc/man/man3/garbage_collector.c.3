@@ -1,4 +1,4 @@
-.TH "src/garbage_collector/garbage_collector.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/garbage_collector/garbage_collector.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -31,20 +31,12 @@ src/garbage_collector/garbage_collector.c
 .ti -1c
 .RI "void \fBprint_garbage_collector\fP (void)"
 .br
+.in -1c
+.SS "Variables"
+
+.in +1c
 .ti -1c
-.RI "void \fBnew_garbage_collector_variable\fP (void)"
-.br
-.RI "create the garbage collector "
-.ti -1c
-.RI "void \fBappend_to_garbage_variable\fP (void *addr)"
-.br
-.RI "append addr to list of elements "
-.ti -1c
-.RI "void \fBfree_garbage_collector_variable\fP (void)"
-.br
-.RI "free list of elements "
-.ti -1c
-.RI "void \fBprint_garbage_collector_variable\fP (void)"
+.RI "struct \fBgarbage_collector\fP * \fBgarbage_collector\fP"
 .br
 .in -1c
 .SH "Function Documentation"
@@ -54,28 +46,13 @@ src/garbage_collector/garbage_collector.c
 .PP
 append addr to list of elements 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIaddr\fP 
 .RE
 .PP
 
-.SS "void append_to_garbage_variable (void * addr)"
-
-.PP
-append addr to list of elements 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIaddr\fP 
-.RE
-.PP
-
-.SS "void free_garbage_collector (void)"
-
-.PP
-free list of elements 
-.SS "void free_garbage_collector_variable (void)"
+.SS "void free_garbage_collector ()"
 
 .PP
 free list of elements 
@@ -83,13 +60,11 @@ free list of elements
 
 .PP
 create the garbage collector 
-.SS "void new_garbage_collector_variable (void)"
-
-.PP
-create the garbage collector 
 .SS "void print_garbage_collector (void)"
 
-.SS "void print_garbage_collector_variable (void)"
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBgarbage_collector\fP* \fBgarbage_collector\fP"
 
 .SH "Author"
 .PP 

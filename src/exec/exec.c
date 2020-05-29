@@ -106,6 +106,7 @@ static bool execute_with_fork(char **args, struct tab_redirection tab,
         else if (args[1])
         {
             strcpy(program_data->last_cmd_status, args[1]);
+            // update_last_status(atoi(args[1]));
             exit_shell();
         }
         else

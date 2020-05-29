@@ -1,4 +1,4 @@
-.TH "src/exec/commands.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/commands.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -60,15 +60,11 @@ src/exec/commands.h \- Extra commands functions\&.
 .br
 .RI "Print all argson stdout\&. "
 .ti -1c
-.RI "int \fBprint_without_sp\fP (char *c)"
+.RI "void \fBfunc_continue\fP (char **args)"
 .br
 .RI "Particular print with option -e from echo\&. "
 .ti -1c
-.RI "void \fBprint_echo\fP (char **args, bool e, bool n)"
-.br
-.RI "Echo function\&. "
-.ti -1c
-.RI "void \fBfunc_continue\fP (char **args)"
+.RI "void \fBfunc_break\fP (char **args)"
 .br
 .in -1c
 .SS "Variables"
@@ -84,22 +80,22 @@ Extra commands functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -114,7 +110,7 @@ Copyright (c) 2020
 .SS "void cd (char ** args)"
 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -125,7 +121,7 @@ Copyright (c) 2020
 .PP
 function to create an alias 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -136,7 +132,7 @@ function to create an alias
 .PP
 function to delete an alias 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -147,7 +143,7 @@ function to delete an alias
 .PP
 implementation of command echo 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
@@ -162,27 +158,43 @@ implementation of exit_shell
 .PP
 implementation of command export 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE
 .PP
 
+.SS "void func_break (char ** args)"
+
 .SS "void func_continue (char ** args)"
+
+.PP
+Particular print with option -e from echo\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIc\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
 
 .SS "bool load_file (char * path, bool warning)"
 
 .PP
 function to give a file to the 42sh 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIpath\fP 
 .br
 \fIwarning\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -195,40 +207,9 @@ false
 .PP
 Print all argson stdout\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
-.RE
-.PP
-
-.SS "void print_echo (char ** args, bool e, bool n)"
-
-.PP
-Echo function\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIargs\fP 
-.br
-\fIe\fP 
-.br
-\fIn\fP 
-.RE
-.PP
-
-.SS "int print_without_sp (char * c)"
-
-.PP
-Particular print with option -e from echo\&. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIc\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-int 
 .RE
 .PP
 
@@ -237,7 +218,7 @@ int
 .PP
 implementation of command sourcefnac 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIargs\fP 
 .RE

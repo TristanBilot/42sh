@@ -1,4 +1,4 @@
-.TH "src/exec/redirection.c" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/exec/redirection.c" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -82,14 +82,14 @@ src/exec/redirection.c
 .SS "struct \fBtab_redirection\fP append_tab_redirection (struct \fBtab_redirection\fP tab, struct \fBnode_redirection\fP * e)"
 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItab\fP complete the redirection table with output/input file name 
 .br
 \fIe\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct \fBtab_redirection\fP 
 .RE
@@ -100,12 +100,12 @@ struct \fBtab_redirection\fP
 .PP
 Copy content of \fBtab_redirection\fP in a new one\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItab\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct \fBtab_redirection\fP 
 .RE
@@ -116,7 +116,7 @@ struct \fBtab_redirection\fP
 .PP
 apply file descriptor duplication from file descriptor 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIout\fP 
 .br
@@ -125,7 +125,7 @@ apply file descriptor duplication from file descriptor
 \fIio\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -138,7 +138,7 @@ false
 .PP
 apply file descriptor duplication from file name 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIfile\fP 
 .br
@@ -149,7 +149,7 @@ apply file descriptor duplication from file name
 \fIptr_fd\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -162,7 +162,7 @@ false
 .PP
 initialize file manager 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct file_manager* 
 .RE
@@ -173,7 +173,7 @@ struct file_manager*
 .PP
 create and init the table of redirection 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct \fBtab_redirection\fP 
 .RE
@@ -184,12 +184,12 @@ struct \fBtab_redirection\fP
 .PP
 manage duplications for each redirections 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItab\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 true 
 .PP
@@ -202,7 +202,7 @@ false
 .PP
 Resets streams with last configurations\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItab\fP 
 .RE

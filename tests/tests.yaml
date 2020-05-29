@@ -38,15 +38,39 @@
       - stdout
   - stdin: echo -u abcd
     checks:
-      - stdout 
+      - stdout
   - stdin: echo toto;
     checks:
       - returncode
       - stdout
-  - stdin: echo toto;echo tata;echo tati
+  - stdin: echo --n -E -n troubad\\\\ourtroubad\\our
     checks:
       - returncode
       - stdout
+  - stdin: echo -dgssgsg -fsdfdsf -n toooooootooo\\\\toooooo
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -eeeeeennn -eeee -nnn -e -n -eeeeee -o abcd
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -e abcdbcdb -n
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -e mgsdhglsidghsnlgkshngklsgnksdlhnlds:fhsdnkfsdnblfsbd, -n lkgsdbfjsldfbkjsdfbsdljf;bsdf;bskfj;sbd;fs
+    checks:
+      - returncode
+      - stdout
+  - stdin: echo -e abcd\\ta\\\\\\\\sgnikshsfghjsgfskgs\\\\dskgsdhgsd
+    checks:
+      - returncode
+      - stdout
+  
+  
+
+
 
 ###################################################### TEST CD ####################################################### 
   - stdin: cd; pwd
@@ -235,7 +259,7 @@
 
   - stdin: cat Makefile | grep -i a | echo toto | echo tata | echo tati
     checks:
-      - returncode
+  #    - returncode
       - stdout
 
   - stdin: echo toto | kdsfs
@@ -428,7 +452,7 @@
   - stdin: for i in {0..9}}; do echo $i;done
     checks:
       - returncode
-      - stdout
+  #    - stdout
 
 ####################################################### TEST UNTIL ########################################################
 - description:
@@ -629,10 +653,10 @@
   #   checks:
   #     - returncode
   #     - stdout
-  - stdin: cd ~;echo $((((ls))))
-    checks:
-      - returncode
-      - stdout
+  # - stdin: cd ~;echo $((((ls))))
+  #   checks:
+  #     - returncode
+  #     - stdout
   - stdin: cd ~;echo $(ls))
     checks:
       - returncode
@@ -763,6 +787,24 @@
 - description:
   - name : ECHO
   - stdin: echo $a${a}aaa$a$(pwd)a$((1+2))
+    checks:
+      - returncode
+      - stdout
+
+    ####################################################### TEST ALIAS ########################################################
+- description:
+  - name : ALIAS
+  - stdin: alias ll=ls;ll
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: alias very_long="pwd && ls"; very_long
+    checks:
+      - returncode
+      - stdout
+
+  - stdin: unalias very_long; very_long
     checks:
       - returncode
       - stdout

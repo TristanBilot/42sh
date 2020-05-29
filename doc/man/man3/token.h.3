@@ -1,4 +1,4 @@
-.TH "src/lexer/token.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/lexer/token.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -30,9 +30,9 @@ src/lexer/token.h \- Token structures and functions\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBtoken_type\fP { \fBTOK_ERROR\fP, \fBTOK_NEWLINE\fP, \fBTOK_EOF\fP, \fBTOK_AND\fP, \fBTOK_SEPAND\fP, \fBTOK_OR\fP, \fBTOK_PIPE\fP, \fBTOK_SEMI\fP, \fBTOK_LPAREN\fP, \fBTOK_RPAREN\fP, \fBTOK_LCURL\fP, \fBTOK_RCURL\fP, \fBTOK_DLESSDASH\fP, \fBTOK_DLESS\fP, \fBTOK_LESSGREAT\fP, \fBTOK_LESSAND\fP, \fBTOK_LESS\fP, \fBTOK_DGREAT\fP, \fBTOK_GREATAND\fP, \fBTOK_CLOBBER\fP, \fBTOK_ASS_WORD\fP, \fBTOK_GREAT\fP, \fBTOK_IONUMBER\fP, \fBTOK_NOT\fP, \fBTOK_COMM\fP, \fBTOK_WORD\fP, \fBKW_IF\fP, \fBKW_THEN\fP, \fBKW_ELSE\fP, \fBKW_ELIF\fP, \fBKW_FI\fP, \fBKW_DO\fP, \fBKW_DONE\fP, \fBKW_FOR\fP, \fBKW_WHILE\fP, \fBKW_UNTIL\fP, \fBKW_CASE\fP, \fBKW_ESAC\fP, \fBKW_IN\fP, \fBKW_DSEMI\fP, \fBKW_UNKNOWN\fP }
-.RI "Type of a token (operators, value, \&.\&.\&.) ""
+.RI "enum \fBtoken_type\fP { \fBTOK_ERROR\fP, \fBTOK_NEWLINE\fP, \fBTOK_EOF\fP, \fBTOK_AND\fP, \fBTOK_SEPAND\fP, \fBTOK_OR\fP, \fBTOK_PIPE\fP, \fBTOK_SEMI\fP, \fBTOK_LPAREN\fP, \fBTOK_RPAREN\fP, \fBTOK_LCURL\fP, \fBTOK_RCURL\fP, \fBTOK_DLESSDASH\fP, \fBTOK_DLESS\fP, \fBTOK_LESSGREAT\fP, \fBTOK_LESSAND\fP, \fBTOK_LESS\fP, \fBTOK_DGREAT\fP, \fBTOK_GREATAND\fP, \fBTOK_CLOBBER\fP, \fBTOK_ASS_WORD\fP, \fBTOK_GREAT\fP, \fBTOK_IONUMBER\fP, \fBTOK_NOT\fP, \fBTOK_COMM\fP, \fBTOK_WORD\fP, \fBKW_IF\fP, \fBKW_THEN\fP, \fBKW_ELSE\fP, \fBKW_ELIF\fP, \fBKW_FI\fP, \fBKW_DO\fP, \fBKW_DONE\fP, \fBKW_FOR\fP, \fBKW_WHILE\fP, \fBKW_UNTIL\fP, \fBKW_CASE\fP, \fBKW_ESAC\fP, \fBKW_IN\fP, \fBKW_DSEMI\fP, \fBKW_UNKNOWN\fP }"
 .br
+.RI "Type of a token (operators, value, \&.\&.\&.) "
 .in -1c
 .SS "Functions"
 
@@ -67,42 +67,42 @@ Token structures and functions\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020
 .RE
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-06
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -210,7 +210,7 @@ Type of a token (operators, value, \&.\&.\&.)
 .PP
 Wrapper to release memory of a token\&. 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fItoken\fP the token to free 
 .RE
@@ -223,7 +223,7 @@ Wrapper to release memory of a token\&.
 .PP
 Token allocator and initializer\&. 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 a pointer to the allocated token\&. 
 .RE

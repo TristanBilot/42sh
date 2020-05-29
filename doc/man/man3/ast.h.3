@@ -1,4 +1,4 @@
-.TH "src/ast/ast.h" 3 "Mon May 25 2020" "Version v0.1" "42h" \" -*- nroff -*-
+.TH "src/ast/ast.h" 3 "Sat May 30 2020" "Version v0.1" "42h" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -209,22 +209,22 @@ Define ast and parser structures\&.
 
 
 .PP
-\fBAuthor:\fP
+\fBAuthor\fP
 .RS 4
 Team 
 .RE
 .PP
-\fBVersion:\fP
+\fBVersion\fP
 .RS 4
 0\&.1 
 .RE
 .PP
-\fBDate:\fP
+\fBDate\fP
 .RS 4
 2020-05-03
 .RE
 .PP
-\fBCopyright:\fP
+\fBCopyright\fP
 .RS 4
 Copyright (c) 2020 
 .RE
@@ -254,7 +254,7 @@ Copyright (c) 2020
 .PP
 build node and_or_final 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIis_and\fP 
 .br
@@ -263,7 +263,7 @@ build node and_or_final
 \fIright\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_and_or* 
 .RE
@@ -274,7 +274,7 @@ struct node_and_or*
 .PP
 build node_and_or_merge 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIis_and\fP 
 .br
@@ -283,7 +283,7 @@ build node_and_or_merge
 \fIright\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_and_or* 
 .RE
@@ -294,12 +294,12 @@ struct node_and_or*
 .PP
 build node case 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_case* 
 .RE
@@ -310,7 +310,7 @@ struct node_case*
 .PP
 build node case clause 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_case_clause* 
 .RE
@@ -321,7 +321,7 @@ struct node_case_clause*
 .PP
 build node case item 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_case_item* 
 .RE
@@ -332,7 +332,7 @@ struct node_case_item*
 .PP
 build command 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_command* 
 .RE
@@ -343,7 +343,7 @@ struct node_command*
 .PP
 build node compound list 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_compound_list* 
 .RE
@@ -354,7 +354,7 @@ struct node_compound_list*
 .PP
 build do group 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_do_group* 
 .RE
@@ -365,12 +365,12 @@ struct node_do_group*
 .PP
 build node element 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_element* 
 .RE
@@ -381,12 +381,12 @@ struct node_element*
 .PP
 build node else clause 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_else_clause* 
 .RE
@@ -397,7 +397,7 @@ struct node_else_clause*
 .PP
 build node for 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_for* 
 .RE
@@ -408,7 +408,7 @@ struct node_for*
 .PP
 build node funcdec 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_funcdec* 
 .RE
@@ -419,7 +419,7 @@ struct node_funcdec*
 .PP
 build node if 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_if* 
 .RE
@@ -430,7 +430,7 @@ struct node_if*
 .PP
 build node input 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_input* 
 .RE
@@ -441,7 +441,7 @@ struct node_input*
 .PP
 build node list 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_list* 
 .RE
@@ -452,12 +452,12 @@ struct node_list*
 .PP
 build node pipeline 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIis_not\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_pipeline* 
 .RE
@@ -468,12 +468,12 @@ struct node_pipeline*
 .PP
 build node prefix 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_prefix* 
 .RE
@@ -484,12 +484,12 @@ struct node_prefix*
 .PP
 build node redirection 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_redirection* 
 .RE
@@ -500,12 +500,12 @@ struct node_redirection*
 .PP
 build shell command 
 .PP
-\fBParameters:\fP
+\fBParameters\fP
 .RS 4
 \fIparser\fP 
 .RE
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_shell_command* 
 .RE
@@ -516,7 +516,7 @@ struct node_shell_command*
 .PP
 build simple command 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_simple_command* 
 .RE
@@ -527,7 +527,7 @@ struct node_simple_command*
 .PP
 build node until 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_until* 
 .RE
@@ -538,7 +538,7 @@ struct node_until*
 .PP
 build node while 
 .PP
-\fBReturns:\fP
+\fBReturns\fP
 .RS 4
 struct node_while* 
 .RE
