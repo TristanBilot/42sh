@@ -1,5 +1,16 @@
 # 42sh
 
+Authors: 
+Bilot Tristan |
+Delfau Nora |
+Salemi Enzar |
+Thambithurai Madushan
+
+- [x] POSIX compliant
+- [x] no memory leaks
+- [x] no warning/errors
+- [x] tested on ArchLinux, Ubuntu, MacOS
+
 ## Usage
 ### Build the shell (3 ways)
     1. ./build.sh
@@ -17,19 +28,14 @@
     4. make doc               (if shell built with the 3rd way)
 
 ### Read Doxygen documentaions :
-    --   evince doc/latex/refman.pdf
-    --   cd doc/man/man3 && man ./[SOURCE FILE NAME].3
-    --   firefox doc/html/index.html
+    -- evince doc/latex/refman.pdf
+    -- cd doc/man/man3 && man ./[SOURCE FILE NAME].3
+    -- firefox doc/html/index.html
 
 ### Execute the python testsuite :
     1. ./build.sh check       (this will build/rebuild the 42sh before)
     2. cd build && make check (if the shell is already built)
     3. make check             (if shell built with the 3rd way)
-
-### Start tests :
-    --   ./(build/)tests_lexer
-    --   ./(build/)tests_parser
-    --   ./(build/)tests_storage
 
 ### Clean the project (3 ways)
     1. ./clean.sh
@@ -47,7 +53,6 @@ echo $(ls -la && pwd)
 ```shell
 echo $((2*33/2-2))
 ```
-
 
 ```shell
 echo $((!3&&1 || 3))
