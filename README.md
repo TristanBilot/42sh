@@ -1,5 +1,8 @@
 # 42sh
 
+42sh was a team project made at EPITA in which we had to implement a POSIX shell from scratch using pure C. No memory leaks were allowed and we needed to implement by ourselves most of useful C functions.
+Our 42sh do not use standard builtins so we had to create the famous ones like echo, source, continue, break, exit, export...
+
 Authors: 
 Bilot Tristan |
 Delfau Nora |
@@ -42,13 +45,14 @@ Thambithurai Madushan
     2. cd build && make clean
     3. make clean
 
-## Command substitution
+## Commands
+### Command substitution
 
 ```shell
 echo $(ls -la && pwd)
 ```
 
-## Arithmetic substitution
+### Arithmetic substitution
 
 ```shell
 echo $((2*33/2-2))
@@ -62,7 +66,7 @@ echo $((!3&&1 || 3))
 echo $((~2- ~3 + ~1&& ~4/4-1))
 ```
 
-## Redirections and pipes
+### Redirections and pipes
 
 ```shell
 ./42sh 2>/dev/null >/dev/null
@@ -76,7 +80,7 @@ tree . | ./42sh >> file
 cat< test_suite.py
 ```
 
-## Variables and aliases
+### Variables and aliases
 
 ```shell
 var=$(echo 42); echo $var
@@ -90,7 +94,11 @@ echo $RANDOM${UID}
 alias ll="ls -l"; ll; unalias ll
 ```
 
-## Loops
+```shell
+export PWD="/bin"; export
+```
+
+### Loops
 
 ```shell
 for i in a b c d e; do echo "Hello, world !"; done
@@ -108,7 +116,7 @@ while ! echo a | echo b | echo c; do echo toto; done
 until echo a | echo b | echo c; do echo toto; done
 ```
 
-## Conditions
+### Conditions
 
 ```shell
 if cat README; then echo success; elif ls; then echo success; else echo failed; fi
@@ -122,13 +130,13 @@ if echo toto; then echo success; else echo failed; fi
 case a in b | c | d ) hello & ;; esac
 ```
 
-## Binary operators
+### Binary operators
 
 ```shell
 ( a || ( ( b && c; ) || ls\n ); )
 ```
 
-## Signals and History
+### Signals and History
 
 Key|Signal|
 :-:|:--
