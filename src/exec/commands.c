@@ -59,7 +59,7 @@ void create_alias(char **args)
 {
     if (!args[0])
     {
-        print_alias_storage(alias_storage);
+        print_alias_storage();
         update_last_status(0);
         return;
     }
@@ -74,7 +74,7 @@ void create_alias(char **args)
                 return;
             }
         }
-        print_alias_storage(alias_storage);
+        print_alias_storage();
     }
     int i = 0;
     if (args[0][0] == '-')
@@ -108,9 +108,7 @@ bool load_file(char *path, bool warning)
     fp = fopen(path, "r");
     if (fp == NULL)
     {
-        warning = warning;
-        // if (warning)
-        //     warn("%s: %s", path, strerror(errno));
+        (void) warning;
         return false;
     }
     while ((read = getline(&line, &len, fp)) != -1)

@@ -374,7 +374,7 @@ void delete_last_character(void)
 
 void sighandler(int signum)
 {
-    signum = signum;
+    (void) signum;
     if (file_manager->fd_to_close != -1)
     {
         close(file_manager->fd_to_close);
@@ -391,7 +391,7 @@ void sighandler(int signum)
 
 void sighandler_without(int signum)
 {
-    signum = signum;
+    (void) signum;
     if (file_manager->fd_to_close != -1)
     {
         close(file_manager->fd_to_close);

@@ -89,7 +89,7 @@ bool execute(char **args, struct tab_redirection tab)
 static bool execute_with_fork(char **args, struct tab_redirection tab,
     char *cmd_name)
 {
-    tab = tab;
+    (void) tab;
     DEBUG("EXECUTE WITH FORK")
     int status = 0;
     int child = 0;
