@@ -1,5 +1,41 @@
 # 42sh
 
+## Usage
+### Build the shell (3 ways)
+    1. ./build.sh
+    2. mkdir build && cd build && cmake . && make
+    3. cmake . && make
+    
+### Run the shell
+    1. ./build/42sh
+    2. ./42sh (only if built with the #3 way)
+    
+### Generate Doxygen documentations :
+    1. ./build.sh doc         (this will build/rebuild the 42sh before)
+    2. cd build && make doc   (if the shell is already built)
+    3. ./documentation.sh     (if the shell is already built)
+    4. make doc               (if shell built with the 3rd way)
+
+### Read Doxygen documentaions :
+    --   evince doc/latex/refman.pdf
+    --   cd doc/man/man3 && man ./[SOURCE FILE NAME].3
+    --   firefox doc/html/index.html
+
+### Execute the python testsuite :
+    1. ./build.sh check       (this will build/rebuild the 42sh before)
+    2. cd build && make check (if the shell is already built)
+    3. make check             (if shell built with the 3rd way)
+
+### Start tests :
+    --   ./(build/)tests_lexer
+    --   ./(build/)tests_parser
+    --   ./(build/)tests_storage
+
+### Clean the project (3 ways)
+    1. ./clean.sh
+    2. cd build && make clean
+    3. make clean
+
 ## Command substitution
 
 ```shell
