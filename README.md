@@ -11,7 +11,7 @@ Thambithurai Madushan
 
 - [x] POSIX compliant
 - [x] no memory leaks
-- [x] no warning/errors
+- [x] no warnings/errors
 - [x] tested on ArchLinux, Ubuntu, MacOS
 
 ## Usage
@@ -24,18 +24,18 @@ Thambithurai Madushan
     1. ./build/42sh
     2. ./42sh (only if built with the #3 way)
     
-### Generate Doxygen documentations :
+### Generate Doxygen documentations
     1. ./build.sh doc         (this will build/rebuild the 42sh before)
     2. cd build && make doc   (if the shell is already built)
     3. ./documentation.sh     (if the shell is already built)
     4. make doc               (if shell built with the 3rd way)
 
-### Read Doxygen documentaions :
+### Read Doxygen documentaions
     -- evince doc/latex/refman.pdf
     -- cd doc/man/man3 && man ./[SOURCE FILE NAME].3
     -- firefox doc/html/index.html
 
-### Execute the python testsuite :
+### Run the python testsuite
     1. ./build.sh check       (this will build/rebuild the 42sh before)
     2. cd build && make check (if the shell is already built)
     3. make check             (if shell built with the 3rd way)
